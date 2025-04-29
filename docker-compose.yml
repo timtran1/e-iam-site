@@ -1,0 +1,27 @@
+services:
+  eiam-site:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - ./u5CMS:/var/www/html
+      - ./config.php:/var/www/html/config.php
+    depends_on:
+      - eiam-db
+    environment:
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_GROUP=www-data
+
+  eiam-db:
+    image: mysql:8.0-debian
+    platform: linux/x86_64
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: eiam
+      MYSQL_USER: eiam
+      MYSQL_PASSWORD: eiam
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./volumes/db_data:/var/lib/mysql
+      - ./u5CMS/u5standard.sql:/docker-entrypoint-initdb.d/u5standard.sql
