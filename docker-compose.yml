@@ -1,11 +1,12 @@
 services:
   eiam-site:
+    container_name: eiam-site
     build: .
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.eiam.rule=Host(`eiam.deepsel.com`)"
-      - "traefik.http.services.eiam.loadbalancer.server.port=80"
+      - "traefik.http.routers.eiam-site.rule=Host(`eiam.deepsel.com`)"
+      - "traefik.http.services.eiam-site.loadbalancer.server.port=80"
     volumes:
       - ./u5CMS:/var/www/html
       - ./config.php:/var/www/html/config.php
@@ -16,6 +17,7 @@ services:
       - APACHE_RUN_GROUP=www-data
 
   eiam-db:
+    container_name: eiam-db
     image: mysql:8.0-debian
     platform: linux/x86_64
     restart: unless-stopped
