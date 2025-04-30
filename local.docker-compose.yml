@@ -1,11 +1,8 @@
 services:
   eiam-site:
     build: .
-    restart: unless-stopped
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.eiam.rule=Host(`eiam.deepsel.com`)"
-      - "traefik.http.services.eiam.loadbalancer.server.port=80"
+    ports:
+      - "8080:80"
     volumes:
       - ./u5CMS:/var/www/html
       - ./config.php:/var/www/html/config.php
@@ -18,12 +15,13 @@ services:
   eiam-db:
     image: mysql:8.0-debian
     platform: linux/x86_64
-    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: eiam
       MYSQL_USER: eiam
       MYSQL_PASSWORD: eiam
+    ports:
+      - "3306:3306"
     volumes:
       - ./volumes/db_data:/var/lib/mysql
       - ./u5CMS/u5standard.sql:/docker-entrypoint-initdb.d/u5standard.sql
