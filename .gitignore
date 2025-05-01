@@ -2,3 +2,9 @@ volumes
 .vscode
 .DS_Store
 u5CMS
+
+.idea
+node_modules
+package-lock.json
+originals
+dist

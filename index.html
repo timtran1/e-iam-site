@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <meta http-equiv="content-language" content="en"/>
+    <title>u5CMS user manual and introductory video Shoe . . . — notieren Sie hier Ihren Firmennamen</title>
+    <!--    <link rel="stylesheet" href="dist/index.css" type="text/css"/>-->
+    <link rel="stylesheet" href="index.css" type="text/css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
+    <link href="favicon.ico" rel="shortcut icon"/>
+</head>
+
+<body id="body">
+<main id="main" class="min-h-screen flex flex-col justify-between">
+
+    <section id="outer">
+        <header id="header" class="sticky top-0 z-50 border-b border-b-[#dfe4e9] bg-white">
+            <div class=" flex items-center sm:border-b border-b-[#dfe4e9]">
+                <div class="flex items-center gap-[10px] sm:gap-[16px] padding-[16px] w-full h-[50px] sm:h-[85px] transition-all duration-500">
+                    <!--                <img src="logo.svg" alt="eIAM" class="w-[250px]">-->
+                    <a href="/" class="w-[43px] h-[58px] sm:w-[250px] sm:h-[80.6px] overflow-hidden block shrink-0">
+                        <div style="background-image: url('logo.svg');"
+                             class="w-[250px] h-[80.6px] bg-cover bg-no-repeat transition-all duration-500    "
+                             role="img" aria-label="eIAM"></div>
+                    </a>
+                    <div class="border-l-1 border-l-[#E5E4E2] h-[40px]"></div>
+                    <div class="text-[26px] font-light">eIAM</div>
+                    <div class="font-light text-[18px] text-ellipsis hidden lg:block">
+                        Federal Office of Information Technology, Systems and Telecommunication &
+                        Federal Chancellery FCh, Digital Transformation and ICT Governance DTI
+                    </div>
+                </div>
+                <div class="px-[16px] py-[4px]">
+                    <!-- Language Switcher Dropdown -->
+                    <div class="relative ml-auto mr-4 cursor-pointer hidden sm:block">
+                        <button class="lang-switcher flex items-center space-x-1 text-gray-700 hover:text-gray-900 focus:outline-none cursor-pointer">
+                            <span class="current-lang">EN</span>
+                            <svg class="lang-caret w-4 h-4 transform transition-transform duration-300" fill="none"
+                                 stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                      d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="lang-dropdown pt-[3px] border-t border-t-[#dfe4e9] shadow-[0_3px_4px_1px_#828e9a] absolute right-0 mt-2 w-24 bg-white overflow-hidden z-50 transform origin-top scale-y-0 opacity-0 transition-all duration-300">
+                            <div class="py-1">
+                                <a href="?l=en" class="lang-option lang-en block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">EN</a>
+                                <a href="?l=de" class="lang-option lang-de block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">DE</a>
+                                <a href="?l=fr" class="lang-option lang-fr block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">FR</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuToggle"
+                            class="sm:hidden flex flex-col justify-center items-center w-10 h-10 space-y-1.5 focus:outline-none relative z-[50]">
+                        <span class="origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 bg-gray-800"></span>
+                        <span class="origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 bg-gray-800"></span>
+                        <span class="origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 bg-gray-800"></span>
+                    </button>
+                </div>
+            </div>
+
+            <nav id="navLeftSubTop" class="navigation hidden sm:block">
+                <ul>
+                    <li class="inactive"><a href="index.php?c=start&amp;l=en">Home</a></li>
+                    <li class="inactive"><a href="index.php?c=trottinett&amp;l=en">Children and Scooter</a>
+                        <ul style="display:none">
+                            <li style="display:none"><a href="index.php?c=formatexamples&amp;l=en">Format
+                                examples</a></li>
+                            <li style="display:none"><a href="index.php?c=formular&amp;l=en">Form</a>
+                                <ul style="display:none">
+                                    <li style="display:none"><a
+                                            href="index.php?c=trottinettvideo&amp;l=en">Video</a>
+                                        <ul style="display:none">
+                                            <li style="display:none"><a
+                                                    href="index.php?c=onemorepage&amp;l=en">Level 4</a></li>
+                                        </ul>
+                                    </li>
+                            </li>
+                        </ul>
+                    </li>
+                    </li>
+                </ul>
+                </li>
+                <li class="inactive"><a href="index.php?c=gotthardtunnel&amp;l=en">Gotthard Traffic</a></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu"
+                 class="navigation-mobile border-t border-t-[#dfe4e9] fixed left-0 right-0 top-[50px] bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-40 sm:hidden">
+                <ul>
+                    <li class="inactive"><a href="index.php?c=start&amp;l=en">Home</a></li>
+                    <li class="inactive"><a href="index.php?c=trottinett&amp;l=en">Children and Scooter</a>
+                        <ul style="display:none">
+                            <li style="display:none"><a href="index.php?c=formatexamples&amp;l=en">Format
+                                examples</a></li>
+                            <li style="display:none"><a href="index.php?c=formular&amp;l=en">Form</a>
+                                <ul style="display:none">
+                                    <li style="display:none"><a
+                                            href="index.php?c=trottinettvideo&amp;l=en">Video</a>
+                                        <ul style="display:none">
+                                            <li style="display:none"><a
+                                                    href="index.php?c=onemorepage&amp;l=en">Level 4</a></li>
+                                        </ul>
+                                    </li>
+                            </li>
+                        </ul>
+                    </li>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <article id="content" class="px-[24px] py-[16px] max-w-[1440px] mx-auto">
+            <p><a target="_blank" title="http://www.yuba.ch/manual" href="http://www.yuba.ch/manual">u5CMS user
+                manual and introductory vide
+                <nobr>o<span style="font-size:80%;text-decoration:none"><img
+                        src="images/extern.svg"
+                        style="height:0.9em;vertical-align:baseline;margin-left:3px"/></span></nobr>
+            </a><br/>
+            <h1>Shoe</h1>
+            <div class="justify">
+                <dl style="width:200px" class="imgBoxLeft dlLeftSmall">
+                    <dt data-caption="Pantofola%20d%27Oro%20GOLDEN%20POPPY%20%28Orange%29" data-fancybox
+                        href="thumb.php?h=1000&w=1000&t=1745575970&f=r/sneaker/sneaker_de.jpg">
+                        <img title="click to zoom" width="200" src="f.php?f=r/sneaker/sneaker_de.jpg&t=1745575970"
+                             alt="Pantofola d'Oro GOLDEN POPPY Herren-Sneaker (Orange)"/>
+                    </dt>
+                    <dd>Pantofola d'Oro</dd>
+                </dl>
+                A <span class="bold">shoe</span> is an item of footwear intended to protect and comfort the human
+                foot while doing various activities. Shoes are also used as an item of decoration. The design of
+                shoes has varied enormously through time and from culture to culture, with appearance originally
+                being tied to function. Additionally, fashion has often dictated many design elements, such as
+                whether shoes have very high heels or flat ones. Contemporary footwear varies widely in style,
+                complexity and cost. Basic sandals may consist of only a thin sole and simple strap. High fashion
+                shoes may be made of very expensive materials in complex construction and sell for thousands of
+                dollars a pair. Other shoes are for very specific purposes, such as boots designed specifically for
+                mountaineering or skiing.</p>
+                <p>Traditionally, shoes have been made from leather, wood or canvas, but are increasingly made from
+                    rubber, plastics, and other petrochemical-derived materials.</p>
+                <p>The foot contains more bones than any other single part of the body. Though it has evolved over
+                    hundreds of thousands of years in relation to vastly varied terrain and climate conditions, the
+                    foot is still vulnerable to environmental hazards such as sharp rocks and hot ground, against
+                    which, shoes can protect.</p>
+                <p>
+                <h2>Construction</h2>The basic anatomy of a shoe is recognizable, regardless of the specific style
+                of footwear.</p>
+                <p>All shoes have a sole, which is the bottom of a shoe, in contact with the ground. Soles can be
+                    made from a variety of materials, although most modern shoes have soles made from natural
+                    rubber, polyurethane, or polyvinyl chloride (PVC) compounds. Soles can be simple — a single
+                    material in a single layer — or they can be complex, with multiple structures or layers and
+                    materials. When various layers are used, soles may consist of an insole, midsole, and an
+                    outsole.<br/>
+            </div>
+            <br/>
+            <!--In former u5CMS versions here was the code for facebook like button. Because it is deprecated, the pro memoria text at hand is present which could be replaced by any social button code.-->
+        </article>
+
+    </section>
+    <footer id="footer"
+            class="bg-[#263645] px-[24px] py-[8px] text-white text-[12.8px] flex justify-start items-center gap-2">
+        <a name="contact"></a>Name — Adresse — Telefon —
+        <a title="mailto:me@provider.ext" href="mailto:me@provider.ext">me@provider.ex
+            <nobr>t</nobr>
+        </a> —
+        <a href="index.php?c=sitemap&amp;l=en">Sitemap</a> —
+        <a href="index.php?c=intranet&amp;l=en">Intranet</a>
+    </footer>
+</main>
+<script>
+    function autoequalsone() {
+        if (location.href.indexOf('auto=1') > 0) location.reload();
+    }
+
+    setTimeout("autoequalsone()", 2222);
+    if (typeof u5mkmobile === "function" && !document.getElementById('nevermobile')) u5mkmobile();
+
+    // Language dropdown functionality
+    document.addEventListener('DOMContentLoaded', function () {
+        const langSwitchers = document.querySelectorAll('.lang-switcher');
+        const langDropdowns = document.querySelectorAll('.lang-dropdown');
+        const langCarets = document.querySelectorAll('.lang-caret');
+        const currentLangSpans = document.querySelectorAll('.current-lang');
+
+        // Get current language from URL
+        function getCurrentLanguage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            console.log({urlParams}, urlParams.get('l'));
+            return urlParams.get('l') || 'en'; // Default to 'en' if not specified
+        }
+
+        // Set active language
+        function setActiveLanguage() {
+            const currentLang = getCurrentLanguage().toLowerCase();
+            console.log({currentLang});
+            
+            // Update all language switchers
+            currentLangSpans.forEach(span => {
+                span.textContent = currentLang.toUpperCase();
+            });
+
+            // Reset and update all language options
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.classList.remove('border-l-4', 'border-red-500', 'pl-3');
+                
+                // Check if this option matches current language
+                if (option.classList.contains(`lang-${currentLang}`)) {
+                    option.classList.add('border-l-4', 'border-red-500', 'pl-3');
+                }
+            });
+        }
+
+        // Initialize active language
+        setActiveLanguage();
+
+        // Set up event listeners for each language switcher
+        langSwitchers.forEach((switcher, index) => {
+            const dropdown = langDropdowns[index];
+            const caret = langCarets[index];
+            
+            // Toggle dropdown when language switcher is clicked
+            switcher.addEventListener('click', function (event) {
+                event.stopPropagation();
+                
+                // Toggle dropdown visibility by changing scale and opacity
+                if (dropdown.classList.contains('scale-y-0')) {
+                    // Close all other dropdowns first
+                    langDropdowns.forEach(d => {
+                        if (d !== dropdown) {
+                            d.classList.remove('scale-y-100', 'opacity-100');
+                            d.classList.add('scale-y-0', 'opacity-0');
+                        }
+                    });
+                    
+                    // Open this dropdown
+                    dropdown.classList.remove('scale-y-0', 'opacity-0');
+                    dropdown.classList.add('scale-y-100', 'opacity-100');
+                    caret.classList.add('rotate-180'); // Rotate caret
+                } else {
+                    dropdown.classList.remove('scale-y-100', 'opacity-100');
+                    dropdown.classList.add('scale-y-0', 'opacity-0');
+                    caret.classList.remove('rotate-180'); // Reset caret rotation
+                }
+            });
+        });
+
+        // Close all dropdowns when clicking outside
+        document.addEventListener('click', function (event) {
+            let clickedInsideDropdown = false;
+            
+            // Check if click was inside any language switcher
+            langSwitchers.forEach((switcher, index) => {
+                if (switcher.contains(event.target) || langDropdowns[index].contains(event.target)) {
+                    clickedInsideDropdown = true;
+                }
+            });
+            
+            if (!clickedInsideDropdown) {
+                // Close all dropdowns
+                langDropdowns.forEach((dropdown, index) => {
+                    dropdown.classList.remove('scale-y-100', 'opacity-100');
+                    dropdown.classList.add('scale-y-0', 'opacity-0');
+                    langCarets[index].classList.remove('rotate-180');
+                });
+            }
+        });
+    });
+
+    // Mobile menu toggle functionality
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    mobileMenuToggle.addEventListener('click', function () {
+        if (!mobileMenu.classList.contains('open')) {
+            mobileMenu.classList.add('open');
+            mobileMenuToggle.classList.add('open');
+        } else {
+            mobileMenu.classList.remove('open');
+            mobileMenuToggle.classList.remove('open');
+        }
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function (event) {
+        if (!mobileMenuToggle.contains(event.target) && !mobileMenu.contains(event.target)) {
+            mobileMenu.classList.remove('open');
+            mobileMenuToggle.classList.remove('open');
+        }
+    });
+
+    // Set active menu item based on current URL
+    function setActiveMenuItem() {
+        const currentUrl = window.location.href;
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentPage = urlParams.get('c') || 'start';
+
+        // Set active class for desktop menu
+        const desktopMenuItems = document.querySelectorAll('#navLeftSubTop li a');
+        desktopMenuItems.forEach(item => {
+            const itemUrl = new URL(item.href, window.location.origin);
+            const itemParams = new URLSearchParams(itemUrl.search);
+            const itemPage = itemParams.get('c');
+
+            if (itemPage === currentPage) {
+                item.parentElement.classList.add('active');
+                item.classList.add('activeItem');
+            } else {
+                item.parentElement.classList.remove('active');
+                item.classList.remove('activeItem');
+            }
+        });
+
+        // Set active class for mobile menu
+        const mobileMenuItems = document.querySelectorAll('#mobileMenu li a');
+        mobileMenuItems.forEach(item => {
+            const itemUrl = new URL(item.href, window.location.origin);
+            const itemParams = new URLSearchParams(itemUrl.search);
+            const itemPage = itemParams.get('c');
+
+            if (itemPage === currentPage) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    }
+
+    // Run on page load
+    setActiveMenuItem();
+</script>
+</body>
+<!-- This site runs with u5CMS version 12.7.11 from https://yuba.ch/u5cms -->
+
+</html>
