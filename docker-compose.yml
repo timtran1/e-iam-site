@@ -3,10 +3,8 @@ services:
     container_name: eiam-site
     build: .
     restart: unless-stopped
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.eiam-site.rule=Host(`eiam.deepsel.com`)"
-      - "traefik.http.services.eiam-site.loadbalancer.server.port=80"
+    ports:
+      - 80:80
     volumes:
       - ./u5CMS:/var/www/html
       - ./config.php:/var/www/html/config.php
@@ -15,8 +13,6 @@ services:
     environment:
       - APACHE_RUN_USER=www-data
       - APACHE_RUN_GROUP=www-data
-    networks:
-      - default
 
   eiam-db:
     container_name: eiam-db
@@ -31,10 +27,3 @@ services:
     volumes:
       - ./volumes/db_data:/var/lib/mysql
       - ./u5CMS/u5standard.sql:/docker-entrypoint-initdb.d/u5standard.sql
-    networks:
-      - default
-
-networks:
-  default:
-    name: homelab-network
-    external: true
