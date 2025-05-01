@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "npx tailwindcss -i r/cssbase.css -o r/dist.css"
+    "build": "npx tailwindcss -i r/cssbase.css -o r/dist.css --minify"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.0",
