@@ -6,7 +6,9 @@
     <meta http-equiv="content-language" content="en"/>
     <title>u5CMS user manual and introductory video Shoe . . . — notieren Sie hier Ihren Firmennamen</title>
     <!--    <link rel="stylesheet" href="dist/index.css" type="text/css"/>-->
+    <link rel="stylesheet" href="cssstyle.css" type="text/css"/>
     <link rel="stylesheet" href="index.css" type="text/css"/>
+
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
           rel="stylesheet">
@@ -45,12 +47,10 @@
                                       d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </button>
-                        <div class="lang-dropdown pt-[3px] border-t border-t-[#dfe4e9] shadow-[0_3px_4px_1px_#828e9a] absolute right-0 mt-2 w-24 bg-white overflow-hidden z-50 transform origin-top scale-y-0 opacity-0 transition-all duration-300">
-                            <div class="py-1">
-                                <a href="?l=en" class="lang-option lang-en block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">EN</a>
-                                <a href="?l=de" class="lang-option lang-de block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">DE</a>
-                                <a href="?l=fr" class="lang-option lang-fr block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">FR</a>
-                            </div>
+                        <div class="lang-dropdown w-[77px] border-t border-t-[#dfe4e9] shadow-[0_3px_4px_1px_#828e9a] absolute right-0 mt-2 w-24 bg-white overflow-hidden z-50 transform origin-top scale-y-0 opacity-0 transition-all duration-300">
+                            <a href="?l=en">EN</a>
+                            <a href="?l=de">DE</a>
+                            <a href="?l=fr">FR</a>
                         </div>
                     </div>
 
@@ -198,19 +198,20 @@
         function setActiveLanguage() {
             const currentLang = getCurrentLanguage().toLowerCase();
             console.log({currentLang});
-            
+
             // Update all language switchers
             currentLangSpans.forEach(span => {
                 span.textContent = currentLang.toUpperCase();
             });
 
             // Reset and update all language options
-            document.querySelectorAll('.lang-option').forEach(option => {
-                option.classList.remove('border-l-4', 'border-red-500', 'pl-3');
-                
+            document.querySelectorAll('.lang-dropdown a').forEach(option => {
+                option.classList.remove('active');
+
                 // Check if this option matches current language
-                if (option.classList.contains(`lang-${currentLang}`)) {
-                    option.classList.add('border-l-4', 'border-red-500', 'pl-3');
+                const optionLang = option.getAttribute('href').split('=')[1];
+                if (optionLang === currentLang) {
+                    option.classList.add('active');
                 }
             });
         }
@@ -222,11 +223,11 @@
         langSwitchers.forEach((switcher, index) => {
             const dropdown = langDropdowns[index];
             const caret = langCarets[index];
-            
+
             // Toggle dropdown when language switcher is clicked
             switcher.addEventListener('click', function (event) {
                 event.stopPropagation();
-                
+
                 // Toggle dropdown visibility by changing scale and opacity
                 if (dropdown.classList.contains('scale-y-0')) {
                     // Close all other dropdowns first
@@ -236,7 +237,7 @@
                             d.classList.add('scale-y-0', 'opacity-0');
                         }
                     });
-                    
+
                     // Open this dropdown
                     dropdown.classList.remove('scale-y-0', 'opacity-0');
                     dropdown.classList.add('scale-y-100', 'opacity-100');
@@ -252,14 +253,14 @@
         // Close all dropdowns when clicking outside
         document.addEventListener('click', function (event) {
             let clickedInsideDropdown = false;
-            
+
             // Check if click was inside any language switcher
             langSwitchers.forEach((switcher, index) => {
                 if (switcher.contains(event.target) || langDropdowns[index].contains(event.target)) {
                     clickedInsideDropdown = true;
                 }
             });
-            
+
             if (!clickedInsideDropdown) {
                 // Close all dropdowns
                 langDropdowns.forEach((dropdown, index) => {
