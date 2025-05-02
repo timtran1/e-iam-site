@@ -246,3 +246,18 @@ h6 {
     display: none;
     flex-direction: column;
 }
+
+/* Navigation caret styles */
+.nav-caret {
+    display: inline-block;
+    margin-left: 8px;
+    vertical-align: middle;
+    transition: transform 0.3s ease;
+    width: 16px;
+    height: 16px;
+    transform-origin: center;
+}
+
+.nav-caret.rotate-180 {
+    transform: rotate(0deg);
+}
