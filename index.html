@@ -377,6 +377,24 @@
         // Get all parent menu items that have dropdowns
         const parentMenuItems = document.querySelectorAll('#navLeftSubTop > ul > li');
 
+        // Remove inline display:none styles added by the server
+        const removeInlineStyles = (element) => {
+            if (element.style && element.style.display === 'none') {
+                element.style.display = '';
+            }
+
+            // Process children recursively
+            Array.from(element.children).forEach(child => {
+                removeInlineStyles(child);
+            });
+        };
+
+        // Remove inline styles from the entire navigation
+        const navigation = document.querySelector('#navLeftSubTop');
+        if (navigation) {
+            removeInlineStyles(navigation);
+        }
+
         parentMenuItems.forEach(item => {
             const submenu = item.querySelector('ul');
 
