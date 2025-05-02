@@ -377,20 +377,20 @@
     document.addEventListener('DOMContentLoaded', function () {
         // Get all parent menu items that have dropdowns
         const parentMenuItems = document.querySelectorAll('#navLeftSubTop > ul > li');
-
+        
         parentMenuItems.forEach(item => {
             const submenu = item.querySelector('ul');
-
+            
             // Skip if this menu item doesn't have a submenu
             if (!submenu) return;
-
+            
             // Add caret to parent menu item
             const parentLink = item.querySelector('a');
             const caret = document.createElement('span');
             caret.className = 'nav-caret';
             caret.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false"><polygon points="12 15.464 2.625 10.051 3.375 8.752 12 13.732 20.625 8.752 21.375 10.051 12 15.464" fill="currentColor"></polygon></svg>';
             parentLink.appendChild(caret);
-
+            
             // Add close button to each dropdown
             const closeButton = document.createElement('button');
             closeButton.className = 'nav-dropdown-close';
@@ -400,15 +400,15 @@
                 submenu.classList.remove('open');
                 caret.classList.remove('rotate-180');
             });
-
+            
             // Insert close button at the beginning of the submenu
             submenu.insertBefore(closeButton, submenu.firstChild);
-
+            
             // Add click event to parent menu item
             parentLink.addEventListener('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
-
+                
                 // Close all other open dropdowns
                 document.querySelectorAll('#navLeftSubTop ul ul.open').forEach(dropdown => {
                     if (dropdown !== submenu) {
@@ -417,14 +417,14 @@
                         dropdown.parentElement.querySelector('.nav-caret')?.classList.remove('rotate-180');
                     }
                 });
-
+                
                 // Toggle this dropdown
                 submenu.classList.toggle('open');
                 // Toggle caret rotation
                 caret.classList.toggle('rotate-180');
             });
         });
-
+        
         // Close dropdowns when clicking outside
         document.addEventListener('click', function (e) {
             if (!e.target.closest('#navLeftSubTop')) {
@@ -437,6 +437,9 @@
                 });
             }
         });
+        
+        // Run setActiveMenuItem again to ensure active classes are properly set
+        setActiveMenuItem();
     });
 </script>
 </body>

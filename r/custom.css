@@ -256,8 +256,9 @@ h6 {
     width: 16px;
     height: 16px;
     transform-origin: center;
+    transform: rotate(180deg); /* Initial state is rotated */
 }
 
 .nav-caret.rotate-180 {
-    transform: rotate(0deg);
+    transform: rotate(0deg); /* When open, rotate to original position */
 }
