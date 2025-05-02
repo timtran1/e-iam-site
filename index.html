@@ -224,6 +224,26 @@
         const langDropdowns = document.querySelectorAll('.lang-dropdown');
         const langCarets = document.querySelectorAll('.lang-caret');
         const currentLangSpans = document.querySelectorAll('.current-lang');
+        
+        // Clean up language switcher dropdowns - remove empty links and whitespace
+        document.querySelectorAll('.lang-dropdown').forEach(dropdown => {
+            // Get all nodes in the dropdown
+            const childNodes = Array.from(dropdown.childNodes);
+            
+            // Remove text nodes (whitespace)
+            childNodes.forEach(node => {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    dropdown.removeChild(node);
+                }
+            });
+            
+            // Remove empty links or links with no text content
+            dropdown.querySelectorAll('a').forEach(link => {
+                if (!link.textContent.trim()) {
+                    dropdown.removeChild(link);
+                }
+            });
+        });
 
         // Get current language from URL
         function getCurrentLanguage() {
