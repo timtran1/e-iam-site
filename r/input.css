@@ -3,3 +3,18 @@
 @import url(csstable.css);
 @import url(cssform.css);
 @import url(custom.css);
+
+@font-face {
+    font-family: 'Noto Sans';
+    src: url('notosans/notosans_de.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Noto Sans';
+    src: url('notosansitalic/notosansitalic_de.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: italic;
+}
+
