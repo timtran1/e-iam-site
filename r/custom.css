@@ -108,6 +108,19 @@ a {
     text-decoration: none;
 }
 
+.navigation-mobile a {
+    color: #1c2834;
+}
+
+.navigation-mobile a:visited {
+    color: #1c2834;
+}
+
+.navigation-mobile a:hover {
+    color: #1c2834;
+    text-decoration: none;
+}
+
 h1, h2, h3, h4, h5, h6 {
     margin: 0 0 .25em;
     color: #1c2834;
@@ -159,6 +172,57 @@ h6 {
     color: #e53940
 }
 
+input, select, textarea {
+    border: 1px solid #1c2834;
+    border-radius: 4px;
+    background: white;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+
+input[type=text], input[type=email], input[type=number], input[type=password], textarea, select {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    color: #1c2834;
+}
+
+select {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+input:focus {
+    outline: none;
+    border: 2px solid #1c2834;
+}
+
+input[type=submit] {
+    background: #596978;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+legend {
+    background: white;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+fieldset {
+    background-color: white;
+    border: 1px solid #555;
+    border-radius: 5px;
+    margin: 0 0 20px 0;
+    padding: 25px;
+    font-size: 104%;
+    color: #555;
+    width: 100%;
+}
+
 /* Language Switcher Styles */
 .lang-dropdown a {
     display: block;
@@ -187,7 +251,7 @@ h6 {
     background-color: white;
     min-width: 200px;
     box-shadow: 0 3px 4px 1px #828e9a;
-    z-index: 50;
+    z-index: 999;
     border-top: 1px solid #dfe4e9;
     padding-top: 60px; /* Space for close button */
     padding-bottom: 12px;
