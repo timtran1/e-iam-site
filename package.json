@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "npx tailwindcss -i r/cssbase.css -o r/dist.css --minify"
+    "build-tailwind": "npx tailwindcss -i tailwind-input.css -o r/tailwind.css --minify",
+    "build": "npx tailwindcss -i tailwind-input.css -o r/tailwind.css --minify && npx tailwindcss -i r/input.css -o r/cssbase.css --minify"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.0",

@@ -5,10 +5,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
     <meta http-equiv="content-language" content="en"/>
     <title>u5CMS user manual and introductory video Shoe . . . — notieren Sie hier Ihren Firmennamen</title>
-
+    <!--prod-->
     <!--    <link rel="stylesheet" href="r/cssbase.css" type="text/css"/>-->
-    <link rel="stylesheet" href="r/dist.css" type="text/css"/>
-    <!--    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>-->
+    <!-- dev-->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="r/input.css" type="text/css"/>
+
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
           rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
@@ -64,26 +66,51 @@
             </div>
 
             <nav id="navLeftSubTop" class="navigation hidden sm:block">
+                <!--                expanded menu-->
                 <ul>
                     <li class="inactive"><a href="index.php?c=start&amp;l=en">Home</a></li>
-                    <li class="inactive"><a href="index.php?c=trottinett&amp;l=en">Children and Scooter</a>
-                        <ul style="display:none">
-                            <li style="display:none"><a href="index.php?c=formatexamples&amp;l=en">Format
+                    <li class=""><a class="" href="index.php?c=trottinett&amp;l=en">Children and Scooter</a>
+                        <ul>
+                            <li class="active"><a class="activeItem" href="index.php?c=formatexamples&amp;l=en">Format
                                 examples</a></li>
-                            <li style="display:none"><a href="index.php?c=formular&amp;l=en">Form</a>
+                            <li><a href="index.php?c=formular&amp;l=en">Form</a>
                                 <ul style="display:none">
-                                    <li style="display:none"><a
-                                            href="index.php?c=trottinettvideo&amp;l=en">Video</a>
+                                    <li style="display:none"><a href="index.php?c=trottinettvideo&amp;l=en">Video</a>
                                         <ul style="display:none">
-                                            <li style="display:none"><a
-                                                    href="index.php?c=onemorepage&amp;l=en">Level 4</a></li>
+                                            <li style="display:none"><a href="index.php?c=onemorepage&amp;l=en">Level
+                                                4</a></li>
                                         </ul>
                                     </li>
+
+                                </ul>
                             </li>
+
                         </ul>
                     </li>
-                    </li>
+                    <li class="inactive"><a href="index.php?c=gotthardtunnel&amp;l=en">Gotthard Traffic</a></li>
                 </ul>
+
+                <!--                not expanded menu-->
+                <!--                <ul>-->
+                <!--                    <li class="inactive"><a href="index.php?c=start&amp;l=en">Home</a></li>-->
+                <!--                    <li class="inactive"><a href="index.php?c=trottinett&amp;l=en">Children and Scooter</a>-->
+                <!--                        <ul style="display:none">-->
+                <!--                            <li style="display:none"><a href="index.php?c=formatexamples&amp;l=en">Format-->
+                <!--                                examples</a></li>-->
+                <!--                            <li style="display:none"><a href="index.php?c=formular&amp;l=en">Form</a>-->
+                <!--                                <ul style="display:none">-->
+                <!--                                    <li style="display:none"><a-->
+                <!--                                            href="index.php?c=trottinettvideo&amp;l=en">Video</a>-->
+                <!--                                        <ul style="display:none">-->
+                <!--                                            <li style="display:none"><a-->
+                <!--                                                    href="index.php?c=onemorepage&amp;l=en">Level 4</a></li>-->
+                <!--                                        </ul>-->
+                <!--                                    </li>-->
+                <!--                            </li>-->
+                <!--                        </ul>-->
+                <!--                    </li>-->
+                <!--                    </li>-->
+                <!--                </ul>-->
             </nav>
 
             <!-- Mobile Menu -->
