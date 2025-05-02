@@ -428,6 +428,7 @@
             const caret = document.createElement('span');
             caret.className = 'nav-caret';
             caret.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false"><polygon points="12 15.464 2.625 10.051 3.375 8.752 12 13.732 20.625 8.752 21.375 10.051 12 15.464" fill="currentColor"></polygon></svg>';
+            caret.style.cursor = 'pointer'; // Make the caret look clickable
             parentLink.appendChild(caret);
 
             // Add close button to each dropdown
@@ -443,8 +444,8 @@
             // Insert close button at the beginning of the submenu
             submenu.insertBefore(closeButton, submenu.firstChild);
 
-            // Add click event to parent menu item
-            parentLink.addEventListener('click', function (e) {
+            // Move click event from parent link to caret only
+            caret.addEventListener('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
 
@@ -461,6 +462,12 @@
                 submenu.classList.toggle('open');
                 // Toggle caret rotation
                 caret.classList.toggle('rotate-180');
+            });
+
+            // Remove any click event from the parent link that might prevent navigation
+            parentLink.addEventListener('click', function(e) {
+                // Only stop propagation, don't prevent default
+                e.stopPropagation();
             });
         });
 
