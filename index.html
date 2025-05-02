@@ -372,6 +372,57 @@
 
     // Run on page load
     setActiveMenuItem();
+
+    // Navigation dropdown functionality
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get all parent menu items that have dropdowns
+        const parentMenuItems = document.querySelectorAll('#navLeftSubTop > ul > li');
+
+        parentMenuItems.forEach(item => {
+            const submenu = item.querySelector('ul');
+
+            // Skip if this menu item doesn't have a submenu
+            if (!submenu) return;
+
+            // Add close button to each dropdown
+            const closeButton = document.createElement('button');
+            closeButton.className = 'nav-dropdown-close';
+            closeButton.innerHTML = 'Close &times;';
+            closeButton.addEventListener('click', function (e) {
+                e.stopPropagation();
+                submenu.classList.remove('open');
+            });
+
+            // Insert close button at the beginning of the submenu
+            submenu.insertBefore(closeButton, submenu.firstChild);
+
+            // Add click event to parent menu item
+            const parentLink = item.querySelector('a');
+            parentLink.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Close all other open dropdowns
+                document.querySelectorAll('#navLeftSubTop ul ul.open').forEach(dropdown => {
+                    if (dropdown !== submenu) {
+                        dropdown.classList.remove('open');
+                    }
+                });
+
+                // Toggle this dropdown
+                submenu.classList.toggle('open');
+            });
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('#navLeftSubTop')) {
+                document.querySelectorAll('#navLeftSubTop ul ul.open').forEach(dropdown => {
+                    dropdown.classList.remove('open');
+                });
+            }
+        });
+    });
 </script>
 </body>
 <!-- This site runs with u5CMS version 12.7.11 from https://yuba.ch/u5cms -->
