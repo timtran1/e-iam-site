@@ -91,7 +91,6 @@ footer a:hover {
 
 /*Override base styles*/
 
-
 a {
     color: #069;
 }
@@ -110,7 +109,8 @@ a {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    margin: 0 0 .25em
+    margin: 0 0 .25em;
+    color: #1c2834;
 }
 
 h1 {
@@ -153,6 +153,10 @@ h6 {
     font-weight: 500;
     line-height: 1.333333;
     letter-spacing: .2px
+}
+
+.hot {
+    color: #e53940
 }
 
 /* Language Switcher Styles */
