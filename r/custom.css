@@ -338,8 +338,78 @@ fieldset {
     height: 16px;
     transform-origin: center;
     transform: rotate(180deg); /* Initial state is rotated */
+    cursor: pointer;
+    border-radius: 3px;
 }
 
 .nav-caret.rotate-180 {
     transform: rotate(0deg); /* When open, rotate to original position */
+}
+
+/* Mobile menu dropdown styles */
+.navigation-mobile ul li ul {
+    display: none;
+    position: fixed; /* Fixed position for sliding */
+    top: 0;
+    right: -100%; /* Start off-screen to the right */
+    height: 100vh;
+    width: 100%;
+    background-color: white;
+    z-index: 1000;
+    overflow-y: auto;
+    transition: right 0.3s ease; /* Transition for sliding effect */
+    padding-top: 60px; /* Space for back button */
+}
+
+.navigation-mobile ul li ul.open {
+    display: block;
+    right: 0; /* Slide in from right */
+}
+
+/* Parent menu item with submenu indicator for mobile */
+.navigation-mobile ul li.has-submenu > a {
+    position: relative;
+    padding-right: 40px; /* Make space for the caret */
+}
+
+/* Right-pointing caret for parent menu items in mobile */
+.mobile-submenu-caret {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;    
+    height: 24px;
+    cursor: pointer;
+    color: #069;
+}
+
+.mobile-submenu-caret svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Back button for mobile submenus */
+.mobile-submenu-back {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    display: flex;
+    align-items: center;
+   margin-bottom: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #069;
+    width: 100%;
+}
+
+.mobile-submenu-back svg {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+
+.mobile-submenu-back:hover {
+    background-color: #f0f4f7;
 }

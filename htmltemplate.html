@@ -278,26 +278,22 @@
 
     // Navigation dropdown functionality
     document.addEventListener('DOMContentLoaded', function () {
-        // Get all parent menu items that have dropdowns
-        const parentMenuItems = document.querySelectorAll('#navLeftSubTop > ul > li');
-
-        // Remove inline display:none styles added by the server
-        const removeInlineStyles = (element) => {
-            if (element.style && element.style.display === 'none') {
-                element.style.display = '';
-            }
-
-            // Process children recursively
-            Array.from(element.children).forEach(child => {
-                removeInlineStyles(child);
-            });
-        };
-
         // Remove inline styles from the entire navigation
         const navigation = document.querySelector('#navLeftSubTop');
         if (navigation) {
             removeInlineStyles(navigation);
+
+            // Initialize desktop dropdown navigation
+            initDesktopDropdownMenu();
+
+            // Initialize mobile sliding submenu navigation
+            initMobileSlidingSubmenu();
         }
+    });
+
+    function initDesktopDropdownMenu() {
+        // Get all parent menu items that have dropdowns
+        const parentMenuItems = document.querySelectorAll('#navLeftSubTop > ul > li');
 
         parentMenuItems.forEach(item => {
             const submenu = item.querySelector('ul');
@@ -365,10 +361,91 @@
                 });
             }
         });
+    }
 
-        // Run setActiveMenuItem again to ensure active classes are properly set
-        setActiveMenuItem();
+    function initMobileSlidingSubmenu() {
+        const mobileNavigation = document.querySelector('.navigation-mobile');
+        if (!mobileNavigation) return;
+
+        // Remove any inline styles from the mobile navigation
+        removeInlineStyles(mobileNavigation);
+
+        // Find all li elements with ul children (parent menu items)
+        const allLiItems = mobileNavigation.querySelectorAll('li');
+
+        allLiItems.forEach(item => {
+            // Check if this li has a ul child
+            const hasSubmenu = item.querySelector('ul') !== null;
+
+            if (hasSubmenu) {
+                // Add has-submenu class to parent items
+                item.classList.add('has-submenu');
+
+                // Create and add caret to parent item link
+                const link = item.querySelector('a');
+                if (link && !link.querySelector('.mobile-submenu-caret')) {
+                    // Create right-pointing caret
+                    const caret = document.createElement('span');
+                    caret.className = 'mobile-submenu-caret';
+                    caret.innerHTML = '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path></svg>';
+                    link.appendChild(caret);
+
+                    // Add click event to caret
+                    caret.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        const submenu = item.querySelector('ul');
+                        if (submenu) {
+                            // Add back button if it doesn't exist
+                            if (!submenu.querySelector('.mobile-submenu-back')) {
+                                const backBtn = document.createElement('button');
+                                backBtn.className = 'mobile-submenu-back';
+                                backBtn.innerHTML = '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path></svg>';
+
+                                backBtn.addEventListener('click', function(e) {
+                                    e.preventDefault();
+                                    submenu.classList.remove('open');
+                                });
+
+                                submenu.insertBefore(backBtn, submenu.firstChild);
+                            }
+
+                            // Open submenu
+                            submenu.classList.add('open');
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    function removeInlineStyles(element) {
+        if (element.style && element.style.display === 'none') {
+            element.style.display = '';
+        }
+
+        // Process children recursively
+        Array.from(element.children).forEach(child => {
+            removeInlineStyles(child);
+        });
+    };
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('#navLeftSubTop')) {
+            document.querySelectorAll('#navLeftSubTop ul ul.open').forEach(dropdown => {
+                dropdown.classList.remove('open');
+                // Reset all carets
+                document.querySelectorAll('.nav-caret').forEach(caret => {
+                    caret.classList.remove('rotate-180');
+                });
+            });
+        }
     });
+
+    // Run setActiveMenuItem again to ensure active classes are properly set
+    setActiveMenuItem();
 </script>
 </body>
 </html>
