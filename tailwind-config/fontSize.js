@@ -4,6 +4,7 @@
  */
 export default {
   3.2: '0.8rem', // 12.8px
+  6.5: '1.625rem', // 26px
   14: '3.5rem', // 56px
   7: '1.75rem', // 28px
   8: '2rem', // 32px
