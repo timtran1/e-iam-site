@@ -18,6 +18,7 @@ export default {
   },
   gray: {
     'pickled-bluewood': '#263645',
+    'black-squeeze': '#f7fafc',
     geyser: '#DFE4E9',
     westar: '#E5E4E2',
   },
