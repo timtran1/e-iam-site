@@ -3,7 +3,7 @@ import fontSize from './tailwind-config/fontSize.js';
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,jsx}'], // or more paths if needed
+  content: ['./index.html', './index.old.html', './src/**/*.{js,jsx}'], // or more paths if needed
   theme: {
     extend: {
       colors,

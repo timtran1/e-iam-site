@@ -1,11 +1,19 @@
 import LangSelector from './lang-selector/index.jsx';
+import clsx from 'clsx';
 
-const Header = () => {
+/**
+ * Header
+ *
+ * @param {string} className
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const Header = ({className}) => {
   return (
     <>
       <header
         id="header"
-        className="z-50 border-b border-b-gray-geyser bg-white"
+        className={clsx('border-b border-b-gray-geyser bg-white', className)}
       >
         <div className=" flex items-center sm:border-b border-b-gray-geyser">
           <div className="flex items-center gap-2.5 sm:gap-[16px] padding-4 w-full h-[50px] sm:h-[85px] transition-all duration-500">

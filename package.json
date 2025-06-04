@@ -10,8 +10,6 @@
     "build": "npx tailwindcss -i tailwind-input.css -o r/tailwind.css --minify && npx tailwindcss -i r/input.css -o r/cssbase.css --minify"
   },
   "dependencies": {
-    "@mantine/core": "^8.0.2",
-    "@mantine/hooks": "^8.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "react": "^18.2.0",
@@ -30,7 +28,6 @@
     "eslint-plugin-react-refresh": "^0.4.3",
     "eslint-plugin-unused-imports": "^4.1.3",
     "postcss": "^8.5.4",
-    "postcss-preset-mantine": "^1.17.0",
     "postcss-simple-vars": "^7.0.1",
     "prettier": "^3.3.3",
     "tailwindcss": "^3.3.3",
