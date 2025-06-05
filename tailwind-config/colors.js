@@ -20,6 +20,7 @@ export default {
   gray: {
     'pickled-bluewood': '#263645',
     'black-squeeze': '#f7fafc',
+    mirage: '#1c2834',
     geyser: '#DFE4E9',
     westar: '#E5E4E2',
   },

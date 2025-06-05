@@ -32,7 +32,10 @@ const ListMenu = React.memo(({listMenu}) => {
           >
             <div className="!ps-4 !py-2">
               <div className="flex items-center justify-between gap-6">
-                <a href={item.href} className="!p-0 !border-none">
+                <a
+                  href={item.href}
+                  className="!p-0 !border-none !text-gray-mirage"
+                >
                   {item.label}
                 </a>
 
@@ -52,7 +55,7 @@ const ListMenu = React.memo(({listMenu}) => {
           {item.children && item.children.length > 0 && (
             <ul
               className={clsx(
-                'sub-open !static !ps-3 transition',
+                'sub-open overflow-hidden !static !ps-3 transition',
                 opened ? 'visible h-auto' : 'invisible h-0'
               )}
             >

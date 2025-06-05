@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import useClickAway from '../../../common/hook/useClickAway.js';
 import AppContext from '../../../common/context/app/app.context.js';
 import ChevronButton from '../../../common/ui/ChevronButton.jsx';
+import useQueryParam from '../../../common/hook/useQueryParam.js';
 
 /**
  * Language selector
@@ -14,6 +15,9 @@ import ChevronButton from '../../../common/ui/ChevronButton.jsx';
 const LangSelector = () => {
   // Get context data
   const {serverSideData} = React.useContext(AppContext);
+
+  // Get current lang
+  const currentLang = useQueryParam('l');
 
   // Visible state
   const [opened, setOpened] = React.useState(false);
@@ -35,7 +39,9 @@ const LangSelector = () => {
         className="relative ml-auto mr-4 cursor-pointer hidden sm:block"
       >
         <ChevronButton
-          leftSection={<span className="current-lang">EN</span>}
+          leftSection={
+            <span className="current-lang uppercase">{currentLang}</span>
+          }
           onClick={() => setOpened(true)}
         />
         <div
