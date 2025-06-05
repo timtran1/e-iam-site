@@ -4,6 +4,7 @@ import LangSelector from '../header/lang-selector/index.jsx';
 import AppContext from '../../common/context/app/app.context.js';
 import useQueryParam from '../../common/hook/useQueryParam.js';
 import clsx from 'clsx';
+import DropdownMenuDesktop from './DropdownMenuDesktop.jsx';
 
 /**
  * Navigation
@@ -23,8 +24,7 @@ const Navigation = () => {
 
   React.useEffect(() => {
     console.log('menu: ', menu);
-    console.log('currentPage: ', currentPage);
-  }, [currentPage, menu]);
+  }, [menu]);
 
   return (
     <>
@@ -34,9 +34,13 @@ const Navigation = () => {
           {menu.map((item, i) => (
             <li
               key={i}
-              className={clsx(item.key === currentPage ? 'active' : 'inactive')}
+              className={clsx(
+                'flex gap-1',
+                item.key === currentPage ? 'active' : 'inactive'
+              )}
             >
-              <a href={item.href}>{item.label}</a>
+              <a href={item.href}>{item.label}</a>{' '}
+              <DropdownMenuDesktop menuItem={item} />
             </li>
           ))}
         </ul>

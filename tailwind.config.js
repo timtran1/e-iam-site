@@ -1,5 +1,6 @@
 import colors from './tailwind-config/colors.js';
 import fontSize from './tailwind-config/fontSize.js';
+import boxShadow from './tailwind-config/boxShadow.js';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -8,6 +9,7 @@ export default {
     extend: {
       colors,
       fontSize,
+      boxShadow,
     },
   },
   plugins: [],

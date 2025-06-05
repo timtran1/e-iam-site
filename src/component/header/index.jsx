@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import LangSelector from './lang-selector/index.jsx';
 import Navigation from '../navigation/index.jsx';
-import NavigationBtn from '../navigation/navigation-btn.jsx';
+import ToggleButton from '../../common/ui/ToggleButton.jsx';
 
 /**
  * Header
@@ -42,7 +42,7 @@ const Header = ({className}) => {
             {/*endregion lang selector*/}
 
             {/*region menu toggle*/}
-            <NavigationBtn />
+            <ToggleButton className="sm:hidden" />
             {/*endregion menu toggle*/}
           </div>
         </div>

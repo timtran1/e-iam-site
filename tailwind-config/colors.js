@@ -15,6 +15,7 @@ export default {
   },
   danger: {
     main: '#ef4444',
+    cinnabar: '#e53940',
   },
   gray: {
     'pickled-bluewood': '#263645',

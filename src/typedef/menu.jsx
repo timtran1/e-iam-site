@@ -4,5 +4,5 @@
  * @property {string} label
  * @property {string} href
  * @property {string} key
- * @property {Array<Menu>} children
+ * @property {Array<AppMenu>} children
  */
