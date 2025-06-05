@@ -1,3 +1,7 @@
+import React from 'react';
+import PureElementRendering from '../../common/ui/PureElementRendering.jsx';
+import AppContext from '../../common/context/app/app.context.js';
+
 /**
  * Footer
  *
@@ -5,19 +9,13 @@
  * @constructor
  */
 const Footer = () => {
+  // Get context data
+  const {serverSideData} = React.useContext(AppContext);
+
   return (
     <>
-      <footer
-        id="footer"
-        className="bg-gray-pickled-bluewood px-6 py-2 text-white text-3.2 flex justify-start items-center gap-2"
-      >
-        <a name="contact"></a>Name — Adresse — Telefon —
-        <a title="mailto:me@provider.ext" href="mailto:me@provider.ext">
-          me@provider.ex
-          <nobr>t</nobr>
-        </a>{' '}
-        —<a href="index.php?c=sitemap&amp;l=en">Sitemap</a> —
-        <a href="index.php?c=intranet&amp;l=en">Intranet</a>
+      <footer className="bg-gray-pickled-bluewood px-6 py-2 text-white text-3.2 flex justify-start items-center gap-2">
+        <PureElementRendering ele={serverSideData.footer} />
       </footer>
     </>
   );

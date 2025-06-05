@@ -1,4 +1,8 @@
 import React from 'react';
+import PureElementRendering from '../../../common/ui/PureElementRendering.jsx';
+import clsx from 'clsx';
+import useClickAway from '../../../common/hook/useClickAway.js';
+import AppContext from '../../../common/context/app/app.context.js';
 
 /**
  * Language selector
@@ -7,13 +11,58 @@ import React from 'react';
  * @constructor
  */
 const LangSelector = () => {
+  // Get context data
+  const {serverSideData} = React.useContext(AppContext);
+
   // Visible state
   const [opened, setOpened] = React.useState(false);
 
+  // Wrapper ref
+  const wrapperRef = React.useRef(null);
+
+  /**
+   * Handle click away
+   */
+  useClickAway(wrapperRef, () => {
+    setOpened(false);
+  });
+
   return (
     <>
-      <div className="relative ml-auto mr-4 cursor-pointer hidden sm:block">
-        lang selector
+      <div
+        ref={wrapperRef}
+        className="relative ml-auto mr-4 cursor-pointer hidden sm:block"
+      >
+        <button
+          className="lang-switcher flex items-center space-x-1 text-gray-700 hover:text-gray-900 focus:outline-none cursor-pointer"
+          onClick={() => setOpened(true)}
+        >
+          <span className="current-lang">EN</span>
+          <svg
+            className="lang-caret w-4 h-4 transform transition-transform duration-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="1.5"
+              d="M19 9l-7 7-7-7"
+            ></path>
+          </svg>
+        </button>
+        <div
+          className={clsx(
+            'lang-dropdown w-[77px] border-t border-t-gray-geyser shadow-[0_3px_4px_1px_#828e9a] absolute right-0 mt-2 bg-white overflow-hidden z-50 transform origin-top',
+            'transition-all duration-300',
+            opened ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'
+          )}
+          onClick={() => setOpened(false)}
+        >
+          <PureElementRendering ele={serverSideData.languages} />
+        </div>
       </div>
     </>
   );
