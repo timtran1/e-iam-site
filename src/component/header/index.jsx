@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 import LangSelector from './lang-selector/index.jsx';
-import Navigation from '../navigation/index.jsx';
-import ToggleButton from '../../common/ui/ToggleButton.jsx';
+import Navigation from '../navigation/index.js';
 
 /**
  * Header
@@ -38,18 +37,26 @@ const Header = ({className}) => {
           </div>
           <div className="px-4 py-1">
             {/*region lang selector*/}
-            <LangSelector />
+            <div className="hidden sm:block">
+              <LangSelector />
+            </div>
             {/*endregion lang selector*/}
 
             {/*region menu toggle*/}
-            <ToggleButton className="sm:hidden" />
+            {/*region mobile nav*/}
+            <div className="sm:hidden">
+              <Navigation.Mobile />
+            </div>
+            {/*endregion mobile nav*/}
             {/*endregion menu toggle*/}
           </div>
         </div>
         {/*endregion header content*/}
 
         {/*region navigation*/}
-        <Navigation />
+        <div className="hidden sm:block">
+          <Navigation.Desktop />
+        </div>
         {/*endregion navigation*/}
       </header>
     </>

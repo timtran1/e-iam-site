@@ -3,6 +3,7 @@ import ChevronButton from '../../common/ui/ChevronButton.jsx';
 import clsx from 'clsx';
 import useClickAway from '../../common/hook/useClickAway.js';
 import useQueryParam from '../../common/hook/useQueryParam.js';
+import AppContext from '../../common/context/app/app.context.js';
 
 /**
  * @type {React.NamedExoticComponent<{
@@ -72,11 +73,16 @@ ListMenu.displayName = 'ListMenu';
 /**
  * Dropdown menu for desktop
  *
- * @param {AppMenu} menuItem
  * @returns {JSX.Element}
  * @constructor
  */
-const DropdownMenuDesktop = ({menuItem}) => {
+const DropdownMenuDesktop = () => {
+  // Get context data
+  const {menu} = React.useContext(AppContext);
+
+  // Get current page
+  const currentPage = useQueryParam('c');
+
   // Visible state
   const [opened, setOpened] = React.useState(false);
 
@@ -92,26 +98,49 @@ const DropdownMenuDesktop = ({menuItem}) => {
 
   return (
     <>
-      {menuItem.children?.length > 0 && (
-        <>
-          <ChevronButton
-            className={clsx('transition', opened ? 'rotate-0' : 'rotate-90')}
-            onClick={() => setOpened((prev) => !prev)}
-          />
-          <ul
-            ref={wrapperRef}
-            className={clsx('transition', opened ? 'open' : 'inactive')}
-          >
-            <button
-              className="nav-dropdown-close"
-              onClick={() => setOpened(false)}
+      <nav className="navigation">
+        <ul>
+          {menu.map((menuItem, i) => (
+            <li
+              key={i}
+              className={clsx(
+                'flex gap-1',
+                menuItem.key === currentPage ? 'active' : 'inactive'
+              )}
             >
-              Close ×
-            </button>
-            <ListMenu listMenu={menuItem.children} />
-          </ul>
-        </>
-      )}
+              <a href={menuItem.href}>{menuItem.label}</a>{' '}
+              <>
+                {menuItem.children?.length > 0 && (
+                  <>
+                    <ChevronButton
+                      className={clsx(
+                        'transition',
+                        opened ? 'rotate-0' : 'rotate-90'
+                      )}
+                      onClick={() => setOpened((prev) => !prev)}
+                    />
+                    <ul
+                      ref={wrapperRef}
+                      className={clsx(
+                        'transition',
+                        opened ? 'open' : 'inactive'
+                      )}
+                    >
+                      <button
+                        className="nav-dropdown-close"
+                        onClick={() => setOpened(false)}
+                      >
+                        Close ×
+                      </button>
+                      <ListMenu listMenu={menuItem.children} />
+                    </ul>
+                  </>
+                )}
+              </>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </>
   );
 };

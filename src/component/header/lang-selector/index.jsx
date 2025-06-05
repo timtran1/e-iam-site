@@ -36,7 +36,7 @@ const LangSelector = () => {
     <>
       <div
         ref={wrapperRef}
-        className="relative ml-auto mr-4 cursor-pointer hidden sm:block"
+        className="relative ml-auto mr-4 cursor-pointer inline-flex"
       >
         <ChevronButton
           leftSection={
