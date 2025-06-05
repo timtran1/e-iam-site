@@ -28,6 +28,12 @@ export const parseMenuEle = (ul) => {
   return items;
 };
 
+/**
+ * Parse available languages from sever-side data to js variable
+ *
+ * @param {Element} ele - element
+ * @returns {Array<AppMenu>}
+ */
 export const parseLangEle = (ele) => {
   const items = [];
   if (ele) {

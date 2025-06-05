@@ -48,7 +48,9 @@ const DropdownMenuMobile = () => {
   const [currentMenuDepth, setCurrentMenuDepth] = React.useState(0);
 
   // Rendered list menu state
-  const [renderedListMenu, setRenderedListMenu] = React.useState(menu);
+  const [renderedListMenu, setRenderedListMenu] = React.useState(
+    appContext.menu
+  );
 
   /**
    * Handle click expand menu
