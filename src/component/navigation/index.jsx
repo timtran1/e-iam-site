@@ -2,39 +2,18 @@ import React from 'react';
 import PureElementRendering from '../../common/ui/PureElementRendering.jsx';
 import LangSelector from '../header/lang-selector/index.jsx';
 import AppContext from '../../common/context/app/app.context.js';
-
-/**
- * Parse menu
- * @param {Element} ul - ul element
- * @returns {*[]}
- */
-const parseMenu = (ul) => {
-  const items = [];
-  if (ul) {
-    ul.querySelectorAll(':scope > li').forEach((li) => {
-      const a = li.querySelector(':scope > a');
-      const submenu = li.querySelector(':scope > ul');
-      const item = {
-        label: a?.textContent?.trim() || '',
-        href: a?.getAttribute('href') || undefined,
-      };
-      if (submenu) {
-        item.children = submenu ? parseMenu(submenu) : [];
-      }
-      items.push(item);
-    });
-  }
-  return items;
-};
+import useQueryParam from '../../common/hook/useQueryParam.js';
+import clsx from 'clsx';
 
 /**
  * Navigation
  */
 const Navigation = () => {
   // Get context data
-  const {serverSideData} = React.useContext(AppContext);
+  const {serverSideData, menu} = React.useContext(AppContext);
 
-  const [menu, setMenu] = React.useState([]);
+  // Get current page
+  const currentPage = useQueryParam('c');
 
   /**
    * Nav ref
@@ -42,30 +21,27 @@ const Navigation = () => {
    */
   const navRef = React.useRef(null);
 
-  /**
-   * Handle nav changes
-   * @type {(function())|*}
-   */
-  const handleNavChange = React.useCallback(() => {}, []);
-
-  React.useEffect(() => {
-    if (serverSideData.navigation) {
-      setMenu(parseMenu(serverSideData.navigation.querySelector('ul')));
-    }
-  }, [serverSideData.navigation]);
-
   React.useEffect(() => {
     console.log('menu: ', menu);
-  }, [menu]);
+    console.log('currentPage: ', currentPage);
+  }, [currentPage, menu]);
 
   return (
     <>
-      <PureElementRendering
-        component="nav"
-        className="navigation hidden sm:block"
-        ele={serverSideData.navigation}
-        onUpdated={handleNavChange}
-      />
+      {/*region desktop nav*/}
+      <nav className="navigation hidden sm:block">
+        <ul>
+          {menu.map((item, i) => (
+            <li
+              key={i}
+              className={clsx(item.key === currentPage ? 'active' : 'inactive')}
+            >
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      {/*endregion desktop nav*/}
 
       {/*region mobile nav*/}
       <div className="navigation-mobile border-t border-t-[#dfe4e9] fixed left-0 right-0 top-[50px] bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-40 sm:hidden">
