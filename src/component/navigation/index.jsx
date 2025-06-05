@@ -4,11 +4,59 @@ import LangSelector from '../header/lang-selector/index.jsx';
 import AppContext from '../../common/context/app/app.context.js';
 
 /**
+ * Parse menu
+ * @param {Element} ul - ul element
+ * @returns {*[]}
+ */
+const parseMenu = (ul) => {
+  const items = [];
+  if (ul) {
+    ul.querySelectorAll(':scope > li').forEach((li) => {
+      const a = li.querySelector(':scope > a');
+      const submenu = li.querySelector(':scope > ul');
+      const item = {
+        label: a?.textContent?.trim() || '',
+        href: a?.getAttribute('href') || undefined,
+      };
+      if (submenu) {
+        item.children = submenu ? parseMenu(submenu) : [];
+      }
+      items.push(item);
+    });
+  }
+  return items;
+};
+
+/**
  * Navigation
  */
 const Navigation = () => {
   // Get context data
   const {serverSideData} = React.useContext(AppContext);
+
+  const [menu, setMenu] = React.useState([]);
+
+  /**
+   * Nav ref
+   * @type {React.MutableRefObject<HTMLDivElement>}
+   */
+  const navRef = React.useRef(null);
+
+  /**
+   * Handle nav changes
+   * @type {(function())|*}
+   */
+  const handleNavChange = React.useCallback(() => {}, []);
+
+  React.useEffect(() => {
+    if (serverSideData.navigation) {
+      setMenu(parseMenu(serverSideData.navigation.querySelector('ul')));
+    }
+  }, [serverSideData.navigation]);
+
+  React.useEffect(() => {
+    console.log('menu: ', menu);
+  }, [menu]);
 
   return (
     <>
@@ -16,6 +64,7 @@ const Navigation = () => {
         component="nav"
         className="navigation hidden sm:block"
         ele={serverSideData.navigation}
+        onUpdated={handleNavChange}
       />
 
       {/*region mobile nav*/}
@@ -42,7 +91,7 @@ const Navigation = () => {
             <LangSelector serverSideData={serverSideData} />
           </div>
         </div>
-        <PureElementRendering ele={serverSideData.navigation} />
+        <PureElementRendering ref={navRef} ele={serverSideData.navigation} />
       </div>
       {/*endregion mobile nav*/}
     </>
