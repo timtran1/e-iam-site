@@ -2,7 +2,13 @@ import React from 'react';
 import {ELEMENT_ID} from '../constant/element-id.js';
 import useEffectOnce from './useEffectOnce.js';
 
+/**
+ * Custom hook - to get the server-side variables
+ */
 const useServerSideVariables = () => {
+  // Flag to mark where the variable has been read
+  const [hasGotten, setHasGotten] = React.useState(false);
+
   // Sever data state
   const [serverSideData, setServerSideData] = React.useState(
     /** @type {ServerSideData} */ {
@@ -27,6 +33,7 @@ const useServerSideVariables = () => {
           [eleId]: ele || null,
         }));
       });
+      setHasGotten(true);
     }
   }, []);
 
@@ -37,6 +44,20 @@ const useServerSideVariables = () => {
   useEffectOnce(() => {
     setTimeout(getServerSideVariables, 100);
   });
+
+  /**
+   * Use effect to delete variables html region
+   */
+  React.useEffect(() => {
+    if (hasGotten) {
+      setTimeout(() => {
+        const element = document.getElementById(ELEMENT_ID.__VARIABLES_REGION);
+        if (element) {
+          element.remove();
+        }
+      }, 500);
+    }
+  }, [hasGotten]);
 
   return {
     serverSideData,
