@@ -1,8 +1,7 @@
 import React from 'react';
 import AppContext from './app.context.js';
 import useServerSideVariables from '../../hook/useServerSideVariables.js';
-import {DUMMY_MENU} from '../../constant/dummy.js';
-import {parseMenu} from '../../helper/element-parsing.js';
+import {parseLangEle, parseMenuEle} from '../../helper/element-parsing.js';
 
 /**
  * App data context
@@ -19,13 +18,23 @@ const AppProvider = ({children}) => {
    * @type {Array<AppMenu>}
    */
   const menu = React.useMemo(() => {
-    return DUMMY_MENU;
     if (serverSideData.navigation) {
-      return parseMenu(serverSideData.navigation.querySelector('ul'));
+      return parseMenuEle(serverSideData.navigation.querySelector('ul'));
     } else {
       return [];
     }
   }, [serverSideData.navigation]);
+
+  /**
+   * @type {Array<AppLanguage>}
+   */
+  const languages = React.useMemo(() => {
+    if (serverSideData.languages) {
+      return parseLangEle(serverSideData.languages);
+    } else {
+      return [];
+    }
+  }, [serverSideData.languages]);
 
   return (
     <>
@@ -33,6 +42,7 @@ const AppProvider = ({children}) => {
         value={{
           serverSideData,
           menu,
+          languages,
         }}
       >
         {children}

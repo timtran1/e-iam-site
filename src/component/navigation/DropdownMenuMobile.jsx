@@ -98,7 +98,10 @@ const DropdownMenuMobile = () => {
   return (
     <>
       {/*region target btn*/}
-      <ToggleButton onClick={() => setOpened((prev) => !prev)} />
+      <ToggleButton
+        opened={opened}
+        onClick={() => setOpened((prev) => !prev)}
+      />
       {/*endregion target btn*/}
 
       {/*region content*/}

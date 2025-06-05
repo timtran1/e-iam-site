@@ -5,11 +5,12 @@ import clsx from 'clsx';
  * Toggle button
  *
  * @type {React.NamedExoticComponent<{
+ *     opened: boolean,
  *     className: string
  *     onClick: () => void
  * }>}
  */
-const ToggleButton = React.memo(({className, onClick = () => {}}) => {
+const ToggleButton = React.memo(({opened, className, onClick = () => {}}) => {
   return (
     <>
       <button
@@ -19,9 +20,26 @@ const ToggleButton = React.memo(({className, onClick = () => {}}) => {
         )}
         onClick={onClick}
       >
-        <span className="origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 mb-0 bg-gray-800"></span>
-        <span className="origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 bg-gray-800"></span>
-        <span className="origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 bg-gray-800"></span>
+        <span
+          className={clsx(
+            'origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 mb-0 bg-gray-800',
+            {'rotate-[22.5deg] origin-center': opened}
+          )}
+        ></span>
+        {!opened && (
+          <span
+            className={clsx(
+              'origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 bg-gray-800',
+              {hidden: opened}
+            )}
+          ></span>
+        )}
+        <span
+          className={clsx(
+            'origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 bg-gray-800',
+            {'rotate-[-22.5deg] !m-0': opened}
+          )}
+        ></span>
       </button>
     </>
   );

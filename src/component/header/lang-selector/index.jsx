@@ -1,5 +1,4 @@
 import React from 'react';
-import PureElementRendering from '../../../common/ui/PureElementRendering.jsx';
 import clsx from 'clsx';
 import useClickAway from '../../../common/hook/useClickAway.js';
 import AppContext from '../../../common/context/app/app.context.js';
@@ -14,7 +13,7 @@ import useQueryParam from '../../../common/hook/useQueryParam.js';
  */
 const LangSelector = () => {
   // Get context data
-  const {serverSideData} = React.useContext(AppContext);
+  const {languages} = React.useContext(AppContext);
 
   // Get current lang
   const currentLang = useQueryParam('l');
@@ -47,12 +46,16 @@ const LangSelector = () => {
         <div
           className={clsx(
             'lang-dropdown w-[77px] border-t border-t-gray-geyser shadow-[0_3px_4px_1px_#828e9a] absolute right-0 mt-2 bg-white overflow-hidden z-50 transform origin-top',
-            'transition-all duration-300',
+            'transition-all duration-300 top-6',
             opened ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'
           )}
           onClick={() => setOpened(false)}
         >
-          <PureElementRendering ele={serverSideData.languages} />
+          {languages.map((lang, index) => (
+            <a key={index} className="uppercase" href={lang.href}>
+              {lang.label}
+            </a>
+          ))}
         </div>
       </div>
     </>

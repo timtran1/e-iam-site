@@ -5,6 +5,7 @@ import React from 'react';
  *
  * @property {ServerSideData} serverSideData
  * @property {Array<AppMenu>} menu
+ * @property {Array<AppLanguage>} languages
  */
 
 /**
@@ -18,6 +19,7 @@ const DefaultState = {
     footer: undefined,
   },
   menu: [],
+  languages: [],
 };
 
 /**
