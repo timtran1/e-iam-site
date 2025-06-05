@@ -12,9 +12,11 @@ const Navigation = () => {
 
   return (
     <>
-      <nav className="navigation hidden sm:block">
-        <PureElementRendering ele={serverSideData.navigation} />
-      </nav>
+      <PureElementRendering
+        component="nav"
+        className="navigation hidden sm:block"
+        ele={serverSideData.navigation}
+      />
 
       {/*region mobile nav*/}
       <div className="navigation-mobile border-t border-t-[#dfe4e9] fixed left-0 right-0 top-[50px] bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-40 sm:hidden">
