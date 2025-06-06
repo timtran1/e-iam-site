@@ -2,15 +2,8 @@ import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 
-const preserveCssLinkPlugin = () => ({
-  name: 'preserve-css-link',
-  transformIndexHtml(html) {
-    return html;
-  },
-});
-
 export default defineConfig({
-  plugins: [react(), preserveCssLinkPlugin()],
+  plugins: [react()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
