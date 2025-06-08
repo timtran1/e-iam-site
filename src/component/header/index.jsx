@@ -25,6 +25,10 @@ const Header = ({className}) => {
                 className="w-[250px] h-[80.6px] bg-cover bg-no-repeat transition-all duration-500    "
                 role="img"
                 aria-label="eIAM"
+                style={{
+                  backgroundImage:
+                    "url('r/eidgenossenschaft/eidgenossenschaft_de.svg')",
+                }}
               ></div>
             </a>
             <div className="border-l-1 border-l-gray-westar h-10"></div>

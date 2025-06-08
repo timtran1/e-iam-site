@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build"
+    "build": "vite build && node merge-built-files.js"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.0",
