@@ -7,6 +7,27 @@ import useQueryParam from '../../common/hook/useQueryParam.js';
 import ChevronButton from '../../common/ui/ChevronButton.jsx';
 
 /**
+ * Recursively adds a `menuDepth` property to each item in the menu list to indicate its nesting level.
+ *
+ * @param {Array<AppMenu>} listMenu
+ * @param {number} currentDepth
+ * @returns {*}
+ * @private
+ */
+const _markMenuDepth = (listMenu, currentDepth = 0) => {
+  return listMenu.map((item) => {
+    const updatedItem = {
+      ...item,
+      menuDepth: currentDepth,
+    };
+    if (item.children?.length > 0) {
+      updatedItem.children = _markMenuDepth(item.children, currentDepth + 1);
+    }
+    return updatedItem;
+  });
+};
+
+/**
  * Dropdown menu for mobile
  *
  * This is bottom-sheet modal to render all of menu
@@ -25,20 +46,7 @@ const DropdownMenuMobile = () => {
    * @type {Array<AppMenu & {menuDepth: number}>}
    */
   const menu = React.useMemo(() => {
-    const markMenuDepth = (listMenu, currentDepth = 0) => {
-      return listMenu.map((item) => {
-        const updatedItem = {
-          ...item,
-          menuDepth: currentDepth,
-        };
-        if (item.children?.length > 0) {
-          updatedItem.children = markMenuDepth(item.children, currentDepth + 1);
-        }
-        return updatedItem;
-      });
-    };
-
-    return markMenuDepth(appContext.menu);
+    return _markMenuDepth(appContext.menu);
   }, [appContext.menu]);
 
   // Get current page
@@ -96,6 +104,13 @@ const DropdownMenuMobile = () => {
       }
     }
   }, [currentMenuDepth, menu]);
+
+  /**
+   * Set init menu to rendered menu
+   */
+  React.useEffect(() => {
+    setRenderedListMenu(menu);
+  }, [menu]);
 
   return (
     <>
