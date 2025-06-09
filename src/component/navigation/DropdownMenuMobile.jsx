@@ -168,7 +168,7 @@ const DropdownMenuMobile = () => {
                     currentPage === menuItem.key ? 'border-s-4' : ''
                   )}
                 >
-                  <a href={menuItem.href} className="block !no-underline">
+                  <a href={menuItem.href} className="flex-1 !no-underline">
                     {menuItem.label}
                   </a>
                   {menuItem.children && menuItem.children.length > 0 && (
