@@ -32,10 +32,10 @@ const ListMenu = React.memo(({listMenu}) => {
             )}
           >
             <div className="!ps-4 !py-2">
-              <div className="flex items-center justify-between gap-6">
+              <div className="flex items-center justify-between gap-2">
                 <a
                   href={item.href}
-                  className="!p-0 !border-none !text-gray-mirage"
+                  className="flex-1 !p-0 !border-none !text-gray-mirage"
                 >
                   {item.label}
                 </a>
