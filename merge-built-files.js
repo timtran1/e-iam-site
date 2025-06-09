@@ -14,7 +14,7 @@ const match = html.match(reactScriptRegex);
 if (!match) {
   console.error(`Error: Could not find the <script> tag to inline.`);
 } else {
-  // Merge built the js file to html file
+  // Merge the built js file to html file
   const jsTag = match[0];
   const jsFilename = match[1];
   const jsFilePath = path.join(distDir, 'assets', jsFilename);
