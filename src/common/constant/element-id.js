@@ -3,7 +3,7 @@
  */
 export const ELEMENT_ID = {
   __VARIABLES_REGION: '__VARIABLES_REGION',
-  header: 'header',
+  HEADER: 'header',
   LANGUAGES: 'languages',
   NAVIGATION: 'navigation',
   CONTENT: 'content',
