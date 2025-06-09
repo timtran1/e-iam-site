@@ -15,6 +15,21 @@ const AppProvider = ({children}) => {
   const {serverSideData} = useServerSideVariables();
 
   /**
+   * Get header meta
+   * @type {{backgroundImage: string}|{}}
+   */
+  const headerMeta = React.useMemo(() => {
+    if (serverSideData && serverSideData.header) {
+      const backgroundImage = window.getComputedStyle(
+        serverSideData.header
+      ).backgroundImage;
+      return {backgroundImage};
+    } else {
+      return {};
+    }
+  }, [serverSideData]);
+
+  /**
    * @type {Array<AppMenu>}
    */
   const menu = React.useMemo(() => {
@@ -41,6 +56,7 @@ const AppProvider = ({children}) => {
       <AppContext.Provider
         value={{
           serverSideData,
+          headerMeta,
           menu,
           languages,
         }}

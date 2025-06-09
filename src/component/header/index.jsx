@@ -1,6 +1,8 @@
+import React from 'react';
 import clsx from 'clsx';
 import LangSelector from './lang-selector/index.jsx';
 import Navigation from '../navigation/index.js';
+import AppContext from '../../common/context/app/app.context.js';
 
 /**
  * Header
@@ -9,9 +11,17 @@ import Navigation from '../navigation/index.js';
  * @constructor
  */
 const Header = ({className}) => {
+  // Get app context
+  const {headerMeta} = React.useContext(AppContext);
+
   return (
     <>
       <header
+        style={{
+          ...(headerMeta?.backgroundImage && {
+            backgroundImage: headerMeta.backgroundImage,
+          }),
+        }}
         className={clsx('border-b border-b-gray-geyser bg-white', className)}
       >
         {/*region header content*/}

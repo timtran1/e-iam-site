@@ -4,6 +4,7 @@ import React from 'react';
  * @typedef AppContext
  *
  * @property {ServerSideData} serverSideData
+ * @property {{backgroundImage?: string}} headerMeta
  * @property {Array<AppMenu>} menu
  * @property {Array<AppLanguage>} languages
  */
@@ -18,6 +19,7 @@ const DefaultState = {
     content: undefined,
     footer: undefined,
   },
+  headerMeta: {},
   menu: [],
   languages: [],
 };
