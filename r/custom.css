@@ -270,6 +270,8 @@ fieldset {
     display: block;
     transform: scaleY(1);
     opacity: 1;
+    overflow-y: scroll;
+    max-height: 60vh;
 }
 
 .navigation ul li ul li {
@@ -378,7 +380,7 @@ fieldset {
     right: 24px;
     top: 50%;
     transform: translateY(-50%);
-    width: 24px;    
+    width: 24px;
     height: 24px;
     cursor: pointer;
     color: #069;
@@ -396,7 +398,7 @@ fieldset {
     left: 16px;
     display: flex;
     align-items: center;
-   margin-bottom: 16px;
+    margin-bottom: 16px;
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
