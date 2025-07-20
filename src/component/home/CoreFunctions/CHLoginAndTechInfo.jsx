@@ -44,7 +44,7 @@ const CHLoginAndTechInfo = React.memo(({className}) => {
               className="scale-105 md:scale-100"
               src={t(
                 'CHLoginAndTechInfo.img1',
-                '/r/faq-and-help.svg'
+                '/r/faqandhelp/faqandhelp_de.svg'
               )}
               alt="faq-and-help"
             />
@@ -76,7 +76,7 @@ const CHLoginAndTechInfo = React.memo(({className}) => {
               className="scale-105 md:scale-100"
               src={t(
                 'CHLoginAndTechInfo.img2',
-                '/r/tech-information.svg'
+                '/r/techinfo/techinfo_de.svg'
               )}
               alt="tech-information"
             />

@@ -22,7 +22,7 @@ const FederalAdministration = React.memo(() => {
               className="h-full"
               src={t(
                 'FederalAdministration.img1',
-                '/r/federal-administration.png'
+                '/r/fedadmin/fedadmin_de.png'
               )}
               alt="federal-administration"
             />
@@ -33,7 +33,7 @@ const FederalAdministration = React.memo(() => {
               className="h-full"
               src={t(
                 'FederalAdministration.img2',
-                '/r/federal-administration-2.png'
+                '/r/fedadmin2/fedadmin2_de.png'
               )}
               alt="federal-administration"
             />
@@ -84,7 +84,7 @@ const FederalAdministration = React.memo(() => {
             <img
               src={t(
                 'FederalAdministration.img1',
-                '/r/federal-administration.png'
+                '/r/fedadmin/fedadmin_de.png'
               )}
               alt="federal-administration"
             />

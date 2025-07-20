@@ -2,7 +2,7 @@ import Hero from './Hero/index.jsx';
 import DirectAccess from './DirectAccess/index.jsx';
 import FederalAdministration from './FederalAdministration/index.jsx';
 import CoreFunctions from './CoreFunctions/index.jsx';
-import CookieConsentPopup from "./CookieConsentPopup.jsx";
+// import CookieConsentPopup from "./CookieConsentPopup.jsx";
 
 
 export default function HomePage() {
@@ -17,7 +17,7 @@ export default function HomePage() {
         </div>
         <CoreFunctions />
       </div>
-      <CookieConsentPopup />
+      {/* <CookieConsentPopup /> */}
     </>
   );
 }

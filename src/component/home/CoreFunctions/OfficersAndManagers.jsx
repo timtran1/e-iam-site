@@ -40,9 +40,9 @@ const OfficersAndManagers = React.memo(({className}) => {
             <img
               src={t(
                 'OfficersAndManagers.img',
-                '/r/officers-and-managers.svg'
+                '/r/officers/officers_de.svg'
               )}
-              alt="faq-and-help"
+              alt="officers-and-managers"
             />
           </div>
           {/*endregion image*/}
