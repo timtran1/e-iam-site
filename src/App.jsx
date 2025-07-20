@@ -2,7 +2,8 @@ import './App.css';
 import Header from './component/header/index.jsx';
 import Footer from './component/footer/index.jsx';
 import AppProvider from './common/context/app/app.provider.jsx';
-import Content from './component/content/index.jsx';
+// import Content from './component/content/index.jsx';
+import HomePage from './component/home/HomePage.jsx';
 
 const App = () => {
   return (
@@ -17,7 +18,8 @@ const App = () => {
 
               {/*region body content*/}
               <article className="px-6 py-4 max-w-[1440px] mx-auto">
-                <Content />
+                {/* <Content /> */}
+                <HomePage />
               </article>
               {/*endregion body content*/}
             </section>
