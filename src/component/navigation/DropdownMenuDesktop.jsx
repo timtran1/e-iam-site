@@ -1,10 +1,9 @@
 import React from 'react';
 import ChevronButton from '../../common/ui/ChevronButton.jsx';
 import clsx from 'clsx';
-// import useClickAway from '../../common/hook/useClickAway.js';
+import useClickAway from '../../common/hook/useClickAway.js';
 import useQueryParam from '../../common/hook/useQueryParam.js';
 import AppContext from '../../common/context/app/app.context.js';
-import { useClickOutside } from '@mantine/hooks';
 
 const isDevMode = import.meta.env.DEV;
 const mockMenu = [
