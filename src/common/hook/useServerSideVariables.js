@@ -16,6 +16,7 @@ const useServerSideVariables = () => {
       navigation: undefined,
       content: undefined,
       footer: undefined,
+      right: undefined,
     }
   );
 

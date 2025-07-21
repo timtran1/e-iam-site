@@ -51,6 +51,19 @@ const AppProvider = ({children}) => {
     }
   }, [serverSideData.languages]);
 
+  /**
+   * @type {string|null}
+   */
+  const rightContent = React.useMemo(() => {
+    if (serverSideData.right) {
+      return serverSideData.right.innerHTML;
+    } else {
+      return null;
+    }
+  }, [serverSideData.right]);
+
+  console.log({serverSideData, headerMeta, menu, languages, rightContent});
+
   return (
     <>
       <AppContext.Provider
@@ -59,6 +72,7 @@ const AppProvider = ({children}) => {
           headerMeta,
           menu,
           languages,
+          rightContent,
         }}
       >
         {children}

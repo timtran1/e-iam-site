@@ -1,8 +1,9 @@
 import React from 'react';
 import clsx from 'clsx';
-import {HERO_NAVIGATION_KEY, HERO_NAVIGATIONS} from './constant.js';
+// import {HERO_NAVIGATION_KEY, HERO_NAVIGATIONS} from './constant.js';
 // import {useSearchParams} from 'react-router-dom';
-import {QueryParamKey} from '../../../constants/queryParams.js';
+// import {QueryParamKey} from '../../../constants/queryParams.js';
+import AppContext from '../../../common/context/app/app.context.js';
 
 /**
  * Hero section
@@ -10,6 +11,8 @@ import {QueryParamKey} from '../../../constants/queryParams.js';
  * @type {React.NamedExoticComponent<object>}
  */
 const Hero = React.memo(() => {
+  const {menu} = React.useContext(AppContext);
+  console.log('HERE', {menu});
   // Query params
   // const [searchParams] = useSearchParams();
 
@@ -23,8 +26,8 @@ const Hero = React.memo(() => {
   //     HERO_NAVIGATION_KEY.StartPage,
   //   [searchParams]
   // );
-
-  const selectedNav = null
+  
+  const currentPath = window.location.pathname;
 
   return (
     <>
@@ -34,18 +37,18 @@ const Hero = React.memo(() => {
         <div className="flex gap-8">
           {/*region navigations sidebar*/}
           <nav className="min-w-52 hidden md:block">
-            {Object.entries(HERO_NAVIGATIONS).map(([navKey, item], index) => (
+            {menu.map((menu, index) => (
               <a
                 key={index}
-                href={`?${QueryParamKey.HomePageSubTab}=${navKey}`}
+                href={menu.href}
                 className={clsx(
                   '!border-b !border-gray-athens-gray !py-4 block !text-secondary-text hover:!no-underline !text-base',
-                  selectedNav === navKey ? '!bg-gray-athens-gray' : ''
+                  currentPath === menu.href ? '!bg-gray-athens-gray' : ''
                 )}
               >
-                <div className="font-medium">{item.label}</div>
-                {item.description && <div className="text-sm text-gray-500">{item.description}</div>}
-                {item.rightSection && <div className="float-right">{item.rightSection}</div>}
+                <div className="font-medium">{menu.label}</div>
+                {/* {menu.description && <div className="text-sm text-gray-500">{menu.description}</div>} */}
+                {/* {menu.rightSection && <div className="float-right">{menu.rightSection}</div>} */}
               </a>
             ))}
           </nav>

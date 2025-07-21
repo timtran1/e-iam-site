@@ -8,4 +8,5 @@ export const ELEMENT_ID = {
   NAVIGATION: 'navigation',
   CONTENT: 'content',
   FOOTER: 'footer',
+  RIGHT: 'right',
 };
