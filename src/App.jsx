@@ -2,10 +2,17 @@ import './App.css';
 import Header from './component/header/index.jsx';
 import Footer from './component/footer/index.jsx';
 import AppProvider from './common/context/app/app.provider.jsx';
-// import Content from './component/content/index.jsx';
+import Content from './component/content/index.jsx';
 import HomePage from './component/home/HomePage.jsx';
 
 const App = () => {
+  const path = window.location.pathname;
+  const relativeURLWithQuery = window.location.search;
+  const searchParams = new URLSearchParams(relativeURLWithQuery);
+  const cParam = searchParams.get('c');
+
+  const isHomePage = path === '/' || cParam === 'eiam';
+
   return (
     <>
       <>
@@ -18,8 +25,7 @@ const App = () => {
 
               {/*region body content*/}
               <article className="px-6 py-4 max-w-[1440px] mx-auto">
-                {/* <Content /> */}
-                <HomePage />
+                {isHomePage ? <HomePage /> : <Content />}
               </article>
               {/*endregion body content*/}
             </section>
