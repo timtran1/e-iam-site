@@ -62,7 +62,13 @@ const AppProvider = ({children}) => {
     }
   }, [serverSideData.right]);
 
-  console.log({serverSideData, headerMeta, menu, languages, rightContent});
+  const content = React.useMemo(() => {
+    if (serverSideData.content) {
+      return serverSideData.content.innerHTML;
+    } else {
+      return null;
+    }
+  }, [serverSideData.content]);
 
   return (
     <>
@@ -73,6 +79,7 @@ const AppProvider = ({children}) => {
           menu,
           languages,
           rightContent,
+          content,
         }}
       >
         {children}

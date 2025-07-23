@@ -39,8 +39,9 @@ const LangSelector = () => {
       >
         <ChevronButton
           leftSection={
-            <span className="current-lang uppercase">{currentLang}</span>
+            <span className="current-lang uppercase rotate">{currentLang}</span>
           }
+          rotateChevron='rotate-90'
           onClick={() => setOpened(true)}
         />
         <div

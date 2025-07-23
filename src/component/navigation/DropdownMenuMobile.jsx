@@ -4,7 +4,10 @@ import clsx from 'clsx';
 import LangSelector from '../header/lang-selector/index.jsx';
 import AppContext from '../../common/context/app/app.context.js';
 import useQueryParam from '../../common/hook/useQueryParam.js';
+import {mockMenu} from '../../common/constant/dummy.js';
 import ChevronButton from '../../common/ui/ChevronButton.jsx';
+
+const isDevMode = import.meta.env.DEV;
 
 /**
  * Recursively adds a `menuDepth` property to each item in the menu list to indicate its nesting level.
@@ -45,9 +48,7 @@ const DropdownMenuMobile = () => {
   /**
    * @type {Array<AppMenu & {menuDepth: number}>}
    */
-  const menu = React.useMemo(() => {
-    return _markMenuDepth(appContext.menu);
-  }, [appContext.menu]);
+  const menus = isDevMode ? mockMenu : appContext.menu;
 
   // Get current page
   const currentPage = useQueryParam('c');
@@ -57,19 +58,25 @@ const DropdownMenuMobile = () => {
 
   // Rendered list menu state
   const [renderedListMenu, setRenderedListMenu] = React.useState(
-    appContext.menu
+    _markMenuDepth(menus)
   );
+  
+  // Keep track of menu navigation history
+  const [menuHistory, setMenuHistory] = React.useState([]);
 
   /**
    * Handle click expand menu
    * @type {(menu: AppMenu) => void}
    */
   const handleClickExpand = React.useCallback((menu) => {
+    console.log('handleClickExpand', menu);
     if (menu.children?.length > 0) {
-      setRenderedListMenu(menu.children);
-      setCurrentMenuDepth(menu.children[0].menuDepth);
+      // Save current menu to history before navigating deeper
+      setMenuHistory(prev => [...prev, renderedListMenu]);
+      setRenderedListMenu(_markMenuDepth(menu.children, currentMenuDepth + 1));
+      setCurrentMenuDepth(currentMenuDepth + 1);
     }
-  }, []);
+  }, [currentMenuDepth, renderedListMenu]);
 
   /**
    * Handle click back to prev menu
@@ -77,40 +84,27 @@ const DropdownMenuMobile = () => {
    * @type {(function(): void)|*}
    */
   const handleClickBack = React.useCallback(() => {
-    if (currentMenuDepth > 0) {
-      const expectMenuDepth = currentMenuDepth - 1;
-
-      // Recursive function to find the menu list at expected depth
-      const findPrevMenuList = (menuList) => {
-        for (const item of menuList) {
-          if (item.menuDepth === expectMenuDepth) {
-            return menuList;
-          }
-
-          if (item.children?.length > 0) {
-            const result = findPrevMenuList(item.children);
-            if (result) {
-              return result;
-            }
-          }
-        }
-        return [];
-      };
-
-      const prevMenuList = findPrevMenuList(menu);
-      if (prevMenuList) {
-        setRenderedListMenu(prevMenuList);
-        setCurrentMenuDepth(expectMenuDepth);
-      }
+    console.log('handleClickBack', currentMenuDepth);
+    if (currentMenuDepth > 0 && menuHistory.length > 0) {
+      // Get the previous menu from history
+      const newHistory = [...menuHistory];
+      const prevMenuList = newHistory.pop();
+      
+      console.log('prevMenuList', prevMenuList);
+      setMenuHistory(newHistory);
+      setRenderedListMenu(prevMenuList);
+      setCurrentMenuDepth(currentMenuDepth - 1);
     }
-  }, [currentMenuDepth, menu]);
+  }, [currentMenuDepth, menuHistory]);
 
   /**
    * Set init menu to rendered menu
    */
   React.useEffect(() => {
-    setRenderedListMenu(menu);
-  }, [menu]);
+    setRenderedListMenu(_markMenuDepth(menus));
+    setMenuHistory([]);
+    setCurrentMenuDepth(0);
+  }, [menus]);
 
   return (
     <>
@@ -146,8 +140,7 @@ const DropdownMenuMobile = () => {
               >
                 <ChevronButton
                   className={clsx(
-                    'transition ',
-                    opened ? 'rotate-45' : 'rotate-90'
+                    'transition rotate-180'
                   )}
                 />
               </div>
@@ -162,7 +155,7 @@ const DropdownMenuMobile = () => {
                 <li
                   key={i}
                   className={clsx(
-                    'flex gap-6 justify-between',
+                    'flex gap-6 justify-between items-center',
                     'cursor-pointer px-4 py-2 border-b transition border-b-gray-geyser border-s-danger-cinnabar',
                     'hover:border-s-4',
                     currentPage === menuItem.key ? 'border-s-4' : ''
@@ -175,7 +168,7 @@ const DropdownMenuMobile = () => {
                     <ChevronButton
                       className={clsx(
                         'px-2 transition',
-                        opened ? '-rotate-45' : 'rotate-90'
+                        // opened ? '-rotate-45' : 'rotate-90'
                       )}
                       onClick={() => handleClickExpand(menuItem)}
                     />

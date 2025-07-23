@@ -41,7 +41,7 @@ const Header = ({className}) => {
                 }}
               ></div>
             </a>
-            <div className="border-l-1 border-l-gray-westar h-10"></div>
+            <div className="border-l border-gray-geyser h-10 w-[1px]"></div>
             <div className="text-6.5 font-light">eIAM</div>
             <div className="font-light text-lg text-ellipsis hidden lg:block">
               Federal Office of Information Technology, Systems and

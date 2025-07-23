@@ -9,7 +9,7 @@
 export default {
   primary: {
     DEFAULT: '#262626',
-    main: '#c1121f',
+    main: '#dc0018',
     contrastText: '#FFFFFF',
     text: '#111827', // gray-ebony
   },

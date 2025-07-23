@@ -56,6 +56,10 @@ const useServerSideVariables = () => {
         if (element) {
           element.remove();
         }
+        const main = document.getElementById('main');
+        if (main) {
+          main.remove();
+        }
       }, 500);
     }
   }, [hasGotten]);

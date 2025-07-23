@@ -12,7 +12,6 @@ import AppContext from '../../../common/context/app/app.context.js';
  */
 const Hero = React.memo(() => {
   const {menu} = React.useContext(AppContext);
-  console.log('HERE', {menu});
   // Query params
   // const [searchParams] = useSearchParams();
 
