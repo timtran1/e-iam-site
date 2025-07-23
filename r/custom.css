@@ -252,6 +252,8 @@ fieldset {
     display: block;
     transform: scaleY(1);
     opacity: 1;
+    overflow-y: scroll;
+    max-height: 60vh;
 }
 
 .navigation ul li ul.sub-open {

@@ -7,7 +7,7 @@
     <title>AGOV the new CH-LOGIN — eIAM, Identity &amp; Access Management of the Federal Administration</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
     <link href="favicon.ico" rel="shortcut icon"/>
-    <link rel="stylesheet" href="r/cssbase.css?1694082138" type="text/css"/>
+    <link rel="stylesheet" href="r/cssbase.css?1694082144" type="text/css"/>
     <link rel="stylesheet" href="js/jquery.fancybox.min.css?1694082138"/>
     <script src="js/jquery.js"></script>
     <script src="js/jquery.fancybox.min.js"></script>
@@ -16,57 +16,24 @@
 
 <body id="body">
 <main id="main" class="min-h-screen flex flex-col justify-between">
-    <section id="outer">
-        <header id="header" class="sticky top-0 z-50 border-b border-b-[#dfe4e9] bg-white">
-            <div class=" flex items-center sm:border-b border-b-[#dfe4e9]">
-                <div class="flex items-center gap-[10px] sm:gap-[16px] padding-[16px] w-full h-[50px] sm:h-[85px] transition-all duration-500">
-                    <a href="/" class="w-[43px] h-[58px] sm:w-[250px] sm:h-[80.6px] overflow-hidden block shrink-0">
-                        <div style="background-image: url('r/eidgenossenschaft/eidgenossenschaft_de.svg');"
-                             class="w-[250px] h-[80.6px] bg-cover bg-no-repeat transition-all duration-500    "
-                             role="img" aria-label="eIAM"></div>
-                    </a>
-                    <div class="border-l-1 border-l-[#E5E4E2] h-[40px]"></div>
-                    <div class="text-[26px] font-light">eIAM</div>
-                    <div class="font-light text-[18px] text-ellipsis hidden lg:block">
-                        Federal Office of Information Technology, Systems and Telecommunication &
-                        Federal Chancellery FCh, Digital Transformation and ICT Governance DTI
-                    </div>
-                </div>
-                <div class="px-[16px] py-[4px]">
-                    <!-- Language Switcher Dropdown -->
-                    <div class="relative ml-auto mr-4 cursor-pointer hidden sm:block">
-                        <button class="lang-switcher flex items-center space-x-1 text-gray-700 hover:text-gray-900 focus:outline-none cursor-pointer">
-                            <span class="current-lang">EN</span>
-                            <svg class="lang-caret w-4 h-4 transform transition-transform duration-300" fill="none"
-                                 stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                      d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </button>
-                        <div class="lang-dropdown w-[77px] border-t border-t-[#dfe4e9] shadow-[0_3px_4px_1px_#828e9a] absolute right-0 mt-2 bg-white overflow-hidden z-50 transform origin-top scale-y-0 opacity-0 transition-all duration-300">
-                            {{{languages}}}
-                        </div>
-                    </div>
-
-                    <!-- Mobile Menu Button -->
-                    <button id="mobileMenuToggle"
-                            class="sm:hidden flex flex-col justify-center items-center w-10 h-10 space-y-1.5 focus:outline-none relative z-[999]">
-                        <span class="origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 mb-0 bg-gray-800"></span>
-                        <span class="origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 bg-gray-800"></span>
-                        <span class="origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 bg-gray-800"></span>
-                    </button>
+    <header id="header" class="sticky top-0 z-50 border-b border-b-[#dfe4e9] bg-white">
+        <div class=" flex items-center sm:border-b border-b-[#dfe4e9]">
+            <div class="flex items-center gap-[10px] sm:gap-[16px] padding-[16px] w-full h-[50px] sm:h-[85px] transition-all duration-500">
+                <a href="/" class="w-[43px] h-[58px] sm:w-[250px] sm:h-[80.6px] overflow-hidden block shrink-0">
+                    <div style="background-image: url('r/eidgenossenschaft/eidgenossenschaft_de.svg');"
+                         class="w-[250px] h-[80.6px] bg-cover bg-no-repeat transition-all duration-500    "
+                         role="img" aria-label="eIAM"></div>
+                </a>
+                <div class="border-l-1 border-l-[#E5E4E2] h-[40px]"></div>
+                <div class="text-[26px] font-light">eIAM</div>
+                <div class="font-light text-[18px] text-ellipsis hidden lg:block">
+                    Federal Office of Information Technology, Systems and Telecommunication &
+                    Federal Chancellery FCh, Digital Transformation and ICT Governance DTI
                 </div>
             </div>
-
-            <nav id="navLeftSubTop" class="navigation hidden sm:block">
-                {{{navigation}}}
-            </nav>
-
-            <!-- Mobile Menu -->
-            <div id="mobileMenu"
-                 class="navigation-mobile border-t border-t-[#dfe4e9] fixed left-0 right-0 top-[50px] bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-40 sm:hidden">
-                <!-- Mobile Language Switcher -->
-                <div class="relative p-4 border-b border-b-[#dfe4e9]">
+            <div class="px-[16px] py-[4px]">
+                <!-- Language Switcher Dropdown -->
+                <div class="relative ml-auto mr-4 cursor-pointer hidden sm:block">
                     <button class="lang-switcher flex items-center space-x-1 text-gray-700 hover:text-gray-900 focus:outline-none cursor-pointer">
                         <span class="current-lang">EN</span>
                         <svg class="lang-caret w-4 h-4 transform transition-transform duration-300" fill="none"
@@ -75,17 +42,50 @@
                                   d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
-                    <div class="lang-dropdown w-[77px] border-t border-t-[#dfe4e9] shadow-[0_3px_4px_1px_#828e9a] absolute left-4 mt-2 bg-white overflow-hidden z-50 transform origin-top scale-y-0 opacity-0 transition-all duration-300">
+                    <div class="lang-dropdown w-[77px] border-t border-t-[#dfe4e9] shadow-[0_3px_4px_1px_#828e9a] absolute right-0 mt-2 bg-white overflow-hidden z-50 transform origin-top scale-y-0 opacity-0 transition-all duration-300">
                         {{{languages}}}
                     </div>
                 </div>
-                {{{navigation}}}
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuToggle"
+                        class="sm:hidden flex flex-col justify-center items-center w-10 h-10 space-y-1.5 focus:outline-none relative z-[999]">
+                    <span class="origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 mb-0 bg-gray-800"></span>
+                    <span class="origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 bg-gray-800"></span>
+                    <span class="origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 bg-gray-800"></span>
+                </button>
             </div>
-        </header>
-        <article id="content" class="px-[24px] py-[16px] max-w-[1440px] mx-auto">
+        </div>
+
+        <nav id="navLeftSubTop" class="navigation hidden sm:block">
+            {{{navigation}}}
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu"
+             class="navigation-mobile border-t border-t-[#dfe4e9] fixed left-0 right-0 top-[50px] bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-40 sm:hidden">
+            <!-- Mobile Language Switcher -->
+            <div class="relative p-4 border-b border-b-[#dfe4e9]">
+                <button class="lang-switcher flex items-center space-x-1 text-gray-700 hover:text-gray-900 focus:outline-none cursor-pointer">
+                    <span class="current-lang">EN</span>
+                    <svg class="lang-caret w-4 h-4 transform transition-transform duration-300" fill="none"
+                         stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                              d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div class="lang-dropdown w-[77px] border-t border-t-[#dfe4e9] shadow-[0_3px_4px_1px_#828e9a] absolute left-4 mt-2 bg-white overflow-hidden z-50 transform origin-top scale-y-0 opacity-0 transition-all duration-300">
+                    {{{languages}}}
+                </div>
+            </div>
+            {{{navigation}}}
+        </div>
+    </header>
+    <section id="outer" class="flex gap-[24px] px-[24px] pt-[32px] pb-[16px] max-w-[1200px] mx-auto">
+        <article id="content">
             {{{content}}}
         </article>
-
+        <aside id="news" class="ml-[24px] pl-[24px] border-l border-l-blue-200 border-dotted">{{{right}}}</aside>
     </section>
     <footer id="footer"
             class="bg-[#263645] px-[24px] py-[8px] text-white text-[12.8px] flex justify-start items-center gap-2">
