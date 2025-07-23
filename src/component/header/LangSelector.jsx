@@ -1,9 +1,9 @@
 import React from 'react';
 import clsx from 'clsx';
-import useClickAway from '../../../common/hook/useClickAway.js';
-import AppContext from '../../../common/context/app/app.context.js';
-import ChevronButton from '../../../common/ui/ChevronButton.jsx';
-import useQueryParam from '../../../common/hook/useQueryParam.js';
+import useClickAway from '../../common/hook/useClickAway.js';
+import AppContext from '../../common/context/app/app.context.js';
+import ChevronButton from '../../common/ui/ChevronButton.jsx';
+import useQueryParam from '../../common/hook/useQueryParam.js';
 
 /**
  * Language selector

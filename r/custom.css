@@ -3,23 +3,6 @@ body {
     font-family: 'Noto Sans', sans-serif;
 }
 
-.navigation ul {
-    display: flex;
-}
-
-.navigation li {
-    padding: 16px;
-}
-
-.navigation>ul>li {
-    border-bottom: 3px white;
-}
-
-.navigation>ul>li.active {
-    border-bottom: 3px solid #e53940;
-    box-shadow: 0 2px 6px -1px #0000000d, 0 5px 20px -2px #00000014;
-}
-
 .navigation-mobile ul {
     display: flex;
     flex-direction: column;
@@ -89,19 +72,6 @@ footer a:hover {
 
 a {
     color: #069;
-}
-
-.navigation a {
-    color: #1c2834;
-}
-
-.navigation a:visited {
-    color: #1c2834;
-}
-
-.navigation a:hover {
-    color: #1c2834;
-    text-decoration: none;
 }
 
 .navigation-mobile a {
@@ -498,6 +468,10 @@ fieldset {
 .right-sidebar h5 {
     font-size: .875rem;
     font-weight: 500;
+}
+
+.right-sidebar a:visited {
+    color: inherit;
 }
 
 .right-sidebar a:hover {

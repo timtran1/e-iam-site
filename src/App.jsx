@@ -1,8 +1,8 @@
 import './App.css';
-import Header from './component/header/index.jsx';
-import Footer from './component/footer/index.jsx';
+import Header from './component/header/Header.jsx';
+import Footer from './component/footer/Footer.jsx';
 import AppProvider from './common/context/app/app.provider.jsx';
-import Content from './component/content/index.jsx';
+import Content from './component/content/Content.jsx';
 // import HomePage from './component/home/HomePage.jsx';
 
 const App = () => {

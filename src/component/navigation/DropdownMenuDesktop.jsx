@@ -4,7 +4,7 @@ import clsx from 'clsx';
 // import useClickAway from '../../common/hook/useClickAway.js';
 import useQueryParam from '../../common/hook/useQueryParam.js';
 import AppContext from '../../common/context/app/app.context.js';
-import {mockMenu} from '../../common/constant/dummy.js';
+import { mockMenu } from '../../common/constant/dummy.js';
 
 const isDevMode = import.meta.env.DEV;
 
@@ -13,13 +13,13 @@ const isDevMode = import.meta.env.DEV;
  *        readonly listMenu?: Array<AppMenu>
  *     }>}
  */
-const ListMenu = React.memo(({listMenu}) => {
+const ListMenu = React.memo(({ listMenu }) => {
   // Track open state for each menu item individually
   const [openedItems, setOpenedItems] = React.useState({});
 
   // Get current page
   const currentPage = useQueryParam('c');
-  
+
   // Toggle open state for a specific item
   const toggleItem = (key) => {
     setOpenedItems(prev => ({
@@ -47,7 +47,7 @@ const ListMenu = React.memo(({listMenu}) => {
                 <a
                   href={item.href}
                   className="flex-1 !p-0 !border-none !text-gray-mirage"
-                  onClick={()=>{
+                  onClick={() => {
                     console.log(item.href)
                   }}
                 >
@@ -92,7 +92,7 @@ ListMenu.displayName = 'ListMenu';
  */
 const DropdownMenuDesktop = () => {
   // Get context data
-  const {menu} = React.useContext(AppContext);
+  const { menu } = React.useContext(AppContext);
   const menus = isDevMode ? mockMenu : menu;
 
   // Get current page
@@ -100,7 +100,7 @@ const DropdownMenuDesktop = () => {
 
   // Track open state for each menu item individually
   const [openedItems, setOpenedItems] = React.useState({});
-  
+
   // Toggle open state for a specific item
   const toggleItem = (key) => {
     setOpenedItems(prev => ({
@@ -122,16 +122,20 @@ const DropdownMenuDesktop = () => {
   return (
     <>
       <nav className="navigation">
-        <ul>
+        <ul className="flex overflow-x-scroll">
           {menus.map((menuItem, i) => (
             <li
               key={i}
               className={clsx(
-                'flex gap-1',
-                menuItem.key === currentPage ? 'active' : 'inactive'
+                'flex gap-1 p-[16px] border-b-[3px]',
+                menuItem.key === currentPage ?
+                  'border-primary-main shadow-lg'
+                  :
+                  'border-transparent hover:border-primary-main hover:shadow-lg'
               )}
             >
-              <a href={menuItem.href}>{menuItem.label}</a>{' '}
+              <a className="transition-all hover:translate-y-0.5 text-gray-mirage visited:text-gray-mirage hover:no-underline"
+                href={menuItem.href}>{menuItem.label}</a>{' '}
               <>
                 {menuItem.children?.length > 0 && (
                   <>

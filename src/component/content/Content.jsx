@@ -21,8 +21,8 @@ const Content = () => {
   const pageContent = isDevMode ? mockContent : content
 
   return (
-    <article className="px-6 py-12 max-w-[1440px] mx-auto">
-      <div className="flex gap-8 justify-between">
+    <article className="px-6 py-6 md:py-12 max-w-[1440px] mx-auto">
+      <div className="flex flex-col-reverse md:flex-row gap-8 justify-between">
         {/*region navigations sidebar*/}
         <LeftSidebar menus={menus} />
         {/*endregion navigations sidebar*/}
@@ -34,7 +34,7 @@ const Content = () => {
 
         {/*region right sidebar*/}
         {rightSidebarContent &&
-          <aside className="hidden lg:block right-sidebar bg-gray-aqua-haze px-6 py-3 w-[300px]"
+          <aside className="right-sidebar w-full md:w-[300px] bg-gray-aqua-haze px-6 py-3"
             dangerouslySetInnerHTML={{ __html: rightSidebarContent }} />
         }
         {/*endregion right sidebar*/}

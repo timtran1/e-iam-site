@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import LangSelector from './lang-selector/index.jsx';
+import LangSelector from './LangSelector.jsx';
 import Navigation from '../navigation/index.js';
 import AppContext from '../../common/context/app/app.context.js';
 
