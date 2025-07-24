@@ -6,15 +6,15 @@ import {
   useDisclosure,
   useLocalStorage,
 } from '@mantine/hooks';
-import {useTranslation} from 'react-i18next';
-import {TranslationNamespace} from '../../constants/translation.js';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCheck, faX} from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
+import { TranslationNamespace } from '../../constants/translation.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faX } from '@fortawesome/free-solid-svg-icons';
 import useEffectOnce from "../../common/hook/useEffectOnce.js";
-import {LocalstorageKey} from '../../constants/localstorage.js';
+import { LocalstorageKey } from '../../constants/localstorage.js';
 
 // Number of days to mark cookie consent is expired
-const DAYS_TO_EXPIRE = 15;
+const DAYS_TO_EXPIRE = 365;
 
 /**
  * Cookie consent popup
@@ -33,7 +33,7 @@ const CookieConsentPopup = React.forwardRef((props, ref) => {
   });
 
   // Translation
-  const {t} = useTranslation(TranslationNamespace.CookieConsent);
+  const { t } = useTranslation(TranslationNamespace.CookieConsent);
 
   // Visible state
   const [opened, actions] = useDisclosure(false);
@@ -87,65 +87,64 @@ const CookieConsentPopup = React.forwardRef((props, ref) => {
   });
 
   return (
-    <>
-      <div
-        className={clsx(
-          'bg-gray-zumthor text-blue-persian font-sans font-normal shadow py-10 px-4 md:p-10 w-full',
-          'fixed bottom-0 right-0',
-          'transition-transform duration-700 ease-in-out',
-          {
-            'translate-y-full': !opened,
-          }
-        )}
-      >
-        <div className="grid grid-cols-12 gap-6">
-          {/*region content*/}
-          <div className="col-span-12 md:col-span-7">
-            {t(
-              'CookieConsentPopup.content',
-              'Damit wir unser Webangebot optimal auf Ihre Bedürfnisse ausrichten können, verwenden wir das Analysetool Matomo. Dabei wird Ihr Verhalten auf der Website in anonymisierter Form erfasst. Es werden also keine personenbezogenen Daten übermittelt oder gespeichert. Wenn Sie damit nicht einverstanden sind, können Sie die Datenerfassung durch Matomo unterbinden und diese Website trotzdem ohne Einschränkungen nutzen. Weitere Informationen dazu finden Sie auf der Seite Rechtliches.'
-            )}
-          </div>
-          {/*endregion content*/}
+    <div
+      className={clsx(
+        'shadow-lg border-t border-gray-geyser bg-gray-zumthor text-[#069] font-sans font-normal shadow p-4 md:p-8 w-full',
+        'fixed bottom-0 right-0',
+        'transition-transform duration-700 ease-in-out',
+        {
+          'translate-y-full': !opened,
+        }
+      )}
+    >
+      <div className="grid grid-cols-12 gap-6">
+        {/*region content*/}
+        <div className="col-span-12 md:col-span-7">
+          {t(
+            'CookieConsentPopup.content',
+            'Damit wir unser Webangebot optimal auf Ihre Bedürfnisse ausrichten können, verwenden wir das Analysetool Matomo. Dabei wird Ihr Verhalten auf der Website in anonymisierter Form erfasst. Es werden also keine personenbezogenen Daten übermittelt oder gespeichert. Wenn Sie damit nicht einverstanden sind, können Sie die Datenerfassung durch Matomo unterbinden und diese Website trotzdem ohne Einschränkungen nutzen. Weitere Informationen dazu finden Sie auf der Seite Rechtliches.'
+          )}
+        </div>
+        {/*endregion content*/}
 
-          {/*region action buttons*/}
-          <div className="col-span-12 md:col-span-5">
-            <div className="flex flex-wrap gap-4 md:gap-6 lg:gap-10 sm:justify-end">
-              <div>
-                <button
-                  className="flex gap-3 border px-4 md:px-6 py-2.5 cursor-pointer"
-                  onClick={handleAccept}
-                >
-                  <span>
-                    {t('CookieConsentPopup.acceptButton', 'Einverstanden')}
-                  </span>
-                  <span>
-                    <FontAwesomeIcon icon={faCheck} />
-                  </span>
-                </button>
-              </div>
-              <div>
-                <button
-                  className="flex gap-3 py-2.5 cursor-pointer border border-transparent"
-                  onClick={actions.close}
-                >
-                  <span className="text-nowrap">
-                    {t(
-                      'CookieConsentPopup.refuseButton',
-                      'Weiter ohne Datenerfassung'
-                    )}
-                  </span>
-                  <span>
-                    <FontAwesomeIcon icon={faX} />
-                  </span>
-                </button>
-              </div>
+        {/*region action buttons*/}
+        <div className="col-span-12 md:col-span-5">
+          <div className="flex flex-wrap gap-2 sm:justify-end">
+            <div>
+              <button
+                className="flex gap-3 border border-blue-persian px-4 md:px-6 py-2.5 cursor-pointer hover:bg-blue-persian hover:text-white"
+                onClick={handleAccept}
+              >
+                <span>
+                  {t('CookieConsentPopup.acceptButton', 'Einverstanden')}
+                </span>
+                <span>
+                  <FontAwesomeIcon icon={faCheck} />
+                </span>
+              </button>
+            </div>
+            <div>
+              <button
+                className="flex px-4 md:px-6 gap-3 py-2.5 cursor-pointer border border-transparent hover:bg-blue-persian hover:text-white"
+                onClick={actions.close}
+              >
+                <span className="text-nowrap">
+                  {t(
+                    'CookieConsentPopup.refuseButton',
+                    'Weiter ohne Datenerfassung'
+                  )}
+                </span>
+                <span>
+                  <FontAwesomeIcon icon={faX} />
+                </span>
+              </button>
             </div>
           </div>
-          {/*endregion action buttons*/}
         </div>
+        {/*endregion action buttons*/}
       </div>
-    </>
+    </div>
+
   );
 });
 

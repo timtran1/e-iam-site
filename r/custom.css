@@ -486,6 +486,18 @@ a:visited {
     color: inherit;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
 header a {
     color: inherit;
+}
+
+.arrow-right-icon {
+    transition: transform .2s ;
+}
+
+a:hover .arrow-right-icon {
+    transform: translateX(5px);
 }
