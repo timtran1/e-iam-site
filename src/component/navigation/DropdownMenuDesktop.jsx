@@ -4,8 +4,9 @@ import clsx from 'clsx';
 // import useClickAway from '../../common/hook/useClickAway.js';
 import useQueryParam from '../../common/hook/useQueryParam.js';
 import AppContext from '../../common/context/app/app.context.js';
-import { mockMenu } from '../../common/constant/dummy.js';
+import {mockMenu} from '../../common/constant/dummy.js';
 import DesktopMenuList from './DesktopMenuList.jsx';
+import useClickAway from '../../common/hook/useClickAway.js';
 
 const isDevMode = import.meta.env.DEV;
 
@@ -17,7 +18,7 @@ const isDevMode = import.meta.env.DEV;
  */
 const DropdownMenuDesktop = () => {
   // Get context data
-  const { menu } = React.useContext(AppContext);
+  const {menu} = React.useContext(AppContext);
   const menus = isDevMode ? mockMenu : menu;
 
   // Get current page
@@ -28,9 +29,9 @@ const DropdownMenuDesktop = () => {
 
   // Toggle open state for a specific item
   const toggleItem = (key) => {
-    setOpenedItems(prev => ({
+    setOpenedItems((prev) => ({
       ...prev,
-      [key]: !prev[key]
+      [key]: !prev[key],
     }));
   };
 
@@ -40,26 +41,29 @@ const DropdownMenuDesktop = () => {
   /**
    * Handle click away
    */
-  // useClickAway(wrapperRef, () => {
-  //   setOpenedItems({});
-  // });
+  useClickAway(wrapperRef, () => {
+    setOpenedItems({});
+  });
 
   return (
     <nav className="navigation">
-      <ul className="flex overflow-x-scroll">
+      <ul ref={wrapperRef} className="flex overflow-x-auto">
         {menus.map((menuItem, i) => (
           <li
             key={i}
             className={clsx(
               'flex gap-1 p-[16px] border-b-[3px]',
-              menuItem.key === currentPage ?
-                'border-primary-main shadow-lg'
-                :
-                'border-transparent hover:border-primary-main hover:shadow-lg'
+              menuItem.key === currentPage
+                ? 'border-primary-main shadow-lg'
+                : 'border-transparent hover:border-primary-main hover:shadow-lg'
             )}
           >
-            <a className="transition-all hover:translate-y-0.5 text-gray-mirage visited:text-gray-mirage hover:no-underline"
-              href={menuItem.href}>{menuItem.label}</a>{' '}
+            <a
+              className="transition-all hover:translate-y-0.5 text-gray-mirage visited:text-gray-mirage hover:no-underline"
+              href={menuItem.href}
+            >
+              {menuItem.label}
+            </a>{' '}
             <>
               {menuItem.children?.length > 0 && (
                 <>
@@ -71,7 +75,6 @@ const DropdownMenuDesktop = () => {
                     onClick={() => toggleItem(menuItem.key)}
                   />
                   <ul
-                    ref={wrapperRef}
                     className={clsx(
                       'transition-all overflow-y-scroll max-h-[80vh]',
                       openedItems[menuItem.key] ? 'open' : 'inactive'

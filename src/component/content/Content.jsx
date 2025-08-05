@@ -1,13 +1,15 @@
-import { useContext, useEffect, useMemo } from 'react';
+import {useContext, useEffect, useMemo} from 'react';
 import AppContext from '../../common/context/app/app.context.js';
-// import PureElementRendering from '../../common/ui/PureElementRendering.jsx';
-// import DirectAccess from '../home/DirectAccess/index.jsx';
-import { mockMenu, mockContent, mockRightContent } from '../../common/constant/dummy.js';
+import {
+  mockMenu,
+  mockContent,
+  mockRightContent,
+} from '../../common/constant/dummy.js';
 import LeftSidebar from '../left-sidebar/LeftSidebar.jsx';
 import RightSidebar from '../right-sidebar/RightSidebar.jsx';
 import ArrowRightHTML from '../icons/ArrowRightHTML.js';
 import useIsMobile from '../../common/hook/useIsMobile.js';
-import { handleResponsiveWidth } from '../../common/utils/responsiveWidthHandler.js';
+import {handleResponsiveWidth} from '../../common/utils/responsiveWidthHandler.js';
 import CookieConsentPopup from '../cookie/CookieConsentPopup.jsx';
 
 const isDevMode = import.meta.env.DEV;
@@ -19,7 +21,7 @@ const isDevMode = import.meta.env.DEV;
  */
 const Content = () => {
   // Get context data
-  const { menu, rightContent, content } = useContext(AppContext);
+  const {menu, rightContent, content} = useContext(AppContext);
 
   const menus = isDevMode ? mockMenu : menu;
   const rightSidebarContent = isDevMode ? mockRightContent : rightContent;
@@ -67,14 +69,18 @@ const Content = () => {
           {/*endregion navigations sidebar*/}
 
           {/*region content*/}
-          <div className="max-w-[740px] overflow-hidden grow"
-            dangerouslySetInnerHTML={{ __html: processedContent }} />
+          <div className="grow">
+            <div
+              className="mx-auto max-w-[740px]"
+              dangerouslySetInnerHTML={{__html: processedContent}}
+            />
+          </div>
           {/*endregion content*/}
 
           {/*region right sidebar*/}
-          {rightSidebarContent &&
+          {rightSidebarContent && (
             <RightSidebar content={rightSidebarContent} />
-          }
+          )}
           {/*endregion right sidebar*/}
         </div>
       </article>
