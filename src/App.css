@@ -1,0 +1,7 @@
+@import "../r/input.css";
+
+@tailwind components;
+@tailwind utilities;
+
+/*Do not import tailwind base. We have the replacement from custom css*/
+/*@tailwind base;*/

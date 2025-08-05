@@ -1,8 +1,16 @@
+import colors from './tailwind-config/colors.js';
+import fontSize from './tailwind-config/fontSize.js';
+import boxShadow from './tailwind-config/boxShadow.js';
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: ["./index.html", "./htmltemplate.html"], // or more paths if needed
+export default {
+  content: ['./index.html', './src/**/*.{js,jsx}'], // or more paths if needed
   theme: {
-    extend: {},
+    extend: {
+      colors,
+      fontSize,
+      boxShadow,
+    },
   },
   plugins: [],
-}
+};

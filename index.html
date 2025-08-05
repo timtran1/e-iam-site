@@ -2,546 +2,61 @@
 <html lang="en">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <meta http-equiv="content-language" content="en"/>
-    <title>AGOV the new CH-LOGIN — eIAM, Identity &amp; Access Management of the Federal Administration</title>
-    <!--prod-->
-<!--    <link rel="stylesheet" href="r/cssbase.css" type="text/css"/>-->
-    <!-- dev-->
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-        <link rel="stylesheet" href="r/input.css" type="text/css"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta http-equiv="content-language" content="en" />
+    <title>eIAM, Federal Administration's central access and permissions system — eIAM, Identity &amp; Access Management of the Federal Administration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link href="favicon.ico" rel="shortcut icon" />
+    <link rel="stylesheet" href="js/jquery.fancybox.min.css" />
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="/r/u5_scripts.js" type="text/javascript"></script>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
-    <link href="favicon.ico" rel="shortcut icon"/>
-    <script src="r/u5_scripts.js" type="text/javascript"></script>
+    <!--region - Hook position to put cassbase.css after build-->
+    <!--see: merge-built-files.js:26-->
+    <!--Please do not remove the "CSS_BASE" below-->
+    <!--CSS_BASE-->
+    <!--endregion - Hook position to put cassbase.css after build-->
 </head>
 
 <body id="body">
-<main id="main" class="min-h-screen flex flex-col justify-between">
+    <div id="root"></div>
+    <div id="__VARIABLES_REGION" class="hidden">
+        <div id="header">{{{header}}}</div>
+        <div id="languages">{{{languages}}}</div>
+        <div id="navigation">{{{navigation}}}</div>
+        <div id="footer" style="display: none; opacity: 0;">{{{footer}}}</div>
+        <div id="right" style="display: none; opacity: 0;">{{{right}}}</div>
+    </div>
+    <!--endregion server-side variables-->
+    <main id="main" style="display: none; opacity:0">
+        <section id="outer">
+            <article id="content"><a name="content" style="pointer-events:none"></a>{{{content}}}
+            </article>
+        </section>
+    </main>
 
-    <section id="outer">
-        <header id="header" class="sticky top-0 z-50 border-b border-b-[#dfe4e9] bg-white">
-            <div class=" flex items-center sm:border-b border-b-[#dfe4e9]">
-                <div class="flex items-center gap-[10px] sm:gap-[16px] padding-[16px] w-full h-[50px] sm:h-[85px] transition-all duration-500">
-                    <a href="/" class="w-[43px] h-[58px] sm:w-[250px] sm:h-[80.6px] overflow-hidden block shrink-0">
-                        <div style="background-image: url('r/eidgenossenschaft/eidgenossenschaft_de.svg');"
-                             class="w-[250px] h-[80.6px] bg-cover bg-no-repeat transition-all duration-500    "
-                             role="img" aria-label="eIAM"></div>
-                    </a>
-                    <div class="border-l-1 border-l-[#E5E4E2] h-[40px]"></div>
-                    <div class="text-[26px] font-light">eIAM</div>
-                    <div class="font-light text-[18px] text-ellipsis hidden lg:block">
-                        Federal Office of Information Technology, Systems and Telecommunication &
-                        Federal Chancellery FCh, Digital Transformation and ICT Governance DTI
-                    </div>
-                </div>
-                <div class="px-[16px] py-[4px]">
-                    <!-- Language Switcher Dropdown -->
-                    <div class="relative ml-auto mr-4 cursor-pointer hidden sm:block">
-                        <button class="lang-switcher flex items-center space-x-1 text-gray-700 hover:text-gray-900 focus:outline-none cursor-pointer">
-                            <span class="current-lang">EN</span>
-                            <svg class="lang-caret w-4 h-4 transform transition-transform duration-300" fill="none"
-                                 stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                      d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </button>
-                        <div class="lang-dropdown w-[77px] border-t border-t-[#dfe4e9] shadow-[0_3px_4px_1px_#828e9a] absolute right-0 mt-2 bg-white overflow-hidden z-50 transform origin-top scale-y-0 opacity-0 transition-all duration-300">
-                            <a href="?l=en">EN</a>
-                            <a href="?l=de">DE</a>
-                            <a href="?l=fr">FR</a>
-                        </div>
-                    </div>
 
-                    <!-- Mobile Menu Button -->
-                    <button id="mobileMenuToggle"
-                            class="sm:hidden flex flex-col justify-center items-center w-10 h-10 space-y-1.5 focus:outline-none relative z-[999]">
-                        <span class="origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 mb-0 bg-gray-800"></span>
-                        <span class="origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 bg-gray-800"></span>
-                        <span class="origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 bg-gray-800"></span>
-                    </button>
-                </div>
-            </div>
-
-            <nav id="navLeftSubTop" class="navigation hidden sm:block">
-                <!--                expanded menu-->
-                <ul>
-                    <li class="inactive"><a href="index.php?c=start&amp;l=en">Home</a></li>
-                    <li class=""><a class="" href="index.php?c=trottinett&amp;l=en">Children and Scooter</a>
-                        <ul>
-                            <li class="active"><a class="activeItem" href="index.php?c=formatexamples&amp;l=en">Format
-                                examples</a></li>
-                            <li><a href="index.php?c=formular&amp;l=en">Form</a>
-                                <ul style="display:none">
-                                    <li style="display:none"><a href="index.php?c=trottinettvideo&amp;l=en">Video</a>
-                                        <ul style="display:none">
-                                            <li style="display:none"><a href="index.php?c=onemorepage&amp;l=en">Level
-                                                4</a></li>
-                                        </ul>
-                                    </li>
-
-                                </ul>
-                            </li>
-
-                        </ul>
-                    </li>
-                    <li class="inactive"><a href="index.php?c=gotthardtunnel&amp;l=en">Gotthard Traffic</a></li>
-                </ul>
-            </nav>
-
-            <!-- Mobile Menu -->
-            <div id="mobileMenu"
-                 class="navigation-mobile border-t border-t-[#dfe4e9] fixed left-0 right-0 top-[50px] bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-40 sm:hidden">
-                <!-- Mobile Language Switcher -->
-                <div class="relative p-4 border-b border-b-[#dfe4e9]">
-                    <button class="lang-switcher flex items-center space-x-1 text-gray-700 hover:text-gray-900 focus:outline-none cursor-pointer">
-                        <span class="current-lang">EN</span>
-                        <svg class="lang-caret w-4 h-4 transform transition-transform duration-300" fill="none"
-                             stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                  d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </button>
-                    <div class="lang-dropdown w-[77px] border-t border-t-[#dfe4e9] shadow-[0_3px_4px_1px_#828e9a] absolute left-4 mt-2 bg-white overflow-hidden z-50 transform origin-top scale-y-0 opacity-0 transition-all duration-300">
-                        <a href="?l=en">EN</a>
-                        <a href="?l=de">DE</a>
-                        <a href="?l=fr">FR</a>
-                    </div>
-                </div>
-                <ul>
-                    <li class="inactive"><a href="index.php?c=start&amp;l=en">Home</a></li>
-                    <li class=""><a class="" href="index.php?c=trottinett&amp;l=en">Children and Scooter</a>
-                        <ul>
-                            <li class="active"><a class="activeItem" href="index.php?c=formatexamples&amp;l=en">Format
-                                examples</a></li>
-                            <li><a href="index.php?c=formular&amp;l=en">Form</a>
-                                <ul style="display:none">
-                                    <li style="display:none"><a href="index.php?c=trottinettvideo&amp;l=en">Video</a>
-                                        <ul style="display:none">
-                                            <li style="display:none"><a href="index.php?c=onemorepage&amp;l=en">Level
-                                                4</a></li>
-                                        </ul>
-                                    </li>
-
-                                </ul>
-                            </li>
-
-                        </ul>
-                    </li>
-                    <li class="inactive"><a href="index.php?c=gotthardtunnel&amp;l=en">Gotthard Traffic</a></li>
-                </ul>
-            </div>
-        </header>
-        <article id="content" class="px-[24px] py-[16px] max-w-[1440px] mx-auto">
-            <form class="unibeform" name="u5form" action="formsave.php?n=formular&amp;l=en" method="post"
-                  target="fvifr"><br>
-                <fieldset class="ksl">
-                    <legend>Your data</legend>
-
-                    <!--Hidden fields in your form. You should have them in your form!-->
-                    <input type="hidden" name="ouremail" value="enter@youremailaddress.here">
-                    <input type="hidden" name="thanks" value="thanks">
-                    <input type="hidden" name="thankssubject" value="Thank you for your message!">
-                    <input type="hidden" name="thankstext"
-                           value="Thank you for your message! Please find it quoted below:">
-                    <input type="hidden" name="thanksgreetings" value="Yours faithfully, John Smith">
-
-                    <!--Visible fields in your form displayed to the form user-->
-                    <label>Business*</label>
-                    <select name="business_mandatory">
-                        <option value="">please select</option>
-                        <option value="education">Education</option>
-                        <option value="engineering">Engineering</option>
-                        <option value="medical">Medical</option>
-                        <option value="other">other</option>
-                    </select>
-
-                    <label>Name*</label><input type="text" name="name_mandatory" placeholder="Name">
-
-                    <label>Firstname</label><input type="text" name="firstname">
-
-                    <label>E-Mail*</label><input type="text" name="youremail_mandatory">
-
-                    <label>Message*</label><textarea rows="3" style="width:98%" type="text"
-                                                     name="message_mandatory"></textarea>
-
-                    <label>How much is hundred minus one (enter digits)? <a
-                            title="javascript:alert('Spam robots fill in web-forms automatically. This question disables spam robots.');"
-                            href="javascript:alert('Spam robots fill in web-forms automatically. This question disables spam robots.');">Why
-                        <nobr>?</nobr>
-                    </a></label><input type="text" name="cliving_mandatory">
-
-                    <label>&nbsp;</label><input type="submit" value="send">
-
-                    <br></fieldset>
-                <br></form>
-        </article>
-
-    </section>
-    <footer id="footer"
-            class="bg-[#263645] px-[24px] py-[8px] text-white text-[12.8px] flex justify-start items-center gap-2">
-        <a name="contact"></a>Name — Adresse — Telefon —
-        <a title="mailto:me@provider.ext" href="mailto:me@provider.ext">me@provider.ex
-            <nobr>t</nobr>
-        </a> —
-        <a href="index.php?c=sitemap&amp;l=en">Sitemap</a> —
-        <a href="index.php?c=intranet&amp;l=en">Intranet</a>
-    </footer>
-</main>
-<script>
-    function autoequalsone() {
-        if (location.href.indexOf('auto=1') > 0) location.reload();
-    }
-
-    setTimeout("autoequalsone()", 2222);
-    if (typeof u5mkmobile === "function" && !document.getElementById('nevermobile')) u5mkmobile();
-
-    // Language dropdown functionality
-    document.addEventListener('DOMContentLoaded', function () {
-        const langSwitchers = document.querySelectorAll('.lang-switcher');
-        const langDropdowns = document.querySelectorAll('.lang-dropdown');
-        const langCarets = document.querySelectorAll('.lang-caret');
-        const currentLangSpans = document.querySelectorAll('.current-lang');
-
-        // Clean up language switcher dropdowns - remove empty links and whitespace
-        document.querySelectorAll('.lang-dropdown').forEach(dropdown => {
-            // Get all nodes in the dropdown
-            const childNodes = Array.from(dropdown.childNodes);
-
-            // Remove text nodes (whitespace)
-            childNodes.forEach(node => {
-                if (node.nodeType === Node.TEXT_NODE) {
-                    dropdown.removeChild(node);
-                }
-            });
-
-            // Remove empty links or links with no text content
-            dropdown.querySelectorAll('a').forEach(link => {
-                if (!link.textContent.trim()) {
-                    dropdown.removeChild(link);
-                }
-            });
-        });
-
-        // Get current language from URL
-        function getCurrentLanguage() {
-            const urlParams = new URLSearchParams(window.location.search);
-            console.log({urlParams}, urlParams.get('l'));
-            return urlParams.get('l') || 'en'; // Default to 'en' if not specified
+    <script type="module" src="/src/main.jsx"></script>
+    {{{s!control}}}
+    <script>
+        function autoequalsone() {
+            if (location.href.indexOf('auto=1') > 0) location.reload();
         }
+        setTimeout("autoequalsone()", 2222);
+    </script>
+    <script src="r/ie11css.css"></script>
+    {{{s!masterscript}}}
+    <script>
+        if (document.getElementById('main')) document.getElementById('main').style.opacity = '1';
+        if (location.href.indexOf('c=_search') > 0) document.getElementById('content').innerHTML += ('<div id="teledocs"></div><iframe style="display:none" src="u5sys.content.php?c=teledocs&x=' + location.href.split('c=')[1] + '"></iframe>');
+        if (location.href.indexOf('c=_search') > 0) document.getElementById('content').innerHTML += ('<div id="telehelp"></div><iframe style="display:none" src="u5sys.content.php?c=telehelp&x=' + location.href.split('c=')[1] + '"></iframe>');
+        if (location.href.indexOf('c=_search') > 0) document.getElementById('content').innerHTML += ('<div id="telehelpagov"></div><iframe style="display:none" src="u5sys.content.php?c=telehelpagov&x=' + location.href.split('c=')[1] + '"></iframe>');
+        if (location.href.indexOf('c=_search') > 0) document.getElementById('content').innerHTML += ('<div id="teleworkagov"></div><iframe style="display:none" src="u5sys.content.php?c=teleworkagov&x=' + location.href.split('c=')[1] + '"></iframe>');
+    </script>
+    <script>if (typeof u5mkmobile === "function" && !document.getElementById('nevermobile')) u5mkmobile();</script>
+    <script>if (location.href.indexOf('c=_search') > 0) document.getElementsByName('content')[0].innerHTML = '<div style="font-size:65%;color:#bbb;line-height:11px">Wildcard is % not *. Set multi terms between &quot;&nbsp;&quot; for exact search, e. g. &quot;native mobile app&quot; and use spaces not dashes.</div>'</script>
 
-        // Set active language
-        function setActiveLanguage() {
-            const currentLang = getCurrentLanguage().toLowerCase();
-            console.log({currentLang});
-
-            // Update all language switchers
-            currentLangSpans.forEach(span => {
-                span.textContent = currentLang.toUpperCase();
-            });
-
-            // Reset and update all language options
-            document.querySelectorAll('.lang-dropdown a').forEach(option => {
-                option.classList.remove('active');
-
-                // Check if this option matches current language
-                const optionLang = option.getAttribute('href').split('=')[1];
-                if (optionLang === currentLang) {
-                    option.classList.add('active');
-                }
-            });
-        }
-
-        // Initialize active language
-        setActiveLanguage();
-
-        // Set up event listeners for each language switcher
-        langSwitchers.forEach((switcher, index) => {
-            const dropdown = langDropdowns[index];
-            const caret = langCarets[index];
-
-            // Toggle dropdown when language switcher is clicked
-            switcher.addEventListener('click', function (event) {
-                event.stopPropagation();
-
-                // Toggle dropdown visibility by changing scale and opacity
-                if (dropdown.classList.contains('scale-y-0')) {
-                    // Close all other dropdowns first
-                    langDropdowns.forEach(d => {
-                        if (d !== dropdown) {
-                            d.classList.remove('scale-y-100', 'opacity-100');
-                            d.classList.add('scale-y-0', 'opacity-0');
-                        }
-                    });
-
-                    // Open this dropdown
-                    dropdown.classList.remove('scale-y-0', 'opacity-0');
-                    dropdown.classList.add('scale-y-100', 'opacity-100');
-                    caret.classList.add('rotate-180'); // Rotate caret
-                } else {
-                    dropdown.classList.remove('scale-y-100', 'opacity-100');
-                    dropdown.classList.add('scale-y-0', 'opacity-0');
-                    caret.classList.remove('rotate-180'); // Reset caret rotation
-                }
-            });
-        });
-
-        // Close all dropdowns when clicking outside
-        document.addEventListener('click', function (event) {
-            let clickedInsideDropdown = false;
-
-            // Check if click was inside any language switcher
-            langSwitchers.forEach((switcher, index) => {
-                if (switcher.contains(event.target) || langDropdowns[index].contains(event.target)) {
-                    clickedInsideDropdown = true;
-                }
-            });
-
-            if (!clickedInsideDropdown) {
-                // Close all dropdowns
-                langDropdowns.forEach((dropdown, index) => {
-                    dropdown.classList.remove('scale-y-100', 'opacity-100');
-                    dropdown.classList.add('scale-y-0', 'opacity-0');
-                    langCarets[index].classList.remove('rotate-180');
-                });
-            }
-        });
-    });
-
-    // Mobile menu toggle functionality
-    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-    const mobileMenu = document.getElementById('mobileMenu');
-
-    mobileMenuToggle.addEventListener('click', function () {
-        if (!mobileMenu.classList.contains('open')) {
-            mobileMenu.classList.add('open');
-            mobileMenuToggle.classList.add('open');
-        } else {
-            mobileMenu.classList.remove('open');
-            mobileMenuToggle.classList.remove('open');
-        }
-    });
-
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', function (event) {
-        if (!mobileMenuToggle.contains(event.target) && !mobileMenu.contains(event.target)) {
-            mobileMenu.classList.remove('open');
-            mobileMenuToggle.classList.remove('open');
-        }
-    });
-
-    // Set active menu item based on current URL
-    function setActiveMenuItem() {
-        const currentUrl = window.location.href;
-        const urlParams = new URLSearchParams(window.location.search);
-        const currentPage = urlParams.get('c') || 'start';
-
-        // Set active class for desktop menu
-        const desktopMenuItems = document.querySelectorAll('#navLeftSubTop li a');
-        desktopMenuItems.forEach(item => {
-            const itemUrl = new URL(item.href, window.location.origin);
-            const itemParams = new URLSearchParams(itemUrl.search);
-            const itemPage = itemParams.get('c');
-
-            if (itemPage === currentPage) {
-                item.parentElement.classList.add('active');
-                item.classList.add('activeItem');
-            } else {
-                item.parentElement.classList.remove('active');
-                item.classList.remove('activeItem');
-            }
-        });
-
-        // Set active class for mobile menu
-        const mobileMenuItems = document.querySelectorAll('#mobileMenu li a');
-        mobileMenuItems.forEach(item => {
-            const itemUrl = new URL(item.href, window.location.origin);
-            const itemParams = new URLSearchParams(itemUrl.search);
-            const itemPage = itemParams.get('c');
-
-            if (itemPage === currentPage) {
-                item.classList.add('active');
-            } else {
-                item.classList.remove('active');
-            }
-        });
-    }
-
-    // Run on page load
-    setActiveMenuItem();
-
-    // Navigation dropdown functionality
-    document.addEventListener('DOMContentLoaded', function () {
-        // Remove inline styles from the entire navigation
-        const navigation = document.querySelector('#navLeftSubTop');
-        if (navigation) {
-            removeInlineStyles(navigation);
-
-            // Initialize desktop dropdown navigation
-            initDesktopDropdownMenu();
-
-            // Initialize mobile sliding submenu navigation
-            initMobileSlidingSubmenu();
-        }
-    });
-
-    function initDesktopDropdownMenu() {
-        // Get all parent menu items that have dropdowns
-        const parentMenuItems = document.querySelectorAll('#navLeftSubTop > ul > li');
-
-        parentMenuItems.forEach(item => {
-            const submenu = item.querySelector('ul');
-
-            // Skip if this menu item doesn't have a submenu
-            if (!submenu) return;
-
-            // Add caret to parent menu item
-            const parentLink = item.querySelector('a');
-            const caret = document.createElement('span');
-            caret.className = 'nav-caret';
-            caret.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false"><polygon points="12 15.464 2.625 10.051 3.375 8.752 12 13.732 20.625 8.752 21.375 10.051 12 15.464" fill="currentColor"></polygon></svg>';
-            caret.style.cursor = 'pointer'; // Make the caret look clickable
-            parentLink.appendChild(caret);
-
-            // Add close button to each dropdown
-            const closeButton = document.createElement('button');
-            closeButton.className = 'nav-dropdown-close';
-            closeButton.innerHTML = 'Close &times;';
-            closeButton.addEventListener('click', function (e) {
-                e.stopPropagation();
-                submenu.classList.remove('open');
-                caret.classList.remove('rotate-180');
-            });
-
-            // Insert close button at the beginning of the submenu
-            submenu.insertBefore(closeButton, submenu.firstChild);
-
-            // Move click event from parent link to caret only
-            caret.addEventListener('click', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                // Close all other open dropdowns
-                document.querySelectorAll('#navLeftSubTop ul ul.open').forEach(dropdown => {
-                    if (dropdown !== submenu) {
-                        dropdown.classList.remove('open');
-                        // Reset all other carets
-                        dropdown.parentElement.querySelector('.nav-caret')?.classList.remove('rotate-180');
-                    }
-                });
-
-                // Toggle this dropdown
-                submenu.classList.toggle('open');
-                // Toggle caret rotation
-                caret.classList.toggle('rotate-180');
-            });
-
-            // Remove any click event from the parent link that might prevent navigation
-            parentLink.addEventListener('click', function (e) {
-                // Only stop propagation, don't prevent default
-                e.stopPropagation();
-            });
-        });
-
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function (e) {
-            if (!e.target.closest('#navLeftSubTop')) {
-                document.querySelectorAll('#navLeftSubTop ul ul.open').forEach(dropdown => {
-                    dropdown.classList.remove('open');
-                    // Reset all carets
-                    document.querySelectorAll('.nav-caret').forEach(caret => {
-                        caret.classList.remove('rotate-180');
-                    });
-                });
-            }
-        });
-    }
-
-    function initMobileSlidingSubmenu() {
-        const mobileNavigation = document.querySelector('.navigation-mobile');
-        if (!mobileNavigation) return;
-
-        // Remove any inline styles from the mobile navigation
-        removeInlineStyles(mobileNavigation);
-
-        // Find all li elements with ul children (parent menu items)
-        const allLiItems = mobileNavigation.querySelectorAll('li');
-
-        allLiItems.forEach(item => {
-            // Check if this li has a ul child
-            const hasSubmenu = item.querySelector('ul') !== null;
-
-            if (hasSubmenu) {
-                // Add has-submenu class to parent items
-                item.classList.add('has-submenu');
-
-                // Create and add caret to parent item link
-                const link = item.querySelector('a');
-                if (link && !link.querySelector('.mobile-submenu-caret')) {
-                    // Create right-pointing caret
-                    const caret = document.createElement('span');
-                    caret.className = 'mobile-submenu-caret';
-                    caret.innerHTML = '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path></svg>';
-                    link.appendChild(caret);
-
-                    // Add click event to caret
-                    caret.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-
-                        const submenu = item.querySelector('ul');
-                        if (submenu) {
-                            // Add back button if it doesn't exist
-                            if (!submenu.querySelector('.mobile-submenu-back')) {
-                                const backBtn = document.createElement('button');
-                                backBtn.className = 'mobile-submenu-back';
-                                backBtn.innerHTML = '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path></svg>';
-
-                                backBtn.addEventListener('click', function (e) {
-                                    e.preventDefault();
-                                    submenu.classList.remove('open');
-                                });
-
-                                submenu.insertBefore(backBtn, submenu.firstChild);
-                            }
-
-                            // Open submenu
-                            submenu.classList.add('open');
-                        }
-                    });
-                }
-            }
-        });
-    }
-
-    function removeInlineStyles(element) {
-        if (element.style && element.style.display === 'none') {
-            element.style.display = '';
-        }
-
-        // Process children recursively
-        Array.from(element.children).forEach(child => {
-            removeInlineStyles(child);
-        });
-    };
-
-    // Close dropdowns when clicking outside
-    document.addEventListener('click', function (e) {
-        if (!e.target.closest('#navLeftSubTop')) {
-            document.querySelectorAll('#navLeftSubTop ul ul.open').forEach(dropdown => {
-                dropdown.classList.remove('open');
-                // Reset all carets
-                document.querySelectorAll('.nav-caret').forEach(caret => {
-                    caret.classList.remove('rotate-180');
-                });
-            });
-        }
-    });
-
-    // Run setActiveMenuItem again to ensure active classes are properly set
-    setActiveMenuItem();
-</script>
 </body>
-<!-- This site runs with u5CMS version 12.7.11 from https://yuba.ch/u5cms -->
 
 </html>

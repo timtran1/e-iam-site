@@ -3,28 +3,6 @@ body {
     font-family: 'Noto Sans', sans-serif;
 }
 
-.navigation ul {
-    display: flex;
-}
-
-.navigation li {
-    padding: 16px;
-}
-
-.navigation > ul > li {
-    border-bottom: 3px white;
-}
-
-.navigation > ul > li.active {
-    border-bottom: 3px solid #e53940;
-    box-shadow: 0 2px 6px -1px #0000000d, 0 5px 20px -2px #00000014;
-}
-
-.navigation > ul > li:hover {
-    border-bottom: 3px solid #e53940;
-    box-shadow: 0 2px 6px -1px #0000000d, 0 5px 20px -2px #00000014;
-}
-
 .navigation-mobile ul {
     display: flex;
     flex-direction: column;
@@ -60,7 +38,8 @@ footer a:hover {
 .hamburger-line {
     transform-origin: center;
     transition: transform 0.3s ease, opacity 0.3s ease;
-    height: 1px !important; /* Thinner lines */
+    height: 1px !important;
+    /* Thinner lines */
 }
 
 /* Hamburger to X animation */
@@ -96,19 +75,6 @@ a {
     color: #069;
 }
 
-.navigation a {
-    color: #1c2834;
-}
-
-.navigation a:visited {
-    color: #1c2834;
-}
-
-.navigation a:hover {
-    color: #1c2834;
-    text-decoration: none;
-}
-
 .navigation-mobile a {
     color: #1c2834;
 }
@@ -122,8 +88,14 @@ a {
     text-decoration: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    margin: 0 0 .25em;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 0.5em;
+    margin-bottom: 0.25em;
     color: #1c2834;
 }
 
@@ -175,7 +147,9 @@ h6 {
     color: #e53940
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
     border: 1px solid #1c2834;
     border-radius: 4px;
     background: white;
@@ -184,7 +158,12 @@ input, select, textarea {
 }
 
 
-input[type=text], input[type=email], input[type=number], input[type=password], textarea, select {
+input[type=text],
+input[type=email],
+input[type=number],
+input[type=password],
+textarea,
+select {
     padding-left: 8px;
     padding-right: 8px;
     padding-top: 4px;
@@ -197,7 +176,8 @@ select {
     padding-bottom: 8px;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
     outline: 1px solid #1c2834;
     /*border: 2px solid #1c2834;*/
 }
@@ -252,14 +232,16 @@ fieldset {
 .navigation ul li ul {
     display: none;
     position: absolute;
-    top: 100%; /* This positions it at the bottom of the parent element */
+    top: 100%;
+    /* This positions it at the bottom of the parent element */
     /*margin-top: 1px;*/
     background-color: white;
     min-width: 200px;
     box-shadow: 0 3px 4px 1px #828e9a;
     z-index: 999;
     border-top: 1px solid #dfe4e9;
-    padding-top: 60px; /* Space for close button */
+    padding-top: 60px;
+    /* Space for close button */
     padding-bottom: 12px;
     padding-left: 12px;
     padding-right: 12px;
@@ -277,14 +259,18 @@ fieldset {
     max-height: 60vh;
 }
 
+.navigation ul li ul.sub-open {
+    padding: 0;
+    display: block;
+    transform: scaleY(1);
+    opacity: 1;
+    @apply shadow-none;
+}
+
 .navigation ul li ul li {
     display: block;
     padding: 0;
     width: 100%;
-}
-
-.navigation ul li ul li:hover {
-    border-left: 3px solid #e53940;
 }
 
 .navigation ul li ul li a {
@@ -324,7 +310,7 @@ fieldset {
 }
 
 /* Override display flex for nested lists */
-.navigation > ul {
+.navigation>ul {
     display: flex;
 }
 
@@ -342,39 +328,47 @@ fieldset {
     width: 16px;
     height: 16px;
     transform-origin: center;
-    transform: rotate(180deg); /* Initial state is rotated */
+    transform: rotate(180deg);
+    /* Initial state is rotated */
     cursor: pointer;
     border-radius: 3px;
 }
 
 .nav-caret.rotate-180 {
-    transform: rotate(0deg); /* When open, rotate to original position */
+    transform: rotate(0deg);
+    /* When open, rotate to original position */
 }
 
 /* Mobile menu dropdown styles */
 .navigation-mobile ul li ul {
     display: none;
-    position: fixed; /* Fixed position for sliding */
+    position: fixed;
+    /* Fixed position for sliding */
     top: 0;
-    right: -100%; /* Start off-screen to the right */
+    right: -100%;
+    /* Start off-screen to the right */
     height: 100vh;
     width: 100%;
     background-color: white;
     z-index: 1000;
     overflow-y: auto;
-    transition: right 0.3s ease; /* Transition for sliding effect */
-    padding-top: 60px; /* Space for back button */
+    transition: right 0.3s ease;
+    /* Transition for sliding effect */
+    padding-top: 60px;
+    /* Space for back button */
 }
 
 .navigation-mobile ul li ul.open {
     display: block;
-    right: 0; /* Slide in from right */
+    right: 0;
+    /* Slide in from right */
 }
 
 /* Parent menu item with submenu indicator for mobile */
-.navigation-mobile ul li.has-submenu > a {
+.navigation-mobile ul li.has-submenu>a {
     position: relative;
-    padding-right: 40px; /* Make space for the caret */
+    padding-right: 40px;
+    /* Make space for the caret */
 }
 
 /* Right-pointing caret for parent menu items in mobile */
@@ -417,4 +411,96 @@ fieldset {
 
 .mobile-submenu-back:hover {
     background-color: #f0f4f7;
+}
+
+.mark {
+    border-left: 30px solid #F0F4F7;
+
+}
+
+.imgBoxRight dd {
+    font-size: .8em;
+    text-align: left;
+    margin: 0;
+    margin-top: 10px;
+    padding: 15px;
+    background: #F0F4F7;
+    cursor: default;
+    border-radius: 4px;
+}
+
+.imgBoxLeft dd {
+    font-size: .8em;
+    text-align: left;
+    margin: 0;
+    margin-top: 10px;
+    padding: 15px;
+    background: #F0F4F7;
+    cursor: default;
+    border-radius: 4px;
+}
+
+.showblock2inactivetab {
+    background: #F0F4F7;
+    padding: 4px;
+    margin-left: -2px;
+}
+
+.right-sidebar {
+    font-size: 14px;
+}
+
+.right-sidebar h1 {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.right-sidebar h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.right-sidebar h3 {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.right-sidebar h4 {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.right-sidebar h5 {
+    font-size: .875rem;
+    font-weight: 500;
+}
+
+.right-sidebar a:visited {
+    color: inherit;
+}
+
+.right-sidebar a:hover {
+    text-decoration: none;
+    color: #1c2834;
+    transition: color .3s ease;
+}
+
+a:visited {
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+header a {
+    color: inherit;
+}
+
+.arrow-right-icon {
+    transition: transform .2s ;
+}
+
+a:hover .arrow-right-icon {
+    transform: translateX(5px);
 }

@@ -1,0 +1,66 @@
+import React from 'react';
+import clsx from 'clsx';
+import useClickAway from '../../common/hook/useClickAway.js';
+import AppContext from '../../common/context/app/app.context.js';
+import ChevronButton from '../../common/ui/ChevronButton.jsx';
+import useQueryParam from '../../common/hook/useQueryParam.js';
+
+/**
+ * Language selector
+ *
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const LangSelector = () => {
+  // Get context data
+  const {languages} = React.useContext(AppContext);
+
+  // Get current lang
+  const currentLang = useQueryParam('l');
+
+  // Visible state
+  const [opened, setOpened] = React.useState(false);
+
+  // Wrapper ref
+  const wrapperRef = React.useRef(null);
+
+  /**
+   * Handle click away
+   */
+  useClickAway(wrapperRef, () => {
+    setOpened(false);
+  });
+
+  return (
+    <>
+      <div
+        ref={wrapperRef}
+        className="relative ml-auto mr-4 cursor-pointer inline-flex"
+      >
+        <ChevronButton
+          leftSection={
+            <span className="current-lang uppercase rotate">{currentLang}</span>
+          }
+          rotateChevron='rotate-90'
+          onClick={() => setOpened(true)}
+        />
+        <div
+          className={clsx(
+            'lang-dropdown w-[77px] border-t border-t-gray-geyser shadow-[0_3px_4px_1px_#828e9a] absolute right-0 mt-2 bg-white overflow-hidden z-50 transform origin-top',
+            'transition-all duration-300 top-6',
+            opened ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'
+          )}
+          onClick={() => setOpened(false)}
+        >
+          {languages.map((lang, index) => (
+            <a key={index} className="uppercase" href={lang.href}>
+              {lang.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default LangSelector;
