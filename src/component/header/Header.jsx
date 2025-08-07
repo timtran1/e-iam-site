@@ -69,7 +69,7 @@ const Header = ({className}) => {
 
         {/*region navigation*/}
         <div className="hidden sm:block">
-          <Navigation.Desktop withSubMenuDropdown={false} />
+          <Navigation.Desktop />
         </div>
         {/*endregion navigation*/}
       </header>
