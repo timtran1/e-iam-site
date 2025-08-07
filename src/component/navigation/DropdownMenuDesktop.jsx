@@ -13,10 +13,12 @@ const isDevMode = import.meta.env.DEV;
 /**
  * Dropdown menu for desktop
  *
+ * @param {boolean} withSubMenuDropdown
  * @returns {JSX.Element}
+ *
  * @constructor
  */
-const DropdownMenuDesktop = () => {
+const DropdownMenuDesktop = ({withSubMenuDropdown = false}) => {
   // Get context data
   const {menu} = React.useContext(AppContext);
   const menus = isDevMode ? mockMenu : menu;
@@ -65,7 +67,7 @@ const DropdownMenuDesktop = () => {
               {menuItem.label}
             </a>{' '}
             <>
-              {menuItem.children?.length > 0 && (
+              {!!withSubMenuDropdown && menuItem.children?.length > 0 && (
                 <>
                   <ChevronButton
                     className={clsx(
