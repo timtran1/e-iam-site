@@ -1,5 +1,6 @@
 import path from 'path';
 import fs from 'fs/promises';
+import {minify} from 'terser';
 
 console.log('Start - Merging built files...');
 
@@ -10,6 +11,47 @@ let html = await fs.readFile(htmlPath, 'utf-8');
 const reactScriptRegex =
   /<script type="module" crossorigin [^>]*src="\/assets\/(index[^"]+\.js)"[^>]*><\/script>/;
 
+/**
+ * Minify js content
+ * Returns original content if catching error
+ *
+ * @param {string} jsContent
+ * @returns {Promise<string>}
+ */
+const minifyJsContent = async (jsContent) => {
+  // Minify the JS content
+  console.log('Minifying JavaScript code...');
+  try {
+    const minifyResult = await minify(jsContent, {
+      compress: {
+        drop_console: false,
+        drop_debugger: true,
+        pure_funcs: ['console.debug'],
+      },
+      mangle: true,
+      format: {
+        comments: false,
+      },
+    });
+
+    // Check error
+    if (minifyResult.error) {
+      console.error('Minification error:', minifyResult.error);
+      return jsContent;
+    }
+
+    // Write log - minified completely
+    const minifiedJsContent = minifyResult.code;
+    console.log(`Minified size: ${minifiedJsContent.length} bytes`);
+
+    // Returns minified js content
+    return minifiedJsContent;
+  } catch (e) {
+    console.error('Can not minify js content:', e);
+    return jsContent;
+  }
+};
+
 const match = html.match(reactScriptRegex);
 if (!match) {
   console.error(`Error: Could not find the <script> tag to inline.`);
@@ -19,7 +61,10 @@ if (!match) {
   const jsFilename = match[1];
   const jsFilePath = path.join(distDir, 'assets', jsFilename);
   const jsContent = await fs.readFile(jsFilePath, 'utf-8');
-  const inlineScript = `<script type="module" crossorigin>\n${jsContent}\n</script>`;
+
+  // Minify the JS content
+  const minifiedJsContent = minifyJsContent(jsContent);
+  const inlineScript = `<script type="module" crossorigin>${minifiedJsContent}</script>`;
   html = html.split(jsTag).join(inlineScript);
 
   // Insert cssbase.css to html
