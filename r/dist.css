@@ -259,14 +259,12 @@ fieldset, legend {
     padding: 0
 }
 
-menu, ol, ul {
-    list-style: none;
-    margin: 0;
+dialog {
     padding: 0
 }
 
-dialog {
-    padding: 0
+menu, ol, ul {
+    margin: 0;
 }
 
 textarea {
@@ -294,11 +292,6 @@ input::placeholder, textarea::placeholder {
 audio, canvas, embed, iframe, img, object, svg, video {
     display: block;
     vertical-align: middle
-}
-
-img, video {
-    max-width: 100%;
-    height: auto
 }
 
 [hidden]:where(:not([hidden=until-found])) {
