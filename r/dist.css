@@ -263,6 +263,10 @@ dialog {
     padding: 0
 }
 
+menu, ol, ul {
+    margin: 0;
+}
+
 textarea {
     resize: vertical
 }
