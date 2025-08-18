@@ -15,7 +15,7 @@ function renderApp() {
   // Clear any pending render to avoid multiple renders
   clearTimeout(renderTimeoutId);
 
-  // Debounce render calls with 300ms delay for better performance
+  // Debounce render calls with a delay for better performance
   renderTimeoutId = setTimeout(() => {
     try {
       console.log('Rendering <App /> ...');
