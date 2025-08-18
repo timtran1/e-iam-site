@@ -60,7 +60,7 @@ const useServerSideVariables = () => {
         if (main) {
           main.remove();
         }
-      }, 500);
+      }, 10000); // Delete hook ids after 10s to make source there is no any change.
     }
   }, [hasGotten]);
 

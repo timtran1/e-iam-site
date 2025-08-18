@@ -24,7 +24,7 @@ const minifyJsContent = async (jsContent) => {
   try {
     const minifyResult = await minify(jsContent, {
       compress: {
-        drop_console: true,
+        drop_console: false,
         drop_debugger: true,
         sequences: true,
         properties: true,
