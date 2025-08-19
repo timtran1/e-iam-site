@@ -23,13 +23,6 @@ export default function RightSidebar({content}) {
    *     index: number, href: string, text: string, name: string, className: string, parentDiv: HTMLElement
    * }>}
    */
-  // Check when asideRef is rendered
-  React.useEffect(() => {
-    if (asideRef.current) {
-      setIsAsideRendered(true);
-    }
-  }, [processedContent]);
-
   const sideAnchors = React.useMemo(() => {
     if (content && isAsideRendered && asideRef.current) {
       const element = asideRef.current.querySelector('#iii');
@@ -67,6 +60,13 @@ export default function RightSidebar({content}) {
     }
     return [];
   }, [content, isAsideRendered]);
+
+  // Check when asideRef is rendered
+  React.useEffect(() => {
+    if (asideRef.current) {
+      setIsAsideRendered(true);
+    }
+  }, [processedContent]);
 
   return (
     <aside className="right-sidebar w-full sm:w-[350px] bg-gray-aqua-haze px-6 py-3 space-y-6">
