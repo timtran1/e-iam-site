@@ -46,6 +46,7 @@ export default {
     mirage: '#1c2834',
     geyser: '#DFE4E9',
     westar: '#E5E4E2',
+    shadow: '#848848',
   },
   blue: {
     'pickled-bluewood': '#2F4356',

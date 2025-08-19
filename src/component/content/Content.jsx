@@ -11,6 +11,7 @@ import ArrowRightHTML from '../icons/ArrowRightHTML.js';
 import useIsMobile from '../../common/hook/useIsMobile.js';
 import {handleResponsiveWidth} from '../../common/utils/responsiveWidthHandler.js';
 import {stripNavigationMarkers} from '../../common/helper/element-parsing.js';
+import useHashScroll from '../../common/hook/useHashScroll.js';
 
 const isDevMode = import.meta.env.DEV;
 /**
@@ -20,6 +21,9 @@ const isDevMode = import.meta.env.DEV;
  * @constructor
  */
 const Content = () => {
+  // Init hash scroll
+  useHashScroll();
+
   // Get context data
   const {menu, rightContent, content} = useContext(AppContext);
 
