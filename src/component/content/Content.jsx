@@ -21,11 +21,13 @@ const isDevMode = import.meta.env.DEV;
  * @constructor
  */
 const Content = () => {
-  // Init hash scroll
-  useHashScroll();
-
   // Get context data
-  const {menu, rightContent, content} = useContext(AppContext);
+  const {menu, rightContent, content, headerMeta} = useContext(AppContext);
+
+  // Init hash scroll
+  useHashScroll({
+    offset: (Number(headerMeta.headerHeight) || 10 * 16) + 5 * 16,
+  });
 
   const menus = isDevMode ? mockMenu : menu;
   const rightSidebarContent = isDevMode ? mockRightContent : rightContent;
