@@ -25,17 +25,16 @@
         <div id="header">{{{header}}}</div>
         <div id="languages">{{{languages}}}</div>
         <div id="navigation">{{{navigation}}}</div>
-        <div id="footer" style="display: none; opacity: 0;">{{{footer}}}</div>
-        <div id="right" style="display: none; opacity: 0;">{{{right}}}</div>
+        <div id="footer">{{{footer}}}</div>
+        <div id="right">{{{right}}}</div>
+        <main id="main">
+            <section id="outer">
+                <a name="content" style="pointer-events:none"></a>
+                <article id="content">{{{content}}}</article>
+            </section>
+        </main>
     </div>
     <!--endregion server-side variables-->
-    <main id="main" style="display: none; opacity:0">
-        <section id="outer">
-            <article id="content"><a name="content" style="pointer-events:none"></a>{{{content}}}
-            </article>
-        </section>
-    </main>
-
 
     <script type="module" src="/src/main.jsx"></script>
     {{{s!control}}}
