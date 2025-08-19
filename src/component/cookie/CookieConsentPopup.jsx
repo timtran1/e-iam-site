@@ -6,12 +6,12 @@ import {
   useDisclosure,
   useLocalStorage,
 } from '@mantine/hooks';
-import { useTranslation } from 'react-i18next';
-import { TranslationNamespace } from '../../constants/translation.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faX } from '@fortawesome/free-solid-svg-icons';
-import useEffectOnce from "../../common/hook/useEffectOnce.js";
-import { LocalstorageKey } from '../../constants/localstorage.js';
+import {useTranslation} from 'react-i18next';
+import {TranslationNamespace} from '../../constants/translation.js';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCheck, faX} from '@fortawesome/free-solid-svg-icons';
+import useEffectOnce from '../../common/hook/useEffectOnce.js';
+import {LocalstorageKey} from '../../constants/localstorage.js';
 
 // Number of days to mark cookie consent is expired
 const DAYS_TO_EXPIRE = 365;
@@ -33,7 +33,7 @@ const CookieConsentPopup = React.forwardRef((props, ref) => {
   });
 
   // Translation
-  const { t } = useTranslation(TranslationNamespace.CookieConsent);
+  const {t} = useTranslation(TranslationNamespace.CookieConsent);
 
   // Visible state
   const [opened, actions] = useDisclosure(false);
@@ -89,7 +89,7 @@ const CookieConsentPopup = React.forwardRef((props, ref) => {
   return (
     <div
       className={clsx(
-        'shadow-lg border-t border-gray-geyser bg-gray-zumthor text-[#069] font-sans font-normal shadow p-4 md:p-8 w-full',
+        'border-t border-gray-geyser bg-gray-zumthor text-[#069] font-sans font-normal shadow p-4 md:p-8 w-full',
         'fixed bottom-0 right-0',
         'transition-transform duration-700 ease-in-out',
         {
@@ -144,7 +144,6 @@ const CookieConsentPopup = React.forwardRef((props, ref) => {
         {/*endregion action buttons*/}
       </div>
     </div>
-
   );
 });
 

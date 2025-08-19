@@ -10,7 +10,7 @@ import RightSidebar from '../right-sidebar/RightSidebar.jsx';
 import ArrowRightHTML from '../icons/ArrowRightHTML.js';
 import useIsMobile from '../../common/hook/useIsMobile.js';
 import {handleResponsiveWidth} from '../../common/utils/responsiveWidthHandler.js';
-import CookieConsentPopup from '../cookie/CookieConsentPopup.jsx';
+import {stripNavigationMarkers} from '../../common/helper/element-parsing.js';
 
 const isDevMode = import.meta.env.DEV;
 /**
@@ -25,27 +25,22 @@ const Content = () => {
 
   const menus = isDevMode ? mockMenu : menu;
   const rightSidebarContent = isDevMode ? mockRightContent : rightContent;
-  const pageContent = isDevMode ? mockContent : content
+  const pageContent = isDevMode ? mockContent : content;
 
-  // Replace all ⇨ with ArrowRightHTML
   const processedContent = useMemo(() => {
     if (pageContent) {
-      const arrowRight = ArrowRightHTML({ width: 24, height: 24 })
-      return pageContent.replace(/⇨/g, arrowRight)
+      const arrowRight = ArrowRightHTML({width: 24, height: 24});
+      return stripNavigationMarkers(pageContent)
+        ?.replace(/⇨/g, arrowRight)
         .replace(/→/g, arrowRight)
         .replace(/&#8594;/g, arrowRight)
-        .replace(/&amp;#8594;/g, arrowRight)
+        .replace(/&amp;#8594;/g, arrowRight);
     } else {
       return null;
     }
   }, [pageContent]);
 
-  console.log({
-    pageContent, processedContent, debug: pageContent?.replace(/⇨/g, ArrowRightHTML({ width: 24, height: 24 }))
-      .replace(/→/g, ArrowRightHTML({ width: 24, height: 24 })).replace(/→/g, ArrowRightHTML({ width: 24, height: 24 }))
-  }, pageContent === processedContent);
-
-  const { isMobile } = useIsMobile();
+  const {isMobile} = useIsMobile();
 
   useEffect(() => {
     if (processedContent) {
@@ -55,7 +50,7 @@ const Content = () => {
         '.dlYoutubeSmall',
         'dlVideoLarge',
         'iframe[src*="youtube"]',
-        'iframe[title*="YouTube"]'
+        'iframe[title*="YouTube"]',
       ]);
     }
   }, [isMobile, processedContent]);
@@ -84,7 +79,9 @@ const Content = () => {
           {/*endregion right sidebar*/}
         </div>
       </article>
-      <CookieConsentPopup />
+
+      {/* Show unnecessary cookie banner */}
+      {/* <CookieConsentPopup />*/}
     </>
   );
 };
