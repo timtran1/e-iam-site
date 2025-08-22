@@ -14,20 +14,8 @@ const AppProvider = ({children}) => {
   // Get server-side data
   const {serverSideData} = useServerSideVariables();
 
-  /**
-   * Get header meta
-   * @type {{backgroundImage: string}|{}}
-   */
-  const headerMeta = React.useMemo(() => {
-    if (serverSideData && serverSideData.header) {
-      const backgroundImage = window.getComputedStyle(
-        serverSideData.header
-      ).backgroundImage;
-      return {backgroundImage};
-    } else {
-      return {};
-    }
-  }, [serverSideData]);
+  // Header meta state
+  const [headerMeta, setHeaderMeta] = React.useState({});
 
   /**
    * @type {Array<AppMenu>}
@@ -70,16 +58,33 @@ const AppProvider = ({children}) => {
     }
   }, [serverSideData.content]);
 
+  /**
+   * Get header meta
+   * @type {{backgroundImage: string}|{}}
+   */
+  React.useEffect(() => {
+    if (serverSideData && serverSideData.header) {
+      const backgroundImage = window.getComputedStyle(
+        serverSideData.header
+      ).backgroundImage;
+      setHeaderMeta((prevState) => ({
+        ...prevState,
+        backgroundImage,
+      }));
+    }
+  }, [serverSideData]);
+
   return (
     <>
       <AppContext.Provider
         value={{
           serverSideData,
-          headerMeta,
           menu,
           languages,
           rightContent,
           content,
+          headerMeta,
+          setHeaderMeta,
         }}
       >
         {children}

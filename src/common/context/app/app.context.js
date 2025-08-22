@@ -4,9 +4,10 @@ import React from 'react';
  * @typedef AppContext
  *
  * @property {ServerSideData} serverSideData
- * @property {{backgroundImage?: string}} headerMeta
  * @property {Array<AppMenu>} menu
  * @property {Array<AppLanguage>} languages
+ * @property {{backgroundImage?: string, headerHeight?: number}} headerMeta
+ * @property setHeaderMeta
  */
 
 /**
@@ -16,12 +17,14 @@ const DefaultState = {
   serverSideData: {
     languages: undefined,
     navigation: undefined,
-    content: undefined,
     footer: undefined,
+    rightContent: undefined,
+    content: undefined,
   },
-  headerMeta: {},
   menu: [],
   languages: [],
+  headerMeta: {},
+  setHeaderMeta: () => {},
 };
 
 /**

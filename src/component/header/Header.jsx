@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import LangSelector from './LangSelector.jsx';
 import Navigation from '../navigation/index.js';
 import AppContext from '../../common/context/app/app.context.js';
+import {useElementSize} from '@mantine/hooks';
 
 /**
  * Header
@@ -11,12 +12,28 @@ import AppContext from '../../common/context/app/app.context.js';
  * @constructor
  */
 const Header = ({className}) => {
+  // Header ref
+  const {ref: headerRef, height: headerHeight} = useElementSize();
+
   // Get app context
-  const {headerMeta} = React.useContext(AppContext);
+  const {headerMeta, setHeaderMeta} = React.useContext(AppContext);
+
+  /**
+   * Get header height and update to data context
+   */
+  React.useEffect(() => {
+    if (headerHeight) {
+      setHeaderMeta((prev) => ({
+        ...prev,
+        headerHeight,
+      }));
+    }
+  }, [headerHeight, setHeaderMeta]);
 
   return (
     <>
       <header
+        ref={headerRef}
         style={{
           ...(headerMeta?.backgroundImage && {
             backgroundImage: headerMeta.backgroundImage,

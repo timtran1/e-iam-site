@@ -6,4 +6,5 @@
  * @property {Element=} navigation
  * @property {Element=} content
  * @property {Element=} footer
+ * @property {Element=} rightContent
  */
