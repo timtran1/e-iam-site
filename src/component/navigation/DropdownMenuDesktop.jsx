@@ -54,14 +54,14 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
           <li
             key={i}
             className={clsx(
-              'flex gap-1 p-[16px] border-b-[3px]',
+              'flex gap-1 border-b-[3px]',
               menuItem.key === currentPage
                 ? 'border-primary-main shadow-lg'
                 : 'border-transparent hover:border-primary-main hover:shadow-lg'
             )}
           >
             <a
-              className="transition-all hover:translate-y-0.5 text-gray-mirage visited:text-gray-mirage hover:no-underline"
+              className="p-4 transition-all hover:translate-y-0.5 text-gray-mirage visited:text-gray-mirage hover:no-underline"
               href={menuItem.href}
             >
               {menuItem.label}
