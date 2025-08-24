@@ -33,7 +33,7 @@ function renderApp() {
     } catch (error) {
       console.error('Error rendering React app:', error);
     }
-  }, 750);
+  }, 1000);
 }
 
 /**
@@ -52,12 +52,8 @@ const attachObserver = (node) => {
     );
 
     if (relevantMutations.length > 0) {
+      // Log for debugging
       console.log(`Relevant mutation detected in #${node.id}`);
-
-      // Log mutation details for debugging
-      for (const mutation of relevantMutations) {
-        console.log('Type:', mutation.type, 'Target:', mutation.target);
-      }
 
       // Trigger app re-render
       renderApp();
