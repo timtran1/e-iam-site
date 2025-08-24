@@ -60,12 +60,10 @@ const attachObserver = (node) => {
     }
   });
 
-  // Configure observer to watch for all types of changes
+  // Configure observer to watch for content changes
   observer.observe(node, {
-    attributes: true, // Watch attribute changes
     characterData: true, // Watch text content changes
     subtree: true, // Watch changes in child elements
-    childList: true, // Watch for added/removed children
   });
 
   // Store observer reference for cleanup
