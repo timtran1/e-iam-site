@@ -7,7 +7,8 @@ import React from 'react';
  * @property {Array<AppMenu>} menu
  * @property {Array<AppLanguage>} languages
  * @property {{backgroundImage?: string, headerHeight?: number}} headerMeta
- * @property setHeaderMeta
+ * @property {function} setHeaderMeta
+ * @property {(id: string) => void} removeServerElement
  */
 
 /**
@@ -15,6 +16,8 @@ import React from 'react';
  */
 const DefaultState = {
   serverSideData: {
+    header: undefined,
+    search: undefined,
     languages: undefined,
     navigation: undefined,
     footer: undefined,
@@ -25,6 +28,7 @@ const DefaultState = {
   languages: [],
   headerMeta: {},
   setHeaderMeta: () => {},
+  removeServerElement: () => {},
 };
 
 /**

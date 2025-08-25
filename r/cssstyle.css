@@ -333,8 +333,8 @@ dd {
     background: url(/r/lupe/lupe_de.svg?1746108024) 0 0 no-repeat transparent;
     border: none;
     cursor: pointer;
-    width: 21px;
-    height: 20px;
+    width: 1.5rem;
+    height: 2rem;
 }
 
 #search_Input {
