@@ -71,25 +71,24 @@ export default function RightSidebar({content}) {
   return (
     <aside className="right-sidebar w-full sm:w-[350px] bg-gray-aqua-haze px-6 py-3 space-y-6">
       <div
-        className="sticky"
+        ref={asideRef}
+        dangerouslySetInnerHTML={{__html: processedContent}}
+      />
+
+      <div
+        className="sticky space-y-3.5"
         style={{top: headerMeta.headerHeight + 16 || 10 * 16}}
       >
-        <div
-          ref={asideRef}
-          dangerouslySetInnerHTML={{__html: processedContent}}
-        />
-        <div className="space-y-3.5">
-          {sideAnchors?.map((anchor, _index) => (
-            <React.Fragment key={_index}>
-              {anchor.parentDiv && (
-                <div
-                  className="leading-5 active:text-gray-shadow hover:underline"
-                  dangerouslySetInnerHTML={{__html: anchor.parentDiv.outerHTML}}
-                />
-              )}
-            </React.Fragment>
-          ))}
-        </div>
+        {sideAnchors?.map((anchor, _index) => (
+          <React.Fragment key={_index}>
+            {anchor.parentDiv && (
+              <div
+                className="leading-5 active:text-gray-shadow hover:underline"
+                dangerouslySetInnerHTML={{__html: anchor.parentDiv.outerHTML}}
+              />
+            )}
+          </React.Fragment>
+        ))}
       </div>
     </aside>
   );

@@ -20,23 +20,27 @@
 </head>
 
 <body id="body">
+    <!--region render element for react-->
     <div id="root"></div>
-    <div id="__VARIABLES_REGION" class="hidden">
+    <script type="module" src="/src/main.jsx"></script>
+    <!--endregion render element for react-->
+
+    <!--region server-side variables-->
+    <!-- These ids should be declared at 'src/common/constant/element-id.js' -->
+    <main id="main" class="hidden">
         <div id="header">{{{header}}}</div>
         <div id="languages">{{{languages}}}</div>
         <div id="navigation">{{{navigation}}}</div>
         <div id="footer">{{{footer}}}</div>
         <div id="right">{{{right}}}</div>
-        <main id="main">
-            <section id="outer">
-                <a name="content" style="pointer-events:none"></a>
-                <article id="content">{{{content}}}</article>
-            </section>
-        </main>
-    </div>
+        <section id="outer">
+            <article id="content">
+                {{{content}}}{{{anticachescript}}}
+            </article>
+        </section>
+    </main>
     <!--endregion server-side variables-->
 
-    <script type="module" src="/src/main.jsx"></script>
     {{{s!control}}}
     <script>
         function autoequalsone() {
@@ -47,7 +51,6 @@
     <script src="r/ie11css.css"></script>
     {{{s!masterscript}}}
     <script>
-        if (document.getElementById('main')) document.getElementById('main').style.opacity = '1';
         if (location.href.indexOf('c=_search') > 0) document.getElementById('content').innerHTML += ('<div id="teledocs"></div><iframe style="display:none" src="u5sys.content.php?c=teledocs&x=' + location.href.split('c=')[1] + '"></iframe>');
         if (location.href.indexOf('c=_search') > 0) document.getElementById('content').innerHTML += ('<div id="telehelp"></div><iframe style="display:none" src="u5sys.content.php?c=telehelp&x=' + location.href.split('c=')[1] + '"></iframe>');
         if (location.href.indexOf('c=_search') > 0) document.getElementById('content').innerHTML += ('<div id="telehelpagov"></div><iframe style="display:none" src="u5sys.content.php?c=telehelpagov&x=' + location.href.split('c=')[1] + '"></iframe>');

@@ -33,7 +33,7 @@ function renderApp() {
     } catch (error) {
       console.error('Error rendering React app:', error);
     }
-  }, 750);
+  }, 1000);
 }
 
 /**
@@ -52,24 +52,18 @@ const attachObserver = (node) => {
     );
 
     if (relevantMutations.length > 0) {
+      // Log for debugging
       console.log(`Relevant mutation detected in #${node.id}`);
-
-      // Log mutation details for debugging
-      for (const mutation of relevantMutations) {
-        console.log('Type:', mutation.type, 'Target:', mutation.target);
-      }
 
       // Trigger app re-render
       renderApp();
     }
   });
 
-  // Configure observer to watch for all types of changes
+  // Configure observer to watch for content changes
   observer.observe(node, {
-    attributes: true, // Watch attribute changes
     characterData: true, // Watch text content changes
     subtree: true, // Watch changes in child elements
-    childList: true, // Watch for added/removed children
   });
 
   // Store observer reference for cleanup
