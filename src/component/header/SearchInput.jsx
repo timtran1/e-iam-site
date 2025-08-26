@@ -3,6 +3,8 @@ import AppContext from '../../common/context/app/app.context.js';
 import {useDebouncedCallback} from '@mantine/hooks';
 import {ELEMENT_ID} from '../../common/constant/element-id.js';
 import useEffectOnce from '../../common/hook/useEffectOnce.js';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faSearch} from '@fortawesome/free-solid-svg-icons';
 
 /**
  * Search input component
@@ -15,6 +17,9 @@ const SearchInput = React.memo(() => {
 
   // Search str from query param
   const [initSearchStr, setInitSearchStr] = React.useState('');
+
+  // Searching string state
+  const [searchStr, setSearchStr] = React.useState('');
 
   /**
    * Remove server search element after debounced time
@@ -43,7 +48,20 @@ const SearchInput = React.memo(() => {
 
     setInput(document.fsearch);
     setInput(document.fsearch2);
+    setSearchStr(initSearchStr);
   }, 500);
+
+  /**
+   * Handle submit search
+   * Why's that fsearch (for header), fsearch2 (for content) - this is element name of U5CMS
+   * @type {function(): void}
+   */
+  const handleSubmit = React.useCallback(() => {
+    if (document.fsearch) {
+      document.fsearch.q.value = searchStr;
+      document.fsearch.submit();
+    }
+  }, [searchStr]);
 
   /**
    * Handle server side data is rendered, delete server element after that
@@ -71,10 +89,23 @@ const SearchInput = React.memo(() => {
   return (
     <>
       {!!serverSideData.search && (
-        <div
-          className="min-w-40 mx-3"
-          dangerouslySetInnerHTML={{__html: serverSideData.search.innerHTML}}
-        ></div>
+        <div className="relative mx-2 md:mx-4 lg:mx-6 2xl:mx-8">
+          <div
+            className="hidden absolute"
+            dangerouslySetInnerHTML={{__html: serverSideData.search.innerHTML}}
+          ></div>
+          <input
+            className="w-32 xl:w-44 2xl:w-64 text-xs rounded-none pl-8 pr-2 py-1.5 border-gray-athens-gray active:!border-gray-100 focus:!border-gray-100"
+            placeholder="Search"
+            value={searchStr}
+            onChange={({target: {value}}) => setSearchStr(value)}
+            onKeyDown={(event) => event.key === 'Enter' && handleSubmit()}
+          />
+          <FontAwesomeIcon
+            icon={faSearch}
+            className="absolute w-6 h-4 px-1.5 left-0 top-0 translate-y-1/2 text-gray-chateau-2"
+          />
+        </div>
       )}
     </>
   );
