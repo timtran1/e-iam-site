@@ -75,7 +75,7 @@ const attachObserver = (node) => {
  * Prevents multiple observers from being attached to the same element
  */
 const checkAndAttachObserver = () => {
-  const target = document.getElementById(ELEMENT_ID.__VARIABLES_REGION);
+  const target = document.getElementById(ELEMENT_ID.MAIN);
 
   // Only attach observer if element exists and hasn't been observed yet
   if (target && !target.__attachedObserver) {
@@ -112,7 +112,7 @@ const cleanup = () => {
   }
 
   // Clean up the marker from DOM elements
-  const target = document.getElementById(ELEMENT_ID.__VARIABLES_REGION);
+  const target = document.getElementById(ELEMENT_ID.MAIN);
   if (target && target.__attachedObserver) {
     delete target.__attachedObserver;
   }

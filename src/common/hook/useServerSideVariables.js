@@ -52,14 +52,12 @@ const useServerSideVariables = () => {
   React.useEffect(() => {
     if (hasGotten) {
       setTimeout(() => {
-        const element = document.getElementById(ELEMENT_ID.__VARIABLES_REGION);
-        if (element) {
-          element.remove();
-        }
-        const main = document.getElementById('main');
-        if (main) {
-          main.remove();
-        }
+        Object.values(ELEMENT_ID).forEach((id) => {
+          const element = document.getElementById(id);
+          if (element) {
+            element.remove();
+          }
+        });
       }, 10000); // Delete hook ids after 10s to make sure there is no any change.
     }
   }, [hasGotten]);

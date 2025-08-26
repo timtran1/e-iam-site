@@ -1,8 +1,11 @@
 /**
+ * These ids only use for serverside elements
+ * DO NOT use or add any other id used for React component
+ *
  * @see index.html
  */
 export const ELEMENT_ID = {
-  __VARIABLES_REGION: 'main', // The "#main" element wraps all the elements from the server.
+  MAIN: 'main',
   HEADER: 'header',
   LANGUAGES: 'languages',
   NAVIGATION: 'navigation',
