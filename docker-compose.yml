@@ -31,7 +31,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./u5CMS:/var/www/html
-      - ./config.php:/var/www/html/config.php
+      - ./php_configs/eiam.php:/var/www/html/config.php
     depends_on:
       - eiam-db
     environment:
@@ -44,7 +44,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./u5CMS:/var/www/html
-      - ./config.php:/var/www/html/config.php
+      - ./php_configs/eiam2.php:/var/www/html/config.php
     depends_on:
       - eiam2-db
     environment:
