@@ -4,8 +4,7 @@ import {ELEMENT_ID} from './common/constant/element-id.js';
 
 // Global variables for managing render timing and observers
 let renderTimeoutId = null;
-let bodyObserver = null;
-let targetObserver = null;
+const elementObservers = new Map(); // Store observers for each element
 
 /**
  * Renders the React App with debouncing to prevent excessive re-renders
@@ -40,8 +39,9 @@ function renderApp() {
  * Attaches a MutationObserver to monitor changes in the target node
  * Re-renders the app when relevant mutations are detected
  * @param {HTMLElement} node - The DOM element to observe
+ * @param {string} elementId - The element ID for tracking
  */
-const attachObserver = (node) => {
+const attachObserver = (node, elementId) => {
   const observer = new MutationObserver((mutationsList) => {
     // Filter only relevant mutations to avoid unnecessary re-renders
     const relevantMutations = mutationsList.filter(
@@ -67,25 +67,35 @@ const attachObserver = (node) => {
   });
 
   // Store observer reference for cleanup
-  targetObserver = observer;
+  elementObservers.set(elementId, observer);
 };
 
 /**
- * Checks if the target element exists and attaches observer if needed
+ * Checks if target elements exist and attaches observers if needed
  * Prevents multiple observers from being attached to the same element
  */
-const checkAndAttachObserver = () => {
-  const target = document.getElementById(ELEMENT_ID.MAIN);
+const checkAndAttachObservers = () => {
+  let hasNewObserver = false;
 
-  // Only attach observer if element exists and hasn't been observed yet
-  if (target && !target.__attachedObserver) {
-    // Mark element as observed to prevent duplicate observers
-    target.__attachedObserver = true;
+  // Iterate through all element IDs and attach observers
+  Object.values(ELEMENT_ID).forEach((elementId) => {
+    const target = document.getElementById(elementId);
 
-    // Attach the mutation observer
-    attachObserver(target);
+    // Only attach observer if element exists and hasn't been observed yet
+    if (target && !target.__attachedObserver) {
+      // Mark element as observed to prevent duplicate observers
+      target.__attachedObserver = true;
 
-    // Initial render when observer is first attached
+      // Attach the mutation observer
+      attachObserver(target, elementId);
+      hasNewObserver = true;
+
+      console.log(`Observer attached to element: #${elementId}`);
+    }
+  });
+
+  // Initial render when any new observer is attached
+  if (hasNewObserver) {
     renderApp();
   }
 };
@@ -100,37 +110,55 @@ const cleanup = () => {
   // Clear any pending render timeout
   clearTimeout(renderTimeoutId);
 
-  // Disconnect observers to prevent memory leaks
-  if (bodyObserver) {
-    bodyObserver.disconnect();
-    bodyObserver = null;
-  }
+  // Disconnect all element observers to prevent memory leaks
+  elementObservers.forEach((observer, elementId) => {
+    observer.disconnect();
+    console.log(`Observer disconnected for element: #${elementId}`);
+  });
+  elementObservers.clear();
 
-  if (targetObserver) {
-    targetObserver.disconnect();
-    targetObserver = null;
-  }
-
-  // Clean up the marker from DOM elements
-  const target = document.getElementById(ELEMENT_ID.MAIN);
-  if (target && target.__attachedObserver) {
-    delete target.__attachedObserver;
-  }
+  // Clean up the marker from all DOM elements
+  Object.values(ELEMENT_ID).forEach((elementId) => {
+    const element = document.getElementById(elementId);
+    if (element && element.__attachedObserver) {
+      delete element.__attachedObserver;
+    }
+  });
 };
 
-// Set up body observer to watch for the target element being added to DOM
-bodyObserver = new MutationObserver(() => {
-  checkAndAttachObserver();
-});
+/**
+ * Set up observers for specific elements instead of observing the entire body
+ * This approach is more efficient and targeted
+ */
+const initializeObservers = () => {
+  // Check for elements periodically until they are found
+  const checkInterval = setInterval(() => {
+    checkAndAttachObservers();
 
-// Start observing the body for changes (target element might be added dynamically)
-bodyObserver.observe(document.body, {
-  childList: true, // Watch for added/removed children
-  subtree: true, // Watch changes in all descendants
-});
+    // Stop checking if all elements have been found and observed
+    const allElementsObserved = Object.values(ELEMENT_ID).every((elementId) => {
+      const element = document.getElementById(elementId);
+      return element && element.__attachedObserver;
+    });
+
+    if (allElementsObserved) {
+      clearInterval(checkInterval);
+      console.log('All target elements found and observers attached');
+    }
+  }, 500); // Check every 500ms
+
+  // Stop checking after 30 seconds to prevent infinite checking
+  setTimeout(() => {
+    clearInterval(checkInterval);
+    console.log('Observer initialization timeout reached');
+  }, 30000);
+};
 
 // Add cleanup listener for page unload to prevent memory leaks
 window.addEventListener('beforeunload', cleanup);
 
-// Initial check in case the target element already exists
-checkAndAttachObserver();
+// Initialize observers
+initializeObservers();
+
+// Initial check in case target elements already exist
+checkAndAttachObservers();
