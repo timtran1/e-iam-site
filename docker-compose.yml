@@ -30,7 +30,6 @@ services:
     build: .
     restart: unless-stopped
     volumes:
-      - ./u5CMS:/var/www/html
       - ./php_configs/eiam.php:/var/www/html/config.php
     depends_on:
       - eiam-db
@@ -43,7 +42,6 @@ services:
     build: .
     restart: unless-stopped
     volumes:
-      - ./u5CMS:/var/www/html
       - ./php_configs/eiam2.php:/var/www/html/config.php
     depends_on:
       - eiam2-db
@@ -63,7 +61,7 @@ services:
       MYSQL_PASSWORD: eiam
     volumes:
       - db_data:/var/lib/mysql
-      - ./u5CMS/u5standard.sql:/docker-entrypoint-initdb.d/u5standard.sql
+      - ./u5cms/u5standard.sql:/docker-entrypoint-initdb.d/u5standard.sql
 
   eiam2-db:
     container_name: eiam2-db
@@ -77,7 +75,7 @@ services:
       MYSQL_PASSWORD: eiam
     volumes:
       - db2_data:/var/lib/mysql
-      - ./u5CMS/u5conference.sql:/docker-entrypoint-initdb.d/u5conference.sql
+      - ./u5cms/u5conference.sql:/docker-entrypoint-initdb.d/u5conference.sql
 
 
 volumes:
