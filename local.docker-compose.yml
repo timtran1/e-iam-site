@@ -4,8 +4,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./u5CMS:/var/www/html
-      - ./config.php:/var/www/html/config.php
+      - ./php_configs/eiam.php:/var/www/html/config.php
     depends_on:
       - eiam-db
     environment:
@@ -24,4 +23,4 @@ services:
       - "3306:3306"
     volumes:
       - ./volumes/db_data:/var/lib/mysql
-      - ./u5CMS/u5standard.sql:/docker-entrypoint-initdb.d/u5standard.sql
+      - ./u5cms/u5standard.sql:/docker-entrypoint-initdb.d/u5standard.sql

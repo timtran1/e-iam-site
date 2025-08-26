@@ -3,8 +3,10 @@
 ## How to run this project
 ### Run u5CMS
 
-1. Download u5CMS with this link, and unzip into folder named `u5CMS` in project root:
-https://yuba.ch/?c=u5cms&l=en
+1. Clone u5cms, configured as a git submodule. This command will clone the u5CMS repo (https://github.com/u5cms/u5cms.git) into the `u5cms` folder.
+```
+git submodule update --init --recursive
+```
 2. Run `docker compose -f local.docker-compose.yml up -d`
 3. Go to http://localhost:8080/u5admin/
 4. Login with user `Temp`, password `FirstPassword7`
