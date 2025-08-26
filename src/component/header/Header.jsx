@@ -68,7 +68,7 @@ const Header = ({className}) => {
             </div>
           </div>
           <SearchInput />
-          <div className="px-4 py-1">
+          <div className="px-2 md:px-4 py-1">
             {/*region lang selector*/}
             <div className="hidden sm:block">
               <LangSelector />
