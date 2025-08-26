@@ -62,7 +62,7 @@ services:
       MYSQL_USER: eiam
       MYSQL_PASSWORD: eiam
     volumes:
-      - ./volumes/db_data:/var/lib/mysql
+      - db_data:/var/lib/mysql
       - ./u5CMS/u5standard.sql:/docker-entrypoint-initdb.d/u5standard.sql
 
   eiam2-db:
@@ -76,5 +76,10 @@ services:
       MYSQL_USER: eiam
       MYSQL_PASSWORD: eiam
     volumes:
-      - ./volumes/db_data:/var/lib/mysql
+      - db2_data:/var/lib/mysql
       - ./u5CMS/u5conference.sql:/docker-entrypoint-initdb.d/u5conference.sql
+
+
+volumes:
+  db_data:
+  db2_data:
