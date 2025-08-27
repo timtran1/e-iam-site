@@ -83,7 +83,7 @@ const SearchInput = React.memo(() => {
   useEffectOnce(() => {
     const params = new URLSearchParams(window.location.search);
     const searchStr = params.get('q') || ''; // Why is it 'q'? - this is the rule of U5CMS
-    searchStr && setInitSearchStr(searchStr);
+    searchStr && setInitSearchStr(searchStr?.replaceAll(',', ' '));
   });
 
   return (
