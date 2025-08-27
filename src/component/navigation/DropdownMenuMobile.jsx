@@ -118,7 +118,7 @@ const DropdownMenuMobile = () => {
       {/*region content*/}
       <div
         className={clsx(
-          'fixed top-[52px] left-0  h-screen w-screen overflow-hidden'
+          'fixed top-[52px] left-0  h-screen w-screen overflow-hidden pointer-events-none'
         )}
       >
         <div
