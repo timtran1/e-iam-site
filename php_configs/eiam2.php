@@ -4,10 +4,10 @@ require_once __DIR__ . '/myfunctions.inc.php';
 use Laminas\Mail\Transport\SmtpOptions;
 
 // E-mail address applied as standard FROM-address and system message recipient. THIS E-MAIL ADDRESS MUST HAVE THE SAME DOMAIN AS THE WEBSITE AT HAND AND IT MUST EXIST! Recommendation: noreply@domainofwebsite
-   $mymail='me@example.com';
+   $mymail='tim.tran@deepsel.com';
 
 // Database connection parameters;
-   $host= 'eiam-db'; // If your DB server is not running on localhost, enter its address;
+   $host= 'eiam2-db'; // If your DB server is not running on localhost, enter its address;
    $username = 'eiam';
    $password = 'eiam';
    $db = 'eiam';

@@ -9,21 +9,19 @@ const App = () => {
     <>
       <>
         <AppProvider>
-          <main className="min-h-screen flex flex-col justify-between">
-            <section>
-              {/*region header*/}
-              <Header className="z-50 sticky top-0" />
-              {/*endregion header*/}
+          <section>
+            {/*region header*/}
+            <Header className="z-50 sticky top-0" />
+            {/*endregion header*/}
 
-              {/*region body content*/}
-              <Content />
-              {/*endregion body content*/}
-            </section>
+            {/*region body content*/}
+            <Content />
+            {/*endregion body content*/}
+          </section>
 
-            {/*region footer*/}
-            <Footer />
-            {/*endregion footer*/}
-          </main>
+          {/*region footer*/}
+          <Footer />
+          {/*endregion footer*/}
         </AppProvider>
       </>
     </>

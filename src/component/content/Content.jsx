@@ -70,12 +70,10 @@ const Content = () => {
           {/*endregion navigations sidebar*/}
 
           {/*region content*/}
-          <div className="grow">
-            <div
-              className="mx-auto max-w-[740px]"
-              dangerouslySetInnerHTML={{__html: processedContent}}
-            />
-          </div>
+          <main
+            className="grow mx-auto max-w-[740px]"
+            dangerouslySetInnerHTML={{__html: processedContent}}
+          />
           {/*endregion content*/}
 
           {/*region right sidebar*/}

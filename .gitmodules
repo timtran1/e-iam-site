@@ -1,0 +1,3 @@
+[submodule "u5cms"]
+	path = u5cms
+	url = https://github.com/u5cms/u5cms.git

@@ -1,15 +1,50 @@
 services:
+  eiam-nginx:
+    container_name: eiam-nginx
+    restart: unless-stopped
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - eiam-site
+      - eiam2-site
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro # real config
+      # - ./nginx/http.temp.conf:/etc/nginx/conf.d/default.conf:ro # temporary config while we get certificates
+      - ./certbot/conf:/etc/letsencrypt:ro
+      - ./certbot/www:/var/www/certbot:ro
+
+  eiam-certbot:
+    image: certbot/certbot
+    container_name: eiam-certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
   eiam-site:
     container_name: eiam-site
     build: .
     restart: unless-stopped
-    ports:
-      - 80:80
     volumes:
-      - ./u5CMS:/var/www/html
-      - ./config.php:/var/www/html/config.php
+      - ./php_configs/eiam.php:/var/www/html/config.php
     depends_on:
       - eiam-db
+    environment:
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_GROUP=www-data
+
+  eiam2-site:
+    container_name: eiam2-site
+    build: .
+    restart: unless-stopped
+    volumes:
+      - ./php_configs/eiam2.php:/var/www/html/config.php
+    depends_on:
+      - eiam2-db
     environment:
       - APACHE_RUN_USER=www-data
       - APACHE_RUN_GROUP=www-data
@@ -25,5 +60,24 @@ services:
       MYSQL_USER: eiam
       MYSQL_PASSWORD: eiam
     volumes:
-      - ./volumes/db_data:/var/lib/mysql
-      - ./u5CMS/u5standard.sql:/docker-entrypoint-initdb.d/u5standard.sql
+      - db_data:/var/lib/mysql
+      - ./u5cms/u5standard.sql:/docker-entrypoint-initdb.d/u5standard.sql
+
+  eiam2-db:
+    container_name: eiam2-db
+    image: mysql:8.0-debian
+    platform: linux/x86_64
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: eiam
+      MYSQL_USER: eiam
+      MYSQL_PASSWORD: eiam
+    volumes:
+      - db2_data:/var/lib/mysql
+      - ./u5cms/u5conference.sql:/docker-entrypoint-initdb.d/u5conference.sql
+
+
+volumes:
+  db_data:
+  db2_data:
