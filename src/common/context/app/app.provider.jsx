@@ -2,6 +2,7 @@ import React from 'react';
 import AppContext from './app.context.js';
 import useServerSideVariables from '../../hook/useServerSideVariables.js';
 import {parseLangEle, parseMenuEle} from '../../helper/element-parsing.js';
+import {ELEMENT_ID} from '../../constant/element-id.js';
 
 /**
  * App data context
@@ -50,6 +51,9 @@ const AppProvider = ({children}) => {
     }
   }, [serverSideData.right]);
 
+  /**
+   * @type {string}
+   */
   const content = React.useMemo(() => {
     if (serverSideData.content) {
       return serverSideData.content.innerHTML;
@@ -57,6 +61,24 @@ const AppProvider = ({children}) => {
       return null;
     }
   }, [serverSideData.content]);
+
+  /**
+   * Remove sever element by id
+   *
+   * @type {(id: string) => void}
+   */
+  const removeServerElement = React.useCallback((id) => {
+    if (Object.values(ELEMENT_ID).includes(id)) {
+      const ele = document.getElementById(id);
+      if (ele) {
+        ele.remove();
+      }
+    } else {
+      console.warn(
+        `Have not removed element ${id} - it should be one of ELEMENT_ID`
+      );
+    }
+  }, []);
 
   /**
    * Get header meta
@@ -85,6 +107,7 @@ const AppProvider = ({children}) => {
           content,
           headerMeta,
           setHeaderMeta,
+          removeServerElement,
         }}
       >
         {children}

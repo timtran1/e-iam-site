@@ -7,6 +7,7 @@
 export const ELEMENT_ID = {
   MAIN: 'main',
   HEADER: 'header',
+  SEARCH: 'search',
   LANGUAGES: 'languages',
   NAVIGATION: 'navigation',
   CONTENT: 'content',

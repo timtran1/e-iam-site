@@ -4,6 +4,7 @@ import LangSelector from './LangSelector.jsx';
 import Navigation from '../navigation/index.js';
 import AppContext from '../../common/context/app/app.context.js';
 import {useElementSize} from '@mantine/hooks';
+import SearchInput from './SearchInput.jsx';
 
 /**
  * Header
@@ -66,7 +67,8 @@ const Header = ({className}) => {
               Transformation and ICT Governance DTI
             </div>
           </div>
-          <div className="px-4 py-1">
+          <SearchInput />
+          <div className="px-2 md:px-4 py-1">
             {/*region lang selector*/}
             <div className="hidden sm:block">
               <LangSelector />
