@@ -61,16 +61,21 @@ const Collapse = ({
         }
       });
     } else {
-      // Closing animation
+      // Closing animation - set current height first then animate to 0
       setIsTransitioning(true);
-      setHeight(scrollHeight);
-      setOpacity(animateOpacity ? 1 : 0);
 
+      // Set explicit height first (get current computed height)
+      setHeight(scrollHeight);
+      setOpacity(animateOpacity ? 1 : 1);
+
+      // Use double requestAnimationFrame to ensure browser has time to render the explicit height
       requestAnimationFrame(() => {
-        setHeight(0);
-        if (animateOpacity) {
-          setOpacity(0);
-        }
+        requestAnimationFrame(() => {
+          setHeight(0);
+          if (animateOpacity) {
+            setOpacity(0);
+          }
+        });
       });
     }
   }, [isOpen, animateOpacity]);
