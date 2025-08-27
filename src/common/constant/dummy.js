@@ -383,6 +383,25 @@ export const mockMenu = [
             label: 'E-ID Infoanlass & PoC',
             href: 'index.php?c=!eidanlass&l=en',
             key: '!eidanlass',
+            children: [
+              {
+                label: 'E-ID 01',
+                href: 'index.php?c=!spezialthemen&l=en',
+                key: '!spezialthemen',
+                children: [
+                  {
+                    label: 'E-ID CC 01',
+                    href: 'index.php?c=!spezialthemen&l=en',
+                    key: '!spezialthemen',
+                  },
+                ],
+              },
+              {
+                label: 'E-ID 02',
+                href: 'index.php?c=!spezialthemen&l=en',
+                key: '!spezialthemen',
+              },
+            ],
           },
           {
             label: 'IdP-Konzept',
