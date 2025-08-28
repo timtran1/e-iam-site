@@ -4,6 +4,7 @@ import useClickAway from '../../common/hook/useClickAway.js';
 import AppContext from '../../common/context/app/app.context.js';
 import ChevronButton from '../../common/ui/ChevronButton.jsx';
 import useQueryParam from '../../common/hook/useQueryParam.js';
+import useCookie from '../../common/hook/useCookie.js';
 
 /**
  * Language selector
@@ -14,6 +15,9 @@ import useQueryParam from '../../common/hook/useQueryParam.js';
 const LangSelector = () => {
   // Get context data
   const {languages} = React.useContext(AppContext);
+
+  // Language from cookie storage
+  const [cookieLang, setCookieLang] = useCookie('aclan'); // This key comes from U5CMS
 
   // Get current lang
   const currentLang = useQueryParam('l');
@@ -31,6 +35,37 @@ const LangSelector = () => {
     setOpened(false);
   });
 
+  /**
+   * Syncs the language from the URL query parameter `l` or sets a default language.
+   */
+  React.useEffect(() => {
+    if (languages.length) {
+      const params = new URLSearchParams(window.location.search);
+      const l = params.get('l') || ''; // Why is it "l"? - this is the rule of U5CMS to get language for qb
+      const setDefaultLang = () => {
+        const key =
+          languages?.find((o) => o.key === 'en')?.key || languages?.[0]?.key;
+        setCookieLang(key, {
+          expires: 7,
+          secure: true,
+          sameSite: 'lax',
+          path: '/',
+        });
+        params.set('l', key);
+        window.location.search = params.toString();
+      };
+      if (l) {
+        const isValidRouteLanguage =
+          cookieLang === l || !!languages.find((o) => o.key === l);
+        if (!isValidRouteLanguage) {
+          setDefaultLang();
+        }
+      } else {
+        setDefaultLang();
+      }
+    }
+  }, [cookieLang, languages, setCookieLang]);
+
   return (
     <>
       <div
@@ -41,7 +76,7 @@ const LangSelector = () => {
           leftSection={
             <span className="current-lang uppercase rotate">{currentLang}</span>
           }
-          rotateChevron='rotate-90'
+          rotateChevron="rotate-90"
           onClick={() => setOpened(true)}
         />
         <div
