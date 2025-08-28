@@ -19,8 +19,11 @@ const LangSelector = () => {
   // Language from cookie storage
   const [cookieLang, setCookieLang] = useCookie('aclan'); // This key comes from U5CMS
 
-  // Get current lang
-  const currentLang = useQueryParam('l');
+  // Get lang from query param
+  const queryParamLang = useQueryParam('l'); // Why is it "l"? - this is the rule of U5CMS to get language from qb
+
+  // State for current language
+  const [currentLang, setCurrentLang] = React.useState(queryParamLang);
 
   // Visible state
   const [opened, setOpened] = React.useState(false);
@@ -40,31 +43,30 @@ const LangSelector = () => {
    */
   React.useEffect(() => {
     if (languages.length) {
-      const params = new URLSearchParams(window.location.search);
-      const l = params.get('l') || ''; // Why is it "l"? - this is the rule of U5CMS to get language from qb
-      const setDefaultLang = () => {
+      if (queryParamLang) {
+        setCurrentLang(queryParamLang);
+      } else {
         const key =
-          languages?.find((o) => o.key === 'en')?.key || languages?.[0]?.key;
+          cookieLang ||
+          languages?.find((o) => o.key === 'en')?.key ||
+          languages?.[0]?.key;
         setCookieLang(key, {
           expires: 7,
           secure: true,
           sameSite: 'lax',
           path: '/',
         });
+        const params = new URLSearchParams(window.location.search);
         params.set('l', key);
-        window.location.search = params.toString();
-      };
-      if (l) {
-        const isValidRouteLanguage =
-          cookieLang === l || !!languages.find((o) => o.key === l);
-        if (!isValidRouteLanguage) {
-          setDefaultLang();
-        }
-      } else {
-        setDefaultLang();
+        setCurrentLang(key);
+        window.history.replaceState(
+          {},
+          '',
+          `${window.location.pathname}?${params.toString()}`
+        );
       }
     }
-  }, [cookieLang, languages, setCookieLang]);
+  }, [cookieLang, languages, queryParamLang, setCookieLang]);
 
   return (
     <>
