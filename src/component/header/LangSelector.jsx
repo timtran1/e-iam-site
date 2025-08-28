@@ -41,7 +41,7 @@ const LangSelector = () => {
   React.useEffect(() => {
     if (languages.length) {
       const params = new URLSearchParams(window.location.search);
-      const l = params.get('l') || ''; // Why is it "l"? - this is the rule of U5CMS to get language for qb
+      const l = params.get('l') || ''; // Why is it "l"? - this is the rule of U5CMS to get language from qb
       const setDefaultLang = () => {
         const key =
           languages?.find((o) => o.key === 'en')?.key || languages?.[0]?.key;
