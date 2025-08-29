@@ -1,164 +1,154 @@
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
-import {ELEMENT_ID} from './common/constant/element-id.js';
 
-// Global variables for managing render timing and observers
-let renderTimeoutId = null;
-const elementObservers = new Map(); // Store observers for each element
+let reactRoot = null;
+let isReactMounted = false;
 
 /**
- * Renders the React App with debouncing to prevent excessive re-renders
- * Uses a timeout to batch multiple rapid changes into a single render
+ * Check if React root element exists and is ready for mounting
+ * @returns {boolean} True if safe to mount React
  */
-function renderApp() {
-  // Clear any pending render to avoid multiple renders
-  clearTimeout(renderTimeoutId);
+function canMountReact() {
+  const rootElement = document.getElementById('root');
 
-  // Debounce render calls with a delay for better performance
-  renderTimeoutId = setTimeout(() => {
-    try {
-      console.log('Rendering <App /> ...');
+  if (!rootElement) {
+    console.warn('Root element not found, waiting for DOM...');
+    return false;
+  }
 
-      // Ensure root element exists before attempting to render
-      const rootElement = document.getElementById('root');
-      if (!rootElement) {
-        console.error('Root element not found - cannot render React app');
-        return;
-      }
+  // Check if React content is missing (indicating u5cms may have cleared it)
+  const hasReactContent = rootElement.children.length > 0;
 
-      // Create root and render the App component
-      const root = ReactDOM.createRoot(rootElement);
-      root.render(<App />);
-    } catch (error) {
-      console.error('Error rendering React app:', error);
-    }
-  }, 1000);
+  return !isReactMounted || !hasReactContent;
 }
 
 /**
- * Attaches a MutationObserver to monitor changes in the target node
- * Re-renders the app when relevant mutations are detected
- * @param {HTMLElement} node - The DOM element to observe
- * @param {string} elementId - The element ID for tracking
+ * Render React app safely
  */
-const attachObserver = (node, elementId) => {
-  const observer = new MutationObserver((mutationsList) => {
-    // Filter only relevant mutations to avoid unnecessary re-renders
-    const relevantMutations = mutationsList.filter(
-      (mutation) =>
-        mutation.type === 'childList' ||
-        mutation.type === 'characterData' ||
-        mutation.type === 'attributes'
-    );
+function renderReactApp() {
+  const rootElement = document.getElementById('root');
 
-    if (relevantMutations.length > 0) {
-      // Log for debugging
-      console.log(`Relevant mutation detected in #${node.id}`);
-
-      // Trigger app re-render
-      renderApp();
-    }
-  });
-
-  // Configure observer to watch for content changes
-  observer.observe(node, {
-    characterData: true, // Watch text content changes
-    subtree: true, // Watch changes in child elements
-  });
-
-  // Store observer reference for cleanup
-  elementObservers.set(elementId, observer);
-};
-
-/**
- * Checks if target elements exist and attaches observers if needed
- * Prevents multiple observers from being attached to the same element
- */
-const checkAndAttachObservers = () => {
-  let hasNewObserver = false;
-
-  // Iterate through all element IDs and attach observers
-  Object.values(ELEMENT_ID).forEach((elementId) => {
-    const target = document.getElementById(elementId);
-
-    // Only attach observer if element exists and hasn't been observed yet
-    if (target && !target.__attachedObserver) {
-      // Mark element as observed to prevent duplicate observers
-      target.__attachedObserver = true;
-
-      // Attach the mutation observer
-      attachObserver(target, elementId);
-      hasNewObserver = true;
-
-      console.log(`Observer attached to element: #${elementId}`);
-    }
-  });
-
-  // Initial render when any new observer is attached
-  if (hasNewObserver) {
-    renderApp();
+  if (!rootElement) {
+    console.warn('Cannot render React: root element not found');
+    return;
   }
-};
+
+  if (canMountReact()) {
+    console.log('Rendering <App /> ...');
+
+    // Clean up previous root if exists
+    if (reactRoot && isReactMounted) {
+      try {
+        reactRoot.unmount();
+      } catch (error) {
+        console.warn('Error unmounting previous React root:', error);
+      }
+    }
+
+    // Create new root and render
+    reactRoot = ReactDOM.createRoot(rootElement);
+    reactRoot.render(<App />);
+    isReactMounted = true;
+
+    console.log('React app mounted successfully');
+  }
+}
 
 /**
- * Cleanup function to disconnect all observers and clear timeouts
- * Should be called when the page is unloading
+ * Handle DOM mutations that might indicate u5cms interference
  */
-const cleanup = () => {
-  console.log('Cleaning up observers and timeouts');
+function handleDOMChanges(mutations) {
+  let shouldReRender = false;
 
-  // Clear any pending render timeout
-  clearTimeout(renderTimeoutId);
+  mutations.forEach((mutation) => {
+    if (mutation.type === 'childList') {
+      // Check if root element was affected
+      const rootElement = document.getElementById('root');
 
-  // Disconnect all element observers to prevent memory leaks
-  elementObservers.forEach((observer, elementId) => {
-    observer.disconnect();
-    console.log(`Observer disconnected for element: #${elementId}`);
-  });
-  elementObservers.clear();
+      if (rootElement) {
+        // If root element is empty but React should be mounted, re-render
+        if (isReactMounted && rootElement.children.length === 0) {
+          console.log(
+            'Detected React content cleared, scheduling re-render...'
+          );
+          shouldReRender = true;
+        }
 
-  // Clean up the marker from all DOM elements
-  Object.values(ELEMENT_ID).forEach((elementId) => {
-    const element = document.getElementById(elementId);
-    if (element && element.__attachedObserver) {
-      delete element.__attachedObserver;
+        // Check if root element was removed and re-added
+        if (
+          mutation.target === document.body &&
+          Array.from(mutation.addedNodes).some((node) => node.id === 'root')
+        ) {
+          console.log(
+            'Detected root element re-added, scheduling re-render...'
+          );
+          shouldReRender = true;
+        }
+      }
     }
   });
-};
+
+  if (shouldReRender) {
+    // Small delay to ensure DOM is stable after u5cms changes
+    setTimeout(() => {
+      isReactMounted = false; // Reset flag to allow re-mounting
+      renderReactApp();
+    }, 100);
+  }
+}
 
 /**
- * Set up observers for specific elements instead of observing the entire body
- * This approach is more efficient and targeted
+ * Initialize DOM observer to watch for u5cms changes
  */
-const initializeObservers = () => {
-  // Check for elements periodically until they are found
-  const checkInterval = setInterval(() => {
-    checkAndAttachObservers();
+function initializeDOMObserver() {
+  const observer = new MutationObserver(handleDOMChanges);
 
-    // Stop checking if all elements have been found and observed
-    const allElementsObserved = Object.values(ELEMENT_ID).every((elementId) => {
-      const element = document.getElementById(elementId);
-      return element && element.__attachedObserver;
-    });
+  // Observe changes to body and its subtree
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: false,
+  });
 
-    if (allElementsObserved) {
-      clearInterval(checkInterval);
-      console.log('All target elements found and observers attached');
-    }
-  }, 500); // Check every 500ms
+  console.log('DOM observer initialized to watch for u5cms changes');
 
-  // Stop checking after 30 seconds to prevent infinite checking
-  setTimeout(() => {
-    clearInterval(checkInterval);
-    console.log('Observer initialization timeout reached');
-  }, 30000);
+  return observer;
+}
+
+/**
+ * Handle page reload events (from u5cms autoequalsone function)
+ */
+function handlePageEvents() {
+  // Listen for before page unload
+  window.addEventListener('beforeunload', () => {
+    console.log('Page is reloading, React will re-mount after reload');
+    isReactMounted = false;
+  });
+
+  // Re-render after DOM is fully loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderReactApp);
+  }
+}
+
+// Initialize everything
+console.log('Initializing React app with u5cms compatibility...');
+
+// Handle page events
+handlePageEvents();
+
+// Initial render
+renderReactApp();
+
+// Start observing DOM changes
+initializeDOMObserver();
+
+// Expose global functions for u5cms coordination (optional)
+window.reactAppUtils = {
+  reRender: () => {
+    console.log('Manual React re-render requested');
+    isReactMounted = false;
+    renderReactApp();
+  },
+  isReactMounted: () => isReactMounted,
 };
-
-// Add cleanup listener for page unload to prevent memory leaks
-window.addEventListener('beforeunload', cleanup);
-
-// Initialize observers
-initializeObservers();
-
-// Initial check in case target elements already exist
-checkAndAttachObservers();
