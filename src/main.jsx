@@ -82,7 +82,7 @@ function renderReactApp(customDelay = null, immediate = false) {
   const delay =
     customDelay !== null ? customDelay : RENDER_CONFIG.DEBOUNCE_DELAY;
 
-  console.log(`Scheduling React render in ${delay}ms...`);
+  console.log(`Scheduling React render...`);
   renderDebounceTimer = setTimeout(() => {
     renderDebounceTimer = null;
     _renderReactAppInternal();
