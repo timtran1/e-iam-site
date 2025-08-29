@@ -41,12 +41,12 @@ export const parseLangEle = (ele) => {
       const label = a?.textContent?.trim() || '';
       if (label) {
         const href = a?.getAttribute('href') || '';
-        const params = new URLSearchParams(href.split('?')?.[1]);
-        const l = params.get(';');
+        const params = new URLSearchParams(href);
+        const key = params.get('l');
         const item = {
           label: a?.textContent?.trim() || '',
           href,
-          key: l,
+          key,
         };
         items.push(item);
       }
