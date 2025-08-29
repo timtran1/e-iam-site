@@ -3,6 +3,13 @@ import App from './App.jsx';
 
 let reactRoot = null;
 let isReactMounted = false;
+let renderDebounceTimer = null;
+
+// Configuration for debounce timing
+const RENDER_CONFIG = {
+  DEBOUNCE_DELAY: 500, // milliseconds to wait before re-render
+  DOM_STABLE_DELAY: 200, // milliseconds to wait for DOM to stabilize
+};
 
 /**
  * Check if React root element exists and is ready for mounting
@@ -23,9 +30,9 @@ function canMountReact() {
 }
 
 /**
- * Render React app safely
+ * Render React app safely (internal function)
  */
-function renderReactApp() {
+function _renderReactAppInternal() {
   const rootElement = document.getElementById('root');
 
   if (!rootElement) {
@@ -52,6 +59,34 @@ function renderReactApp() {
 
     console.log('React app mounted successfully');
   }
+}
+
+/**
+ * Debounced version of renderReactApp
+ * @param {number | null} customDelay - Optional custom delay in milliseconds
+ * @param {boolean} immediate - If true, render immediately without debounce
+ */
+function renderReactApp(customDelay = null, immediate = false) {
+  // Clear existing timer
+  if (renderDebounceTimer) {
+    clearTimeout(renderDebounceTimer);
+    renderDebounceTimer = null;
+  }
+
+  if (immediate) {
+    console.log('Immediate React render requested');
+    _renderReactAppInternal();
+    return;
+  }
+
+  const delay =
+    customDelay !== null ? customDelay : RENDER_CONFIG.DEBOUNCE_DELAY;
+
+  console.log(`Scheduling React render in ${delay}ms...`);
+  renderDebounceTimer = setTimeout(() => {
+    renderDebounceTimer = null;
+    _renderReactAppInternal();
+  }, delay);
 }
 
 /**
@@ -89,11 +124,11 @@ function handleDOMChanges(mutations) {
   });
 
   if (shouldReRender) {
-    // Small delay to ensure DOM is stable after u5cms changes
-    setTimeout(() => {
-      isReactMounted = false; // Reset flag to allow re-mounting
-      renderReactApp();
-    }, 100);
+    // Reset flag to allow re-mounting
+    isReactMounted = false;
+
+    // Use debounced render with DOM stable delay
+    renderReactApp(RENDER_CONFIG.DOM_STABLE_DELAY);
   }
 }
 
@@ -127,7 +162,9 @@ function handlePageEvents() {
 
   // Re-render after DOM is fully loaded
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', renderReactApp);
+    document.addEventListener('DOMContentLoaded', () =>
+      renderReactApp(null, true)
+    );
   }
 }
 
@@ -137,18 +174,8 @@ console.log('Initializing React app with u5cms compatibility...');
 // Handle page events
 handlePageEvents();
 
-// Initial render
-renderReactApp();
+// Initial render (immediate, no debounce)
+renderReactApp(null, true);
 
 // Start observing DOM changes
 initializeDOMObserver();
-
-// Expose global functions for u5cms coordination (optional)
-window.reactAppUtils = {
-  reRender: () => {
-    console.log('Manual React re-render requested');
-    isReactMounted = false;
-    renderReactApp();
-  },
-  isReactMounted: () => isReactMounted,
-};
