@@ -24,3 +24,5 @@ services:
     volumes:
       - ./volumes/db_data:/var/lib/mysql
       - ./u5cms/u5standard.sql:/docker-entrypoint-initdb.d/u5standard.sql
+      # uncomment the line below to use u5conference version (dont use both u5standard and u5conference)
+      # - ./u5cms/u5conference.sql:/docker-entrypoint-initdb.d/u5conference.sql
