@@ -74,3 +74,13 @@ export const stripNavigationMarkers = (content) => {
   }
   return lines.map((line) => line.replace(/^#+(?=<a\b)/i, '')).join('<br>');
 };
+
+/**
+ * Whether Element is empty
+ *
+ * @param {Element} ele
+ * @returns {boolean|""}
+ */
+export const isEmptyElement = (ele) => {
+  return !ele || (!ele.textContent.trim() && !ele.children.length);
+};
