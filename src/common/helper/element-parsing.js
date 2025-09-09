@@ -79,7 +79,7 @@ export const stripNavigationMarkers = (content) => {
  * Whether Element is empty
  *
  * @param {Element} ele
- * @returns {boolean|""}
+ * @returns {boolean}
  */
 export const isEmptyElement = (ele) => {
   return !ele || (!ele.textContent.trim() && !ele.children.length);
