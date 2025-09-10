@@ -6,7 +6,7 @@ import useEffectOnce from './useEffectOnce.js';
 // Configuration constants for server-side data fetching
 const RENDER_CONFIG = {
   DEBOUNCE_DELAY: 330, // Interval between polling attempts (ms)
-  POLLING_TIMEOUT: 2500, // Maximum time to poll before giving up (ms)
+  POLLING_TIMEOUT: 5000, // Maximum time to poll before giving up (ms)
 };
 
 /**
@@ -29,29 +29,24 @@ const useServerSideVariables = () => {
 
   /**
    * Get server side variables for elements that are not empty
-   *
-   * @returns {boolean} - Returns true if all elements have data, false if some are still empty
    */
   const getServerSideVariables = React.useCallback(() => {
-    if (!document) return true;
-
-    let allElementsHaveData = true;
+    if (!document) return;
 
     Object.values(ELEMENT_ID).forEach((eleId) => {
+      // Get element
       const ele = document.querySelector(`#${eleId}`);
 
       // Only update state if element is not empty
       if (!isEmptyElement(ele)) {
-        setServerSideData((prevState) => ({
-          ...prevState,
-          [eleId]: ele,
-        }));
-      } else {
-        allElementsHaveData = false;
+        setServerSideData((prevState) => {
+          return {
+            ...prevState,
+            [eleId]: prevState[eleId] || ele, // Only update if the ele of eleId is not existed
+          };
+        });
       }
     });
-
-    return allElementsHaveData;
   }, []);
 
   /**
@@ -97,6 +92,29 @@ const useServerSideVariables = () => {
   useEffectOnce(() => {
     startPolling();
   });
+
+  /**
+   * Effect to handle u5form element conflicts between React and u5cms
+   *
+   * This effect prevents duplication of u5form elements by removing them from the original
+   *
+   * The effect compares u5form elements in both the current DOM and the server-side content,
+   * and removes duplicates from the original element to maintain form functionality.
+   */
+  React.useEffect(() => {
+    if (serverSideData.content) {
+      const ele = document.querySelector(`#${ELEMENT_ID.CONTENT}`);
+      if (ele) {
+        // Remove u5form on original element to avoid duplication
+        const u5formStateTemplate = ele.querySelectorAll('[name="u5form"]');
+        const u5formState =
+          serverSideData.content.querySelectorAll('[name="u5form"]');
+        if (u5formState.length && u5formStateTemplate.length) {
+          u5formStateTemplate.forEach((item) => item.remove());
+        }
+      }
+    }
+  }, [serverSideData.content]);
 
   /**
    * Cleanup effect
