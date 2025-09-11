@@ -504,3 +504,25 @@ header a {
 a:hover .arrow-right-icon {
     transform: translateX(5px);
 }
+
+.showblockdivinner {
+    background: #fafaf9;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+.showblockclose {
+    margin-top: -7px;
+    margin-right: 0;
+    color: #ef4444;
+    font-weight: 400;
+}
+
+.showblockactivetab, .showblockinactivetab {
+    background: #e7e5e4;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-right: 8px;
+    padding-left: 8px;
+    border-radius: 4px;
+}
