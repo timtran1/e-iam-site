@@ -31,6 +31,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./php_configs/eiam.php:/var/www/html/config.php
+      - eiam-r-data:/var/www/html/r
     depends_on:
       - eiam-db
     environment:
@@ -43,6 +44,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./php_configs/eiam2.php:/var/www/html/config.php
+      - eiam2-r-data:/var/www/html/r
     depends_on:
       - eiam2-db
     environment:
@@ -81,3 +83,5 @@ services:
 volumes:
   db_data:
   db2_data:
+  eiam-r-data:
+  eiam2-r-data:
