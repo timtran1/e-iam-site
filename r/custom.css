@@ -485,14 +485,6 @@ fieldset {
     transition: color .3s ease;
 }
 
-a:visited {
-    color: inherit;
-}
-
-a:hover {
-    text-decoration: none;
-}
-
 header a {
     color: inherit;
 }
