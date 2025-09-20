@@ -193,6 +193,10 @@ dd {
     cursor: default;
 }
 
+dl.freeImgLeft {
+    width: auto !important;
+}
+
 .freeImgLeft {
     float: left;
     padding-right: 32px;
