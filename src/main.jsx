@@ -41,7 +41,7 @@ function _renderReactAppInternal() {
   }
 
   if (canMountReact()) {
-    console.log('Rendering <App /> ...');
+    console.log('Rendering...');
 
     // Clean up previous root if exists
     if (reactRoot && isReactMounted) {
