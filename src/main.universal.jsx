@@ -1,6 +1,19 @@
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import {ELEMENT_ID} from './common/constant/element-id.js';
+import {isU5AdminPreview} from './common/helper/pageContext.js';
+
+// Check if we're in u5admin preview mode - if so, exit early
+const isPreview = isU5AdminPreview();
+console.log(`Mode: ${isPreview ? 'u5admin Preview' : 'Original Page'}`);
+
+if (isPreview) {
+  console.log('u5admin preview detected - skipping all universal script logic');
+  // Exit early, don't execute any universal script logic
+} else {
+  // Only execute universal script logic if NOT in preview mode
+  executeUniversalScript();
+}
 
 /**
  * Hide server-side elements immediately when universal script loads
@@ -17,7 +30,6 @@ function hideServerSideElements() {
     if (element) {
       // Add display: none !important to hide the element
       element.style.setProperty('display', 'none', 'important');
-      console.log(`Hidden element: #${elementId}`);
     }
   });
 }
@@ -38,8 +50,42 @@ function executeHideLogic() {
   setTimeout(hideServerSideElements, 100);
 }
 
-// Execute immediately when script loads (highest priority)
-executeHideLogic();
+/**
+ * Execute all universal script logic
+ * This includes hiding elements and initializing React
+ */
+function executeUniversalScript() {
+  // Execute hiding logic immediately when script loads (highest priority)
+  executeHideLogic();
+
+  // Initialize React app
+  initializeUniversalReact();
+}
+
+/**
+ * Initialize React app for universal mode
+ */
+function initializeUniversalReact() {
+  // Auto-initialize when script loads
+  let reactAppInstance = null;
+
+  // Wait for DOM to be ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      reactAppInstance = initializeReactApp();
+    });
+  } else {
+    reactAppInstance = initializeReactApp();
+  }
+
+  // Expose global API for external control (optional)
+  if (typeof window !== 'undefined') {
+    window.ReactApp = {
+      init: initializeReactApp,
+      getInstance: () => reactAppInstance,
+    };
+  }
+}
 
 let reactRoot = null;
 let isReactMounted = false;
@@ -53,8 +99,8 @@ const RENDER_CONFIG = {
 
 // Default container configuration
 const CONTAINER_CONFIG = {
-  DEFAULT_ID: 'react-app-root',
-  DEFAULT_CLASS: 'react-app-container',
+  DEFAULT_ID: 'app-root',
+  DEFAULT_CLASS: 'app-container',
   FALLBACK_TARGET: 'body', // Where to append if no specific target found
 };
 
@@ -85,9 +131,9 @@ function getOrCreateContainer(containerId = CONTAINER_CONFIG.DEFAULT_ID) {
       );
       if (targetElement) {
         targetElement.appendChild(container);
-        console.log(`Created React container with ID: ${containerId}`);
+        console.log(`Created container with ID: ${containerId}`);
       } else {
-        console.error('Cannot find target element to append React container');
+        console.error('Cannot find target element to append container');
         return null;
       }
     } else {
@@ -130,7 +176,7 @@ function _renderReactAppInternal(containerId = CONTAINER_CONFIG.DEFAULT_ID) {
   }
 
   if (canMountReact(containerId)) {
-    console.log('Rendering <App /> ...');
+    console.log('Rendering...');
 
     // Clean up previous root if exists
     if (reactRoot && isReactMounted) {
@@ -146,7 +192,7 @@ function _renderReactAppInternal(containerId = CONTAINER_CONFIG.DEFAULT_ID) {
     reactRoot.render(<App />);
     isReactMounted = true;
 
-    console.log('React app mounted successfully');
+    console.log('App mounted successfully');
   }
 }
 
@@ -287,7 +333,7 @@ function initializeReactApp(options = {}) {
     autoRender = true,
   } = options;
 
-  console.log('Initializing universal React app...');
+  console.log('Initializing universal app...');
 
   // Handle page events
   handlePageEvents(containerId);
@@ -309,31 +355,11 @@ function initializeReactApp(options = {}) {
       if (reactRoot && isReactMounted) {
         reactRoot.unmount();
         isReactMounted = false;
-        console.log('React app unmounted');
+        console.log('App unmounted');
       }
     },
     isReactMounted: () => isReactMounted,
     getContainer: () => getOrCreateContainer(containerId),
-  };
-}
-
-// Auto-initialize when script loads
-let reactAppInstance = null;
-
-// Wait for DOM to be ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    reactAppInstance = initializeReactApp();
-  });
-} else {
-  reactAppInstance = initializeReactApp();
-}
-
-// Expose global API for external control (optional)
-if (typeof window !== 'undefined') {
-  window.ReactApp = {
-    init: initializeReactApp,
-    getInstance: () => reactAppInstance,
   };
 }
 
