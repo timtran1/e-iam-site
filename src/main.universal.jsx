@@ -1,5 +1,45 @@
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
+import {ELEMENT_ID} from './common/constant/element-id.js';
+
+/**
+ * Hide server-side elements immediately when universal script loads
+ * This prevents flickering and conflicts with React rendering
+ */
+function hideServerSideElements() {
+  console.log('Hiding server-side elements for universal mode...');
+
+  // Get all element IDs from the constant
+  const elementIds = Object.values(ELEMENT_ID);
+
+  elementIds.forEach((elementId) => {
+    const element = document.getElementById(elementId);
+    if (element) {
+      // Add display: none !important to hide the element
+      element.style.setProperty('display', 'none', 'important');
+      console.log(`Hidden element: #${elementId}`);
+    }
+  });
+}
+
+/**
+ * Execute hiding logic with multiple strategies to ensure it runs as early as possible
+ */
+function executeHideLogic() {
+  // Strategy 1: Execute immediately (script load time)
+  hideServerSideElements();
+
+  // Strategy 2: Execute when DOM is ready (if not already loaded)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', hideServerSideElements);
+  }
+
+  // Strategy 3: Execute after a short delay as fallback
+  setTimeout(hideServerSideElements, 100);
+}
+
+// Execute immediately when script loads (highest priority)
+executeHideLogic();
 
 let reactRoot = null;
 let isReactMounted = false;
@@ -145,6 +185,7 @@ function renderReactApp(
 
 /**
  * Handle DOM mutations that might indicate external interference
+ * @param mutations
  * @param {string} containerId - ID of the container element
  */
 function handleDOMChanges(
