@@ -5,8 +5,6 @@ import {isU5AdminPreview} from './common/helper/pageContext.js';
 
 // Check if we're in u5admin preview mode - if so, exit early
 const isPreview = isU5AdminPreview();
-console.log(`Mode: ${isPreview ? 'u5admin Preview' : 'Original Page'}`);
-
 if (isPreview) {
   console.log('u5admin preview detected - skipping all universal script logic');
   // Exit early, don't execute any universal script logic
@@ -115,8 +113,8 @@ function getOrCreateContainer(containerId = CONTAINER_CONFIG.DEFAULT_ID) {
   if (!container) {
     // Try to find alternative containers
     container =
+      document.getElementById(CONTAINER_CONFIG.DEFAULT_ID) ||
       document.getElementById('root') ||
-      document.getElementById('app') ||
       document.querySelector('[data-react-root]');
 
     if (!container) {
