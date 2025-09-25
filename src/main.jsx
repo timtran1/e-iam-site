@@ -41,7 +41,7 @@ function _renderReactAppInternal() {
   }
 
   if (canMountReact()) {
-    console.log('Rendering <App /> ...');
+    console.log('Rendering...');
 
     // Clean up previous root if exists
     if (reactRoot && isReactMounted) {
@@ -57,7 +57,7 @@ function _renderReactAppInternal() {
     reactRoot.render(<App />);
     isReactMounted = true;
 
-    console.log('React app mounted successfully');
+    console.log('App mounted successfully');
   }
 }
 
@@ -169,7 +169,7 @@ function handlePageEvents() {
 }
 
 // Initialize everything
-console.log('Initializing React app with u5cms compatibility...');
+console.log('Initializing app app with u5cms compatibility...');
 
 // Handle page events
 handlePageEvents();

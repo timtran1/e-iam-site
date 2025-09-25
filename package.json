@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build && node merge-built-files.js"
+    "build": "vite build --mode universal",
+    "build:universal": "vite build --mode universal",
+    "build:regular": "vite build && node merge-built-files.js"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
