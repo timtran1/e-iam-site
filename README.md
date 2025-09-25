@@ -67,3 +67,32 @@ The universal build mode creates a standalone JavaScript bundle that can be embe
 5. Implements server-side element hiding logic to prevent rendering conflicts
 6. Creates DOM observers to handle dynamic content changes
 7. Generates a single `app-universal.js` file with no external dependencies
+
+## Deployment
+
+**Step 1: Create JavaScript Container File (One-time Configuration)**
+1. Navigate to `/u5admin` in your u5CMS instance
+2. Select mode "S" from the right sidebar, then click "Code (html template & css)"
+3. Click "New" to create a new file
+4. Name the file `jsreactapp` and click "insert new file"
+
+<img src="/docs/deployment/image-01.png" width="400" alt="u5admin interface">
+<img src="/docs/deployment/image-02.png" width="400" alt="Create new file dialog">
+
+**Step 2: Update HTML Template (One-time Configuration)**
+1. In the same u5admin interface, select the `htmltemplate` file
+2. **Option A:** Copy the content from `htmltemplate.external-react.html` in this project and paste it into the `htmltemplate` file
+3. **Option B:** If you prefer to keep your existing HTML template unchanged, simply add the following script tag to the `<head>` section:
+   ```html
+   <script src="r/jsreactapp.css"></script>
+   ```
+4. Save the changes
+
+*Note: The `htmltemplate.external-react.html` file contains the original HTML template with an additional script tag to load the React application.*
+
+**Step 3: Deploy Updates**
+For subsequent deployments when React source code changes:
+1. Run `npm run build` to generate the universal build
+2. Copy the JavaScript code from `dist/app-universal.iife.js`
+3. Paste the code into the `jsreactapp` file in u5admin and save
+ 
