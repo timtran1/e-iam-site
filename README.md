@@ -82,13 +82,31 @@ The universal build mode creates a standalone JavaScript bundle that can be embe
 **Step 2: Update HTML Template (One-time Configuration)**
 1. In the same u5admin interface, select the `htmltemplate` file
 2. **Option A:** Copy the content from `htmltemplate.external-react.html` in this project and paste it into the `htmltemplate` file
-3. **Option B:** If you prefer to keep your existing HTML template unchanged, simply add the following script tag to the `<head>` section:
+3. **Option B:** If you prefer to keep your existing HTML template unchanged, add the following script block to the `<head>` section:
    ```html
-   <script src="r/jsreactapp.css"></script>
+   <!--Load and execute jsreactapp script-->
+   <script>
+   (function() {
+     try {
+       const xhr = new XMLHttpRequest();
+       xhr.open('GET', 'r/jsreactapp.css', false);
+       xhr.send();
+       if (xhr.status === 200) {
+         const script = document.createElement('script');
+         script.text = xhr.responseText;
+         document.head.appendChild(script);
+       } else {
+         console.error('Failed to load jsreactapp - Status:', xhr.status);
+       }
+     } catch (e) {
+       console.error('Error loading jsreactapp:', e.message);
+     }
+   })();
+   </script>
    ```
 4. Save the changes
 
-*Note: The `htmltemplate.external-react.html` file contains the original HTML template with an additional script tag to load the React application.*
+*Note: The script uses XMLHttpRequest to load and execute the JavaScript content from the `jsreactapp.css` file, bypassing MIME type restrictions that prevent direct script loading of .css files.*
 
 **Step 3: Deploy Updates**
 For subsequent deployments when React source code changes:

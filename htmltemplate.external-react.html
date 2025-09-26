@@ -9,7 +9,27 @@
 <script src="js/jquery.fancybox.min.js"></script>
 <script src="js/u5_scripts.js" type="text/javascript"></script>
 <script src="r/jsmobilespecific.css"></script>
-<script src="r/jsreactapp.css"></script>
+
+<!--Load and execute jsreactapp script-->
+<script>
+(function() {
+  try {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'r/jsreactapp.css', false);
+    xhr.send();
+    if (xhr.status === 200) {
+      const script = document.createElement('script');
+      script.text = xhr.responseText;
+      document.head.appendChild(script);
+    } else {
+      console.error('Failed to load jsreactapp - Status:', xhr.status);
+    }
+  } catch (e) {
+    console.error('Error loading jsreactapp:', e.message);
+  }
+})();
+</script>
+
 </head>
 <body id="body">
 <section class="skipLinks">{{{skiplinks}}}</section>
