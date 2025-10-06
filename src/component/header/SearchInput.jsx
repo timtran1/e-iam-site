@@ -16,8 +16,10 @@ const SearchInput = React.memo(() => {
   const searchKeyForU5cm = 'q'; // Why is it 'q' - this is the rule of U5CMS
   const searchKeyForDisplay = 'q2';
   const [searchValue, setSearchValue] = useQueryParam(searchKeyForDisplay);
-  const decodedSearchStr = React.useMemo(
-    () => decodeURIComponent(searchValue),
+
+  // Encoded search string, using for u5cms engine (@see window.fsearch)
+  const encodedSearchStr = React.useMemo(
+    () => escape(searchValue?.replace(/ /g, ',')?.replace(/\+/g, ',') || ''),
     [searchValue]
   );
 
@@ -65,14 +67,13 @@ const SearchInput = React.memo(() => {
       fsearch.q.value = searchValue;
       const href =
         fsearch.action.split(`javascript:location.href='`)?.[1] || 'index.php?';
-      const [path] = href.split('?');
-      const params = new URLSearchParams({
-        [searchKeyForU5cm]: decodedSearchStr,
-        [searchKeyForDisplay]: searchValue,
-      });
+      const [path, paramsStr] = href.split('?');
+      const params = new URLSearchParams(paramsStr);
+      params.set(searchKeyForU5cm, encodedSearchStr);
+      params.set(searchKeyForDisplay, searchValue);
       location.href = `${path}?${params.toString()}`;
     }
-  }, [decodedSearchStr, searchValue]);
+  }, [encodedSearchStr, searchValue]);
 
   /**
    * Handle server side data is rendered, delete server element after that
