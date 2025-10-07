@@ -2,6 +2,8 @@ import React from 'react';
 import LeftMenuItem from './LeftMenuItem.jsx';
 import linkIsCurrentPage from '../../common/helper/linkIsCurrentPage.js';
 
+const isDevMode = import.meta.env.DEV;
+
 /**
  * Recursively checks if the given menu or any of its child menus is currently active.
  *
@@ -32,6 +34,10 @@ export default function LeftSidebar({menus}) {
    * @type {Array<AppMenu>}
    */
   const processedMenus = React.useMemo(() => {
+    if (isDevMode) {
+      return menus;
+    }
+
     for (const menu of menus) {
       if (hasActivatedMenu(menu)) {
         return menu.children || [];
@@ -43,7 +49,7 @@ export default function LeftSidebar({menus}) {
   return (
     <>
       {!!processedMenus.length && (
-        <nav className="w-[250px] hidden lg:block">
+        <nav className="left-sidebar w-[180px] md:w-[200px] lg:w-[220px] xl:w-[240px] 2xl:w-[260px] hidden sm:block">
           {processedMenus.map((menu, index) => (
             <LeftMenuItem key={index} menu={menu} index={index} />
           ))}

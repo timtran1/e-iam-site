@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
+import replaceU5CMSFunctions from './utils/replaceU5CMSFunctions.js';
 
 let reactRoot = null;
 let isReactMounted = false;
@@ -58,6 +59,8 @@ function _renderReactAppInternal() {
     isReactMounted = true;
 
     console.log('App mounted successfully');
+
+    replaceU5CMSFunctions();
   }
 }
 
