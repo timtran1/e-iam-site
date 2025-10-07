@@ -132,10 +132,10 @@ const SearchInput = React.memo(() => {
                 'absolute top-1/2 -translate-y-1/2 right-0',
                 'rounded-none border-2 border-opacity-90',
                 'border-blue-cornflower hover:border-blue-cornflower active:border-blue-cornflower focus:outline-blue-cornflower',
-                'pl-2 !pr-8 py-1 transition-all opacity-0 border border-transparent',
+                'pl-2 !pr-8 py-1 transition-all',
                 expanded
-                  ? 'opacity-100 !w-44 sm:!w-56 border-gray'
-                  : '!w-20 hover:border-transparent active:border-transparent cursor-pointer'
+                  ? 'opacity-100 !w-44 sm:!w-56'
+                  : 'opacity-0 !w-20 hover:border-transparent active:border-transparent cursor-pointer'
               )}
               placeholder="Suche"
               onChange={({target: {value}}) => setSearchValue(value)}
