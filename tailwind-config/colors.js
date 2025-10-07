@@ -51,6 +51,7 @@ export default {
   blue: {
     'pickled-bluewood': '#2F4356',
     persian: '#1D4ED8',
+    cornflower: '#8655F6',
   },
   green: {
     mantis: '#83BF6E',

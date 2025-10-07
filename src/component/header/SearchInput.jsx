@@ -5,6 +5,8 @@ import {ELEMENT_ID} from '../../common/constant/element-id.js';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import useQueryParam from '../../common/hook/useQueryParam.js';
+import clsx from 'clsx';
+import useClickAway from '../../common/hook/useClickAway.js';
 
 /**
  * Search input component
@@ -12,10 +14,18 @@ import useQueryParam from '../../common/hook/useQueryParam.js';
  * After rendered it will delete the server element
  */
 const SearchInput = React.memo(() => {
+  // Search id
+  const searchId = React.useId();
+
   // Search string value
   const searchKeyForU5cm = 'q'; // Why is it 'q' - this is the rule of U5CMS
   const searchKeyForDisplay = 'q2';
   const [searchValue, setSearchValue] = useQueryParam(searchKeyForDisplay);
+
+  // Search input control
+  const [expanded, setExpanded] = React.useState(false);
+  const searchContainerRef = React.useRef(null);
+  useClickAway(searchContainerRef, () => setExpanded(false));
 
   // Encoded search string, using for u5cms engine (@see window.fsearch)
   const encodedSearchStr = React.useMemo(
@@ -92,22 +102,56 @@ const SearchInput = React.memo(() => {
   return (
     <>
       {!!serverSideData.search && (
-        <div className="relative mx-2 md:mx-4 lg:mx-6 2xl:mx-8">
+        <div className="relative" ref={searchContainerRef}>
           <div
             className="hidden absolute"
-            dangerouslySetInnerHTML={{__html: serverSideData.search.innerHTML}}
+            dangerouslySetInnerHTML={{
+              __html: serverSideData.search.innerHTML,
+            }}
           ></div>
-          <input
-            className="w-32 xl:w-44 2xl:w-64 text-xs rounded-none pl-8 pr-2 py-1.5 border-gray-athens-gray active:!border-gray-100 focus:!border-gray-100"
-            placeholder="Search"
-            value={searchValue}
-            onChange={({target: {value}}) => setSearchValue(value)}
-            onKeyDown={(event) => event.key === 'Enter' && handleSubmit()}
-          />
-          <FontAwesomeIcon
-            icon={faSearch}
-            className="absolute w-6 h-4 px-1.5 left-0 top-0 translate-y-1/2 text-gray-chateau-2"
-          />
+
+          <div onClick={() => setExpanded(true)}>
+            <label
+              htmlFor={searchId}
+              tabIndex="-1"
+              className={clsx(
+                'hidden md:block',
+                'py-0 pr-6 transition opacity-0',
+                {
+                  'opacity-100': !expanded,
+                }
+              )}
+            >
+              Suche
+            </label>
+
+            <input
+              id={searchId}
+              type="text"
+              className={clsx(
+                'absolute top-1/2 -translate-y-1/2 right-0',
+                'rounded-none border-2 border-opacity-90',
+                'border-blue-cornflower hover:border-blue-cornflower active:border-blue-cornflower focus:outline-blue-cornflower',
+                'pl-2 !pr-8 py-1 transition-all opacity-0 border border-transparent',
+                expanded
+                  ? 'opacity-100 !w-44 sm:!w-56 border-gray'
+                  : '!w-20 hover:border-transparent active:border-transparent cursor-pointer'
+              )}
+              placeholder="Suche"
+              onChange={({target: {value}}) => setSearchValue(value)}
+              onKeyDown={(event) => event.key === 'Enter' && handleSubmit()}
+            />
+          </div>
+
+          <div
+            className="absolute top-1/2 right-1.5 -translate-y-1/2 cursor-pointer"
+            onClick={() => setExpanded((prevState) => !prevState)}
+          >
+            <FontAwesomeIcon
+              icon={faSearch}
+              className="w-4 h-4 px-1 text-gray-chateau-2"
+            />
+          </div>
         </div>
       )}
     </>
