@@ -69,7 +69,7 @@ export default function RightSidebar({content}) {
   }, [processedContent]);
 
   return (
-    <aside className="right-sidebar w-full sm:w-[350px] bg-gray-aqua-haze px-6 py-3 space-y-6">
+    <aside className="right-sidebar grow bg-gray-aqua-haze border border-gray-aqua-haze px-6 py-3 space-y-6 shadow">
       <div
         ref={asideRef}
         dangerouslySetInnerHTML={{__html: processedContent}}

@@ -64,14 +64,14 @@ const Content = () => {
   return (
     <>
       <article className="px-6 py-6 md:py-12 max-w-[1440px] mx-auto">
-        <div className="flex flex-col sm:flex-row gap-12 justify-between">
+        <div className="flex flex-col sm:flex-row gap-12 justify-between max-w-full">
           {/*region navigations sidebar*/}
           <LeftSidebar menus={menus} />
           {/*endregion navigations sidebar*/}
 
           {/*region content*/}
           <main
-            className="grow mx-auto max-w-[740px]"
+            className="relative grow mx-auto max-w-full lg:max-w-[740px]"
             dangerouslySetInnerHTML={{__html: processedContent}}
           />
           {/*endregion content*/}
