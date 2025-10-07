@@ -1,4 +1,5 @@
 import {useRef, useState, useEffect} from 'react';
+import {useTranslation} from 'react-i18next';
 
 /**
  * Hide long sections of content under a spoiler
@@ -8,12 +9,8 @@ import {useRef, useState, useEffect} from 'react';
  * @param children
  * @constructor
  */
-const Spoiler = ({
-  maxHeight = 160,
-  children,
-  showMoreLabel = 'Show more',
-  hideLabel = 'Hide',
-}) => {
+const Spoiler = ({maxHeight = 160, children, showMoreLabel, hideLabel}) => {
+  const {t} = useTranslation();
   const contentRef = useRef(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -54,7 +51,9 @@ const Spoiler = ({
             onClick={() => setIsExpanded(!isExpanded)}
             className="text-blue-600 text-sm font-medium hover:underline focus:outline-none"
           >
-            {isExpanded ? hideLabel : showMoreLabel}
+            {isExpanded
+              ? hideLabel || t('hide')
+              : showMoreLabel || t('showMore')}
           </button>
         </div>
       )}

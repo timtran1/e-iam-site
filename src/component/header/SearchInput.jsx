@@ -7,6 +7,7 @@ import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import useQueryParam from '../../common/hook/useQueryParam.js';
 import clsx from 'clsx';
 import useClickAway from '../../common/hook/useClickAway.js';
+import {useTranslation} from 'react-i18next';
 
 /**
  * Search input component
@@ -14,6 +15,9 @@ import useClickAway from '../../common/hook/useClickAway.js';
  * After rendered it will delete the server element
  */
 const SearchInput = React.memo(() => {
+  // Translation
+  const {t} = useTranslation();
+
   // Search id
   const searchId = React.useId();
 
@@ -122,7 +126,7 @@ const SearchInput = React.memo(() => {
                 }
               )}
             >
-              Suche
+              {t('search')}
             </label>
 
             <input
@@ -137,8 +141,8 @@ const SearchInput = React.memo(() => {
                   ? 'opacity-100 !w-44 sm:!w-56'
                   : 'opacity-0 !w-20 hover:border-transparent active:border-transparent cursor-pointer'
               )}
-              placeholder="Suche"
-              value={searchValue}
+              placeholder={t('search')}
+              value={searchValue || ''}
               onChange={({target: {value}}) => setSearchValue(value)}
               onKeyDown={(event) => event.key === 'Enter' && handleSubmit()}
             />
