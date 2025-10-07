@@ -49,7 +49,7 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
 
   return (
     <nav className="navigation">
-      <ul ref={wrapperRef} className="px-0 flex overflow-x-auto">
+      <ul ref={wrapperRef} className="px-0 flex overflow-x-auto gap-[24px]">
         {menus.map((menuItem, i) => (
           <li
             key={i}
@@ -57,11 +57,11 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
               'flex gap-1 border-b-[3px]',
               menuItem.key === currentPage
                 ? 'border-primary-main shadow-lg'
-                : 'border-transparent hover:border-primary-main hover:shadow-lg'
+                : 'border-transparent hover:border-primary-main'
             )}
           >
             <a
-              className="p-4 transition-all hover:translate-y-0.5 text-gray-mirage visited:text-gray-mirage hover:no-underline"
+              className="p-4 transition-all text-gray-mirage visited:text-gray-mirage hover:no-underline hover:text-primary-main"
               href={menuItem.href}
             >
               {menuItem.label}
