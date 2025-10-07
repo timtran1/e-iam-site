@@ -12,6 +12,8 @@ import useIsMobile from '../../common/hook/useIsMobile.js';
 import {handleResponsiveWidth} from '../../common/utils/responsiveWidthHandler.js';
 import {stripNavigationMarkers} from '../../common/helper/element-parsing.js';
 import useHashScroll from '../../common/hook/useHashScroll.js';
+import useSearchResult from './hooks/useSearchResult.js';
+import SearchResults from './components/search-results/index.jsx';
 
 const isDevMode = import.meta.env.DEV;
 /**
@@ -23,6 +25,10 @@ const isDevMode = import.meta.env.DEV;
 const Content = () => {
   // Get context data
   const {menu, rightContent, content, headerMeta} = useContext(AppContext);
+
+  // Search contents
+  const {isSearchResultPage, searchResults, contentWithoutSearchResults} =
+    useSearchResult(content);
 
   // Init hash scroll
   useHashScroll({
@@ -70,10 +76,19 @@ const Content = () => {
           {/*endregion navigations sidebar*/}
 
           {/*region content*/}
-          <main
-            className="grow mx-auto max-w-[740px]"
-            dangerouslySetInnerHTML={{__html: processedContent}}
-          />
+          {isSearchResultPage ? (
+            <main className="grow mx-auto max-w-[740px]">
+              <div
+                dangerouslySetInnerHTML={{__html: contentWithoutSearchResults}}
+              ></div>
+              <SearchResults searchResults={searchResults} />
+            </main>
+          ) : (
+            <main
+              className="grow mx-auto max-w-[740px]"
+              dangerouslySetInnerHTML={{__html: processedContent}}
+            />
+          )}
           {/*endregion content*/}
 
           {/*region right sidebar*/}
