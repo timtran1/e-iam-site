@@ -9,10 +9,11 @@ import useCookie from '../../common/hook/useCookie.js';
 /**
  * Language selector
  *
+ * @property {string} className
  * @returns {JSX.Element}
  * @constructor
  */
-const LangSelector = () => {
+const LangSelector = ({className = ''}) => {
   // Get context data
   const {languages} = React.useContext(AppContext);
 
@@ -70,7 +71,10 @@ const LangSelector = () => {
     <>
       <div
         ref={wrapperRef}
-        className="relative ml-auto mr-4 cursor-pointer inline-flex"
+        className={clsx(
+          'relative ml-auto cursor-pointer inline-flex',
+          className
+        )}
       >
         <ChevronButton
           leftSection={

@@ -67,21 +67,31 @@ const Header = ({className}) => {
               Transformation and ICT Governance DTI
             </div>
           </div>
-          <SearchInput />
+
+          {/*region search input for mobile*/}
+          <div className="sm:hidden">
+            <SearchInput />
+          </div>
+          {/*endregion search input for mobile*/}
+
           <div className="px-2 md:px-4 py-1">
             {/*region lang selector*/}
-            <div className="hidden sm:block">
+            <div className="hidden sm:block text-end mr-1">
               <LangSelector />
             </div>
             {/*endregion lang selector*/}
 
-            {/*region menu toggle*/}
             {/*region mobile nav*/}
             <div className="sm:hidden">
               <Navigation.Mobile />
             </div>
             {/*endregion mobile nav*/}
-            {/*endregion menu toggle*/}
+
+            {/*region search input for desktop*/}
+            <div className="pt-5 lg:pt-3 hidden sm:block">
+              <SearchInput />
+            </div>
+            {/*endregion search input for desktop*/}
           </div>
         </div>
         {/*endregion header content*/}
