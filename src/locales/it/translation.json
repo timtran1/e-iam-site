@@ -1,5 +1,13 @@
 {
   "search": "Cerca",
   "hide": "Nascondi",
-  "showMore": "Mostra di più"
+  "showMore": "Mostra di più",
+  "suche": "Ricerca",
+  "searchResults": "Risultati della ricerca",
+  "noMatchesFor": "Nessun risultato per «{{searchTerm}}»",
+  "searchTips": "Suggerimenti per la ricerca",
+  "checkSpelling": "Controlla l'ortografia del termine di ricerca",
+  "useDifferentTerm": "Usa un termine diverso o più generale",
+  "useFewerTerms": "Usa meno termini di ricerca",
+  "useAnotherSite": "Usa un altro sito"
 }

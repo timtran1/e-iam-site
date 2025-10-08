@@ -571,3 +571,76 @@ e[i].innerHTML='<a name="'+e[i].id+'"></a>'+e[i].innerHTML;
 </script>
 <div id="iii" style="display:none;">:::<div name="1&hairsp;&nbsp;legal context ⅰ&nbsp; &lt;span class=smaller&gt;&lt;span class=smaller&gt;&lt;span class=smaller&gt;&lt;span class=bold&gt;(usage obligation)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; " class="an de"><a href="#h2id1" onclick="anyl(this.href,0)">1&hairsp;&nbsp;Legal context Ⅰ&nbsp; <span x="smaller"><span x="smaller"><span x="smaller"><span x="bold"><br>&nbsp;&nbsp;&nbsp;&nbsp;(Usage obligation)</span></span></span></span> </a></div>:::<div name="2&hairsp;&nbsp;legal context ⅱ&nbsp; &lt;span class=smaller&gt;&lt;span class=smaller&gt;&lt;span class=smaller&gt;&lt;span class=bold&gt;(responsibilities, data, beneficiaries)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; " class="an de"><a href="#h2id2" onclick="anyl(this.href,1)">2&hairsp;&nbsp;Legal context Ⅱ&nbsp; <span x="smaller"><span x="smaller"><span x="smaller"><span x="bold"><br>&nbsp;&nbsp;&nbsp;&nbsp;(Responsibilities, data, beneficiaries)</span></span></span></span> </a></div>:::<div name="3&hairsp;&nbsp;terms and conditions &lt;span class=smaller&gt;&lt;span class=smaller&gt;&lt;span class=smaller&gt;&lt;span class=bold&gt;(end users)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; " class="an de"><a href="#h2id3" onclick="anyl(this.href,2)">3&hairsp;&nbsp;Terms and conditions <span x="smaller"><span x="smaller"><span x="smaller"><span x="bold"><br>&nbsp;&nbsp;&nbsp;&nbsp;(End users)</span></span></span></span> </a></div>:::<div name="4&hairsp;&nbsp;definition of services" class="an de"><a href="#h2id4" onclick="anyl(this.href,3)">4&hairsp;&nbsp;Definition of services</a></div>:::<div name="5&hairsp;&nbsp;change and development" class="an de"><a href="#h2id5" onclick="anyl(this.href,4)">5&hairsp;&nbsp;Change and development</a></div>:::<div name="6&hairsp;&nbsp;control and management" class="an de"><a href="#h2id6" onclick="anyl(this.href,5)">6&hairsp;&nbsp;Control and management</a></div>:::<div name="7&hairsp;&nbsp;operation" class="an de"><a href="#h2id7" onclick="anyl(this.href,6)">7&hairsp;&nbsp;Operation</a></div></div>
 </div>`;
+
+export const MockingSearchResultsContent = `<main class="grow mx-auto max-w-[740px]">
+    <a name="content" style="pointer-events:none">
+        <div style="font-size:65%;color:#bbb;line-height:11px">Wildcard is % not *. Set multi terms between "&nbsp;" for exact search, e. g. "native mobile app" and use spaces not dashes.</div>
+    </a>
+    <p>
+    </p>
+    <form class="unibeform" id="frm_Search2" name="fsearch2" method="get" action="javascript:location.href='index.php?c=_search&amp;l=en&amp;q='+escape(document.fsearch2.q.value.replace(/ /g,',').replace(/\\+/g,','))" onsubmit="return isterm2()">
+        <input type="hidden" name="l" value="en">
+        <input type="hidden" name="c" value="_search">
+        <input style="width:450px;max-width:98%;margin:2px 0 7px 0" name="q" id="searchlarge" type="text" value="">
+        <input type="submit" class="btnSubmit" alt="search" value="search">
+        <span id="keeper" style="display:none"></span>
+        <script type="text/javascript">
+            document.fsearch2.q.value=unescape('search').replace(/&quot;/g,'"');
+            setTimeout("if(document.fsearch2.q.value.replace(/\\s/g,'')==''){document.getElementById('keeper').innerHTML=unescape('search');document.fsearch2.q.value=document.getElementById('keeper').innerHTML};document.fsearch2.q.select()",555);
+        </script>
+    </form>
+    <br>
+    <script type="text/javascript">
+        function isterm2() {
+            if (document.fsearch2.q.value.replace(/ /g,'')=='') {
+                valert=jQuery('<textarea />').html("Please enter search term").text();
+                alert(valert);
+                document.fsearch2.q.focus();
+                return false;
+            }
+        }
+    </script>
+    <p><strong>2</strong> hits containing all of the term <strong id="terms">search</strong></p>
+    <h5><a style="text-decoration:underline" onclick="if(document.getElementById('search_Input'))this.href+=('&amp;q='+escape(document.getElementById('search_Input').value.replace(/ /g,',').replace(/\\+/g,',')))" href="?c=zumbeispielformate&amp;l=en">writeyourtitlehere Lorem ipsum dolor sit amet, consetetur .  . . .</a></h5>
+    <p>…positions and eye movement. Eye trackers are used in re<span class="hitshilite">search</span> on the visual system, in psychology, in cognitive ling…which the eye position is extracted. Other methods use <span class="hitshilite">search</span> coils or are based on the electrooculogram. download L…</p>
+    <h5><a style="text-decoration:underline" onclick="if(document.getElementById('search_Input'))this.href+=('&amp;q='+escape(document.getElementById('search_Input').value.replace(/ /g,',').replace(/\\+/g,',')))" href="?c=formatexamples&amp;l=en">writeyourtitlehere Lorem ipsum dolor sit amet, consetetur .  . . .</a></h5>
+    <p>…positions and eye movement. Eye trackers are used in re<span class="hitshilite">search</span> on the visual system, in psychology, in cognitive ling…which the eye position is extracted. Other methods use <span class="hitshilite">search</span> coils or are based on the electrooculogram. download L…</p>
+    <p></p>
+    <script type="text/javascript">
+        function replace(string,text,by) {
+            // Replaces text with by in string
+            var strLength = string.length, txtLength = text.length;
+            if ((strLength == 0) || (txtLength == 0)) return string;
+            var i = string.indexOf(text);
+            if ((!i) && (text != string.substring(0,txtLength))) return string;
+            if (i == -1) return string;
+            var newstr = string.substring(0,i) + by;
+            if (i+txtLength < strLength)
+                newstr += replace(string.substring(i+txtLength,strLength),text,by);
+            return newstr;
+        }
+
+        document.fsearch2.q.focus();
+        function hglgtsrts2(){
+            if(document.getElementById('search_Input')){
+                document.getElementById('search_Input').value=document.getElementById('terms').innerHTML;
+                document.getElementById('search_Input').value=replace(document.getElementById('search_Input').value,'&lt;','<');
+                document.getElementById('search_Input').value=replace(document.getElementById('search_Input').value,'&gt;','>');
+                document.getElementById('search_Input').value=replace(document.getElementById('search_Input').value,'&amp;','&');
+            }
+        }
+        jQuery(document).ready(function() {
+            hglgtsrts2();
+        });
+    </script>
+    <script src="sq.js"></script>
+    <div id="teledocs"></div>
+    <iframe style="display:none" src="u5sys.content.php?c=teledocs&amp;x=_search&amp;l=en&amp;q=search&amp;q2=search"></iframe>
+    <div id="telehelp"></div>
+    <iframe style="display:none" src="u5sys.content.php?c=telehelp&amp;x=_search&amp;l=en&amp;q=search&amp;q2=search"></iframe>
+    <div id="telehelpagov"></div>
+    <iframe style="display:none" src="u5sys.content.php?c=telehelpagov&amp;x=_search&amp;l=en&amp;q=search&amp;q2=search"></iframe>
+    <div id="teleworkagov"></div>
+    <iframe style="display:none" src="u5sys.content.php?c=teleworkagov&amp;x=_search&amp;l=en&amp;q=search&amp;q2=search"></iframe>
+</main>
+`;

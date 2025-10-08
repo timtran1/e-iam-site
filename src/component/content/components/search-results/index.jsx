@@ -1,21 +1,41 @@
 import ResultItem from './ResultItem.jsx';
+import SearchResultsLayout from './SearchResultsLayout.jsx';
+import React from 'react';
+import clsx from 'clsx';
+import {VIEW_MODE} from './constants.js';
 
 /**
  * Render list results of search
  *
  * @param {Array<SearchResult>} searchResults
+ * @param {string} searchTerm - Current search term
  */
-const SearchResults = ({searchResults}) => {
+const SearchResults = ({searchResults, searchTerm = ''}) => {
+  // View mode state
+  const [viewMode, setViewMode] = React.useState(VIEW_MODE.List);
+
   return (
-    <>
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2">
+    <SearchResultsLayout
+      viewMode={viewMode}
+      setViewMode={setViewMode}
+      resultsCount={searchResults.length}
+      searchTerm={searchTerm}
+    >
+      <div
+        className={clsx(
+          'grid gap-6',
+          viewMode === VIEW_MODE.Grid
+            ? 'grid-cols-1 lg:grid-cols-2'
+            : 'grid-cols-1'
+        )}
+      >
         {searchResults.map((searchResult, index) => (
           <div key={index}>
-            <ResultItem searchResult={searchResult} />
+            <ResultItem viewMode={viewMode} searchResult={searchResult} />
           </div>
         ))}
       </div>
-    </>
+    </SearchResultsLayout>
   );
 };
 

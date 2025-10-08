@@ -1,5 +1,13 @@
 {
   "search": "Search",
   "hide": "Hide",
-  "showMore": "Show more"
+  "showMore": "Show more",
+  "suche": "Search",
+  "searchResults": "Search results",
+  "noMatchesFor": "No matches for «{{searchTerm}}»",
+  "searchTips": "Search tips",
+  "checkSpelling": "Check the spelling of your search term",
+  "useDifferentTerm": "Use a different or more general term",
+  "useFewerTerms": "Use fewer search terms",
+  "useAnotherSite": "Use another site"
 }

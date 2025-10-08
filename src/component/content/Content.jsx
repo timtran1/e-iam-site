@@ -4,6 +4,7 @@ import {
   mockMenu,
   mockContent,
   mockRightContent,
+  MockingSearchResultsContent,
 } from '../../common/constant/dummy.js';
 import LeftSidebar from '../left-sidebar/LeftSidebar.jsx';
 import RightSidebar from '../right-sidebar/RightSidebar.jsx';

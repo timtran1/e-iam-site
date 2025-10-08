@@ -1,5 +1,13 @@
 {
   "search": "Tschertgar",
   "hide": "Zuppentar",
-  "showMore": "Mussar dapli"
+  "showMore": "Mussar dapli",
+  "suche": "Tschertga",
+  "searchResults": "Resultats da tschertga",
+  "noMatchesFor": "Nagins resultats per «{{searchTerm}}»",
+  "searchTips": "Tips per tschertgar",
+  "checkSpelling": "Controllescha l'ortografia da tes term da tschertga",
+  "useDifferentTerm": "Duvra in term different u pli general",
+  "useFewerTerms": "Duvra damain terms da tschertga",
+  "useAnotherSite": "Duvra in auter sito"
 }
