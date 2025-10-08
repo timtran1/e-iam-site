@@ -2,6 +2,9 @@ import {useTranslation} from 'react-i18next';
 import clsx from 'clsx';
 import {VIEW_MODE} from './constants.js';
 import SearchResultsInput from './SearchResultsInput.jsx';
+import {useDebouncedState} from '@mantine/hooks';
+import useEffectOnce from '../../../../common/hook/useEffectOnce.js';
+import Spinner from '../../../../common/ui/Spinner.jsx';
 
 /**
  * Layout component for search results page
@@ -22,6 +25,12 @@ const SearchResultsLayout = ({
 }) => {
   // Translation
   const {t} = useTranslation();
+
+  // Loading simulation
+  const [isLoading, setIsLoading] = useDebouncedState(true, 1000);
+  useEffectOnce(() => {
+    setIsLoading(false);
+  });
 
   return (
     <div>
@@ -110,25 +119,33 @@ const SearchResultsLayout = ({
 
       {/* Results Grid */}
       <div className={clsx('container mx-auto px-16 py-8')}>
-        {resultsCount === 0 ? (
-          /* Empty State */
-          <div className="px-4 py-8 md:px-8 lg:px-12 max-w-2xl">
-            <h2 className="text-xl font-semibold mb-6">
-              {t('noMatchesFor', {searchTerm})}
-            </h2>
-            <div className="space-y-4">
-              <h3 className="font-semibold">{t('searchTips')}</h3>
-              <ul className="list-disc list-inside space-y-2 text-gray-700">
-                <li>{t('checkSpelling')}</li>
-                <li>{t('useDifferentTerm')}</li>
-                <li>{t('useFewerTerms')}</li>
-                <li>{t('useAnotherSite')}</li>
-              </ul>
-            </div>
+        {isLoading ? (
+          <div className="flex items-center py-6">
+            <Spinner />
           </div>
         ) : (
-          /* Results Grid */
-          <>{children}</>
+          <>
+            {resultsCount === 0 ? (
+              /* Empty State */
+              <div className="y-8 max-w-2xl">
+                <h2 className="text-xl font-semibold mb-6">
+                  {t('noMatchesFor', {searchTerm})}
+                </h2>
+                <div className="space-y-4">
+                  <h3 className="font-semibold">{t('searchTips')}</h3>
+                  <ul className="list-disc list-inside space-y-2 text-gray-700">
+                    <li>{t('checkSpelling')}</li>
+                    <li>{t('useDifferentTerm')}</li>
+                    <li>{t('useFewerTerms')}</li>
+                    <li>{t('useAnotherSite')}</li>
+                  </ul>
+                </div>
+              </div>
+            ) : (
+              /* Results Grid */
+              <>{children}</>
+            )}
+          </>
         )}
       </div>
     </div>
