@@ -4,10 +4,10 @@ import {useDebouncedCallback} from '@mantine/hooks';
 import {ELEMENT_ID} from '../../common/constant/element-id.js';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
-import useQueryParam from '../../common/hook/useQueryParam.js';
 import clsx from 'clsx';
 import useClickAway from '../../common/hook/useClickAway.js';
 import {useTranslation} from 'react-i18next';
+import useSearchInputControl from '../../common/hook/useSearchInputControl.js';
 
 /**
  * Search input component
@@ -18,24 +18,14 @@ const SearchInput = React.memo(() => {
   // Translation
   const {t} = useTranslation();
 
-  // Search id
-  const searchId = React.useId();
-
-  // Search string value
-  const searchKeyForU5cm = 'q'; // Why is it 'q' - this is the rule of U5CMS
-  const searchKeyForDisplay = 'q2';
-  const [searchValue, setSearchValue] = useQueryParam(searchKeyForDisplay);
+  // Search input control
+  const {searchId, searchValue, setSearchValue, handleSubmit} =
+    useSearchInputControl();
 
   // Search input control
   const [expanded, setExpanded] = React.useState(false);
   const searchContainerRef = React.useRef(null);
   useClickAway(searchContainerRef, () => setExpanded(false));
-
-  // Encoded search string, using for u5cms engine (@see window.fsearch)
-  const encodedSearchStr = React.useMemo(
-    () => escape(searchValue?.replace(/ /g, ',')?.replace(/\+/g, ',') || ''),
-    [searchValue]
-  );
 
   // Get app context
   const {serverSideData, removeServerElement} = React.useContext(AppContext);
@@ -69,25 +59,6 @@ const SearchInput = React.memo(() => {
     setInput(document.fsearch);
     setInput(document.fsearch2);
   }, 500);
-
-  /**
-   * Handle submit search
-   * Why's that fsearch (for header), fsearch2 (for content) - this is element name of U5CMS
-   * @type {function(): void}
-   */
-  const handleSubmit = React.useCallback(() => {
-    const fsearch = document.fsearch;
-    if (fsearch) {
-      fsearch.q.value = searchValue;
-      const href =
-        fsearch.action.split(`javascript:location.href='`)?.[1] || 'index.php?';
-      const [path, paramsStr] = href.split('?');
-      const params = new URLSearchParams(paramsStr);
-      params.set(searchKeyForU5cm, encodedSearchStr);
-      params.set(searchKeyForDisplay, searchValue);
-      location.href = `${path}?${params.toString()}`;
-    }
-  }, [encodedSearchStr, searchValue]);
 
   /**
    * Handle click search button icon

@@ -1,6 +1,7 @@
 import {useTranslation} from 'react-i18next';
 import clsx from 'clsx';
 import {VIEW_MODE} from './constants.js';
+import SearchResultsInput from './SearchResultsInput.jsx';
 
 /**
  * Layout component for search results page
@@ -32,32 +33,7 @@ const SearchResultsLayout = ({
           </h1>
 
           {/* Search Input */}
-          <div className="relative max-w-[62rem]">
-            <input
-              type="text"
-              className={clsx(
-                'w-full !p-4 !pr-12 rounded-none',
-                'border-blue-cornflower hover:border-blue-cornflower hover:outline-blue-cornflower',
-                'focus:border-blue-cornflower focus:outline-blue-cornflower'
-              )}
-              placeholder={t('search')}
-            />
-            <button className="absolute right-8 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-900">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </button>
-          </div>
+          <SearchResultsInput />
         </div>
       </div>
 
