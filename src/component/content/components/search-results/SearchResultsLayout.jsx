@@ -27,7 +27,7 @@ const SearchResultsLayout = ({
   const {t} = useTranslation();
 
   // Loading simulation
-  const [isLoading, setIsLoading] = useDebouncedState(true, 1000);
+  const [isLoading, setIsLoading] = useDebouncedState(true, 500);
   useEffectOnce(() => {
     setIsLoading(false);
   });
