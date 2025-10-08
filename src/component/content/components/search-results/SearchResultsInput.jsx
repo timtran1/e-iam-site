@@ -26,7 +26,7 @@ const SearchResultsInput = () => {
           'border-blue-cornflower hover:border-blue-cornflower hover:outline-blue-cornflower',
           'focus:border-blue-cornflower focus:outline-blue-cornflower'
         )}
-        placeholder={t('search')}
+        placeholder={t('searchTerm')}
         value={searchValue || ''}
         onChange={({target: {value}}) => setSearchValue(value)}
         onKeyDown={(event) => event.key === 'Enter' && handleSubmit()}

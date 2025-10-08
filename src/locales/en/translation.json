@@ -1,10 +1,11 @@
 {
   "search": "Search",
+  "searchTerm": "Search term",
   "hide": "Hide",
   "showMore": "Show more",
   "suche": "Search",
   "searchResults": "Search results",
-  "noMatchesFor": "No matches for «{{searchTerm}}»",
+  "noMatchesFor": "No matches for \"{{searchTerm}}\"",
   "searchTips": "Search tips",
   "checkSpelling": "Check the spelling of your search term",
   "useDifferentTerm": "Use a different or more general term",
