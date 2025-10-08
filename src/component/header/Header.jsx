@@ -68,15 +68,14 @@ const Header = ({className}) => {
             </div>
           </div>
 
-          {/*region search input for mobile*/}
-          <div className="sm:hidden">
-            <SearchInput />
-          </div>
-          {/*endregion search input for mobile*/}
-
-          <div className="px-2 md:px-4 py-1">
+          <div
+            className={clsx(
+              'px-2 md:px-4 py-1',
+              'flex items-center gap-3 flex-row-reverse sm:block'
+            )}
+          >
             {/*region lang selector*/}
-            <div className="hidden sm:block text-end mr-1">
+            <div className="hidden sm:block text-end">
               <LangSelector />
             </div>
             {/*endregion lang selector*/}
@@ -87,11 +86,11 @@ const Header = ({className}) => {
             </div>
             {/*endregion mobile nav*/}
 
-            {/*region search input for desktop*/}
-            <div className="pt-5 lg:pt-3 hidden sm:block">
+            {/*region search input*/}
+            <div className="pt-0 sm:pt-5 lg:pt-3">
               <SearchInput />
             </div>
-            {/*endregion search input for desktop*/}
+            {/*endregion search input*/}
           </div>
         </div>
         {/*endregion header content*/}

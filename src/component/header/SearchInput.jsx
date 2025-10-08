@@ -119,7 +119,7 @@ const SearchInput = React.memo(() => {
               htmlFor={searchId}
               tabIndex="-1"
               className={clsx(
-                'hidden md:block',
+                'hidden sm:block',
                 'py-0 pr-6 transition opacity-0',
                 {
                   'opacity-100': !expanded,
