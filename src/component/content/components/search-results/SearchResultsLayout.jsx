@@ -23,43 +23,52 @@ const SearchResultsLayout = ({
   const {t} = useTranslation();
 
   return (
-    <div className="w-full">
+    <div>
       {/* Search Header Section */}
-      <div className="bg-gray-100 px-4 py-8 md:px-8 lg:px-12">
-        <h1 className="text-3xl font-bold mb-6 text-gray-900">{t('search')}</h1>
+      <div className="bg-gray-100">
+        <div className="container mx-auto px-16 py-20">
+          <h1 className="text-4xl font-bold mb-8 text-gray-900">
+            {t('search')}
+          </h1>
 
-        {/* Search Input */}
-        <div className="relative">
-          <input
-            type="text"
-            className={clsx(
-              'w-full !p-4 !pr-12 rounded-none',
-              'border-blue-cornflower hover:border-blue-cornflower hover:outline-blue-cornflower',
-              'focus:border-blue-cornflower focus:outline-blue-cornflower'
-            )}
-            placeholder={t('search')}
-          />
-          <button className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-900">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-          </button>
+          {/* Search Input */}
+          <div className="relative max-w-[62rem]">
+            <input
+              type="text"
+              className={clsx(
+                'w-full !p-4 !pr-12 rounded-none',
+                'border-blue-cornflower hover:border-blue-cornflower hover:outline-blue-cornflower',
+                'focus:border-blue-cornflower focus:outline-blue-cornflower'
+              )}
+              placeholder={t('search')}
+            />
+            <button className="absolute right-8 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-900">
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Results Info Bar */}
-      <div className="border-b border-gray-300 px-4 py-4 md:px-8 lg:px-12">
-        <div className="flex items-center justify-between">
+      <div className={clsx('container mx-auto px-16')}>
+        <div
+          className={clsx(
+            'flex items-center justify-between',
+            'border-b border-gray-300 pt-8 pb-4'
+          )}
+        >
           {/* Results Count */}
           <div className="text-gray-700">
             {resultsCount} {t('searchResults')}
@@ -124,7 +133,7 @@ const SearchResultsLayout = ({
       </div>
 
       {/* Results Grid */}
-      <div className="py-8">
+      <div className={clsx('container mx-auto px-16 py-8')}>
         {resultsCount === 0 ? (
           /* Empty State */
           <div className="px-4 py-8 md:px-8 lg:px-12 max-w-2xl">

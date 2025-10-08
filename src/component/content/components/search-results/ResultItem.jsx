@@ -27,7 +27,7 @@ const ResultItem = React.memo(({searchResult, viewMode}) => {
           'cursor-pointer group',
           viewMode === VIEW_MODE.Grid &&
             'rounded p-6 shadow transition hover:shadow-xl',
-          viewMode === VIEW_MODE.List && 'border-b'
+          viewMode === VIEW_MODE.List && 'border-b pb-6'
         )}
         onClick={handleClickItem}
       >
@@ -42,7 +42,7 @@ const ResultItem = React.memo(({searchResult, viewMode}) => {
           className={clsx(
             'break-words mb-0',
             viewMode === VIEW_MODE.Grid && 'min-h-44 line-clamp-6',
-            viewMode === VIEW_MODE.List && 'min-h-32 line-clamp-3'
+            viewMode === VIEW_MODE.List && 'min-h-24 line-clamp-3'
           )}
           dangerouslySetInnerHTML={{
             __html: searchResult.description?.innerHTML,

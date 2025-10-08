@@ -23,9 +23,9 @@ const SearchResults = ({searchResults, searchTerm = ''}) => {
     >
       <div
         className={clsx(
-          'grid gap-6',
+          'grid gap-6 lg:gap-8 xl:gap-10',
           viewMode === VIEW_MODE.Grid
-            ? 'grid-cols-1 lg:grid-cols-2'
+            ? 'grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'
             : 'grid-cols-1'
         )}
       >

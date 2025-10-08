@@ -4,7 +4,6 @@ import {
   mockMenu,
   mockContent,
   mockRightContent,
-  MockingSearchResultsContent,
 } from '../../common/constant/dummy.js';
 import LeftSidebar from '../left-sidebar/LeftSidebar.jsx';
 import RightSidebar from '../right-sidebar/RightSidebar.jsx';
@@ -28,8 +27,7 @@ const Content = () => {
   const {menu, rightContent, content, headerMeta} = useContext(AppContext);
 
   // Search contents
-  const {isSearchResultPage, searchResults, contentWithoutSearchResults} =
-    useSearchResult(content);
+  const {isSearchResultPage, searchResults} = useSearchResult(content);
 
   // Init hash scroll
   useHashScroll({
@@ -70,7 +68,7 @@ const Content = () => {
 
   return (
     <>
-      <article className="px-6 py-6 md:py-12 max-w-[1440px] mx-auto">
+      <article className="py-6 md:py-12 max-w-[1440px] mx-auto">
         <div className="flex flex-col sm:flex-row gap-12 justify-between max-w-full">
           {/*region navigations sidebar*/}
           <LeftSidebar menus={menus} />
@@ -78,15 +76,12 @@ const Content = () => {
 
           {/*region content*/}
           {isSearchResultPage ? (
-            <main className="relative grow mx-auto max-w-full lg:max-w-[740px]">
-              <div
-                dangerouslySetInnerHTML={{__html: contentWithoutSearchResults}}
-              ></div>
+            <main className="w-full">
               <SearchResults searchResults={searchResults} />
             </main>
           ) : (
             <main
-              className="relative grow mx-auto max-w-full lg:max-w-[740px]"
+              className="relative grow mx-auto max-w-full lg:max-w-[740px] px-6"
               dangerouslySetInnerHTML={{__html: processedContent}}
             />
           )}
@@ -99,9 +94,6 @@ const Content = () => {
           {/*endregion right sidebar*/}
         </div>
       </article>
-
-      {/* Show unnecessary cookie banner */}
-      {/* <CookieConsentPopup />*/}
     </>
   );
 };
