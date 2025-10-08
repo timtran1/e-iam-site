@@ -90,6 +90,18 @@ const SearchInput = React.memo(() => {
   }, [encodedSearchStr, searchValue]);
 
   /**
+   * Handle click search button icon
+   * @type {function(): void}
+   */
+  const handleClickSearchBtn = React.useCallback(() => {
+    if (!expanded) {
+      setExpanded(true);
+    } else {
+      handleSubmit();
+    }
+  }, [expanded, handleSubmit]);
+
+  /**
    * Handle server side data is rendered, delete server element after that
    */
   React.useEffect(() => {
@@ -150,7 +162,7 @@ const SearchInput = React.memo(() => {
 
           <div
             className="absolute top-1/2 right-1.5 -translate-y-1/2 cursor-pointer"
-            onClick={() => setExpanded((prevState) => !prevState)}
+            onClick={handleClickSearchBtn}
           >
             <FontAwesomeIcon
               icon={faSearch}
