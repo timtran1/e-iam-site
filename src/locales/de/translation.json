@@ -1,0 +1,14 @@
+{
+  "search": "Suchen",
+  "searchTerm": "Suchbegriff",
+  "hide": "Ausblenden",
+  "showMore": "Mehr anzeigen",
+  "suche": "Suche",
+  "searchResults": "Suchergebnisse",
+  "noMatchesFor": "Keine Treffer für «{{searchTerm}}»",
+  "searchTips": "Suchtipps",
+  "checkSpelling": "Überprüfen Sie die Rechtschreibung Ihres Suchbegriffs",
+  "useDifferentTerm": "Verwenden Sie einen anderen oder allgemeineren Begriff",
+  "useFewerTerms": "Verwenden Sie weniger Suchbegriffe",
+  "useAnotherSite": "Verwenden Sie eine andere Website"
+}

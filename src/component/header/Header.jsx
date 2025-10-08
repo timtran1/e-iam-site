@@ -67,21 +67,30 @@ const Header = ({className}) => {
               Transformation and ICT Governance DTI
             </div>
           </div>
-          <SearchInput />
-          <div className="px-2 md:px-4 py-1">
+
+          <div
+            className={clsx(
+              'px-2 md:px-4 py-1',
+              'flex items-center gap-3 flex-row-reverse sm:block'
+            )}
+          >
             {/*region lang selector*/}
-            <div className="hidden sm:block">
+            <div className="hidden sm:block text-end">
               <LangSelector />
             </div>
             {/*endregion lang selector*/}
 
-            {/*region menu toggle*/}
             {/*region mobile nav*/}
             <div className="sm:hidden">
               <Navigation.Mobile />
             </div>
             {/*endregion mobile nav*/}
-            {/*endregion menu toggle*/}
+
+            {/*region search input*/}
+            <div className="pt-0 sm:pt-5 lg:pt-3">
+              <SearchInput />
+            </div>
+            {/*endregion search input*/}
           </div>
         </div>
         {/*endregion header content*/}

@@ -12,6 +12,8 @@ import useIsMobile from '../../common/hook/useIsMobile.js';
 import {handleResponsiveWidth} from '../../common/utils/responsiveWidthHandler.js';
 import {stripNavigationMarkers} from '../../common/helper/element-parsing.js';
 import useHashScroll from '../../common/hook/useHashScroll.js';
+import useSearchResult from './hooks/useSearchResult.js';
+import SearchResults from './components/search-results/index.jsx';
 
 const isDevMode = import.meta.env.DEV;
 /**
@@ -23,6 +25,9 @@ const isDevMode = import.meta.env.DEV;
 const Content = () => {
   // Get context data
   const {menu, rightContent, content, headerMeta} = useContext(AppContext);
+
+  // Search contents
+  const {isSearchResultPage, searchResults} = useSearchResult(content);
 
   // Init hash scroll
   useHashScroll({
@@ -63,17 +68,23 @@ const Content = () => {
 
   return (
     <>
-      <article className="px-6 py-6 md:py-12 max-w-[1440px] mx-auto">
+      <article className="max-w-[1440px] mx-auto">
         <div className="flex flex-col sm:flex-row gap-12 justify-between max-w-full">
           {/*region navigations sidebar*/}
           <LeftSidebar menus={menus} />
           {/*endregion navigations sidebar*/}
 
           {/*region content*/}
-          <main
-            className="relative grow mx-auto max-w-full lg:max-w-[740px]"
-            dangerouslySetInnerHTML={{__html: processedContent}}
-          />
+          {isSearchResultPage ? (
+            <main className="w-full">
+              <SearchResults searchResults={searchResults} />
+            </main>
+          ) : (
+            <main
+              className="relative grow mx-auto max-w-full lg:max-w-[740px] px-6 py-6 md:py-12"
+              dangerouslySetInnerHTML={{__html: processedContent}}
+            />
+          )}
           {/*endregion content*/}
 
           {/*region right sidebar*/}
@@ -83,9 +94,6 @@ const Content = () => {
           {/*endregion right sidebar*/}
         </div>
       </article>
-
-      {/* Show unnecessary cookie banner */}
-      {/* <CookieConsentPopup />*/}
     </>
   );
 };

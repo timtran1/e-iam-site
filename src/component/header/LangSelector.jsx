@@ -9,10 +9,11 @@ import useCookie from '../../common/hook/useCookie.js';
 /**
  * Language selector
  *
+ * @property {string} className
  * @returns {JSX.Element}
  * @constructor
  */
-const LangSelector = () => {
+const LangSelector = ({className = ''}) => {
   // Get context data
   const {languages} = React.useContext(AppContext);
 
@@ -20,10 +21,9 @@ const LangSelector = () => {
   const [cookieLang, setCookieLang] = useCookie('aclan'); // This key comes from U5CMS
 
   // Get lang from query param
-  const queryParamLang = useQueryParam('l'); // Why is it "l"? - this is the rule of U5CMS to get language
+  const [currentLang, setCurrentLang] = useQueryParam('l'); // Why is it "l"? - this is the rule of U5CMS to get language
 
   // State for current language
-  const [currentLang, setCurrentLang] = React.useState(queryParamLang);
 
   // Visible state
   const [opened, setOpened] = React.useState(false);
@@ -42,12 +42,9 @@ const LangSelector = () => {
    * Syncs the language from the URL query parameter `l` or sets a default language.
    */
   React.useEffect(() => {
-    if (queryParamLang) {
-      setCurrentLang(queryParamLang);
-    } else {
+    if (!currentLang) {
       if (cookieLang) {
         const params = new URLSearchParams(window.location.search);
-        params.set('l', cookieLang); // Why is it "l"? - this is the rule of U5CMS to get language
         setCurrentLang(cookieLang);
         window.history.replaceState(
           {},
@@ -64,18 +61,20 @@ const LangSelector = () => {
           path: '/',
         });
         const params = new URLSearchParams(window.location.search);
-        params.set('l', langKey); // Why is it "l"? - this is the rule of U5CMS to get language
         setCurrentLang(langKey);
         window.location.href = `${window.location.pathname}?${params.toString()}`;
       }
     }
-  }, [cookieLang, languages, queryParamLang, setCookieLang]);
+  }, [cookieLang, currentLang, languages, setCookieLang, setCurrentLang]);
 
   return (
     <>
       <div
         ref={wrapperRef}
-        className="relative ml-auto mr-4 cursor-pointer inline-flex"
+        className={clsx(
+          'relative ml-auto cursor-pointer inline-flex',
+          className
+        )}
       >
         <ChevronButton
           leftSection={

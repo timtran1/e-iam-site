@@ -1,0 +1,155 @@
+import {useTranslation} from 'react-i18next';
+import clsx from 'clsx';
+import {VIEW_MODE} from './constants.js';
+import SearchResultsInput from './SearchResultsInput.jsx';
+import {useDebouncedState} from '@mantine/hooks';
+import useEffectOnce from '../../../../common/hook/useEffectOnce.js';
+import Spinner from '../../../../common/ui/Spinner.jsx';
+
+/**
+ * Layout component for search results page
+ *
+ * @param {Object} props
+ * @param {number} props.resultsCount - Number of search results
+ * @param {React.ReactNode} props.children - Results content to render
+ * @param {string} props.searchTerm - Current search term for empty state
+ * @param {string} props.viewMode
+ * @param props.setViewMode
+ */
+const SearchResultsLayout = ({
+  resultsCount,
+  children,
+  searchTerm = '',
+  viewMode,
+  setViewMode,
+}) => {
+  // Translation
+  const {t} = useTranslation();
+
+  // Loading simulation
+  const [isLoading, setIsLoading] = useDebouncedState(true, 500);
+  useEffectOnce(() => {
+    setIsLoading(false);
+  });
+
+  return (
+    <div>
+      {/* Search Header Section */}
+      <div className="bg-gray-100">
+        <div className="container mx-auto px-16 py-20">
+          <h1 className="text-4xl font-bold mb-8 text-gray-900">
+            {t('search')}
+          </h1>
+
+          {/* Search Input */}
+          <SearchResultsInput />
+        </div>
+      </div>
+
+      {/* Results Info Bar */}
+      <div className={clsx('container mx-auto px-16')}>
+        <div
+          className={clsx(
+            'flex items-center justify-between',
+            'border-b border-gray-300 pt-8 pb-4'
+          )}
+        >
+          {/* Results Count */}
+          <div className="text-gray-700">
+            {resultsCount} {t('searchResults')}
+          </div>
+
+          {/* Right Side Controls */}
+          <div className="flex items-center gap-4">
+            {/* Divider */}
+            <div className="w-px h-6 bg-gray-300"></div>
+
+            {/* View Toggle Buttons */}
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setViewMode(VIEW_MODE.List)}
+                className={`p-2 rounded transition ${
+                  viewMode === VIEW_MODE.List
+                    ? 'bg-gray-200 text-gray-900'
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+                aria-label="List view"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              </button>
+              <button
+                onClick={() => setViewMode(VIEW_MODE.Grid)}
+                className={`p-2 rounded transition ${
+                  viewMode === VIEW_MODE.Grid
+                    ? 'bg-gray-200 text-gray-900'
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+                aria-label="Grid view"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Results Grid */}
+      <div className={clsx('container mx-auto px-16 py-8')}>
+        {isLoading ? (
+          <div className="flex items-center py-6">
+            <Spinner />
+          </div>
+        ) : (
+          <>
+            {resultsCount === 0 ? (
+              /* Empty State */
+              <div className="y-8 max-w-2xl">
+                <h2 className="text-xl font-semibold mb-6">
+                  {t('noMatchesFor', {searchTerm})}
+                </h2>
+                <div className="space-y-4">
+                  <h3 className="font-semibold">{t('searchTips')}</h3>
+                  <ul className="list-disc list-inside space-y-2 text-gray-700">
+                    <li>{t('checkSpelling')}</li>
+                    <li>{t('useDifferentTerm')}</li>
+                    <li>{t('useFewerTerms')}</li>
+                    <li>{t('useAnotherSite')}</li>
+                  </ul>
+                </div>
+              </div>
+            ) : (
+              /* Results Grid */
+              <>{children}</>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default SearchResultsLayout;
