@@ -1,6 +1,6 @@
 import React from 'react';
 import AppContext from './app.context.js';
-import useServerSideVariables from '../../hook/useServerSideVariables.js';
+import useServerSideVariables from './hooks/useServerSideVariables.js';
 import {parseLangEle, parseMenuEle} from '../../helper/element-parsing.js';
 import {ELEMENT_ID} from '../../constant/element-id.js';
 

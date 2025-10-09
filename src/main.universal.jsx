@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
-import { ELEMENT_ID } from './common/constant/element-id.js';
-import { isU5AdminPreview } from './common/helper/pageContext.js';
+import {ELEMENT_ID} from './common/constant/element-id.js';
+import {isU5AdminPreview} from './common/helper/pageContext.js';
 import replaceU5CMSFunctions from './utils/replaceU5CMSFunctions.js';
 
 // Check if we're in u5admin preview mode - if so, exit early
@@ -88,13 +88,6 @@ function initializeUniversalReact() {
 
 let reactRoot = null;
 let isReactMounted = false;
-let renderDebounceTimer = null;
-
-// Configuration for debounce timing
-const RENDER_CONFIG = {
-  DEBOUNCE_DELAY: 500, // milliseconds to wait before re-render
-  DOM_STABLE_DELAY: 200, // milliseconds to wait for DOM to stabilize
-};
 
 // Default container configuration
 const CONTAINER_CONFIG = {
@@ -198,160 +191,21 @@ function _renderReactAppInternal(containerId = CONTAINER_CONFIG.DEFAULT_ID) {
 }
 
 /**
- * Debounced version of renderReactApp
- * @param {string} containerId - ID of the container element
- * @param {number | null} customDelay - Optional custom delay in milliseconds
- * @param {boolean} immediate - If true, render immediately without debounce
- */
-function renderReactApp(
-  containerId = CONTAINER_CONFIG.DEFAULT_ID,
-  customDelay = null,
-  immediate = false
-) {
-  // Clear existing timer
-  if (renderDebounceTimer) {
-    clearTimeout(renderDebounceTimer);
-    renderDebounceTimer = null;
-  }
-
-  if (immediate) {
-    console.log('Immediate React render requested');
-    _renderReactAppInternal(containerId);
-    return;
-  }
-
-  const delay =
-    customDelay !== null ? customDelay : RENDER_CONFIG.DEBOUNCE_DELAY;
-
-  console.log(`Scheduling React render...`);
-  renderDebounceTimer = setTimeout(() => {
-    renderDebounceTimer = null;
-    _renderReactAppInternal(containerId);
-  }, delay);
-}
-
-/**
- * Handle DOM mutations that might indicate external interference
- * @param mutations
- * @param {string} containerId - ID of the container element
- */
-function handleDOMChanges(
-  mutations,
-  containerId = CONTAINER_CONFIG.DEFAULT_ID
-) {
-  let shouldReRender = false;
-
-  mutations.forEach((mutation) => {
-    if (mutation.type === 'childList') {
-      // Check if root element was affected
-      const rootElement = document.getElementById(containerId);
-
-      if (rootElement) {
-        // If root element is empty but React should be mounted, re-render
-        if (isReactMounted && rootElement.children.length === 0) {
-          console.log(
-            'Detected React content cleared, scheduling re-render...'
-          );
-          shouldReRender = true;
-        }
-
-        // Check if root element was removed and re-added
-        if (
-          mutation.target === document.body &&
-          Array.from(mutation.addedNodes).some(
-            (node) => node.id === containerId
-          )
-        ) {
-          console.log(
-            'Detected root element re-added, scheduling re-render...'
-          );
-          shouldReRender = true;
-        }
-      }
-    }
-  });
-
-  if (shouldReRender) {
-    // Reset flag to allow re-mounting
-    isReactMounted = false;
-
-    // Use debounced render with DOM stable delay
-    renderReactApp(containerId, RENDER_CONFIG.DOM_STABLE_DELAY);
-  }
-}
-
-/**
- * Initialize DOM observer to watch for external changes
- * @param {string} containerId - ID of the container element
- */
-function initializeDOMObserver(containerId = CONTAINER_CONFIG.DEFAULT_ID) {
-  const observer = new MutationObserver((mutations) =>
-    handleDOMChanges(mutations, containerId)
-  );
-
-  // Observe changes to body and its subtree
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true,
-    attributes: false,
-  });
-
-  console.log('DOM observer initialized to watch for external changes');
-
-  return observer;
-}
-
-/**
- * Handle page reload events
- * @param {string} containerId - ID of the container element
- */
-function handlePageEvents(containerId = CONTAINER_CONFIG.DEFAULT_ID) {
-  // Listen for before page unload
-  window.addEventListener('beforeunload', () => {
-    console.log('Page is reloading, React will re-mount after reload');
-    isReactMounted = false;
-  });
-
-  // Re-render after DOM is fully loaded
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () =>
-      renderReactApp(containerId, null, true)
-    );
-  }
-}
-
-/**
  * Initialize React app with universal mounting capability
- * @param {Object} options - Configuration options
- * @param {string} options.containerId - ID of the container element
- * @param {boolean} options.enableDOMObserver - Whether to enable DOM observer
- * @param {boolean} options.autoRender - Whether to auto-render on initialization
  */
 function initializeReactApp(options = {}) {
-  const {
-    containerId = CONTAINER_CONFIG.DEFAULT_ID,
-    enableDOMObserver = true,
-    autoRender = true,
-  } = options;
-
+  const {containerId = CONTAINER_CONFIG.DEFAULT_ID, autoRender = true} =
+    options;
   console.log('Initializing universal app...');
-
-  // Handle page events
-  handlePageEvents(containerId);
 
   // Initial render if auto-render is enabled
   if (autoRender) {
-    renderReactApp(containerId, null, true);
-  }
-
-  // Start observing DOM changes if enabled
-  if (enableDOMObserver) {
-    initializeDOMObserver(containerId);
+    _renderReactAppInternal(containerId);
   }
 
   // Return public API for manual control
   return {
-    render: (immediate = false) => renderReactApp(containerId, null, immediate),
+    render: () => _renderReactAppInternal(containerId),
     unmount: () => {
       if (reactRoot && isReactMounted) {
         reactRoot.unmount();
@@ -359,8 +213,6 @@ function initializeReactApp(options = {}) {
         console.log('App unmounted');
       }
     },
-    isReactMounted: () => isReactMounted,
-    getContainer: () => getOrCreateContainer(containerId),
   };
 }
 
