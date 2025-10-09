@@ -11,6 +11,27 @@ const RENDER_CONFIG = {
 };
 
 /**
+ * Handle element content
+ *
+ * @param {Element} ele
+ * @param {Element} clonedEle
+ */
+const handleElementContent = (ele, clonedEle) => {
+  // Clone form pre-fill iframe
+  const ifrMonoFillIframe = ele.querySelector('[name="ifrmonofill"]');
+  if (ifrMonoFillIframe) {
+    clonedEle.querySelector('[name="ifrmonofill"]')?.remove();
+    clonedEle.appendChild(cloneIframe(ifrMonoFillIframe));
+  }
+
+  // Remove original u5forms to avoid conflicts between React and U5CMS
+  const u5formState = ele.querySelectorAll('[name="u5form"]');
+  if (u5formState.length) {
+    u5formState.forEach((item) => item.remove());
+  }
+};
+
+/**
  * Custom hook - to get the server-side variables
  */
 const useServerSideVariables = () => {
@@ -40,32 +61,19 @@ const useServerSideVariables = () => {
 
       // Only update state if element is not empty
       if (!isEmptyElement(ele)) {
+        // Clone sever site element
         const clonedEle = ele.cloneNode(true);
 
+        // Handle element before assigning to state
         switch (eleId) {
           case ELEMENT_ID.CONTENT:
-            {
-              // Clone form
-              const ifrMonoFillIframe = ele.querySelector(
-                '[name="ifrmonofill"]'
-              );
-              if (ifrMonoFillIframe) {
-                clonedEle.querySelector('[name="ifrmonofill"]')?.remove();
-                clonedEle.appendChild(cloneIframe(ifrMonoFillIframe));
-              }
-
-              // Remove original u5forms to avoid conflicts between React and U5CMS
-              const u5formState = ele.querySelectorAll('[name="u5form"]');
-              if (u5formState.length) {
-                u5formState.forEach((item) => item.remove());
-              }
-            }
+            handleElementContent(ele, clonedEle);
             break;
-
           default:
             break;
         }
 
+        // Update state
         setServerSideData((prevState) => {
           return {
             ...prevState,
