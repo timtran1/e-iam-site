@@ -18,9 +18,10 @@ const RENDER_CONFIG = {
  */
 const handleElementContent = (ele, clonedEle) => {
   // Clone form pre-fill iframe
-  const ifrMonoFillIframe = ele.querySelector('[name="ifrmonofill"]');
+  const preFillIframeSelector = '[name="ifrmonofill"]';
+  const ifrMonoFillIframe = ele.querySelector(preFillIframeSelector);
   if (ifrMonoFillIframe) {
-    clonedEle.querySelector('[name="ifrmonofill"]')?.remove();
+    clonedEle.querySelector(preFillIframeSelector)?.remove();
     clonedEle.appendChild(cloneIframe(ifrMonoFillIframe));
   }
 
