@@ -1,12 +1,35 @@
 import React from 'react';
-import {ELEMENT_ID} from '../constant/element-id.js';
-import {isEmptyElement} from '../helper/element-parsing.js';
-import useEffectOnce from './useEffectOnce.js';
+import {ELEMENT_ID} from '../../../constant/element-id.js';
+import {isEmptyElement} from '../../../helper/element-parsing.js';
+import useEffectOnce from '../../../hook/useEffectOnce.js';
+import {cloneIframe} from '../../../helper/iframe.js';
 
 // Configuration constants for server-side data fetching
 const RENDER_CONFIG = {
   DEBOUNCE_DELAY: 330, // Interval between polling attempts (ms)
   POLLING_TIMEOUT: 5000, // Maximum time to poll before giving up (ms)
+};
+
+/**
+ * Handle element content
+ *
+ * @param {Element} ele
+ * @param {Element} clonedEle
+ */
+const handleElementContent = (ele, clonedEle) => {
+  // Clone form pre-fill iframe
+  const preFillIframeSelector = '[name="ifrmonofill"]';
+  const ifrMonoFillIframe = ele.querySelector(preFillIframeSelector);
+  if (ifrMonoFillIframe) {
+    clonedEle.querySelector(preFillIframeSelector)?.remove();
+    clonedEle.appendChild(cloneIframe(ifrMonoFillIframe));
+  }
+
+  // Remove original u5forms to avoid conflicts between React and U5CMS
+  const u5formState = ele.querySelectorAll('[name="u5form"]');
+  if (u5formState.length) {
+    u5formState.forEach((item) => item.remove());
+  }
 };
 
 /**
@@ -39,10 +62,23 @@ const useServerSideVariables = () => {
 
       // Only update state if element is not empty
       if (!isEmptyElement(ele)) {
+        // Clone sever site element
+        const clonedEle = ele.cloneNode(true);
+
+        // Handle element before assigning to state
+        switch (eleId) {
+          case ELEMENT_ID.CONTENT:
+            handleElementContent(ele, clonedEle);
+            break;
+          default:
+            break;
+        }
+
+        // Update state
         setServerSideData((prevState) => {
           return {
             ...prevState,
-            [eleId]: prevState[eleId] || ele, // Only update if the ele of eleId is not existed
+            [eleId]: prevState[eleId] || clonedEle, // Only update if the ele of eleId is not existed
           };
         });
       }
@@ -92,29 +128,6 @@ const useServerSideVariables = () => {
   useEffectOnce(() => {
     startPolling();
   });
-
-  /**
-   * Effect to handle u5form element conflicts between React and u5cms
-   *
-   * This effect prevents duplication of u5form elements by removing them from the original
-   *
-   * The effect compares u5form elements in both the current DOM and the server-side content,
-   * and removes duplicates from the original element to maintain form functionality.
-   */
-  React.useEffect(() => {
-    if (serverSideData.content) {
-      const ele = document.querySelector(`#${ELEMENT_ID.CONTENT}`);
-      if (ele) {
-        // Remove u5form on original element to avoid duplication
-        const u5formStateTemplate = ele.querySelectorAll('[name="u5form"]');
-        const u5formState =
-          serverSideData.content.querySelectorAll('[name="u5form"]');
-        if (u5formState.length && u5formStateTemplate.length) {
-          u5formStateTemplate.forEach((item) => item.remove());
-        }
-      }
-    }
-  }, [serverSideData.content]);
 
   /**
    * Cleanup effect
