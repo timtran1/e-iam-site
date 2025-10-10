@@ -5,6 +5,25 @@ import {parseLangEle, parseMenuEle} from '../../helper/element-parsing.js';
 import {ELEMENT_ID} from '../../constant/element-id.js';
 
 /**
+ * Recursively filters menu tree by removing items with empty labels
+ *
+ * @param {Array<AppMenu>} menus - Array of menu items to filter
+ * @returns {Array<AppMenu>} Filtered menu array with valid labels only
+ */
+const filterMenusRecursive = (menus) => {
+  const newValues = [];
+  menus.forEach((menu) => {
+    if (menu.label?.trim()) {
+      if (menu.children?.length) {
+        menu.children = filterMenusRecursive(menu.children);
+      }
+      newValues.push(menu);
+    }
+  });
+  return newValues;
+};
+
+/**
  * App data context
  *
  * @param children
@@ -23,7 +42,8 @@ const AppProvider = ({children}) => {
    */
   const menu = React.useMemo(() => {
     if (serverSideData.navigation) {
-      return parseMenuEle(serverSideData.navigation.querySelector('ul'));
+      const menus = parseMenuEle(serverSideData.navigation.querySelector('ul'));
+      return filterMenusRecursive(menus);
     } else {
       return [];
     }
