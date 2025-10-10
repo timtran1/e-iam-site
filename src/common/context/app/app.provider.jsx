@@ -7,8 +7,8 @@ import {ELEMENT_ID} from '../../constant/element-id.js';
 /**
  * Recursively filters menu tree by removing items with empty labels
  *
- * @param {Array<AppMenu>} menus - Array of menu items to filter
- * @returns {Array<AppMenu>} Filtered menu array with valid labels only
+ * @param {Array<AppMenu>} menus
+ * @returns {Array<AppMenu>}
  */
 const filterMenusRecursive = (menus) => {
   const newValues = [];
