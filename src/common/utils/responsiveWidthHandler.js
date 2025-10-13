@@ -20,8 +20,9 @@ export const handleResponsiveWidth = (isMobile, selectors) => {
           const originalWidth = element.style.width || window.getComputedStyle(element).width;
           element.setAttribute('data-original-width', originalWidth);
         }
-        // Apply mobile width (100%)
-        element.style.width = '100%';
+        // Remove fixed width to allow natural responsive behavior
+        element.style.width = '';
+        element.style.maxWidth = '100%';
       } else {
         // Restore original width if available
         const originalWidth = element.getAttribute('data-original-width');

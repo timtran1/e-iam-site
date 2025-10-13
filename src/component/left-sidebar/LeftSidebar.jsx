@@ -26,7 +26,7 @@ const hasActivatedMenu = (menu) => {
   }
 };
 
-export default function LeftSidebar({menus}) {
+export default function LeftSidebar({ menus }) {
   /**
    * Only allow top level items to have children
    * We don't want to nest to be too deep here
@@ -46,15 +46,20 @@ export default function LeftSidebar({menus}) {
     return [];
   }, [menus]);
 
+    const widthClass = React.useMemo(() => {
+      if (processedMenus.length && processedMenus.length > 0) {
+        return 'w-[150px] lg:w-[200px] lg:w-[220px] xl:w-[240px] 2xl:w-[260px]';
+      }
+      // produce spacer to let main content be in center
+      return 'invisible w-0 lg:w-[200px] lg:w-[220px] xl:w-[240px] 2xl:w-[260px]';
+  
+    }, [processedMenus]);
+
   return (
-    <>
-      {!!processedMenus.length && (
-        <nav className="left-sidebar w-[180px] md:w-[200px] lg:w-[220px] xl:w-[240px] 2xl:w-[260px] hidden sm:block">
-          {processedMenus.map((menu, index) => (
-            <LeftMenuItem key={index} menu={menu} index={index} />
-          ))}
-        </nav>
-      )}
-    </>
+    <nav className={`left-sidebar text-sm lg:text-base hidden md:block ${widthClass}`}>
+      {processedMenus.map((menu, index) => (
+        <LeftMenuItem key={index} menu={menu} index={index} />
+      ))}
+    </nav>
   );
 }

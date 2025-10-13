@@ -51,7 +51,7 @@ export default function LeftMenuItem({menu, index}) {
         <a
           href={menu.href}
           className={clsx(
-            'flex-1 px-2 !py-4 block text-secondary-text hover:!no-underline !text-base',
+            'flex-1 px-2 !py-4 block text-secondary-text hover:!no-underline',
             isActive || hasActiveChild ? '!text-primary-main' : ''
           )}
         >

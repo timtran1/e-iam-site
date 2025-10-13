@@ -2,9 +2,9 @@ import React from 'react';
 import ArrowRightHTML from '../icons/ArrowRightHTML.js';
 import AppContext from '../../common/context/app/app.context.js';
 
-export default function RightSidebar({content}) {
+export default function RightSidebar({ content }) {
   // Get app context
-  const {headerMeta} = React.useContext(AppContext);
+  const { headerMeta } = React.useContext(AppContext);
 
   // Sidebar element ref
   const asideRef = React.useRef(null);
@@ -17,6 +17,15 @@ export default function RightSidebar({content}) {
       content?.replace(/⇨/g, ArrowRightHTML()).replace(/→/g, ArrowRightHTML()),
     [content]
   );
+
+  const widthClass = React.useMemo(() => {
+    if (content) {
+      return 'sm:max-w-[150px] lg:max-w-[200px] xl:max-w-[220px] 2xl:max-w-[260px] shrink-[5] ';
+    }
+    // produce spacer to let main content be in center
+    return 'invisible w-0 lg:w-[200px] lg:w-[220px] xl:w-[240px] 2xl:w-[260px]';
+
+  }, [content]);
 
   /**
    * @type {Array<{
@@ -69,22 +78,22 @@ export default function RightSidebar({content}) {
   }, [processedContent]);
 
   return (
-    <aside className="right-sidebar grow bg-gray-aqua-haze border border-gray-aqua-haze px-6 py-3 space-y-6 shadow">
+    <aside className={`right-sidebar break-words text-wrap text-[12px] lg:text-[14px] bg-gray-aqua-haze border border-gray-aqua-haze px-3 lg:px-6 py-3 lg:py-6 shadow ${widthClass}`}>
       <div
         ref={asideRef}
-        dangerouslySetInnerHTML={{__html: processedContent}}
+        dangerouslySetInnerHTML={{ __html: processedContent }}
       />
 
       <div
-        className="sticky space-y-3.5"
-        style={{top: headerMeta.headerHeight + 16 || 10 * 16}}
+        className="sticky"
+        style={{ top: headerMeta.headerHeight + 16 || 10 * 16 }}
       >
         {sideAnchors?.map((anchor, _index) => (
           <React.Fragment key={_index}>
             {anchor.parentDiv && (
               <div
                 className="leading-5 active:text-gray-shadow hover:underline"
-                dangerouslySetInnerHTML={{__html: anchor.parentDiv.outerHTML}}
+                dangerouslySetInnerHTML={{ __html: anchor.parentDiv.outerHTML }}
               />
             )}
           </React.Fragment>

@@ -1,4 +1,4 @@
-import {useContext, useEffect, useMemo} from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import AppContext from '../../common/context/app/app.context.js';
 import {
   mockMenu,
@@ -8,9 +8,9 @@ import {
 import LeftSidebar from '../left-sidebar/LeftSidebar.jsx';
 import RightSidebar from '../right-sidebar/RightSidebar.jsx';
 import ArrowRightHTML from '../icons/ArrowRightHTML.js';
-import useIsMobile from '../../common/hook/useIsMobile.js';
-import {handleResponsiveWidth} from '../../common/utils/responsiveWidthHandler.js';
-import {stripNavigationMarkers} from '../../common/helper/element-parsing.js';
+// import useIsMobile from '../../common/hook/useIsMobile.js';
+import { handleResponsiveWidth } from '../../common/utils/responsiveWidthHandler.js';
+import { stripNavigationMarkers } from '../../common/helper/element-parsing.js';
 import useHashScroll from '../../common/hook/useHashScroll.js';
 import useSearchResult from './hooks/useSearchResult.js';
 import SearchResults from './components/search-results/index.jsx';
@@ -24,10 +24,10 @@ const isDevMode = import.meta.env.DEV;
  */
 const Content = () => {
   // Get context data
-  const {menu, rightContent, content, headerMeta} = useContext(AppContext);
+  const { menu, rightContent, content, headerMeta } = useContext(AppContext);
 
   // Search contents
-  const {isSearchResultPage, searchResults} = useSearchResult(content);
+  const { isSearchResultPage, searchResults } = useSearchResult(content);
 
   // Init hash scroll
   useHashScroll({
@@ -40,7 +40,7 @@ const Content = () => {
 
   const processedContent = useMemo(() => {
     if (pageContent) {
-      const arrowRight = ArrowRightHTML({width: 24, height: 24});
+      const arrowRight = ArrowRightHTML({ width: 24, height: 24 });
       return stripNavigationMarkers(pageContent)
         ?.replace(/⇨/g, arrowRight)
         .replace(/→/g, arrowRight)
@@ -51,12 +51,12 @@ const Content = () => {
     }
   }, [pageContent]);
 
-  const {isMobile} = useIsMobile();
+  // const {isMobile} = useIsMobile();
 
   useEffect(() => {
     if (processedContent) {
       // handle responsive width for YouTube elements
-      handleResponsiveWidth(isMobile, [
+      handleResponsiveWidth(true, [
         '.dlYoutubeLarge',
         '.dlYoutubeSmall',
         'dlVideoLarge',
@@ -64,37 +64,33 @@ const Content = () => {
         'iframe[title*="YouTube"]',
       ]);
     }
-  }, [isMobile, processedContent]);
+  }, [processedContent]);
 
   return (
-    <>
-      <article className="max-w-[1440px] mx-auto">
-        <div className="flex flex-col sm:flex-row gap-12 justify-between max-w-full py-6 md:py-12">
-          {/*region navigations sidebar*/}
-          <LeftSidebar menus={menus} />
-          {/*endregion navigations sidebar*/}
+    <article className="max-w-[1440px] mx-auto">
+      <div className="flex flex-col md:flex-row gap-3 xl:gap-12 justify-between max-w-full py-3 lg:py-12 px-3">
+        {/*region navigations sidebar*/}
+        <LeftSidebar menus={menus} />
+        {/*endregion navigations sidebar*/}
 
-          {/*region content*/}
-          {isSearchResultPage ? (
-            <main className="w-full">
-              <SearchResults searchResults={searchResults} />
-            </main>
-          ) : (
-            <main
-              className="relative grow mx-auto max-w-full lg:max-w-[740px] px-6"
-              dangerouslySetInnerHTML={{__html: processedContent}}
-            />
-          )}
-          {/*endregion content*/}
+        {/*region content*/}
+        {isSearchResultPage ? (
+          <main className="w-full">
+            <SearchResults searchResults={searchResults} />
+          </main>
+        ) : (
+          <main
+            className="relative flex-1 min-w-0 mx-auto max-w-full px-0 sm:px-3 lg:px-6"
+            dangerouslySetInnerHTML={{ __html: processedContent }}
+          />
+        )}
+        {/*endregion content*/}
 
-          {/*region right sidebar*/}
-          {rightSidebarContent && (
-            <RightSidebar content={rightSidebarContent} />
-          )}
-          {/*endregion right sidebar*/}
-        </div>
-      </article>
-    </>
+        {/*region right sidebar*/}
+        <RightSidebar content={rightSidebarContent} />
+        {/*endregion right sidebar*/}
+      </div>
+    </article>
   );
 };
 
