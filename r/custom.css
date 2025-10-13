@@ -533,13 +533,15 @@ a:hover .arrow-right-icon {
 .showblock2activetab,
 .showblock2inactivetab {
     background: transparent;
-    padding-top: 1.25rem;
-    padding-bottom: 1.25rem;
-    padding-left: 1.25rem;
-    padding-right: 3rem;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 8px;
+    padding-right: 42px;
     border-color: #acb4bd;
     border-top-width: 1px;
     border-bottom-width: 1px;
+    border-left: 0;
+    border-right: 0;
     color: inherit;
     font-weight: bold;
     position: relative;
@@ -561,7 +563,7 @@ a:hover .arrow-right-icon {
     content: "";
     position: absolute;
     top: 50%;
-    right: 0.75rem;
+    right: 8px;
     width: 32px;
     /* Adjust to your needs */
     height: 32px;
