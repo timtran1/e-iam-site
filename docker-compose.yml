@@ -51,6 +51,19 @@ services:
       - APACHE_RUN_USER=www-data
       - APACHE_RUN_GROUP=www-data
 
+  eiam3-site:
+    container_name: eiam3-site
+    build: .
+    restart: unless-stopped
+    volumes:
+      - ./php_configs/eiam3.php:/var/www/html/config.php
+      - eiam3-r-data:/var/www/html/r
+    depends_on:
+      - eiam3-db
+    environment:
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_GROUP=www-data
+
   eiam-db:
     container_name: eiam-db
     image: mysql:8.0-debian
@@ -80,8 +93,24 @@ services:
       - ./u5cms/u5conference.sql:/docker-entrypoint-initdb.d/u5conference.sql
 
 
+  eiam3-db:
+    container_name: eiam3-db
+    image: mysql:8.0-debian
+    platform: linux/x86_64
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: eiam
+      MYSQL_USER: eiam
+      MYSQL_PASSWORD: eiam
+    volumes:
+      - db3_data:/var/lib/mysql
+      - ./u5cms/u5conference.sql:/docker-entrypoint-initdb.d/u5conference.sql
+
 volumes:
   db_data:
   db2_data:
+  db3_data:
   eiam-r-data:
   eiam2-r-data:
+  eiam3-r-data:
