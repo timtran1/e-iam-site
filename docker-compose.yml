@@ -105,7 +105,7 @@ services:
       MYSQL_PASSWORD: eiam
     volumes:
       - db3_data:/var/lib/mysql
-      - ./u5cms/u5conference.sql:/docker-entrypoint-initdb.d/u5conference.sql
+      - ./u5cms/u5standard.sql:/docker-entrypoint-initdb.d/u5standard.sql
 
 volumes:
   db_data:
