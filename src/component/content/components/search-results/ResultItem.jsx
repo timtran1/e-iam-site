@@ -17,7 +17,21 @@ const ResultItem = React.memo(({searchResult, viewMode}) => {
    */
   const handleClickItem = React.useCallback(() => {
     const [endpoint] = location.href.split('?');
-    location.href = endpoint + searchResult.href;
+    const currentSearchParams = new URLSearchParams(location.search);
+    const hrefPath = searchResult.href?.includes('?')
+      ? searchResult.href.split('?')[0]
+      : '';
+    const hrefParams = new URLSearchParams(
+      searchResult.href?.includes('?')
+        ? searchResult.href?.split('?')[1]
+        : searchResult.href?.split[0]
+    );
+    for (const key of hrefParams.keys()) {
+      if (currentSearchParams.has(key)) {
+        currentSearchParams.set(key, hrefParams.get(key));
+      }
+    }
+    location.href = endpoint + hrefPath + `?${currentSearchParams.toString()}`;
   }, [searchResult.href]);
 
   return (
