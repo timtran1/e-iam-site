@@ -1,5 +1,6 @@
 import React from 'react';
 import useQueryParam from './useQueryParam.js';
+import useEffectOnce from './useEffectOnce.js';
 
 const useSearchInputControl = () => {
   // Search id
@@ -7,8 +8,7 @@ const useSearchInputControl = () => {
 
   // Search string value
   const searchKeyForU5cm = 'q'; // Why is it 'q' - this is the rule of U5CMS
-  const searchKeyForDisplay = 'q2';
-  const [searchValue, setSearchValue] = useQueryParam(searchKeyForDisplay);
+  const [searchValue, setSearchValue] = useQueryParam(searchKeyForU5cm);
 
   // Encoded search string, using for u5cms engine (@see window.fsearch)
   const encodedSearchStr = React.useMemo(
@@ -30,10 +30,24 @@ const useSearchInputControl = () => {
       const [path, paramsStr] = href.split('?');
       const params = new URLSearchParams(paramsStr);
       params.set(searchKeyForU5cm, encodedSearchStr);
-      params.set(searchKeyForDisplay, searchValue);
       location.href = `${path}?${params.toString()}`;
     }
   }, [encodedSearchStr, searchValue]);
+
+  /**
+   * Set search value from server side data
+   * This only executes once time
+   */
+  useEffectOnce(() => {
+    // The 'fsearch' is element name of U5CMS
+    if (document.fsearch) {
+      const fsearch = Array.isArray(document.fsearch)
+        ? document.fsearch[0]
+        : document.fsearch;
+      const searchValue = fsearch[searchKeyForU5cm]?.value;
+      searchValue && setSearchValue(searchValue);
+    }
+  });
 
   return {
     searchId,

@@ -1,6 +1,9 @@
 import {useMemo} from 'react';
 import useQueryParam from '../../../common/hook/useQueryParam.js';
 
+/** List of search page query params */
+const SEARCH_PAGE_QUERY_PARAMS = ['_search', '_searchsi'];
+
 /**
  * Custom hook to get search content
  *
@@ -13,7 +16,10 @@ const useSearchResult = (content = null) => {
   /**
    * @type {boolean}
    */
-  const isSearchResultPage = useMemo(() => page === '_search', [page]);
+  const isSearchResultPage = useMemo(
+    () => SEARCH_PAGE_QUERY_PARAMS.includes(page),
+    [page]
+  );
 
   /**
    * @type {{searchResults: Array<SearchResult>, contentWithoutSearchResults: Element }}
