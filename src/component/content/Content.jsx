@@ -87,7 +87,7 @@ const Content = () => {
         {/*endregion content*/}
 
         {/*region right sidebar*/}
-        <RightSidebar content={rightSidebarContent} />
+        {rightSidebarContent && <RightSidebar content={rightSidebarContent} />}
         {/*endregion right sidebar*/}
       </div>
     </article>

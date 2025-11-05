@@ -1,6 +1,7 @@
 import React from 'react';
 import LeftMenuItem from './LeftMenuItem.jsx';
 import linkIsCurrentPage from '../../common/helper/linkIsCurrentPage.js';
+import clsx from 'clsx';
 
 const isDevMode = import.meta.env.DEV;
 
@@ -56,10 +57,19 @@ export default function LeftSidebar({ menus }) {
     }, [processedMenus]);
 
   return (
-    <nav className={`left-sidebar text-sm lg:text-base hidden md:block ${widthClass}`}>
-      {processedMenus.map((menu, index) => (
-        <LeftMenuItem key={index} menu={menu} index={index} />
-      ))}
-    </nav>
+    <>
+      {!!processedMenus.length && (
+        <nav
+          className={clsx(
+            'left-sidebar text-sm lg:text-base hidden md:block',
+            widthClass
+          )}
+        >
+          {processedMenus.map((menu, index) => (
+            <LeftMenuItem key={index} menu={menu} index={index} />
+          ))}
+        </nav>
+      )}
+    </>
   );
 }
