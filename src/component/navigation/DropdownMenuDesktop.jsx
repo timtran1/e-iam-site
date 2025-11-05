@@ -48,8 +48,8 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
   });
 
   return (
-    <nav className="navigation">
-      <ul ref={wrapperRef} className="px-0 flex overflow-x-auto gap-[24px]">
+    <nav className="navigation container mx-auto">
+      <ul ref={wrapperRef} className="px-0 flex overflow-x-auto gap-6">
         {menus.map((menuItem, i) => (
           <li
             key={i}
