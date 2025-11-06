@@ -47,29 +47,25 @@ export default function LeftSidebar({ menus }) {
     return [];
   }, [menus]);
 
-    const widthClass = React.useMemo(() => {
-      if (processedMenus.length && processedMenus.length > 0) {
-        return 'w-[150px] lg:w-[200px] lg:w-[220px] xl:w-[240px] 2xl:w-[260px]';
-      }
-      // produce spacer to let main content be in center
-      return 'invisible w-0 lg:w-[200px] lg:w-[220px] xl:w-[240px] 2xl:w-[260px]';
-  
-    }, [processedMenus]);
+  const widthClass = React.useMemo(() => {
+    if (processedMenus.length && processedMenus.length > 0) {
+      return 'w-[150px] lg:w-[200px] lg:w-[220px] xl:w-[240px] 2xl:w-[260px]';
+    }
+    // produce spacer to let main content be in center
+    return 'invisible w-0 lg:w-[200px] lg:w-[220px] xl:w-[240px] 2xl:w-[260px]';
+
+  }, [processedMenus]);
 
   return (
-    <>
-      {!!processedMenus.length && (
-        <nav
-          className={clsx(
-            'left-sidebar text-sm lg:text-base hidden md:block',
-            widthClass
-          )}
-        >
-          {processedMenus.map((menu, index) => (
-            <LeftMenuItem key={index} menu={menu} index={index} />
-          ))}
-        </nav>
+    <nav
+      className={clsx(
+        'left-sidebar text-sm lg:text-base hidden md:block',
+        widthClass
       )}
-    </>
+    >
+      {processedMenus.map((menu, index) => (
+        <LeftMenuItem key={index} menu={menu} index={index} />
+      ))}
+    </nav>
   );
 }
