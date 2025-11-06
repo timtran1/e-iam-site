@@ -43,54 +43,55 @@ const Header = ({className}) => {
         className={clsx('border-b border-b-gray-geyser bg-white', className)}
       >
         {/*region header content*/}
-        <div className=" flex items-center sm:border-b border-b-gray-geyser">
-          <div className="flex items-center gap-2.5 sm:gap-[16px] padding-4 w-full h-[50px] sm:h-[85px] transition-all duration-500">
-            <a
-              href="/"
-              className="w-[43px] h-[58px] sm:w-[250px] sm:h-[80.6px] overflow-hidden block shrink-0"
+        <div className="sm:border-b border-b-gray-geyser">
+          <div className="container mx-auto flex items-center">
+            <div className="flex items-center gap-2.5 sm:gap-[16px] padding-4 w-full h-[50px] sm:h-[85px] transition-all duration-500">
+              <a
+                href="/"
+                className="w-[43px] h-[58px] sm:w-[250px] sm:h-[80.6px] overflow-hidden block shrink-0"
+              >
+                <div
+                  className="w-[250px] h-[80.6px] bg-cover bg-no-repeat transition-all duration-500    "
+                  role="img"
+                  aria-label="eIAM"
+                  style={{
+                    backgroundImage:
+                      "url('r/eidgenossenschaft/eidgenossenschaft_de.svg')",
+                  }}
+                ></div>
+              </a>
+              <div className="border-l border-gray-geyser h-10 w-[1px]"></div>
+              <div className="text-6.5 font-light">eIAM</div>
+              <div className="font-light text-lg text-ellipsis hidden lg:block">
+                Federal Office of Information Technology, Systems and
+                Telecommunication & Federal Chancellery FCh, Digital
+                Transformation and ICT Governance DTI
+              </div>
+            </div>
+            <div
+              className={clsx(
+                'px-2 md:px-4 py-1',
+                'flex items-center gap-3 flex-row-reverse sm:block'
+              )}
             >
-              <div
-                className="w-[250px] h-[80.6px] bg-cover bg-no-repeat transition-all duration-500    "
-                role="img"
-                aria-label="eIAM"
-                style={{
-                  backgroundImage:
-                    "url('r/eidgenossenschaft/eidgenossenschaft_de.svg')",
-                }}
-              ></div>
-            </a>
-            <div className="border-l border-gray-geyser h-10 w-[1px]"></div>
-            <div className="text-6.5 font-light">eIAM</div>
-            <div className="font-light text-lg text-ellipsis hidden lg:block">
-              Federal Office of Information Technology, Systems and
-              Telecommunication & Federal Chancellery FCh, Digital
-              Transformation and ICT Governance DTI
-            </div>
-          </div>
+              {/*region lang selector*/}
+              <div className="hidden sm:block text-end">
+                <LangSelector />
+              </div>
+              {/*endregion lang selector*/}
 
-          <div
-            className={clsx(
-              'px-2 md:px-4 py-1',
-              'flex items-center gap-3 flex-row-reverse sm:block'
-            )}
-          >
-            {/*region lang selector*/}
-            <div className="hidden sm:block text-end">
-              <LangSelector />
-            </div>
-            {/*endregion lang selector*/}
+              {/*region mobile nav*/}
+              <div className="sm:hidden">
+                <Navigation.Mobile />
+              </div>
+              {/*endregion mobile nav*/}
 
-            {/*region mobile nav*/}
-            <div className="sm:hidden">
-              <Navigation.Mobile />
+              {/*region search input*/}
+              <div className="pt-0 sm:pt-5 lg:pt-3">
+                <SearchInput />
+              </div>
+              {/*endregion search input*/}
             </div>
-            {/*endregion mobile nav*/}
-
-            {/*region search input*/}
-            <div className="pt-0 sm:pt-5 lg:pt-3">
-              <SearchInput />
-            </div>
-            {/*endregion search input*/}
           </div>
         </div>
         {/*endregion header content*/}
