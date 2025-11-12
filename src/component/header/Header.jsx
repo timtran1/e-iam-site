@@ -97,7 +97,7 @@ const Header = ({className}) => {
         {/*endregion header content*/}
 
         {/*region navigation*/}
-        <div className="hidden sm:block">
+        <div className="hidden sm:block desktop-menu">
           <Navigation.Desktop />
         </div>
         {/*endregion navigation*/}

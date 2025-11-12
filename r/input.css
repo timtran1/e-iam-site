@@ -2,10 +2,11 @@
 @import url(cssstyle.css);
 @import url(csstable.css);
 @import url(cssform.css);
-@import url(custom.css);
+@import url(swissdesignsystem/main.postcss);
+/* @import url(custom.css); */
 
 @font-face {
-    font-family: 'Noto Sans';
+    font-family: 'Font-Regular';
     src: url('/r/notosans/notosans_de.ttf') format('truetype');
     font-weight: 100 200 300 400 500 600 700 800 900;
     font-style: normal;
