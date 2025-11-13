@@ -127,7 +127,7 @@ window.showLeftSidebarPages = ['', 'eiam']
 Controls which pages show top-level menu items in the left sidebar:
 - Pages in this array → Display all top-level menus without children
 - Pages NOT in array → Display only children of the active parent menu
-- Empty string `''` = homepage
+- Empty string `''` = Page without query string
 
 **Example:** `?c=eiam` shows top-level items, while `?c=federation` shows nested children.
 
