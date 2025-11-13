@@ -124,12 +124,12 @@ For subsequent deployments when React source code changes:
 window.showLeftSidebarPages = ['', 'eiam']
 ```
 
-Controls which pages show top-level menu items in the left sidebar:
-- Pages in this array → Display all top-level menus without children
-- Pages NOT in array → Display only children of the active parent menu
+Controls left sidebar menu display behavior:
+- Pages in array → Show current menu's children if exists, otherwise show top-level menus
+- Pages NOT in array → Show children of active parent menu
 - Empty string `''` = Page without query string
 
-**Example:** `?c=eiam` shows top-level items, while `?c=federation` shows nested children.
+**Example:** `?c=eiam` checks if eiam menu has children to display.
 
 **Note:** Comment out or remove this line in `htmltemplate.external-react.html` if you don't need to configure specific pages for left sidebar display.
 

@@ -45,10 +45,29 @@ export default function LeftSidebar({menus}) {
 
     /** @see htmltemplate.external-react.html:16 - to see and edit which pages should have sidebar */
     if (window?.showLeftSidebarPages?.includes(currentPage || '')) {
-      return menus.map((menu) => ({
-        ...menu,
-        children: [], // remove children to prevent nested menu for this page
-      }));
+      const getCurrentMenu = (listMenu) => {
+        for (const menu of listMenu) {
+          if (menu.key === currentPage) {
+            return menu;
+          }
+          if (menu.children?.length) {
+            const found = getCurrentMenu(menu.children);
+            if (found) {
+              return found;
+            }
+          }
+        }
+        return null;
+      };
+      const currentMenu = getCurrentMenu(menus);
+      if (currentMenu?.children?.length) {
+        return currentMenu.children;
+      } else {
+        return menus.map((menu) => ({
+          ...menu,
+          children: [], // remove children to prevent nested menu for this page
+        }));
+      }
     }
 
     for (const menu of menus) {
