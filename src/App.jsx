@@ -17,7 +17,7 @@ const App = () => {
           <div className="min-h-screen flex flex-col justify-between">
             <section>
               {/*region header*/}
-              <Header className="z-50 sticky top-0" />
+              <Header />
               {/*endregion header*/}
 
               {/*region body content*/}
