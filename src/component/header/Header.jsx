@@ -21,6 +21,9 @@ const Header = ({className, sticky = false}) => {
   // Get app context
   const {headerMeta, setHeaderMeta} = React.useContext(AppContext);
 
+  // Mobile navigation menu opened state
+  const [isMobileMenuOpened, setIsMobileMenuOpened] = React.useState(false);
+
   /**
    * Get header height and update to data context
    */
@@ -32,6 +35,27 @@ const Header = ({className, sticky = false}) => {
       }));
     }
   }, [headerHeight, setHeaderMeta]);
+
+  /**
+   * Handle scroll to top and lock body scroll when mobile menu is opened
+   */
+  React.useEffect(() => {
+    if (isMobileMenuOpened) {
+      // Scroll to top
+      window.scrollTo({top: 0, behavior: 'smooth'});
+
+      // Lock body scroll
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Unlock body scroll
+      document.body.style.overflow = '';
+    }
+
+    // Cleanup function to ensure scroll is unlocked when component unmounts
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpened]);
 
   return (
     <>
@@ -49,12 +73,12 @@ const Header = ({className, sticky = false}) => {
         )}
       >
         {/*region header content*/}
-        <div className="sm:border-b border-b-gray-geyser">
+        <div className="lg:border-b border-b-gray-geyser">
           <div className="container mx-auto flex items-center">
-            <div className="flex items-center gap-2.5 sm:gap-[16px] padding-4 w-full h-[50px] sm:h-[85px] transition-all duration-500">
+            <div className="flex items-center gap-2.5 lg:gap-4 padding-4 w-full h-[50px] lg:h-[85px] transition-all duration-500">
               <a
                 href="/"
-                className="w-[43px] h-[58px] sm:w-[250px] sm:h-[80.6px] overflow-hidden block shrink-0"
+                className="w-[43px] h-[58px] lg:w-[250px] lg:h-[80.6px] overflow-hidden block shrink-0"
               >
                 <div
                   className="w-[250px] h-[80.6px] bg-cover bg-no-repeat transition-all duration-500    "
@@ -76,24 +100,27 @@ const Header = ({className, sticky = false}) => {
             </div>
             <div
               className={clsx(
-                'px-2 md:px-4 py-1',
-                'flex items-center gap-3 flex-row-reverse sm:block'
+                'ps-2 md:ps-4 py-1',
+                'flex items-center gap-3 flex-row-reverse lg:block'
               )}
             >
               {/*region lang selector*/}
-              <div className="hidden sm:block text-end">
+              <div className="hidden lg:block text-end">
                 <LangSelector />
               </div>
               {/*endregion lang selector*/}
 
               {/*region mobile nav*/}
-              <div className="sm:hidden">
-                <Navigation.Mobile />
+              <div className="lg:hidden">
+                <Navigation.Mobile
+                  opened={isMobileMenuOpened}
+                  setOpened={setIsMobileMenuOpened}
+                />
               </div>
               {/*endregion mobile nav*/}
 
               {/*region search input*/}
-              <div className="pt-0 sm:pt-5 lg:pt-3">
+              <div className="pt-0  lg:pt-3">
                 <SearchInput />
               </div>
               {/*endregion search input*/}
@@ -103,7 +130,7 @@ const Header = ({className, sticky = false}) => {
         {/*endregion header content*/}
 
         {/*region navigation*/}
-        <div className="hidden sm:block">
+        <div className="hidden lg:block">
           <Navigation.Desktop />
         </div>
         {/*endregion navigation*/}

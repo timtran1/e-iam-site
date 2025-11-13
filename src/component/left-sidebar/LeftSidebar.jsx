@@ -27,7 +27,7 @@ const hasActivatedMenu = (menu) => {
   }
 };
 
-export default function LeftSidebar({ menus }) {
+export default function LeftSidebar({menus}) {
   /**
    * Only allow top level items to have children
    * We don't want to nest to be too deep here
@@ -53,13 +53,12 @@ export default function LeftSidebar({ menus }) {
     }
     // produce spacer to let main content be in center
     return 'invisible w-0 lg:w-[200px] lg:w-[220px] xl:w-[240px] 2xl:w-[260px]';
-
   }, [processedMenus]);
 
   return (
     <nav
       className={clsx(
-        'left-sidebar text-sm lg:text-base hidden md:block',
+        'left-sidebar text-sm lg:text-base hidden lg:block',
         widthClass
       )}
     >
