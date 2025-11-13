@@ -121,7 +121,7 @@ For subsequent deployments when React source code changes:
 **Location:** `htmltemplate.external-react.html:17`
 
 ```javascript
-window.showLeftSidebarPages = ['eiam', '']
+window.showLeftSidebarPages = ['', 'eiam']
 ```
 
 Controls which pages show top-level menu items in the left sidebar:
@@ -129,7 +129,9 @@ Controls which pages show top-level menu items in the left sidebar:
 - Pages NOT in array → Display only children of the active parent menu
 - Empty string `''` = homepage
 
-**Example:** `?c=eiam` or `?c=` shows top-level items, while `?c=federation` shows nested children.
+**Example:** `?c=eiam` shows top-level items, while `?c=federation` shows nested children.
+
+**Note:** Comment out or remove this line in `htmltemplate.external-react.html` if you don't need to configure specific pages for left sidebar display.
 
 *See `src/component/left-sidebar/LeftSidebar.jsx:47` for implementation.*
  
