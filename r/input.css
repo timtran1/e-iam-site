@@ -2,6 +2,7 @@
 @import url(cssstyle.css);
 @import url(csstable.css);
 @import url(cssform.css);
+@import url(typography.css);
 @import url(custom.css);
 
 @font-face {

@@ -1,7 +1,7 @@
-body {
+/* body {
     color: #1c2834;
     font-family: 'Noto Sans', sans-serif;
-}
+} */
 
 .navigation-mobile ul {
     display: flex;
@@ -87,7 +87,7 @@ a {
     color: #1c2834;
     text-decoration: none;
 }
-
+/* 
 h1,
 h2,
 h3,
@@ -141,7 +141,9 @@ h6 {
     font-weight: 500;
     line-height: 1.333333;
     letter-spacing: .2px
-}
+} */
+
+
 
 .hot {
     color: #e53940

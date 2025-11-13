@@ -78,7 +78,7 @@ export default function RightSidebar({ content }) {
   }, [processedContent]);
 
   return (
-    <aside className={`right-sidebar break-words text-wrap text-[12px] lg:text-[14px] bg-gray-aqua-haze border border-gray-aqua-haze px-3 lg:px-6 py-3 lg:py-6 shadow ${widthClass}`}>
+    <aside className={`right-sidebar break-words text-wrap bg-gray-aqua-haze border border-gray-aqua-haze px-3 lg:px-6 py-3 lg:py-6 shadow ${widthClass}`}>
       <div
         ref={asideRef}
         dangerouslySetInnerHTML={{ __html: processedContent }}

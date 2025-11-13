@@ -224,10 +224,10 @@ export default {
       black: '#000000',
       transparent: 'transparent',
     },
-    fontWeight: {
-      normal: 400,
-      bold: 400,
-    },
+    // fontWeight: {
+    //   normal: 400,
+    //   bold: 400,
+    // },
     fontSize: {
       xs: '0.75rem',
       sm: '0.875rem',
@@ -246,7 +246,7 @@ export default {
     fontFamily: {
       regular: ['Noto Sans', 'sans-serif'],
       italic: ['Noto Sans', 'sans-serif'],
-      bold: ['Noto Sans', 'sans-serif'],
+      // bold: ['Noto Sans', 'sans-serif'],
       'bold-italic': ['Noto Sans', 'sans-serif'],
     },
     boxShadow: {
