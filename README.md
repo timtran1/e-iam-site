@@ -113,4 +113,23 @@ For subsequent deployments when React source code changes:
 1. Run `npm run build` to generate the universal build
 2. Copy the JavaScript code from `dist/app-universal.iife.js`
 3. Paste the code into the `jsreactapp` file in u5admin and save
+
+## Configuration
+
+### Left Sidebar Display Control
+
+**Location:** `htmltemplate.external-react.html:17`
+
+```javascript
+window.showLeftSidebarPages = ['eiam', '']
+```
+
+Controls which pages show top-level menu items in the left sidebar:
+- Pages in this array → Display all top-level menus without children
+- Pages NOT in array → Display only children of the active parent menu
+- Empty string `''` = homepage
+
+**Example:** `?c=eiam` or `?c=` shows top-level items, while `?c=federation` shows nested children.
+
+*See `src/component/left-sidebar/LeftSidebar.jsx:47` for implementation.*
  
