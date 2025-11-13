@@ -23,6 +23,7 @@ const SearchResultsInput = () => {
         type="text"
         className={clsx(
           'w-full !p-4 !pr-12 rounded-none',
+          'border-3 hover:border-3 active:border-3 focus:border-3',
           'border-blue-cornflower hover:border-blue-cornflower hover:outline-blue-cornflower',
           'focus:border-blue-cornflower focus:outline-blue-cornflower'
         )}

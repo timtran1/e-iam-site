@@ -9,10 +9,12 @@ import SearchInput from './SearchInput.jsx';
 /**
  * Header
  * @param {string} className
+ * @param {boolean=} sticky
+ *
  * @returns {JSX.Element}
  * @constructor
  */
-const Header = ({className}) => {
+const Header = ({className, sticky = false}) => {
   // Header ref
   const {ref: headerRef, height: headerHeight} = useElementSize();
 
@@ -40,7 +42,11 @@ const Header = ({className}) => {
             backgroundImage: headerMeta.backgroundImage,
           }),
         }}
-        className={clsx('border-b border-b-gray-geyser bg-white', className)}
+        className={clsx(
+          'border-b border-b-gray-geyser bg-white',
+          {'z-50 sticky top-0': sticky},
+          className
+        )}
       >
         {/*region header content*/}
         <div className="sm:border-b border-b-gray-geyser">
