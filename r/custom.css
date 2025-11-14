@@ -440,6 +440,7 @@ fieldset legend {
 }
 
 .showblock2inactivetab {
+    display: block;
     background: #F0F4F7;
     padding: 4px;
     margin-left: -2px;
@@ -543,7 +544,6 @@ a:hover .arrow-right-icon {
     color: inherit;
     font-weight: bold;
     position: relative;
-    display: inline-block;
     border-radius: 0;
 }
 
@@ -602,6 +602,10 @@ a:hover .arrow-right-icon {
     border: 0;
     border-radius: 0;
     box-sizing: border-box;
+}
+
+.showblock2divinner + br {
+    display: none;
 }
 
 .showblock2divinner {

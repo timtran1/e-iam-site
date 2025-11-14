@@ -1,7 +1,7 @@
 // import colors from './tailwind-config/colors.js';
 // import fontSize from './tailwind-config/fontSize.js';
 // import boxShadow from './tailwind-config/boxShadow.js';
-import defaultTheme from 'tailwindcss/defaultTheme'
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -284,6 +284,9 @@ export default {
     extend: {
       animation: {
         'spin-fast': 'spin 0.5s linear infinite',
+      },
+      borderWidth: {
+        3: '3px',
       },
     },
   },
