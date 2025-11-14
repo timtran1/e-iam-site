@@ -31,7 +31,6 @@ const hasActivatedMenu = (menu) => {
 export default function LeftSidebar({menus}) {
   // Get current page
   const [currentPage] = useQueryParam('c'); // the 'c' letter is the page code of u5CMS
-
   /**
    * Only allow top level items to have children
    * We don't want to nest to be too deep here
@@ -89,7 +88,7 @@ export default function LeftSidebar({menus}) {
   return (
     <nav
       className={clsx(
-        'left-sidebar text-sm lg:text-base hidden md:block',
+        'left-sidebar text-sm lg:text-base hidden lg:block',
         widthClass
       )}
     >

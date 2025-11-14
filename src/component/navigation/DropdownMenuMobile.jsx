@@ -35,12 +35,20 @@ const _markMenuDepth = (listMenu, currentDepth = 0) => {
  *
  * This is bottom-sheet modal to render all of menu
  *
+ * @param {Object} props
+ * @param {boolean} [props.opened] - Controlled opened state (optional)
+ * @param {Function} [props.setOpened] - Controlled setter for opened state (optional)
  * @returns {JSX.Element}
  * @constructor
  */
-const DropdownMenuMobile = () => {
-  // Visible state
-  const [opened, setOpened] = React.useState(false);
+const DropdownMenuMobile = ({opened: openedProp, setOpened: setOpenedProp}) => {
+  // Internal state for uncontrolled mode
+  const [openedState, setOpenedState] = React.useState(false);
+
+  // Use prop if provided, otherwise use internal state
+  const opened = openedProp !== undefined ? openedProp : openedState;
+  const setOpened =
+    setOpenedProp !== undefined ? setOpenedProp : setOpenedState;
 
   // Get context data
   const appContext = React.useContext(AppContext);
@@ -60,7 +68,7 @@ const DropdownMenuMobile = () => {
   const [renderedListMenu, setRenderedListMenu] = React.useState(
     _markMenuDepth(menus)
   );
-  
+
   // Keep track of menu navigation history
   const [menuHistory, setMenuHistory] = React.useState([]);
 
@@ -68,15 +76,19 @@ const DropdownMenuMobile = () => {
    * Handle click expand menu
    * @type {(menu: AppMenu) => void}
    */
-  const handleClickExpand = React.useCallback((menu) => {
-    console.log('handleClickExpand', menu);
-    if (menu.children?.length > 0) {
-      // Save current menu to history before navigating deeper
-      setMenuHistory(prev => [...prev, renderedListMenu]);
-      setRenderedListMenu(_markMenuDepth(menu.children, currentMenuDepth + 1));
-      setCurrentMenuDepth(currentMenuDepth + 1);
-    }
-  }, [currentMenuDepth, renderedListMenu]);
+  const handleClickExpand = React.useCallback(
+    (menu) => {
+      if (menu.children?.length > 0) {
+        // Save current menu to history before navigating deeper
+        setMenuHistory((prev) => [...prev, renderedListMenu]);
+        setRenderedListMenu(
+          _markMenuDepth(menu.children, currentMenuDepth + 1)
+        );
+        setCurrentMenuDepth(currentMenuDepth + 1);
+      }
+    },
+    [currentMenuDepth, renderedListMenu]
+  );
 
   /**
    * Handle click back to prev menu
@@ -84,13 +96,11 @@ const DropdownMenuMobile = () => {
    * @type {(function(): void)|*}
    */
   const handleClickBack = React.useCallback(() => {
-    console.log('handleClickBack', currentMenuDepth);
     if (currentMenuDepth > 0 && menuHistory.length > 0) {
       // Get the previous menu from history
       const newHistory = [...menuHistory];
       const prevMenuList = newHistory.pop();
-      
-      console.log('prevMenuList', prevMenuList);
+
       setMenuHistory(newHistory);
       setRenderedListMenu(prevMenuList);
       setCurrentMenuDepth(currentMenuDepth - 1);
@@ -118,7 +128,7 @@ const DropdownMenuMobile = () => {
       {/*region content*/}
       <div
         className={clsx(
-          'fixed top-[52px] left-0  h-screen w-screen overflow-hidden',
+          'fixed z-50 left-0  h-screen w-screen overflow-hidden',
           {'pointer-events-none': !opened}
         )}
       >
@@ -139,11 +149,7 @@ const DropdownMenuMobile = () => {
                 className="cursor-pointer p-1 rounded transition hover:bg-gray-black-squeeze"
                 onClick={handleClickBack}
               >
-                <ChevronButton
-                  className={clsx(
-                    'transition rotate-180'
-                  )}
-                />
+                <ChevronButton className={clsx('transition rotate-180')} />
               </div>
             </div>
           )}
@@ -168,7 +174,7 @@ const DropdownMenuMobile = () => {
                   {menuItem.children && menuItem.children.length > 0 && (
                     <ChevronButton
                       className={clsx(
-                        'px-2 transition',
+                        'px-2 transition'
                         // opened ? '-rotate-45' : 'rotate-90'
                       )}
                       onClick={() => handleClickExpand(menuItem)}
