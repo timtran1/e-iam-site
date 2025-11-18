@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import ArrowRightHTML from '../icons/ArrowRightHTML.js';
 import AppContext from '../../common/context/app/app.context.js';
 import useQueryParam from '../../common/hook/useQueryParam.js';
@@ -79,7 +79,7 @@ export default function RightSidebar({content, sticky = false}) {
    * @see htmltemplate.external-react.html:19
    * @type {boolean}
    */
-  const showRightSidebarPages = useMemo(() => {
+  const showRightSidebarPages = React.useMemo(() => {
     if (Array.isArray(window?.showRightSidebarPages)) {
       return !!window?.showRightSidebarPages.includes(currentPage || '');
     } else {
