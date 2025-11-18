@@ -98,8 +98,9 @@ export default function RightSidebar({content, sticky = false}) {
   return (
     <aside
       className={clsx(
-        'right-sidebar h-full break-words text-wrap border border-gray-aqua-haze px-3 lg:px-6 py-3 lg:py-6 shadow',
-        showRightSidebarPages && 'bg-gray-aqua-haze',
+        'right-sidebar h-full break-words text-wrap px-3 lg:px-6 py-3 lg:py-6',
+        showRightSidebarPages &&
+          'bg-gray-aqua-haze border border-gray-aqua-haze shadow',
         widthClass
       )}
     >
