@@ -13,9 +13,10 @@
 <!--Load and execute jsreactapp script-->
 <script>
 (function() {
-  // Pages that should show top-level menu in left sidebar (e.g. ?c=eiam or ?c=)
+  // Pages that should show right sidebar and top-level menu in left sidebar (e.g. ?c=eiam or ?c=)
   // Comment out or remove this line if you don't need to configure specific pages
   window.showLeftSidebarPages = ['', 'eiam']
+  window.showRightSidebarPages = ['', 'eiam']
 
   try {
     const xhr = new XMLHttpRequest();
@@ -51,7 +52,7 @@
 <section id="outer">
 <section id="navigation"><nav id="navLeft" style="float:left"><a name="navigation"></a>{{{navigation}}}</nav></section>
 <article id="content"><a name="content" style="pointer-events:none"></a>{{{content}}}{{{anticachescript}}}</article>
-<aside id="news">{{{right}}}</aside>
+<aside id="right">{{{right}}}</aside>
 <footer id="footer"><a name="contact"></a>{{{footer}}}</footer>
 </section>
 </main>
