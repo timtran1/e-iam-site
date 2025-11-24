@@ -5,6 +5,7 @@
 @import url(swissdesignsystem/main.postcss);
 /* @import url(custom.css); */
 
+
 @font-face {
     font-family: 'Font-Regular';
     src: url('/r/notosans/notosans_de.ttf') format('truetype');

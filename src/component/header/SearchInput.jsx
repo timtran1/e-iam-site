@@ -117,7 +117,7 @@ const SearchInput = React.memo(() => {
               type="text"
               className={clsx(
                 'absolute top-1/2 -translate-y-1/2 right-0',
-                'rounded-none border-2 border-opacity-90',
+                'rounded-none border-3 border-opacity-90',
                 'border-blue-cornflower hover:border-blue-cornflower active:border-blue-cornflower focus:border-blue-cornflower focus:outline-blue-cornflower',
                 '!pl-3 !pr-8 !py-1.5 transition-all',
                 expanded

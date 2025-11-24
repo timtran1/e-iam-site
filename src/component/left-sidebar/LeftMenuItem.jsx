@@ -55,7 +55,7 @@ export default function LeftMenuItem({menu, index}) {
             isActive || hasActiveChild ? '!text-primary-main' : ''
           )}
         >
-          <div className="font-medium">{menu.label}</div>
+          <div className="text-[20px] font-medium">{menu.label}</div>
         </a>
 
         {hasChildren && (

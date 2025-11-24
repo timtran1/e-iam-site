@@ -113,4 +113,40 @@ For subsequent deployments when React source code changes:
 1. Run `npm run build` to generate the universal build
 2. Copy the JavaScript code from `dist/app-universal.iife.js`
 3. Paste the code into the `jsreactapp` file in u5admin and save
+
+## Configuration
+
+### Left Sidebar Display Control
+
+**Location:** `htmltemplate.external-react.html:17`
+
+```javascript
+window.showLeftSidebarPages = ['', 'eiam']
+```
+
+Controls left sidebar menu display behavior:
+- Pages in array → Show current menu's children if exists, otherwise show top-level menus
+- Pages NOT in array → Show children of active parent menu
+- Empty string `''` = Page without query string
+
+**Example:** `?c=eiam` checks if eiam menu has children to display.
+
+**Note:** Comment out or remove this line in `htmltemplate.external-react.html` if you don't need to configure specific pages for left sidebar display.
+
+*See `src/component/left-sidebar/LeftSidebar.jsx:47` for implementation.*
+
+### Right Sidebar Display Control
+
+**Location:** `htmltemplate.external-react.html:19`
+
+```javascript
+window.showRightSidebarPages = ['', 'eiam']
+```
+
+Determines whether the right sidebar content renders:
+- Pages in array → Right sidebar renders with processed anchors from `RightSidebar.jsx`
+- Pages NOT in array → Right sidebar hidden for those pages
+- If line removed or `window.showRightSidebarPages` undefined → Right sidebar visible on every page
+
+*See `src/component/right-sidebar/RightSidebar.jsx:77` for implementation logic.*
  

@@ -87,7 +87,7 @@ a {
     color: #1c2834;
     text-decoration: none;
 }
-
+/* 
 h1,
 h2,
 h3,
@@ -141,10 +141,12 @@ h6 {
     font-weight: 500;
     line-height: 1.333333;
     letter-spacing: .2px
-}
+} */
+
+
 
 .hot {
-    color: #e53940
+    color: #047857
 }
 
 input,
@@ -438,6 +440,7 @@ fieldset legend {
 }
 
 .showblock2inactivetab {
+    display: block;
     background: #F0F4F7;
     padding: 4px;
     margin-left: -2px;
@@ -517,13 +520,6 @@ a:hover .arrow-right-icon {
     border-radius: 4px;
 }
 
-/* .note {
-    border-radius: 6px;
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    padding-left: 10px;
-    padding-right: 10px;
-} */
-
 .showblockactivetab,
 .showblockinactivetab,
 .showblock2activetab,
@@ -541,7 +537,6 @@ a:hover .arrow-right-icon {
     color: inherit;
     font-weight: bold;
     position: relative;
-    display: inline-block;
     border-radius: 0;
 }
 
@@ -600,6 +595,10 @@ a:hover .arrow-right-icon {
     border: 0;
     border-radius: 0;
     box-sizing: border-box;
+}
+
+.showblock2divinner + br {
+    display: none;
 }
 
 .showblock2divinner {
