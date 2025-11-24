@@ -2,21 +2,7 @@ import {useState, useRef} from 'react';
 import linkIsCurrentPage from '../../common/helper/linkIsCurrentPage.js';
 import clsx from 'clsx';
 import Collapse from '../../common/ui/Collapse.jsx';
-
-// Check if a menu item or any of its children is active/current page
-const hasChildActive = (menuItem) => {
-  // Check if the current menu item is active
-  if (linkIsCurrentPage(menuItem.href)) {
-    return true;
-  }
-
-  // Check if any children are active (recursive)
-  if (menuItem.children && menuItem.children.length > 0) {
-    return menuItem.children.some((child) => hasChildActive(child));
-  }
-
-  return false;
-};
+import {hasChildActive} from '../../common/helper/menu.js';
 
 export default function LeftMenuItem({menu, index}) {
   const hasChildren = menu.children && menu.children.length > 0;

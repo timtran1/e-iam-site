@@ -1,12 +1,11 @@
 import React from 'react';
 import ChevronButton from '../../common/ui/ChevronButton.jsx';
 import clsx from 'clsx';
-// import useClickAway from '../../common/hook/useClickAway.js';
-import useQueryParam from '../../common/hook/useQueryParam.js';
 import AppContext from '../../common/context/app/app.context.js';
 import {mockMenu} from '../../common/constant/dummy.js';
 import DesktopMenuList from './DesktopMenuList.jsx';
 import useClickAway from '../../common/hook/useClickAway.js';
+import {hasChildActive} from '../../common/helper/menu.js';
 
 const isDevMode = import.meta.env.DEV;
 
@@ -22,9 +21,6 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
   // Get context data
   const {menu} = React.useContext(AppContext);
   const menus = isDevMode ? mockMenu : menu;
-
-  // Get current page
-  const currentPage = useQueryParam('c');
 
   // Track open state for each menu item individually
   const [openedItems, setOpenedItems] = React.useState({});
@@ -55,7 +51,7 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
             key={i}
             className={clsx(
               'flex gap-1 border-b-[3px]',
-              menuItem.key === currentPage
+              hasChildActive(menuItem)
                 ? 'border-primary-main shadow-lg'
                 : 'border-transparent hover:border-primary-main'
             )}
