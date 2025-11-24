@@ -509,8 +509,3 @@ dt {
 .crossout {
     text-decoration: line-through;
 }
-
-.note {
-    padding: 7px;
-    background: gold;
-} 
