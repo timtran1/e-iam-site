@@ -6,6 +6,7 @@ import {mockMenu} from '../../common/constant/dummy.js';
 import DesktopMenuList from './DesktopMenuList.jsx';
 import useClickAway from '../../common/hook/useClickAway.js';
 import {hasChildActive} from '../../common/helper/menu.js';
+import useQueryParam from '../../common/hook/useQueryParam.js';
 
 const isDevMode = import.meta.env.DEV;
 
@@ -24,6 +25,9 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
 
   // Track open state for each menu item individually
   const [openedItems, setOpenedItems] = React.useState({});
+
+  // Get current page
+  const [currentPage] = useQueryParam('c');
 
   // Toggle open state for a specific item
   const toggleItem = (key) => {
@@ -51,7 +55,7 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
             key={i}
             className={clsx(
               'flex gap-1 border-b-[3px]',
-              hasChildActive(menuItem)
+              (!currentPage && !i) || hasChildActive(menuItem)
                 ? 'border-primary-main shadow-lg'
                 : 'border-transparent hover:border-primary-main'
             )}
