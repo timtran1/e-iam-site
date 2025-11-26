@@ -51,15 +51,16 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
     <nav className="container mx-auto main-navigation main-navigation--desktop">
       <ul ref={wrapperRef} className="">
         {menus.map((menuItem, i) => (
-          <li
-            key={i}
-            className={clsx(
-              (!currentPage && !i) || (hasChildActive(menuItem) && 'active')
-            )}
-          >
-            <a className="hover:no-underline" href={menuItem.href}>
+          <li key={i}>
+            <a
+              className={clsx(
+                'hover:no-underline',
+                ((!currentPage && !i) || hasChildActive(menuItem)) && 'active'
+              )}
+              href={menuItem.href}
+            >
               {menuItem.label}
-            </a>{' '}
+            </a>
             <>
               {!!withSubmenuDropdown && menuItem.children?.length > 0 && (
                 <>
