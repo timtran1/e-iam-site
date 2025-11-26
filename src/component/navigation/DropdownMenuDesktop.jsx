@@ -53,7 +53,9 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
         {menus.map((menuItem, i) => (
           <li
             key={i}
-            className={clsx((!currentPage && !i) || hasChildActive(menuItem) && 'active')}
+            className={clsx(
+              (!currentPage && !i) || (hasChildActive(menuItem) && 'active')
+            )}
           >
             <a className="hover:no-underline" href={menuItem.href}>
               {menuItem.label}
