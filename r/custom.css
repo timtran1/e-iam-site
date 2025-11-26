@@ -1,4 +1,19 @@
+/* Body of base styles */
+body {
+    font-size: 1rem;
+}
+@media (min-width: 1280px) {
+    body {
+        font-size:1.125rem
+    }
+}
+@media (min-width: 1920px) {
+    body {
+        font-size:1.25rem
+    }
+}
 
+/* Footer */
 footer a {
     color: white !important;
     text-decoration: underline !important;
@@ -90,44 +105,6 @@ h6 {
     line-height: 1.333333;
     letter-spacing: .2px
 } */
-
-
-
-.hot {
-    color: #047857
-}
-
-select {
-    padding-top: 8px;
-    padding-bottom: 8px;
-}
-
-input:focus,
-textarea:focus {
-    outline: 1px solid #1c2834;
-    /*border: 2px solid #1c2834;*/
-}
-
-fieldset {
-    background-color: white;
-    border: 1px solid #555;
-    border-radius: 12px;
-    margin: 0 0 20px 0;
-    padding: 25px;
-    font-size: 104%;
-    color: #555;
-    width: 100%;
-}
-
-fieldset legend {
-    background: white;
-    padding-left: 16px;
-    padding-right: 16px;
-    font-weight: 600;
-    color: #1c2834;
-    font-size: 1.25rem;
-    margin-left: 4px;
-}
 
 /* Language Switcher Styles */
 .lang-dropdown a {
@@ -539,12 +516,15 @@ table.table > tbody > tr:first-child {
 .input,input,select,textarea,fieldset {
     padding: .625rem 1rem !important;
     width: 100% !important;
+
     --tw-shadow: 0px 1px 2px 0px rgba(0,0,0,.06),0px 1px 5px 0px rgba(0,0,0,.08) !important;
     --tw-shadow-colored: 0px 1px 2px 0px var(--tw-shadow-color),0px 1px 5px 0px var(--tw-shadow-color) !important;
     border-width: 1px !important;
     box-shadow: var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow) !important;
+
     --tw-border-opacity: 1 !important;
     border-color: rgb(107 114 128/var(--tw-border-opacity,1)) !important;
+
     --tw-bg-opacity: 1 !important;
     background-color: rgb(255 255 255/var(--tw-bg-opacity,1)) !important;
     border-radius: .0625rem !important;
@@ -574,4 +554,29 @@ select {
     background-repeat: no-repeat;
     background-position: calc(100% - 0.25rem) 50%, calc(100% - 3.25rem) 0;
     background-size: 3rem 3rem, 1px 100%;
+}
+fieldset {
+    background-color: white;
+    border: 1px solid rgb(107 114 128/var(--tw-border-opacity,1));
+    border-radius: 0.75rem;
+    margin: 0 0 20px 0;
+    padding: 1.5rem;
+    width: 100%;
+}
+fieldset > legend {
+    background: white !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem!important;
+    font-weight: 600 !important;
+    color: var(--color-secondary-800) !important;
+    font-size: 1.25rem !important;
+    margin-left: 0.25rem !important;
+}
+input[type='submit'] {
+    font-size: 1rem;
+    min-height: var(--input-min-height) !important;
+    border-color: var(--color-primary-600) !important;
+    border-width: 1px !important;
+    color: var(--color-primary-600) !important;
+    font-weight: 400;
 }
