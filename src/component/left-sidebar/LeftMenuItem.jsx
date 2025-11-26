@@ -2,27 +2,21 @@ import {useState, useRef} from 'react';
 import linkIsCurrentPage from '../../common/helper/linkIsCurrentPage.js';
 import clsx from 'clsx';
 import Collapse from '../../common/ui/Collapse.jsx';
-
-// Check if a menu item or any of its children is active/current page
-const hasChildActive = (menuItem) => {
-  // Check if the current menu item is active
-  if (linkIsCurrentPage(menuItem.href)) {
-    return true;
-  }
-
-  // Check if any children are active (recursive)
-  if (menuItem.children && menuItem.children.length > 0) {
-    return menuItem.children.some((child) => hasChildActive(child));
-  }
-
-  return false;
-};
+import {hasChildActive} from '../../common/helper/menu.js';
+import useQueryParam from '../../common/hook/useQueryParam.js';
 
 export default function LeftMenuItem({menu, index}) {
   const hasChildren = menu.children && menu.children.length > 0;
   const isActive = linkIsCurrentPage(menu.href);
+
+  // Get current page
+  const [currentPage] = useQueryParam('c');
+
+  // Firstly, check if the current page is not the first page and the index is not 0
+  // Secondly, check if the menu has children and if any of its children are active
   const hasActiveChild =
-    hasChildren && menu.children.some((child) => hasChildActive(child));
+    (!currentPage && !index) ||
+    (hasChildren && menu.children.some((child) => hasChildActive(child)));
 
   // Local state for this specific menu item only - initialize to open if it has an active child
   const [isOpen, setIsOpen] = useState(hasActiveChild);

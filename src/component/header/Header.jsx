@@ -91,8 +91,10 @@ const Header = ({className, sticky = false}) => {
                 ></div>
               </a>
               <div className="border-l border-gray-geyser h-10 w-[1px]"></div>
-              <div className="text-6.5 font-light">eIAM</div>
-              <div className="font-light text-lg text-ellipsis hidden lg:block">
+              <div className="text-6.5 font-bold text-gray-ebony-clay">
+                eIAM
+              </div>
+              <div className="font-bold text-base leading-6 text-gray-ebony-clay text-ellipsis hidden lg:block">
                 Federal Office of Information Technology, Systems and
                 Telecommunication & Federal Chancellery FCh, Digital
                 Transformation and ICT Governance DTI
