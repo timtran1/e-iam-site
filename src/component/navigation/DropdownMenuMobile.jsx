@@ -134,6 +134,7 @@ const DropdownMenuMobile = ({opened: openedProp, setOpened: setOpenedProp}) => {
       >
         <div
           className={clsx(
+            'navy',
             'h-full bg-white transition-transform duration-300 ease-in-out transform',
             opened ? 'translate-y-0' : '-translate-y-full'
           )}
@@ -153,32 +154,42 @@ const DropdownMenuMobile = ({opened: openedProp, setOpened: setOpenedProp}) => {
               </div>
             </div>
           )}
-
           {/*endregion lang selector*/}
+
           {/*region menu*/}
-          <nav>
+          <nav className="main-navigation main-navigation--mobile">
             <ul>
               {renderedListMenu.map((menuItem, i) => (
                 <li
                   key={i}
                   className={clsx(
-                    'flex gap-6 justify-between items-center',
-                    'cursor-pointer px-4 py-2 border-b transition border-b-gray-geyser border-s-danger-cinnabar',
-                    'hover:border-s-4',
-                    currentPage === menuItem.key ? 'border-s-4' : ''
+                    'relative',
+                    currentPage === menuItem.key && 'border-s-4'
                   )}
                 >
                   <a href={menuItem.href} className="flex-1 !no-underline">
                     {menuItem.label}
                   </a>
                   {menuItem.children && menuItem.children.length > 0 && (
-                    <ChevronButton
-                      className={clsx(
-                        'px-2 transition'
-                        // opened ? '-rotate-45' : 'rotate-90'
-                      )}
+                    <div
+                      className="absolute right-3 top-1/2 -translate-y-1/2 p-1 cursor-pointer"
                       onClick={() => handleClickExpand(menuItem)}
-                    />
+                    >
+                      <svg
+                        className={clsx('w-4 h-4')}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="1.5"
+                          d="M9 5l7 7-7 7"
+                        ></path>
+                      </svg>
+                    </div>
                   )}
                 </li>
               ))}

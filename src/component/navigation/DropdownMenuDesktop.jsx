@@ -48,22 +48,14 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
   });
 
   return (
-    <nav className="navigation main-navigation container mx-auto">
-      <ul ref={wrapperRef} className="px-0 flex overflow-x-auto gap-6">
+    <nav className="container mx-auto main-navigation main-navigation--desktop">
+      <ul ref={wrapperRef} className="">
         {menus.map((menuItem, i) => (
           <li
             key={i}
-            className={clsx(
-              'flex gap-1 border-b-[3px]',
-              menuItem.key === currentPage
-                ? 'border-primary-main shadow-lg'
-                : 'border-transparent hover:border-primary-main'
-            )}
+            className={clsx(menuItem.key === currentPage && 'active')}
           >
-            <a
-              className="p-4 transition-all text-gray-mirage visited:text-gray-mirage hover:no-underline hover:text-primary-main"
-              href={menuItem.href}
-            >
+            <a className="hover:no-underline" href={menuItem.href}>
               {menuItem.label}
             </a>{' '}
             <>

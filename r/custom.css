@@ -1,29 +1,3 @@
-/* body {
-    color: #1c2834;
-    font-family: 'Noto Sans', sans-serif;
-} */
-
-.navigation-mobile ul {
-    display: flex;
-    flex-direction: column;
-}
-
-.navigation-mobile li a {
-    border-bottom: 1px solid #dfe4e9;
-    width: 100%;
-    display: block;
-    padding: 8px 16px;
-    font-size: 16px;
-}
-
-.navigation-mobile li a:hover {
-    border-left: 3px solid #e53940;
-    background-color: #f0f4f7;
-}
-
-.navigation-mobile li a.active {
-    border-left: 3px solid #e53940;
-}
 
 footer a {
     color: white !important;
@@ -55,38 +29,12 @@ footer a:hover {
     transform: translateY(-7px) rotate(-45deg);
 }
 
-/* Mobile menu slide animation */
-.navigation-mobile {
-    max-height: none;
-    height: 0;
-    overflow-y: auto;
-    visibility: hidden;
-    transition: transform 0.3s ease, visibility 0.3s ease, height 0.3s ease;
-}
-
-.navigation-mobile.open {
-    height: calc(100vh - 50px);
-    visibility: visible;
-}
-
 /*Override base styles*/
 
 a {
     color: #069;
 }
 
-.navigation-mobile a {
-    color: #1c2834;
-}
-
-.navigation-mobile a:visited {
-    color: #1c2834;
-}
-
-.navigation-mobile a:hover {
-    color: #1c2834;
-    text-decoration: none;
-}
 /* 
 h1,
 h2,
@@ -149,30 +97,6 @@ h6 {
     color: #047857
 }
 
-input,
-select,
-textarea {
-    border: 1px solid #1c2834;
-    border-radius: 4px;
-    background: white;
-    box-sizing: border-box;
-    font-size: 14px;
-}
-
-
-input[type=text],
-input[type=email],
-input[type=number],
-input[type=password],
-textarea,
-select {
-    padding-left: 8px;
-    padding-right: 8px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    color: #1c2834;
-}
-
 select {
     padding-top: 8px;
     padding-bottom: 8px;
@@ -183,14 +107,6 @@ textarea:focus {
     outline: 1px solid #1c2834;
     /*border: 2px solid #1c2834;*/
 }
-
-input[type=submit] {
-    background: #596978;
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
 
 fieldset {
     background-color: white;
@@ -343,38 +259,6 @@ fieldset legend {
     /* When open, rotate to original position */
 }
 
-/* Mobile menu dropdown styles */
-.navigation-mobile ul li ul {
-    display: none;
-    position: fixed;
-    /* Fixed position for sliding */
-    top: 0;
-    right: -100%;
-    /* Start off-screen to the right */
-    height: 100vh;
-    width: 100%;
-    background-color: white;
-    z-index: 1000;
-    overflow-y: auto;
-    transition: right 0.3s ease;
-    /* Transition for sliding effect */
-    padding-top: 60px;
-    /* Space for back button */
-}
-
-.navigation-mobile ul li ul.open {
-    display: block;
-    right: 0;
-    /* Slide in from right */
-}
-
-/* Parent menu item with submenu indicator for mobile */
-.navigation-mobile ul li.has-submenu>a {
-    position: relative;
-    padding-right: 40px;
-    /* Make space for the caret */
-}
-
 /* Right-pointing caret for parent menu items in mobile */
 .mobile-submenu-caret {
     position: absolute;
@@ -479,18 +363,6 @@ fieldset legend {
     text-decoration: none;
     color: #1c2834;
     transition: color .3s ease;
-}
-
-header a {
-    color: inherit;
-}
-
-.arrow-right-icon {
-    transition: transform .2s;
-}
-
-a:hover .arrow-right-icon {
-    transform: translateX(5px);
 }
 
 .showblockdivinner {
@@ -657,12 +529,40 @@ a:hover .arrow-right-icon {
     display: none;
 }
 
-nav.left-sidebar a {
-    color: inherit;
-    text-decoration: none;
+/* Table styles */
+table.table > tbody > tr:first-child {
+    background-color: var(--color-secondary-50);
 }
 
-nav.left-sidebar a:visited {
-    color: inherit;
-    text-decoration: none;
+
+/* Form inputs */
+.unibeform > .input,input,select,textarea,fieldset {
+    padding: .625rem 1rem !important;
+    width: 100% !important;
+    --tw-shadow: 0px 1px 2px 0px rgba(0,0,0,.06),0px 1px 5px 0px rgba(0,0,0,.08) !important;
+    --tw-shadow-colored: 0px 1px 2px 0px var(--tw-shadow-color),0px 1px 5px 0px var(--tw-shadow-color) !important;
+    border-width: 1px !important;
+    box-shadow: var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow) !important;
+    --tw-border-opacity: 1 !important;
+    border-color: rgb(107 114 128/var(--tw-border-opacity,1)) !important;
+    --tw-bg-opacity: 1 !important;
+    background-color: rgb(255 255 255/var(--tw-bg-opacity,1)) !important;
+    border-radius: .0625rem !important;
+    color: #1f2937 !important;
+
+    --tw-space-y-reverse: 0;
+    margin-bottom: calc(.5rem*var(--tw-space-y-reverse)) !important;
+    margin-top: calc(.5rem*(1 - var(--tw-space-y-reverse))) !important;
+
+    /* Base size */
+    font-size: 1rem;
+    line-height: 1.5rem !important;
+}
+
+.unibeform > .input,input,textarea,fieldset {
+    min-height: var(--input-min-height) !important;
+}
+
+.unibeform > select {
+    min-height: 2.875rem !important;
 }

@@ -11,7 +11,12 @@ import clsx from 'clsx';
  * }>}
  */
 const ChevronButton = React.memo(
-  ({className = '', onClick = () => {}, leftSection = <></>, rotateChevron = 'rotate-0'}) => {
+  ({
+    className = '',
+    onClick = () => {},
+    leftSection = <></>,
+    rotateChevron = 'rotate-0',
+  }) => {
     return (
       <>
         <button
