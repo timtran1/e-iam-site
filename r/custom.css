@@ -1,15 +1,33 @@
-/* Body of base styles */
+/* Based styles */
 body {
     font-size: 1rem;
+}
+span.smaller {
+    font-size: .875rem
+}
+span.larger {
+    font-size: 1.125rem
 }
 @media (min-width: 1280px) {
     body {
         font-size:1.125rem
     }
+    span.smaller {
+        font-size: 1rem
+    }
+    span.larger {
+        font-size:1.25rem
+    }
 }
 @media (min-width: 1920px) {
     body {
         font-size:1.25rem
+    }
+    span.smaller {
+        font-size:1.125rem
+    }
+    span.larger {
+        font-size:1.375rem
     }
 }
 
@@ -482,7 +500,9 @@ a {
 table.table > tbody > tr:first-child {
     background-color: var(--color-secondary-50);
 }
-
+table.table > tbody > tr:not(:first-child):hover {
+    background: inherit !important;
+}
 
 /* Form inputs */
 .input,input,select,textarea,fieldset {
