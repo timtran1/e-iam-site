@@ -1,5 +1,4 @@
 import {useTranslation} from 'react-i18next';
-import clsx from 'clsx';
 import useSearchInputControl from '../../../../common/hook/useSearchInputControl.js';
 
 /**
@@ -17,40 +16,40 @@ const SearchResultsInput = () => {
     useSearchInputControl();
 
   return (
-    <div className="relative max-w-[62rem]">
-      <input
-        id={searchId}
-        type="text"
-        className={clsx(
-          'w-full !p-4 !pr-12 rounded-none',
-          'border-3 hover:border-3 active:border-3 focus:border-3',
-          'border-blue-cornflower hover:border-blue-cornflower hover:outline-blue-cornflower',
-          'focus:border-blue-cornflower focus:outline-blue-cornflower'
-        )}
-        placeholder={t('searchTerm')}
-        value={searchValue || ''}
-        onChange={({target: {value}}) => setSearchValue(value)}
-        onKeyDown={(event) => event.key === 'Enter' && handleSubmit()}
-      />
-      <button
-        className="absolute right-8 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-900"
-        onClick={handleSubmit}
-      >
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+    <>
+      <div className="search search--large search--page-result">
+        <div className="search__group">
+          <input
+            id={searchId}
+            type="search"
+            autoComplete="off"
+            placeholder={t('searchTerm')}
+            className="!my-0"
+            value={searchValue || ''}
+            onChange={({target: {value}}) => setSearchValue(value)}
+            onKeyDown={(event) => event.key === 'Enter' && handleSubmit()}
           />
-        </svg>
-      </button>
-    </div>
+          <button
+            type="button"
+            className="btn btn--bare btn--lg btn--icon-only"
+            onClick={handleSubmit}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              enableBackground="new 0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              className="icon icon--base icon--Search btn__icon"
+            >
+              <path
+                xmlns="http://www.w3.org/2000/svg"
+                d="m13.3 12.8c1.9-2.2 1.7-5.6-.5-7.5s-5.6-1.7-7.5.5-1.7 5.6.5 7.5c2 1.7 4.9 1.7 6.9 0l6 6 .5-.5zm-4 1c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z"
+              ></path>
+            </svg>
+            <span className="btn__text">Ämter filtern</span>
+          </button>
+        </div>
+      </div>
+    </>
   );
 };
 
