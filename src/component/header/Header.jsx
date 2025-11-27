@@ -66,14 +66,10 @@ const Header = ({className, sticky = false}) => {
             backgroundImage: headerMeta.backgroundImage,
           }),
         }}
-        className={clsx(
-          'border-b border-b-gray-geyser bg-white',
-          {'z-50 sticky top-0': sticky},
-          className
-        )}
+        className={clsx({'z-50 sticky top-0': sticky}, className)}
       >
         {/*region header content*/}
-        <div className="lg:border-b border-b-gray-geyser">
+        <div className="top-header">
           <div className="container mx-auto flex items-center">
             <div className="flex items-center gap-2.5 lg:gap-4 padding-4 w-full h-[50px] lg:h-[85px] transition-all duration-500">
               <a
@@ -102,8 +98,7 @@ const Header = ({className, sticky = false}) => {
             </div>
             <div
               className={clsx(
-                'ps-2 md:ps-4 py-1',
-                'flex items-center gap-3 flex-row-reverse lg:block'
+                'ps-2 md:ps-4 py-1 flex items-center gap-3 flex-row-reverse lg:block'
               )}
             >
               {/*region lang selector*/}
@@ -122,7 +117,7 @@ const Header = ({className, sticky = false}) => {
               {/*endregion mobile nav*/}
 
               {/*region search input*/}
-              <div className="pt-0  lg:pt-3">
+              <div className="pt-0 lg:pt-3 min-w-36 flex justify-end">
                 <SearchInput />
               </div>
               {/*endregion search input*/}

@@ -87,7 +87,7 @@ const SearchInput = React.memo(() => {
   return (
     <>
       {!!serverSideData.search && (
-        <div className="relative" ref={searchContainerRef}>
+        <>
           <div
             className="hidden absolute"
             dangerouslySetInnerHTML={{
@@ -95,13 +95,11 @@ const SearchInput = React.memo(() => {
             }}
           ></div>
 
-          <div className="search search--main">
+          <div ref={searchContainerRef} className="search search--main">
             <div className="search__group" onClick={handleClickSearchBtn}>
               <h2 className="sr-only">{t('search')}</h2>
               <div className="form__group__input ">
-                <label htmlFor="search-main" className="">
-                  Suche in dieser Website
-                </label>
+                <label htmlFor="search-main">{t('search')}</label>
                 <input
                   id={searchId}
                   type="search"
@@ -135,7 +133,7 @@ const SearchInput = React.memo(() => {
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );
