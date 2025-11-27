@@ -1,5 +1,6 @@
 /* Based styles */
 body {
+    font-family: Font-Regular, Hind, Fallback-font, Sans-Serif, sans-serif;
     font-size: 1rem;
 }
 span.smaller {
