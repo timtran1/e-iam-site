@@ -2,12 +2,10 @@ import React from 'react';
 import AppContext from '../../common/context/app/app.context.js';
 import {useDebouncedCallback} from '@mantine/hooks';
 import {ELEMENT_ID} from '../../common/constant/element-id.js';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSearch} from '@fortawesome/free-solid-svg-icons';
-import clsx from 'clsx';
 import useClickAway from '../../common/hook/useClickAway.js';
 import {useTranslation} from 'react-i18next';
 import useSearchInputControl from '../../common/hook/useSearchInputControl.js';
+import clsx from 'clsx';
 
 /**
  * Search input component
@@ -97,48 +95,45 @@ const SearchInput = React.memo(() => {
             }}
           ></div>
 
-          <div onClick={() => setExpanded(true)}>
-            <label
-              htmlFor={searchId}
-              tabIndex="-1"
-              className={clsx(
-                'hidden sm:block',
-                'py-0 pr-6 transition opacity-0',
-                {
-                  'opacity-100': !expanded,
-                }
-              )}
-            >
-              {t('search')}
-            </label>
-
-            <input
-              id={searchId}
-              type="text"
-              className={clsx(
-                'absolute top-1/2 -translate-y-1/2 right-0',
-                'rounded-none border-3 border-opacity-90',
-                'border-blue-cornflower hover:border-blue-cornflower active:border-blue-cornflower focus:border-blue-cornflower focus:outline-blue-cornflower',
-                '!pl-3 !pr-8 !py-1.5 transition-all',
-                expanded
-                  ? 'opacity-100 !w-44 sm:!w-56'
-                  : 'opacity-0 !w-20 hover:border-transparent active:border-transparent cursor-pointer'
-              )}
-              placeholder={t('search')}
-              value={searchValue || ''}
-              onChange={({target: {value}}) => setSearchValue(value)}
-              onKeyDown={(event) => event.key === 'Enter' && handleSubmit()}
-            />
-          </div>
-
-          <div
-            className="absolute top-1/2 right-1.5 -translate-y-1/2 cursor-pointer"
-            onClick={handleClickSearchBtn}
-          >
-            <FontAwesomeIcon
-              icon={faSearch}
-              className="w-4 h-4 px-1 text-gray-chateau-2"
-            />
+          <div className="search search--main">
+            <div className="search__group" onClick={handleClickSearchBtn}>
+              <h2 className="sr-only">{t('search')}</h2>
+              <div className="form__group__input ">
+                <label htmlFor="search-main" className="">
+                  Suche in dieser Website
+                </label>
+                <input
+                  id={searchId}
+                  type="search"
+                  className={clsx(
+                    'input--outline !my-0 !transition-all',
+                    expanded
+                      ? 'opacity-100 !w-44 sm:!w-72'
+                      : 'opacity-0 !w-20 hover:border-transparent active:border-transparent cursor-pointer'
+                  )}
+                  autoComplete="off"
+                  name="search-main"
+                  placeholder={t('search')}
+                  value={searchValue || ''}
+                  onChange={({target: {value}}) => setSearchValue(value)}
+                  onKeyDown={(event) => event.key === 'Enter' && handleSubmit()}
+                />
+              </div>
+              <div className="search__button" title="Toggle search">
+                <span className="search__button__title">{t('search')}</span>
+                <svg
+                  viewBox="0 0 24 24"
+                  enableBackground="new 0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="icon icon--lg icon--Search search__button__icon"
+                >
+                  <path
+                    xmlns="http://www.w3.org/2000/svg"
+                    d="m13.3 12.8c1.9-2.2 1.7-5.6-.5-7.5s-5.6-1.7-7.5.5-1.7 5.6.5 7.5c2 1.7 4.9 1.7 6.9 0l6 6 .5-.5zm-4 1c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
           </div>
         </div>
       )}
