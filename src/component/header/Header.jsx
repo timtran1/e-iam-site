@@ -128,7 +128,9 @@ const Header = ({className, sticky = false}) => {
 
         {/*region navigation*/}
         <div className="hidden lg:block desktop-menu">
-          <Navigation.Desktop />
+          <div className="container container--flex">
+            <Navigation.Desktop />
+          </div>
         </div>
         {/*endregion navigation*/}
       </header>

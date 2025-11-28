@@ -48,7 +48,7 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
   });
 
   return (
-    <nav className="container mx-auto main-navigation main-navigation--desktop">
+    <nav className="main-navigation main-navigation--desktop">
       <ul ref={wrapperRef} className="">
         {menus.map((menuItem, i) => (
           <li key={i}>
