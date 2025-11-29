@@ -65,10 +65,7 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
               {!!withSubmenuDropdown && menuItem.children?.length > 0 && (
                 <>
                   <ChevronButton
-                    className={clsx(
-                      'transition',
-                      openedItems[menuItem.key] ? 'rotate-90' : ''
-                    )}
+                    rotateChevron={!!openedItems[menuItem.key]}
                     onClick={() => toggleItem(menuItem.key)}
                   />
                   <ul

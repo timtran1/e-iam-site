@@ -146,12 +146,10 @@ const DropdownMenuMobile = ({opened: openedProp, setOpened: setOpenedProp}) => {
             </div>
           ) : (
             <div className="px-4 py-4">
-              <div
-                className="cursor-pointer p-1 rounded transition hover:bg-gray-black-squeeze"
+              <ChevronButton
+                iconClassName="rotate-90"
                 onClick={handleClickBack}
-              >
-                <ChevronButton className={clsx('transition rotate-180')} />
-              </div>
+              />
             </div>
           )}
           {/*endregion lang selector*/}
@@ -171,25 +169,11 @@ const DropdownMenuMobile = ({opened: openedProp, setOpened: setOpenedProp}) => {
                     {menuItem.label}
                   </a>
                   {menuItem.children && menuItem.children.length > 0 && (
-                    <div
-                      className="absolute right-3 top-1/2 -translate-y-1/2 p-1 cursor-pointer"
+                    <ChevronButton
+                      className="!absolute right-3 top-1/2 -translate-y-1/2 focus:!outline-none hover:!bg-white border-none !p-0 !w-auto"
+                      iconClassName="-rotate-90"
                       onClick={() => handleClickExpand(menuItem)}
-                    >
-                      <svg
-                        className={clsx('w-4 h-4')}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="1.5"
-                          d="M9 5l7 7-7 7"
-                        ></path>
-                      </svg>
-                    </div>
+                    />
                   )}
                 </li>
               ))}
