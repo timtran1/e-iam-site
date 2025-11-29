@@ -528,6 +528,10 @@ table.table > tbody > tr:not(:first-child):hover {
 .input,input,textarea,fieldset {
     min-height: var(--input-min-height) !important;
 }
+input[type="range"] {
+    border: none !important;
+    box-shadow: none !important;
+}
 select {
     min-height: 2.875rem !important;
     background-image:
