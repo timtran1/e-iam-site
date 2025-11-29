@@ -15,9 +15,9 @@ const Footer = () => {
   }, [serverSideData]);
 
   return (
-    <footer className="bg-gray-pickled-bluewood py-2">
+    <footer className="bg--secondary-700 py-5">
       <div
-        className="container mx-auto text-white text-3.2"
+        className="container mx-auto text-white text-3.2 footer-navigation"
         dangerouslySetInnerHTML={{__html: footerHTML}}
       ></div>
     </footer>

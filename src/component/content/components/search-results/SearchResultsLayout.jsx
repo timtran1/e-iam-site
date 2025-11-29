@@ -35,8 +35,9 @@ const SearchResultsLayout = ({
   return (
     <div>
       {/* Search Header Section */}
-      <div className="bg-gray-100">
-        <div className="container mx-auto px-16 py-20">
+      <div className="section section--default bg--secondary-50">
+        <div className="container">
+          {/* Search result heading */}
           <h1 className="text-4xl font-bold mb-8 text-gray-900">
             {t('search')}
           </h1>

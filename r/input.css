@@ -3,7 +3,7 @@
 @import url(csstable.css);
 @import url(cssform.css);
 @import url(swissdesignsystem/main.postcss);
-/* @import url(custom.css); */
+@import url(custom.css);
 
 
 @font-face {
