@@ -285,13 +285,6 @@ footer a:hover {
     border-radius: 4px;
 }
 
-.showblock2inactivetab {
-    display: block;
-    background: #F0F4F7;
-    padding: 4px;
-    margin-left: -2px;
-}
-
 .right-sidebar h1 {
     font-size: 2rem;
     font-weight: 500;
@@ -354,6 +347,24 @@ footer a:hover {
     border-radius: 4px;
 }
 
+.showblock2inactivetab {
+    display: block;
+    text-decoration: unset;
+    font-size: 1rem;
+    padding-bottom: .25rem;
+    padding-right: 1rem;
+    padding-top: .25rem;
+    text-align: left;
+    border-top: 1px solid var(--color-secondary-200) !important;
+    border-bottom: none;
+}
+div.showblock2divinner {
+    border-bottom: 1px solid var(--color-secondary-200) !important;
+}
+div.showblock2divinner.expand {
+    padding: 1rem .5rem 2.5rem !important;
+}
+
 .showblockactivetab,
 .showblockinactivetab,
 .showblock2activetab,
@@ -373,12 +384,15 @@ footer a:hover {
     position: relative;
     border-radius: 0;
 }
-
+.showblock2activetab:focus,
+.showblock2inactivetab:focus {
+    color: inherit !important;
+}
 .showblockactivetab:hover,
 .showblockinactivetab:hover,
 .showblock2activetab:hover,
 .showblock2inactivetab:hover {
-    color: #e53940;
+    color: var(--color-primary-500) !important;
 }
 
 .showblockactivetab::after,
@@ -467,12 +481,6 @@ footer a:hover {
 
 .showblock2divinner.expand:after {
     display: block;
-}
-
-
-.showblock2divinner.expand {
-    overflow: auto;
-    padding: 8px;
 }
 
 .showblockdivinner.expand {
