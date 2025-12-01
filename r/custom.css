@@ -624,3 +624,26 @@ blockquote {
         top: calc(100% - 5rem) !important;
     }
 }
+
+/* Audio */
+dl.dlAudioLarge {
+    width: 100% !important;
+    border: none !important;
+    margin: 0 !important;
+    float: none !important;
+}
+dl.dlAudioLarge > dt {
+    margin: 0 !important;
+}
+dl.dlAudioLarge > dt > audio {
+    width: 300px !important;
+    height: 54px !important;
+}
+dl.dlAudioLarge > dd {
+    background: inherit !important;
+    margin-top: .5rem !important;
+    padding: .5rem 0 0 0 !important;
+    --tw-text-opacity: 1;
+    color: rgb(107 114 128/var(--tw-text-opacity,1)) !important;
+    font-size: .75rem !important;
+}
