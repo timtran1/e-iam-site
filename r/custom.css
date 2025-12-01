@@ -500,11 +500,24 @@ div.showblock2divinner.expand {
 }
 
 /* Table styles */
+table.table th {
+    font-weight: normal !important;
+}
 table.table > tbody > tr:first-child {
     background-color: var(--color-secondary-50);
+    font-weight: normal !important;
 }
 table.table > tbody > tr:not(:first-child):hover {
     background: inherit !important;
+}
+table.table > tbody tr th,
+table.table > tbody tr td {
+    line-height: inherit !important;
+    border-right: none !important;
+    border-left: none !important;
+}
+table:not(.table--compact) tbody th, table:not(.table--compact) tfoot th {
+    font-weight: normal !important;
 }
 
 /* Form inputs */
