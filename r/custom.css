@@ -647,3 +647,19 @@ dl.dlAudioLarge > dd {
     color: rgb(107 114 128/var(--tw-text-opacity,1)) !important;
     font-size: .75rem !important;
 }
+
+/* Video */
+dl.dlVideoLarge {
+    border: none !important;
+}
+dl.dlVideoLarge > dt {
+    margin: 0 !important;
+}
+dl.dlVideoLarge > dd {
+    background: inherit !important;
+    padding: .5rem 0 0 0 !important;
+    margin-top: 0 !important;
+    --tw-text-opacity: 1;
+    color: rgb(107 114 128/var(--tw-text-opacity,1)) !important;
+    font-size: .75rem !important;
+}
