@@ -688,13 +688,19 @@ dl.dlAudioLarge > dd {
 }
 
 /* Video */
-dl.dlVideoLarge {
+dl.dlYoutubeLarge {
+    max-width: 570px !important;
+}
+dl.dlVideoLarge,
+dl.dlYoutubeLarge {
     border: none !important;
 }
-dl.dlVideoLarge > dt {
+dl.dlVideoLarge > dt,
+dl.dlYoutubeLarge > dt {
     margin: 0 !important;
 }
-dl.dlVideoLarge > dd {
+dl.dlVideoLarge > dd,
+dl.dlYoutubeLarge > dd {
     background: inherit !important;
     padding: .5rem 0 0 0 !important;
     margin-top: 0 !important;
