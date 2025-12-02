@@ -1,9 +1,10 @@
-import {useState, useRef} from 'react';
+import {useState} from 'react';
 import linkIsCurrentPage from '../../common/helper/linkIsCurrentPage.js';
 import clsx from 'clsx';
 import Collapse from '../../common/ui/Collapse.jsx';
 import {hasChildActive} from '../../common/helper/menu.js';
 import useQueryParam from '../../common/hook/useQueryParam.js';
+import ChevronButton from '../../common/ui/ChevronButton.jsx';
 
 export default function LeftMenuItem({menu, index}) {
   const hasChildren = menu.children && menu.children.length > 0;
@@ -20,9 +21,6 @@ export default function LeftMenuItem({menu, index}) {
 
   // Local state for this specific menu item only - initialize to open if it has an active child
   const [isOpen, setIsOpen] = useState(hasActiveChild);
-
-  // Refs for animation elements
-  const caretRef = useRef(null);
 
   // Toggle this specific menu item only
   const toggleOpen = (e) => {
@@ -53,23 +51,11 @@ export default function LeftMenuItem({menu, index}) {
         </a>
 
         {hasChildren && (
-          <button onClick={toggleOpen} className="px-3 py-4 focus:outline-none">
-            <svg
-              ref={caretRef}
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button>
+          <ChevronButton
+            className="focus:outline-none"
+            iconClassName="-rotate-90"
+            onClick={toggleOpen}
+          />
         )}
       </div>
 

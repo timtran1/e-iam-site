@@ -66,16 +66,12 @@ const Header = ({className, sticky = false}) => {
             backgroundImage: headerMeta.backgroundImage,
           }),
         }}
-        className={clsx(
-          'border-b border-b-gray-geyser bg-white',
-          {'z-50 sticky top-0': sticky},
-          className
-        )}
+        className={clsx({'z-50 sticky top-0': sticky}, className)}
       >
         {/*region header content*/}
-        <div className="lg:border-b border-b-gray-geyser">
-          <div className="container mx-auto flex items-center">
-            <div className="flex items-center gap-2.5 lg:gap-4 padding-4 w-full h-[50px] lg:h-[85px] transition-all duration-500">
+        <div className="top-header">
+          <div className="container container--flex">
+            <div className="logo">
               <a
                 href="/"
                 className="w-[43px] h-[58px] lg:w-[250px] lg:h-[80.6px] overflow-hidden block shrink-0"
@@ -90,20 +86,25 @@ const Header = ({className, sticky = false}) => {
                   }}
                 ></div>
               </a>
-              <div className="border-l border-gray-geyser h-10 w-[1px]"></div>
-              <div className="text-6.5 font-bold text-gray-ebony-clay">
-                eIAM
-              </div>
-              <div className="font-bold text-base leading-6 text-gray-ebony-clay text-ellipsis hidden lg:block">
-                Federal Office of Information Technology, Systems and
-                Telecommunication & Federal Chancellery FCh, Digital
-                Transformation and ICT Governance DTI
+              <div
+                className="logo__separator"
+                role="separator"
+                aria-hidden="true"
+              ></div>
+              <div className="flex gap-4">
+                <div className="logo-title__container font--bold text-6.5">
+                  eIAM
+                </div>
+                <div className="logo-title__container font--bold hidden lg:block">
+                  Federal Office of Information Technology, Systems and
+                  Telecommunication & Federal Chancellery FCh, Digital
+                  Transformation and ICT Governance DTI
+                </div>
               </div>
             </div>
             <div
               className={clsx(
-                'ps-2 md:ps-4 py-1',
-                'flex items-center gap-3 flex-row-reverse lg:block'
+                'ps-2 md:ps-4 py-1 flex items-center gap-3 flex-row-reverse lg:block'
               )}
             >
               {/*region lang selector*/}
@@ -122,7 +123,7 @@ const Header = ({className, sticky = false}) => {
               {/*endregion mobile nav*/}
 
               {/*region search input*/}
-              <div className="pt-0  lg:pt-3">
+              <div className="min-w-36 flex justify-end">
                 <SearchInput />
               </div>
               {/*endregion search input*/}
@@ -133,7 +134,9 @@ const Header = ({className, sticky = false}) => {
 
         {/*region navigation*/}
         <div className="hidden lg:block desktop-menu">
-          <Navigation.Desktop />
+          <div className="container container--flex">
+            <Navigation.Desktop />
+          </div>
         </div>
         {/*endregion navigation*/}
       </header>

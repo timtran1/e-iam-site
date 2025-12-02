@@ -4,11 +4,6 @@ body {
     background-image: none !important;
 }
 
-
-article, article p, article ul li, article ul ul, article li li {
-    line-height: 30px;
-}
-
 h1 {
     margin-bottom: 0.5em;
     margin-top: 0.2em;

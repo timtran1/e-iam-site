@@ -6,17 +6,24 @@ import clsx from 'clsx';
  * @type {React.NamedExoticComponent<{
  *     leftSection
  *     className: string,
+ *     iconClassName: string,
  *     onClick: () => void,
- *     rotateChevron: string
+ *     rotateChevron: boolean
  * }>}
  */
 const ChevronButton = React.memo(
-  ({className = '', onClick = () => {}, leftSection = <></>, rotateChevron = 'rotate-0'}) => {
+  ({
+    className = '',
+    iconClassName = '',
+    onClick = () => {},
+    leftSection = <></>,
+    rotateChevron = false,
+  }) => {
     return (
       <>
         <button
           className={clsx(
-            'flex items-center space-x-1 text-gray-700 hover:text-gray-900 focus:outline-none cursor-pointer',
+            '!w-auto flex items-center space-x-1 text-gray-700 hover:text-gray-900 focus:outline-none cursor-pointer',
             className
           )}
           onClick={onClick}
@@ -24,20 +31,15 @@ const ChevronButton = React.memo(
           {leftSection}
           <svg
             className={clsx(
-              'lang-caret w-4 h-4 transform transition-transform duration-300',
-              rotateChevron
+              'w-8 transform transition-transform duration-300',
+              rotateChevron && 'rotate-180',
+              iconClassName
             )}
-            fill="none"
-            stroke="currentColor"
+            role="presentation"
+            aria-hidden="true"
             viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="1.5"
-              d="M9 5l7 7-7 7"
-            ></path>
+            <path d="m5.706 10.015 6.669 3.85 6.669-3.85.375.649-7.044 4.067-7.044-4.067z"></path>
           </svg>
         </button>
       </>
