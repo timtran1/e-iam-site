@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - swissdesignsystem
 
 permissions:
   contents: read
@@ -30,6 +31,5 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: dist-output
-          path: |
-            dist
+          name: app-universal-${{ github.ref_name }}.iife.js
+          path: dist/app-universal.iife.js
