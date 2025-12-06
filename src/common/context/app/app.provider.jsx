@@ -63,7 +63,7 @@ const AppProvider = ({children}) => {
   /**
    * @type {string | null}
    */
-  const newsContent = React.useMemo(() => {
+  const news = React.useMemo(() => {
     if (serverSideData.news) {
       return serverSideData.news.innerHTML;
     } else {
@@ -74,7 +74,7 @@ const AppProvider = ({children}) => {
   /**
    * @type {string|null}
    */
-  const rightContent = React.useMemo(() => {
+  const right = React.useMemo(() => {
     if (serverSideData.right) {
       return serverSideData.right.innerHTML;
     } else {
@@ -134,8 +134,8 @@ const AppProvider = ({children}) => {
           serverSideData,
           menu,
           languages,
-          rightContent,
-          newsContent,
+          right,
+          news,
           content,
           headerMeta,
           setHeaderMeta,
