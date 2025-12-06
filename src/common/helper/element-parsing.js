@@ -84,3 +84,64 @@ export const stripNavigationMarkers = (content) => {
 export const isEmptyElement = (ele) => {
   return !ele || (!ele.textContent.trim() && !ele.children.length);
 };
+
+/**
+ * Wraps innerHTML with a div that preserves inline styles from the original element
+ *
+ * @param {HTMLElement} element - The element to extract innerHTML and styles from
+ * @param {Partial<import('react').CSSProperties>} cssProperties - Optional CSS properties to override/add to inline styles
+ * @returns {string | null} - HTML string with wrapper div containing inline styles
+ */
+export const wrapWithInlineStyles = (element, cssProperties = {}) => {
+  if (!element) {
+    return null;
+  }
+
+  // Parse existing inline styles
+  const existingStyle = element.getAttribute('style') || '';
+  const styleObj = {};
+
+  // Convert existing inline styles to object
+  if (existingStyle) {
+    existingStyle.split(';').forEach((rule) => {
+      const [property, value] = rule.split(':').map((s) => s.trim());
+      if (property && value) {
+        styleObj[property] = value;
+      }
+    });
+  }
+
+  // Merge with override properties
+  const mergedStyles = {...styleObj, ...cssProperties};
+
+  // Convert back to inline style string
+  const inlineStyle = Object.entries(mergedStyles)
+    .map(([property, value]) => `${property}: ${value}`)
+    .join('; ');
+
+  const innerHTML = element.innerHTML;
+
+  return `<div style="${inlineStyle}">${innerHTML}</div>`;
+};
+
+/**
+ * Wraps innerHTML with a div from the original element
+ *
+ * @param {HTMLElement} element - The element to extract innerHTML
+ * @param {Partial<import('react').CSSProperties>} cssProperties - Optional CSS properties to override/add to inline styles
+ * @returns {string | null} - HTML string with wrapper div containing inline styles
+ */
+export const wrapWithInline = (element, cssProperties = {}) => {
+  if (!element) {
+    return null;
+  }
+
+  // Convert back to inline style string
+  const inlineStyle = Object.entries(cssProperties)
+    .map(([property, value]) => `${property}: ${value}`)
+    .join('; ');
+
+  const innerHTML = element.innerHTML;
+
+  return `<div style="${inlineStyle}">${innerHTML}</div>`;
+};

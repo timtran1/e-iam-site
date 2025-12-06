@@ -1,7 +1,11 @@
 import React from 'react';
 import AppContext from './app.context.js';
 import useServerSideVariables from './hooks/useServerSideVariables.js';
-import {parseLangEle, parseMenuEle} from '../../helper/element-parsing.js';
+import {
+  parseLangEle,
+  parseMenuEle,
+  wrapWithInline,
+} from '../../helper/element-parsing.js';
 import {ELEMENT_ID} from '../../constant/element-id.js';
 
 /**
@@ -65,7 +69,7 @@ const AppProvider = ({children}) => {
    */
   const news = React.useMemo(() => {
     if (serverSideData.news) {
-      return serverSideData.news.innerHTML;
+      return wrapWithInline(serverSideData.news, {margin: '1rem'});
     } else {
       return null;
     }
@@ -76,7 +80,7 @@ const AppProvider = ({children}) => {
    */
   const right = React.useMemo(() => {
     if (serverSideData.right) {
-      return serverSideData.right.innerHTML;
+      return wrapWithInline(serverSideData.right, {margin: '1rem'});
     } else {
       return null;
     }
