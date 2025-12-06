@@ -44,6 +44,7 @@ const useServerSideVariables = () => {
       content: undefined,
       footer: undefined,
       right: undefined,
+      news: undefined,
     }
   );
 

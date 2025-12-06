@@ -23,14 +23,6 @@ export default function RightSidebar({content, sticky = false}) {
     [content]
   );
 
-  const widthClass = React.useMemo(() => {
-    if (content) {
-      return 'sm:max-w-[150px] lg:max-w-[200px] xl:max-w-[220px] 2xl:max-w-[260px] shrink-[5] ';
-    }
-    // produce spacer to let main content be in center
-    return 'invisible w-0 lg:w-[200px] lg:w-[220px] xl:w-[240px] 2xl:w-[260px]';
-  }, [content]);
-
   /**
    * @type {Array<{
    *     index: number, href: string, text: string, name: string, className: string, parentDiv: HTMLElement
@@ -98,10 +90,10 @@ export default function RightSidebar({content, sticky = false}) {
   return (
     <aside
       className={clsx(
-        'right-sidebar h-full break-words text-wrap px-3 lg:px-6 py-3 lg:py-6',
+        'right-sidebar h-full break-words text-wrap w-0 lg:w-[200px] xl:w-[240px] 2xl:w-[260px]',
         showRightSidebarPages &&
-          'bg-gray-aqua-haze border border-gray-aqua-haze shadow',
-        widthClass
+          !!processedContent &&
+          'sm:max-w-[150px] lg:max-w-[200px] xl:max-w-[220px] 2xl:max-w-[260px] shrink-[5] bg-gray-aqua-haze'
       )}
     >
       {showRightSidebarPages && (
