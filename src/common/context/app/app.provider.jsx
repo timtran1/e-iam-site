@@ -61,6 +61,17 @@ const AppProvider = ({children}) => {
   }, [serverSideData.languages]);
 
   /**
+   * @type {string | null}
+   */
+  const newsContent = React.useMemo(() => {
+    if (serverSideData.news) {
+      return serverSideData.news.innerHTML;
+    } else {
+      return null;
+    }
+  }, [serverSideData.news]);
+
+  /**
    * @type {string|null}
    */
   const rightContent = React.useMemo(() => {
@@ -124,6 +135,7 @@ const AppProvider = ({children}) => {
           menu,
           languages,
           rightContent,
+          newsContent,
           content,
           headerMeta,
           setHeaderMeta,

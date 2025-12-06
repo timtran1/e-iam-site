@@ -22,6 +22,7 @@ const DefaultState = {
     navigation: undefined,
     footer: undefined,
     rightContent: undefined,
+    newsContent: undefined,
     content: undefined,
   },
   menu: [],

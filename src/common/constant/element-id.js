@@ -13,4 +13,5 @@ export const ELEMENT_ID = {
   CONTENT: 'content',
   FOOTER: 'footer',
   RIGHT: 'right',
+  NEWS: 'news',
 };

@@ -8,4 +8,5 @@
  * @property {Element=} content
  * @property {Element=} footer
  * @property {Element=} rightContent
+ * @property {Element=} newsContent
  */
