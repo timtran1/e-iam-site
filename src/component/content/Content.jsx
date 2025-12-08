@@ -24,7 +24,7 @@ const isDevMode = import.meta.env.DEV;
  */
 const Content = () => {
   // Get context data
-  const { menu, rightContent, content, headerMeta } = useContext(AppContext);
+  const { menu, right, news, content, headerMeta } = useContext(AppContext);
 
   // Search contents
   const { isSearchResultPage, searchResults } = useSearchResult(content);
@@ -35,7 +35,9 @@ const Content = () => {
   });
 
   const menus = isDevMode ? mockMenu : menu;
-  const rightSidebarContent = isDevMode ? mockRightContent : rightContent;
+  const rightSidebarContent = isDevMode
+    ? mockRightContent
+    : [right, news].filter(Boolean).join('<br>');
   const pageContent = isDevMode ? mockContent : content;
 
   const processedContent = useMemo(() => {
