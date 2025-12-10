@@ -145,3 +145,15 @@ export const wrapWithInline = (element, cssProperties = {}) => {
 
   return `<div style="${inlineStyle}">${innerHTML}</div>`;
 };
+
+/**
+ * Get all focusable elements within a container
+ * @param {HTMLElement} container
+ * @returns {HTMLElement[]}
+ */
+export const getFocusableElements = (container) => {
+  if (!container) return [];
+  const focusableSelectors =
+    'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  return Array.from(container.querySelectorAll(focusableSelectors));
+};

@@ -14,6 +14,7 @@ import {stripNavigationMarkers} from '../../common/helper/element-parsing.js';
 import useHashScroll from '../../common/hook/useHashScroll.js';
 import useSearchResult from './hooks/useSearchResult.js';
 import SearchResults from './components/search-results/index.jsx';
+import {ELEMENT_ID} from '../../common/constant/element-id.js';
 
 const isDevMode = import.meta.env.DEV;
 /**
@@ -24,7 +25,8 @@ const isDevMode = import.meta.env.DEV;
  */
 const Content = () => {
   // Get context data
-  const {menu, right, news, content, headerMeta} = useContext(AppContext);
+  const {menu, right, news, content, headerMeta, hasRemovedServerElements} =
+    useContext(AppContext);
 
   // Search contents
   const {isSearchResultPage, searchResults} = useSearchResult(content);
@@ -77,11 +79,15 @@ const Content = () => {
 
         {/*region content*/}
         {isSearchResultPage ? (
-          <main className="w-full">
+          <main
+            {...(hasRemovedServerElements ? {id: ELEMENT_ID.CONTENT} : {})}
+            className="w-full"
+          >
             <SearchResults searchResults={searchResults} />
           </main>
         ) : (
           <main
+            {...(hasRemovedServerElements ? {id: ELEMENT_ID.CONTENT} : {})}
             className="relative flex-1 min-w-0 mx-auto max-w-full"
             dangerouslySetInnerHTML={{__html: processedContent}}
           />

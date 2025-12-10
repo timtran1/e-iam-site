@@ -28,7 +28,8 @@ const SearchInput = React.memo(() => {
   useClickAway(searchContainerRef, () => setExpanded(false));
 
   // Get app context
-  const {serverSideData, removeServerElement} = React.useContext(AppContext);
+  const {serverSideData, removeServerElement, hasRemovedServerElements} =
+    React.useContext(AppContext);
 
   /**
    * Remove server search element after debounced time
@@ -89,7 +90,11 @@ const SearchInput = React.memo(() => {
   return (
     <>
       {!!serverSideData.search && (
-        <div className="relative" ref={searchContainerRef}>
+        <div
+          {...(hasRemovedServerElements ? {id: ELEMENT_ID.SEARCH} : {})}
+          className="relative"
+          ref={searchContainerRef}
+        >
           <div
             className="hidden absolute"
             dangerouslySetInnerHTML={{

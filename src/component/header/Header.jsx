@@ -5,6 +5,7 @@ import Navigation from '../navigation/index.js';
 import AppContext from '../../common/context/app/app.context.js';
 import {useElementSize} from '@mantine/hooks';
 import SearchInput from './SearchInput.jsx';
+import {useTranslation} from 'react-i18next';
 
 /**
  * Header
@@ -15,6 +16,9 @@ import SearchInput from './SearchInput.jsx';
  * @constructor
  */
 const Header = ({className, sticky = false}) => {
+  // Translation
+  const {t} = useTranslation();
+
   // Header ref
   const {ref: headerRef, height: headerHeight} = useElementSize();
 
@@ -61,6 +65,7 @@ const Header = ({className, sticky = false}) => {
     <>
       <header
         ref={headerRef}
+        aria-label={t('Site header')}
         style={{
           ...(headerMeta?.backgroundImage && {
             backgroundImage: headerMeta.backgroundImage,
@@ -73,28 +78,40 @@ const Header = ({className, sticky = false}) => {
         )}
       >
         {/*region header content*/}
-        <div className="lg:border-b border-b-gray-geyser">
+        <div role="banner" className="lg:border-b border-b-gray-geyser">
           <div className="container mx-auto flex items-center">
             <div className="flex items-center gap-2.5 lg:gap-4 padding-4 w-full h-[50px] lg:h-[85px] transition-all duration-500">
               <a
                 href="/"
+                aria-label={t('eIAM - Go to homepage')}
                 className="w-[43px] h-[58px] lg:w-[250px] lg:h-[80.6px] overflow-hidden block shrink-0"
               >
                 <div
                   className="w-[250px] h-[80.6px] bg-cover bg-no-repeat transition-all duration-500    "
                   role="img"
-                  aria-label="eIAM"
+                  aria-hidden="true"
                   style={{
                     backgroundImage:
                       "url('r/eidgenossenschaft/eidgenossenschaft_de.svg')",
                   }}
                 ></div>
               </a>
-              <div className="border-l border-gray-geyser h-10 w-[1px]"></div>
-              <div className="text-6.5 font-bold text-gray-ebony-clay">
+              <div
+                className="border-l border-gray-geyser h-10 w-[1px]"
+                aria-hidden="true"
+              ></div>
+              <div
+                className="text-6.5 font-bold text-gray-ebony-clay"
+                aria-hidden="true"
+              >
                 eIAM
               </div>
-              <div className="font-bold text-base leading-6 text-gray-ebony-clay text-ellipsis hidden lg:block">
+              <div
+                className="font-bold text-base leading-6 text-gray-ebony-clay text-ellipsis hidden lg:block"
+                aria-label={t(
+                  'Federal Office of Information Technology, Systems and Telecommunication & Federal Chancellery FCh, Digital Transformation and ICT Governance DTI'
+                )}
+              >
                 Federal Office of Information Technology, Systems and
                 Telecommunication & Federal Chancellery FCh, Digital
                 Transformation and ICT Governance DTI
