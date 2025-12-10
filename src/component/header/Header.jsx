@@ -103,12 +103,7 @@ const Header = ({className, sticky = false}) => {
               <div className="text-6.5 font-bold text-gray-ebony-clay">
                 eIAM
               </div>
-              <div
-                className="font-bold text-base leading-6 text-gray-ebony-clay text-ellipsis hidden lg:block"
-                aria-label={t(
-                  'Federal Office of Information Technology, Systems and Telecommunication & Federal Chancellery FCh, Digital Transformation and ICT Governance DTI'
-                )}
-              >
+              <div className="font-bold text-base leading-6 text-gray-ebony-clay text-ellipsis hidden lg:block">
                 Federal Office of Information Technology, Systems and
                 Telecommunication & Federal Chancellery FCh, Digital
                 Transformation and ICT Governance DTI
