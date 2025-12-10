@@ -78,7 +78,7 @@ const Header = ({className, sticky = false}) => {
         )}
       >
         {/*region header content*/}
-        <div role="banner" className="lg:border-b border-b-gray-geyser">
+        <div className="lg:border-b border-b-gray-geyser">
           <div className="container mx-auto flex items-center">
             <div className="flex items-center gap-2.5 lg:gap-4 padding-4 w-full h-[50px] lg:h-[85px] transition-all duration-500">
               <a
@@ -89,7 +89,7 @@ const Header = ({className, sticky = false}) => {
                 <div
                   className="w-[250px] h-[80.6px] bg-cover bg-no-repeat transition-all duration-500    "
                   role="img"
-                  aria-hidden="true"
+                  aria-label={t('Swiss Confederation logo')}
                   style={{
                     backgroundImage:
                       "url('r/eidgenossenschaft/eidgenossenschaft_de.svg')",
@@ -100,10 +100,7 @@ const Header = ({className, sticky = false}) => {
                 className="border-l border-gray-geyser h-10 w-[1px]"
                 aria-hidden="true"
               ></div>
-              <div
-                className="text-6.5 font-bold text-gray-ebony-clay"
-                aria-hidden="true"
-              >
+              <div className="text-6.5 font-bold text-gray-ebony-clay">
                 eIAM
               </div>
               <div

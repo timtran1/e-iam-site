@@ -132,7 +132,7 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
       <ul ref={wrapperRef} className="px-0 flex overflow-x-auto gap-6">
         {menus.map((menuItem, i) => (
           <li
-            key={i}
+            key={menuItem.key || i}
             className={clsx(
               'flex gap-1 border-b-[3px]',
               (!currentPage && !i) || hasChildActive(menuItem)
@@ -164,9 +164,9 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
                   <ul
                     ref={(el) => (dropdownRefs.current[menuItem.key] = el)}
                     id={`header-nav-dropdown-${menuItem.key}`}
-                    role="menubar"
+                    role="menu"
                     aria-label={`${menuItem.label} submenu`}
-                    aria-hidden={!openedItems[menuItem.key]}
+                    aria-hidden={!openedItems[menuItem.key] ? 'true' : 'false'}
                     onKeyDown={(e) => handleDropdownKeyDown(e, menuItem.key)}
                     className={clsx(
                       'transition-all overflow-y-scroll max-h-[80vh]',
@@ -175,6 +175,7 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
                   >
                     <button
                       ref={(el) => (closeButtonRefs.current[menuItem.key] = el)}
+                      type="button"
                       className="nav-dropdown-close transition-all hover:translate-y-0.5"
                       onClick={() => toggleItem(menuItem.key, true)}
                       aria-label={t('Close submenu')}
