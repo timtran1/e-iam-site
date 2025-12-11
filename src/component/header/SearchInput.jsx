@@ -105,10 +105,10 @@ const SearchInput = React.memo(() => {
           <div onClick={() => setExpanded(true)}>
             <label
               htmlFor={searchId}
-              tabIndex="-1"
+              onFocus={() => setExpanded(true)}
               className={clsx(
                 'hidden sm:block',
-                'py-0 pr-6 transition opacity-0',
+                'py-0 pr-6 transition opacity-0 cursor-pointer',
                 {
                   'opacity-100': !expanded,
                 }
@@ -133,6 +133,7 @@ const SearchInput = React.memo(() => {
               value={searchValue || ''}
               onChange={({target: {value}}) => setSearchValue(value)}
               onKeyDown={(event) => event.key === 'Enter' && handleSubmit()}
+              onFocus={() => setExpanded(true)}
             />
           </div>
 
