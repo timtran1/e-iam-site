@@ -81,7 +81,7 @@ const Content = () => {
         {isSearchResultPage ? (
           <main
             {...(hasRemovedServerElements ? {id: ELEMENT_ID.CONTENT} : {})}
-            className="w-full"
+            className="!w-full !p-0 !m-0 !border-none !min-h-0"
           >
             <SearchResults searchResults={searchResults} />
           </main>

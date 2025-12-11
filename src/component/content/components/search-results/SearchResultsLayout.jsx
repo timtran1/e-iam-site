@@ -36,7 +36,7 @@ const SearchResultsLayout = ({
     <div>
       {/* Search Header Section */}
       <div className="bg-gray-100">
-        <div className="container mx-auto px-16 py-20">
+        <div className="container py-20">
           <h1 className="text-4xl font-bold mb-8 text-gray-900">
             {t('search')}
           </h1>
@@ -47,7 +47,7 @@ const SearchResultsLayout = ({
       </div>
 
       {/* Results Info Bar */}
-      <div className={clsx('container mx-auto px-16')}>
+      <div className={clsx('container')}>
         <div
           className={clsx(
             'flex items-center justify-between',
@@ -73,7 +73,7 @@ const SearchResultsLayout = ({
                     ? 'bg-gray-200 text-gray-900'
                     : 'text-gray-600 hover:bg-gray-100'
                 }`}
-                aria-label="List view"
+                aria-label={t('List view')}
               >
                 <svg
                   className="w-5 h-5"
@@ -96,7 +96,7 @@ const SearchResultsLayout = ({
                     ? 'bg-gray-200 text-gray-900'
                     : 'text-gray-600 hover:bg-gray-100'
                 }`}
-                aria-label="Grid view"
+                aria-label={t('Grid view')}
               >
                 <svg
                   className="w-5 h-5"
@@ -118,7 +118,7 @@ const SearchResultsLayout = ({
       </div>
 
       {/* Results Grid */}
-      <div className={clsx('container mx-auto px-16 py-8')}>
+      <div className={clsx('container py-8')}>
         {isLoading ? (
           <div className="flex items-center py-6">
             <Spinner />

@@ -1,6 +1,6 @@
+import React from 'react';
 import ResultItem from './ResultItem.jsx';
 import SearchResultsLayout from './SearchResultsLayout.jsx';
-import React from 'react';
 import clsx from 'clsx';
 import {VIEW_MODE} from './constants.js';
 
