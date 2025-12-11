@@ -1,5 +1,6 @@
 import {forwardRef} from 'react';
 import clsx from 'clsx';
+import {useTranslation} from 'react-i18next';
 
 /**
  * Chevron icon button
@@ -25,6 +26,9 @@ const ChevronButton = forwardRef(
     },
     ref
   ) => {
+    // Translation
+    const {t} = useTranslation();
+
     return (
       <>
         <button
@@ -36,6 +40,7 @@ const ChevronButton = forwardRef(
           )}
           onClick={onClick}
           onKeyDown={onKeyDown}
+          aria-label={t('Chevron button')}
           {...restProps}
         >
           {leftSection}

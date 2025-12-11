@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+import {useTranslation} from 'react-i18next';
 
 /**
  * Toggle button
@@ -11,6 +12,9 @@ import clsx from 'clsx';
  * }>}
  */
 const ToggleButton = React.memo(({opened, className, onClick = () => {}}) => {
+  // Translation
+  const {t} = useTranslation();
+
   return (
     <>
       <button
@@ -19,6 +23,7 @@ const ToggleButton = React.memo(({opened, className, onClick = () => {}}) => {
           className
         )}
         onClick={onClick}
+        aria-label={t('Toggle button')}
       >
         <span
           className={clsx(
