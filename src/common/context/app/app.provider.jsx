@@ -36,7 +36,7 @@ const filterMenusRecursive = (menus) => {
  */
 const AppProvider = ({children}) => {
   // Get server-side data
-  const {serverSideData} = useServerSideVariables();
+  const {serverSideData, hasRemovedServerElements} = useServerSideVariables();
 
   // Header meta state
   const [headerMeta, setHeaderMeta] = React.useState({});
@@ -144,6 +144,7 @@ const AppProvider = ({children}) => {
           headerMeta,
           setHeaderMeta,
           removeServerElement,
+          hasRemovedServerElements,
         }}
       >
         {children}

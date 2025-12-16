@@ -9,6 +9,7 @@ import React from 'react';
  * @property {{backgroundImage?: string, headerHeight?: number}} headerMeta
  * @property {function} setHeaderMeta
  * @property {(id: string) => void} removeServerElement
+ * @property {boolean} hasRemovedServerElements
  */
 
 /**
@@ -30,6 +31,7 @@ const DefaultState = {
   headerMeta: {},
   setHeaderMeta: () => {},
   removeServerElement: () => {},
+  hasRemovedServerElements: false,
 };
 
 /**

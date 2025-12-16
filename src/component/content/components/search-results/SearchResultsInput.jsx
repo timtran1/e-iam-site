@@ -35,6 +35,7 @@ const SearchResultsInput = () => {
       <button
         className="absolute right-8 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-900"
         onClick={handleSubmit}
+        aria-label={t('Search button')}
       >
         <svg
           className="w-6 h-6"

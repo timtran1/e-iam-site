@@ -28,7 +28,8 @@ const SearchInput = React.memo(() => {
   useClickAway(searchContainerRef, () => setExpanded(false));
 
   // Get app context
-  const {serverSideData, removeServerElement} = React.useContext(AppContext);
+  const {serverSideData, removeServerElement, hasRemovedServerElements} =
+    React.useContext(AppContext);
 
   /**
    * Remove server search element after debounced time
@@ -89,7 +90,11 @@ const SearchInput = React.memo(() => {
   return (
     <>
       {!!serverSideData.search && (
-        <div className="relative" ref={searchContainerRef}>
+        <div
+          {...(hasRemovedServerElements ? {id: ELEMENT_ID.SEARCH} : {})}
+          className="relative"
+          ref={searchContainerRef}
+        >
           <div
             className="hidden absolute"
             dangerouslySetInnerHTML={{
@@ -100,10 +105,10 @@ const SearchInput = React.memo(() => {
           <div onClick={() => setExpanded(true)}>
             <label
               htmlFor={searchId}
-              tabIndex="-1"
+              onFocus={() => setExpanded(true)}
               className={clsx(
                 'hidden sm:block',
-                'py-0 pr-6 transition opacity-0',
+                'py-0 pr-6 transition opacity-0 cursor-pointer',
                 {
                   'opacity-100': !expanded,
                 }
@@ -128,6 +133,7 @@ const SearchInput = React.memo(() => {
               value={searchValue || ''}
               onChange={({target: {value}}) => setSearchValue(value)}
               onKeyDown={(event) => event.key === 'Enter' && handleSubmit()}
+              onFocus={() => setExpanded(true)}
             />
           </div>
 

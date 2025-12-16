@@ -113,7 +113,7 @@ function getOrCreateContainer(containerId = CONTAINER_CONFIG.DEFAULT_ID) {
 
     if (!container) {
       // Create new container
-      container = document.createElement('div');
+      container = document.createElement('main');
       container.id = containerId;
       container.className = CONTAINER_CONFIG.DEFAULT_CLASS;
 

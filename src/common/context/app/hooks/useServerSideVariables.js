@@ -7,7 +7,7 @@ import {cloneIframe} from '../../../helper/iframe.js';
 // Configuration constants for server-side data fetching
 const RENDER_CONFIG = {
   DEBOUNCE_DELAY: 330, // Interval between polling attempts (ms)
-  POLLING_TIMEOUT: 5000, // Maximum time to poll before giving up (ms)
+  POLLING_TIMEOUT: 3000, // Maximum time to poll before giving up (ms)
 };
 
 /**
@@ -47,6 +47,10 @@ const useServerSideVariables = () => {
       news: undefined,
     }
   );
+
+  // Has removed server element state
+  const [hasRemovedServerElements, setHasRemovedServerElements] =
+    React.useState(false);
 
   // Ref to store interval ID for cleanup
   const intervalRef = React.useRef(null);
@@ -96,6 +100,7 @@ const useServerSideVariables = () => {
         element.remove();
       }
     });
+    setHasRemovedServerElements(true);
   }, []);
 
   /**
@@ -144,6 +149,7 @@ const useServerSideVariables = () => {
 
   return {
     serverSideData,
+    hasRemovedServerElements,
   };
 };
 
