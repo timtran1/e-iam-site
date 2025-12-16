@@ -11,18 +11,26 @@ const RENDER_CONFIG = {
 };
 
 /**
- * Handle element content
+ * Handles form and iframe elements by cloning pre-fill iframes from U5CMS structure
+ * and removing original "u5form" elements to prevent conflicts between React and U5CMS.
  *
  * @param {Element} ele
  * @param {Element} clonedEle
  */
-const handleElementContent = (ele, clonedEle) => {
-  // Clone form pre-fill iframe
-  const preFillIframeSelector = '[name="ifrmonofill"]';
-  const ifrMonoFillIframe = ele.querySelector(preFillIframeSelector);
-  if (ifrMonoFillIframe) {
-    clonedEle.querySelector(preFillIframeSelector)?.remove();
-    clonedEle.appendChild(cloneIframe(ifrMonoFillIframe));
+const handleFormAndIframeElements = (ele, clonedEle) => {
+  // Selectors for pre-fill iframes, these are extracted from U5CMS structure
+  const preFillIframeSelectors = [
+    '[name="ifrmonofill"]',
+    'iframe[src*="formdataedit2.php"]',
+  ];
+
+  // Clone each form pre-fill iframe
+  for (const preFillIframeSelector of preFillIframeSelectors) {
+    const preFillIframe = document.querySelector(preFillIframeSelector);
+    if (preFillIframe) {
+      clonedEle.querySelector(preFillIframeSelector)?.remove();
+      clonedEle.appendChild(cloneIframe(preFillIframe));
+    }
   }
 
   // Remove original u5forms to avoid conflicts between React and U5CMS
@@ -73,7 +81,7 @@ const useServerSideVariables = () => {
         // Handle element before assigning to state
         switch (eleId) {
           case ELEMENT_ID.CONTENT:
-            handleElementContent(ele, clonedEle);
+            handleFormAndIframeElements(ele, clonedEle);
             break;
           default:
             break;
