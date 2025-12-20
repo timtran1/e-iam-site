@@ -77,7 +77,7 @@ const Content = () => {
    *
    * @type {{showLeftSidebar: boolean, showRightSidebar: boolean}}
    */
-  const sidebarRegionsVisibility = useMemo(() => {
+  const sidebarRegionVisibility = useMemo(() => {
     let showLeftSidebar;
     if (menus?.length) {
       showLeftSidebar = true;
@@ -102,7 +102,7 @@ const Content = () => {
     <article className="container mx-auto">
       <div className="flex flex-col md:flex-row gap-3 xl:gap-12 justify-between max-w-full py-3 lg:py-12">
         {/*region navigations sidebar*/}
-        {sidebarRegionsVisibility.showLeftSidebar && (
+        {sidebarRegionVisibility.showLeftSidebar && (
           <LeftSidebar menus={menus} />
         )}
         {/*endregion navigations sidebar*/}
@@ -125,7 +125,7 @@ const Content = () => {
         {/*endregion content*/}
 
         {/*region right sidebar*/}
-        {sidebarRegionsVisibility.showRightSidebar && (
+        {sidebarRegionVisibility.showRightSidebar && (
           <RightSidebar content={rightSidebarContent} />
         )}
         {/*endregion right sidebar*/}
