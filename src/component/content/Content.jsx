@@ -88,7 +88,7 @@ const Content = () => {
         ) : (
           <main
             {...(hasRemovedServerElements ? {id: ELEMENT_ID.CONTENT} : {})}
-            className="relative flex-1 min-w-0 !mx-auto max-w-full !px-0 !border-none"
+            className="relative flex-1 min-w-0 mx-auto max-w-full"
             dangerouslySetInnerHTML={{__html: processedContent}}
           />
         )}
