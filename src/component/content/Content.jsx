@@ -70,11 +70,41 @@ const Content = () => {
     }
   }, [processedContent]);
 
+  /**
+   * Determines visibility of left and right sidebars based on available content.
+   * Shows left sidebar if menus exist, otherwise shows it when right sidebar is hidden.
+   * Shows right sidebar if content exists, otherwise shows it when left sidebar is hidden.
+   *
+   * @type {{showLeftSidebar: boolean, showRightSidebar: boolean}}
+   */
+  const sidebarRegionsVisibility = useMemo(() => {
+    let showLeftSidebar;
+    if (menus?.length) {
+      showLeftSidebar = true;
+    } else {
+      showLeftSidebar = !rightSidebarContent;
+    }
+
+    let showRightSidebar;
+    if (rightSidebarContent) {
+      showRightSidebar = true;
+    } else {
+      showRightSidebar = !menus?.length;
+    }
+
+    return {
+      showLeftSidebar,
+      showRightSidebar,
+    };
+  }, [menus?.length, rightSidebarContent]);
+
   return (
     <article className="container mx-auto">
       <div className="flex flex-col md:flex-row gap-3 xl:gap-12 justify-between max-w-full py-3 lg:py-12">
         {/*region navigations sidebar*/}
-        <LeftSidebar menus={menus} />
+        {sidebarRegionsVisibility.showLeftSidebar && (
+          <LeftSidebar menus={menus} />
+        )}
         {/*endregion navigations sidebar*/}
 
         {/*region content*/}
@@ -95,7 +125,9 @@ const Content = () => {
         {/*endregion content*/}
 
         {/*region right sidebar*/}
-        <RightSidebar content={rightSidebarContent} />
+        {sidebarRegionsVisibility.showRightSidebar && (
+          <RightSidebar content={rightSidebarContent} />
+        )}
         {/*endregion right sidebar*/}
       </div>
     </article>
