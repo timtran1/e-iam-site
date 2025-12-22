@@ -125,7 +125,7 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
 
   return (
     <nav
-      className="navigation container mx-auto !w-full"
+      className="navigation container mx-auto !w-full !block"
       aria-label={t('Header navigation')}
       {...(hasRemovedServerElements ? {id: ELEMENT_ID.NAVIGATION} : {})}
     >
