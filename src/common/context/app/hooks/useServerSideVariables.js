@@ -211,7 +211,10 @@ const useServerSideVariables = () => {
     };
 
     // Handle content rendered
-    Object.values(ELEMENT_ID).forEach((elementId) => {
+    Object.values([
+      ELEMENT_ID.CONTENT,
+      // Add enough element IDs here to optimize performance
+    ]).forEach((elementId) => {
       handleContentRendered(elementId, () => {
         switch (elementId) {
           case ELEMENT_ID.CONTENT:
