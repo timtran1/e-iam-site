@@ -7,7 +7,7 @@ const useGlobalStyleConfig = () => {
 
   /**
    * Whether the current page is formdatadel page
-   * @example https://docs-r.eiam.swiss/formdatadel.php?n=f%21eiamglossary%21edit&id=15107&l=en
+   * @example https://exp-domain.swiss/formdatadel.php?n=f%21eiamglossary
    *
    * @type {boolean}
    */
