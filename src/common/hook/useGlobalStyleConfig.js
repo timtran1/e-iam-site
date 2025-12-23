@@ -1,22 +1,20 @@
 import {useEffect, useMemo} from 'react';
-import useCurrentPath from './useCurrentPath';
+import useQueryParam from './useQueryParam.js';
 
 const useGlobalStyleConfig = () => {
-  // Get current path
-  const currentPath = useCurrentPath();
+  // Get current page params. 'c' and 'n' are the query params for specific page (this is business structure)
+  const [cParam] = useQueryParam('c');
+  const [nParam] = useQueryParam('n');
 
   /**
    * Whether the current page is formdatadel page
-   * @example https://exp-domain.swiss/formdatadel.php?n=f%21eiamglossary
+   * @example https://exp-domain.swiss/formdatadel.php?n=f%21eiamglossary%21edit
    *
    * @type {boolean}
    */
   const isInFormDataActionPage = useMemo(() => {
-    return (
-      /formdatadel\.php/.test(currentPath) ||
-      /formdataedit\.php/.test(currentPath)
-    );
-  }, [currentPath]);
+    return [cParam, nParam].includes('f!eiamglossary!edit');
+  }, [cParam, nParam]);
 
   useEffect(() => {
     if (isInFormDataActionPage) {
