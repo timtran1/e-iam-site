@@ -1,36 +1,9 @@
-import {useState, useEffect, useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
+import useCurrentPath from './useCurrentPath';
 
 const useGlobalStyleConfig = () => {
-  // Track current path
-  const [currentPath, setCurrentPath] = useState(window.location.pathname);
-
-  // Listen for location changes
-  useEffect(() => {
-    const handleLocationChange = () => {
-      setCurrentPath(window.location.pathname);
-    };
-
-    window.addEventListener('popstate', handleLocationChange);
-
-    const originalPushState = window.history.pushState;
-    const originalReplaceState = window.history.replaceState;
-
-    window.history.pushState = function (...args) {
-      originalPushState.apply(this, args);
-      handleLocationChange();
-    };
-
-    window.history.replaceState = function (...args) {
-      originalReplaceState.apply(this, args);
-      handleLocationChange();
-    };
-
-    return () => {
-      window.removeEventListener('popstate', handleLocationChange);
-      window.history.pushState = originalPushState;
-      window.history.replaceState = originalReplaceState;
-    };
-  }, []);
+  // Get current path
+  const currentPath = useCurrentPath();
 
   /**
    * Whether the current page is formdatadel page
@@ -38,12 +11,15 @@ const useGlobalStyleConfig = () => {
    *
    * @type {boolean}
    */
-  const isFormDataDelPage = useMemo(() => {
-    return /formdatadel\.php/.test(currentPath);
+  const isInFormDataActionPage = useMemo(() => {
+    return (
+      /formdatadel\.php/.test(currentPath) ||
+      /formdataedit\.php/.test(currentPath)
+    );
   }, [currentPath]);
 
   useEffect(() => {
-    if (isFormDataDelPage) {
+    if (isInFormDataActionPage) {
       // Select all button elements that are direct children of body and apply styles to delete buttons
       const deleteButtons = Array.from(
         document.querySelectorAll('body > button[type="button"]')
@@ -63,10 +39,10 @@ const useGlobalStyleConfig = () => {
         );
       }
     }
-  }, [isFormDataDelPage]);
+  }, [isInFormDataActionPage]);
 
   return {
-    isFormDataDelPage,
+    isFormDataDelPage: isInFormDataActionPage,
   };
 };
 
