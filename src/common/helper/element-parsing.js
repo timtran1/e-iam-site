@@ -157,3 +157,37 @@ export const getFocusableElements = (container) => {
     'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
   return Array.from(container.querySelectorAll(focusableSelectors));
 };
+
+/**
+ * Execute scripts within an element
+ * @param {HTMLElement} element - The element containing scripts
+ */
+export const executeScriptsWithinElement = (element) => {
+  if (!element) return;
+
+  // Find all script elements in the cloned element
+  const scripts = element.querySelectorAll('script');
+
+  // Create and execute each script
+  scripts.forEach((script) => {
+    const newScript = document.createElement('script');
+
+    // Copy all attributes from the original script
+    Array.from(script.attributes).forEach((attr) => {
+      newScript.setAttribute(attr.name, attr.value);
+    });
+
+    // If script has inline code
+    if (script.textContent) {
+      try {
+        // Create a new script with the same content
+        newScript.textContent = script.textContent;
+      } catch (error) {
+        console.error('Error executing script:', error);
+      }
+    }
+
+    // Replace the original script with the new one to execute it
+    script.parentNode.replaceChild(newScript, script);
+  });
+};

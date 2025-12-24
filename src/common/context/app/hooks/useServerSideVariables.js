@@ -1,6 +1,9 @@
 import React from 'react';
 import {ELEMENT_ID} from '../../../constant/element-id.js';
-import {isEmptyElement} from '../../../helper/element-parsing.js';
+import {
+  executeScriptsWithinElement,
+  isEmptyElement,
+} from '../../../helper/element-parsing.js';
 import useEffectOnce from '../../../hook/useEffectOnce.js';
 import {cloneIframe} from '../../../helper/iframe.js';
 
@@ -18,32 +21,42 @@ const RENDER_CONFIG = {
  * @param {Element} clonedEle
  */
 const handleFormAndIframeElements = (ele, clonedEle) => {
-  // Selectors for pre-fill iframes, these are extracted from U5CMS structure
-  const preFillIframeSelectors = [
+  // Selectors for iframes, these are extracted from U5CMS structure
+  const iframeSelectors = [
     '[name="ifrmonofill"]',
     'iframe[src*="formdataedit2.php"]',
+    'iframe#chkv',
+    'iframe#weckifr',
+    '[name="fvifr"]',
   ];
 
   // Clone each form pre-fill iframe
-  for (const preFillIframeSelector of preFillIframeSelectors) {
-    const preFillIframe = document.querySelector(preFillIframeSelector);
+  for (const iframeSelector of iframeSelectors) {
+    const preFillIframe = document.querySelector(iframeSelector);
     if (preFillIframe) {
-      clonedEle.querySelector(preFillIframeSelector)?.remove();
+      clonedEle.querySelector(iframeSelector)?.remove();
       clonedEle.appendChild(cloneIframe(preFillIframe));
     }
   }
 
-  // Remove original u5forms to avoid conflicts between React and U5CMS
-  const u5formState = ele.querySelectorAll('[name="u5form"]');
-  if (u5formState.length) {
-    u5formState.forEach((item) => item.remove());
-  }
+  // Remove 'original u5forms' to avoid conflicts between React and U5CMS
+  const formSelector = '[name="u5form"]';
+  const u5formState = ele.querySelectorAll(formSelector);
+  u5formState.forEach((element) => element.remove());
 };
 
 /**
  * Custom hook - to get the server-side variables
  */
 const useServerSideVariables = () => {
+  // Have elements rendered state
+  const [hasElementRendered, setHasElementRendered] = React.useState(
+    Object.values(ELEMENT_ID).reduce((acc, id) => {
+      acc[id] = false;
+      return acc;
+    }, {})
+  );
+
   // Server data state
   const [serverSideData, setServerSideData] = React.useState(
     /** @type {ServerSideData} */ {
@@ -154,6 +167,73 @@ const useServerSideVariables = () => {
       }
     };
   }, []);
+
+  /**
+   * Handles post-render operations after the final render of cloned U5CMS content into React web.
+   *
+   * This effect monitors the DOM to detect when elements cloned from U5CMS have been fully
+   * rendered by React. It uses MutationObserver to watch for the appearance of specific
+   * element IDs in the DOM tree.
+   */
+  React.useEffect(() => {
+    // Initialize observers
+    const observers = [];
+
+    // Handle content rendered function
+    const handleContentRendered = (elementId, callback = () => {}) => {
+      if (!hasElementRendered[elementId] && serverSideData[elementId]) {
+        const observer = new MutationObserver(() => {
+          const el = document.getElementById(elementId);
+          if (el) {
+            // Do something here
+            setHasElementRendered((prevState) => ({
+              ...prevState,
+              [elementId]: true,
+            }));
+
+            // Call callback function
+            callback();
+
+            // Stop listening
+            observer.disconnect();
+          }
+        });
+
+        // Observe document body
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true,
+        });
+
+        // Return cleanup function
+        observers.push(observer);
+      }
+    };
+
+    // Handle content rendered
+    Object.values([
+      ELEMENT_ID.CONTENT,
+      // Add enough element IDs here to optimize performance
+    ]).forEach((elementId) => {
+      handleContentRendered(elementId, () => {
+        switch (elementId) {
+          case ELEMENT_ID.CONTENT:
+            if (document.u5form) {
+              // Execute scripts within u5form
+              executeScriptsWithinElement(document.u5form);
+            }
+            break;
+          default:
+            break;
+        }
+      });
+    });
+
+    // Cleanup observers on unmount
+    return () => {
+      observers.forEach((observer) => observer.disconnect());
+    };
+  }, [hasElementRendered, serverSideData, serverSideData.content]);
 
   return {
     serverSideData,
