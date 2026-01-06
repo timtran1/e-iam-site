@@ -1,4 +1,5 @@
-@import "../r/input.css";
+@import "../../../r/input.css";
+@import "./variable.css";
 
 @tailwind components;
 @tailwind utilities;
@@ -52,6 +53,15 @@
         .container {
             width: 100%;
             padding: 0 5rem;
+        }
+
+        h1 {
+            color: var(--Color-Font-Main, #1F2937);
+            font-family: var(--Basic-Font-Family-Font-Family, "Noto Sans");
+            font-size: var(--Color-Font-Maintitle-Font-Size, 3rem);
+            font-style: normal;
+            font-weight: 400;
+            line-height: var(--Color-Font-Maintitle-Line-Height, 3.375rem); /* 112.5% */
         }
     }
 }

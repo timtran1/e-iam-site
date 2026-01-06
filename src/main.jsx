@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import replaceU5CMSFunctions from './utils/replaceU5CMSFunctions.js';
+import './assets/css/global.css';
 
 let reactRoot = null;
 let isReactMounted = false;
