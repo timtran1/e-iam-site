@@ -1,0 +1,7 @@
+@screen 2xl {
+    :root {
+        /* Color and typography */
+        --Color-Font-Maintitle-Font-Size: 48px;
+        --Color-Font-Maintitle-Line-Height: 54px;
+    }
+}

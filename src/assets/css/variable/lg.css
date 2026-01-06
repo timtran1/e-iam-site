@@ -1,0 +1,7 @@
+@screen lg {
+    :root {
+        /* Color and typography */
+        --Color-Font-Maintitle-Font-Size: 32px;
+        --Color-Font-Maintitle-Line-Height: 43px;
+    }
+}

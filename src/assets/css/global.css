@@ -1,5 +1,5 @@
 @import "../../../r/input.css";
-@import "./variable.css";
+@import "./variable/index.css";
 
 @tailwind components;
 @tailwind utilities;
@@ -8,60 +8,46 @@
 /*@tailwind base;*/
 
 @layer components {
-    /*Breakpoint: 'sm' - mobile*/
-    @media (min-width: 480px) {
-        .container {
-            width: 100%;
+    .container {
+        width: 100%;
+
+        /*Breakpoint: 'sm' - mobile*/
+        @screen sm {
             padding: 0 1rem;
         }
-    }
 
-    /*Breakpoint: 'md' - tablet*/
-    @media (min-width: 768px) {
-        .container {
-            width: 100%;
+        /*Breakpoint: 'md' - tablet*/
+        @screen md {
             padding: 0 2rem;
         }
-    }
 
-    /*Breakpoint: 'lg'*/
-    @media (min-width: 1024px) {
-        .container {
-            width: 100%;
+        /*Breakpoint: 'lg'*/
+        @screen lg {
             padding: 0 3rem;
         }
-    }
 
-    /*Breakpoint: 'xl'*/
-    @media (min-width: 1280px) {
-        .container {
-            width: 100%;
+        /*Breakpoint: 'xl'*/
+        @screen xl {
             padding: 0 4rem;
         }
-    }
 
-    /*Breakpoint: '2xl'*/
-    @media (min-width: 1544px) {
-        .container {
-            width: 100%;
+        /*Breakpoint: '2xl'*/
+        @screen 2xl {
+            padding: 0 5rem;
+        }
+
+        /*Breakpoint: '3xl'*/
+        @screen 3xl {
             padding: 0 5rem;
         }
     }
 
-    /*Breakpoint: '3xl'*/
-    @media (min-width: 1920px) {
-        .container {
-            width: 100%;
-            padding: 0 5rem;
-        }
-
-        h1 {
-            color: var(--Color-Font-Main, #1F2937);
-            font-family: var(--Basic-Font-Family-Font-Family, "Noto Sans");
-            font-size: var(--Color-Font-Maintitle-Font-Size, 3rem);
-            font-style: normal;
-            font-weight: 400;
-            line-height: var(--Color-Font-Maintitle-Line-Height, 3.375rem); /* 112.5% */
-        }
+    h1 {
+        font-style: normal;
+        font-weight: 400;
+        color: var(--Color-Font-Main, #1F2937);
+        font-family: var(--Basic-Font-Family-Font-Family, "Noto Sans"), sans-serif;
+        font-size: var(--Color-Font-Maintitle-Font-Size, 3rem);
+        line-height: var(--Color-Font-Maintitle-Line-Height, 3.375rem); /* 112.5% */
     }
 }
