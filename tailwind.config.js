@@ -8,18 +8,15 @@ export default {
   content: ['./index.html', './src/**/*.{js,jsx}'], // or more paths if needed
   theme: {
     screens: {
-      xs: '480px',
-      sm: '640px',
-      md: '768px',
+      xs: '360px', // smallest screen
+      sm: '480px', // mobile screen
+      md: '768px', // tablet screen
       lg: '1024px',
       xl: '1280px',
       '2xl': '1544px',
       '3xl': '1920px',
     },
-    container: {
-      '2xl': '1544px',
-      '3xl': '1676px',
-    },
+    container: {},
     scale: {
       102: '1.02',
       ...defaultTheme.scale,
