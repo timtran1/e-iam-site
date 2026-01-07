@@ -15,6 +15,10 @@
         --Color-Font-Subtitle-Font-Size: 22px;
         --Color-Font-Subtitle-Line-Height: 33px;
 
+        /*H3*/
+        --Color-Font-Subsubtitle-Font-Size: 20px;
+        --Color-Font-Subsubtitle-Line-Height: 32px;
+
         /*Container padding*/
         --Basic-Body-Horizontal-padding: 2rem;
     }
