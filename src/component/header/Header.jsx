@@ -146,7 +146,7 @@ const Header = ({className, sticky = false}) => {
       {/*endregion header*/}
 
       {/*region navigation*/}
-      <div className="hidden lg:block">
+      <div className="hidden xl:block">
         <Navigation.Desktop />
       </div>
       {/*endregion navigation*/}

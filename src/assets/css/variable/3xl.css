@@ -36,5 +36,12 @@
         /*Header*/
         --Header-Vertical-Padding: 40px;
         --Header-Max-Width: 1000px;
+
+        /*Navigation*/
+        --Navigation-Primary-Navigation-Navbar-Spacing: 48px;
+        --Navigation-Primary-Navigation-Item-Vertical-Padding: 24px;
+        --Navigation-Primary-Navigation-Item-Horizontal-Padding: 0px;
+        --Color-Font-Navigation-Font-Size: 18px;
+        --Color-Font-Navigation-Line-Height: 28px;
     }
 }
