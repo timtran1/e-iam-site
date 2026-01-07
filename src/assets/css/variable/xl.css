@@ -7,8 +7,13 @@
 @screen xl {
     :root {
         /* Color and typography */
+        /*H1*/
         --Color-Font-Maintitle-Font-Size: 40px;
         --Color-Font-Maintitle-Line-Height: 48px;
+
+        /*H2*/
+        --Color-Font-Subtitle-Font-Size: 32px;
+        --Color-Font-Subtitle-Line-Height: 43px;
 
         /*Container padding*/
         --Basic-Body-Horizontal-padding: 4rem;

@@ -50,4 +50,13 @@
         font-size: var(--Color-Font-Maintitle-Font-Size, 3rem);
         line-height: var(--Color-Font-Maintitle-Line-Height, 3.375rem); /* 112.5% */
     }
+
+    h2 {
+        font-style: normal;
+        font-weight: 400;
+        color: var(--Color-Font-Main, #1F2937);
+        font-family: var(--Basic-Font-Family-Font-Family, "Noto Sans");
+        font-size: var(--Color-Font-Subtitle-Font-Size, 40px);
+        line-height: var(--Color-Font-Subtitle-Line-Height, 48px); /* 120% */
+    }
 }

@@ -8,8 +8,14 @@
     /* Color and typography */
     --Color-Font-Main: #1F2937;
     --Basic-Font-Family-Font-Family: "Noto Sans";
+
+    /*H1*/
     --Color-Font-Maintitle-Font-Size: 36px;
     --Color-Font-Maintitle-Line-Height: 26px;
+
+    /*H2*/
+    --Color-Font-Subtitle-Font-Size: 22px;
+    --Color-Font-Subtitle-Line-Height: 33px;
 
     /*Container padding*/
     --Basic-Body-Horizontal-padding: 1rem;
