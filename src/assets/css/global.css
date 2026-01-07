@@ -42,6 +42,15 @@
         }
     }
 
+    body {
+        font-style: normal;
+        font-weight: 400;
+        color: var(--Color-Font-Main, #1F2937);
+        font-family: var(--Basic-Font-Family-Font-Family, "Noto Sans"), sans-serif;
+        font-size: var(--Color-Font-Paragraph-Font-Size, 18px);
+        line-height: var(--Color-Font-Paragraph-Line-Height, 28px); /* 155.556% */
+    }
+
     h1 {
         font-style: normal;
         font-weight: 400;
@@ -67,5 +76,20 @@
         font-family: var(--Basic-Font-Family-Font-Family, "Noto Sans"), sans-serif;
         font-size: var(--Color-Font-Subsubtitle-Font-Size, 32px);
         line-height: var(--Color-Font-Subsubtitle-Line-Height, 43px); /* 134.375% */
+    }
+
+    a {
+        font-style: normal;
+        font-weight: 400;
+        text-decoration-line: underline;
+        text-decoration-style: solid;
+        text-decoration-skip-ink: auto;
+        text-decoration-thickness: auto;
+        text-underline-offset: auto;
+        text-underline-position: from-font;
+        color: var(--Color-Font-Link, #D8232A);
+        font-family: var(--Basic-Font-Family-Font-Family, "Noto Sans"), sans-serif;
+        font-size: var(--Color-Font-Paragraph-Font-Size, 18px);
+        line-height: var(--Color-Font-Paragraph-Line-Height, 28px); /* 155.556% */
     }
 }

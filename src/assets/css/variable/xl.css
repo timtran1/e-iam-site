@@ -6,7 +6,14 @@
  */
 @screen xl {
     :root {
+        /*Container padding*/
+        --Basic-Body-Horizontal-padding: 4rem;
+
         /* Color and typography */
+        /*Body*/
+        --Color-Font-Paragraph-Font-Size: 18px;
+        --Color-Font-Paragraph-Line-Height: 28px;
+
         /*H1*/
         --Color-Font-Maintitle-Font-Size: 40px;
         --Color-Font-Maintitle-Line-Height: 48px;
@@ -19,7 +26,7 @@
         --Color-Font-Subsubtitle-Font-Size: 26px;
         --Color-Font-Subsubtitle-Line-Height: 36px;
 
-        /*Container padding*/
-        --Basic-Body-Horizontal-padding: 4rem;
+        /*Link*/
+        --Color-Font-Link: #D8232A;
     }
 }

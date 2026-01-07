@@ -6,7 +6,14 @@
  */
 @screen lg {
     :root {
+        /*Container padding*/
+        --Basic-Body-Horizontal-padding: 3rem;
+
         /* Color and typography */
+        /*Body*/
+        --Color-Font-Paragraph-Font-Size: 16px;
+        --Color-Font-Paragraph-Line-Height: 24px;
+
         /*H1*/
         --Color-Font-Maintitle-Font-Size: 32px;
         --Color-Font-Maintitle-Line-Height: 43px;
@@ -19,7 +26,7 @@
         --Color-Font-Subsubtitle-Font-Size: 22px;
         --Color-Font-Subsubtitle-Line-Height: 33px;
 
-        /*Container padding*/
-        --Basic-Body-Horizontal-padding: 3rem;
+        /*Link*/
+        --Color-Font-Link: #D8232A;
     }
 }
