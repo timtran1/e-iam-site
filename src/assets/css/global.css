@@ -104,6 +104,15 @@
         background: #FFF;
     }
 
+    /*Override style of U5CM csslayout for #navigation*/
+    #navigation {
+        display: initial;
+        vertical-align: initial;
+        width: initial;
+        background: initial;
+        hyphens: initial;
+    }
+
     nav > ul.navigation {
         display: flex;
         padding: 0 var(--Basic-Body-Horizontal-padding, 80px);
@@ -135,5 +144,9 @@
 
     nav > ul.navigation > li > a:visited {
         color: var(--Color-Font-Main, #1F2937);
+    }
+
+    nav > ul.navigation > li > a:hover {
+        color: var(--Color-Highlight-Red, #D8232A);
     }
 }

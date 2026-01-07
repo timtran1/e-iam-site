@@ -176,70 +176,6 @@ fieldset legend {
     padding-left: 0.75rem;
 }
 
-/* Navigation Dropdown Styles */
-.navigation ul li ul {
-    display: none;
-    position: absolute;
-    top: 100%;
-    /* This positions it at the bottom of the parent element */
-    /*margin-top: 1px;*/
-    background-color: white;
-    min-width: 200px;
-    box-shadow: 0 3px 4px 1px #828e9a;
-    z-index: 999;
-    border-top: 1px solid #dfe4e9;
-    padding-top: 60px;
-    /* Space for close button */
-    padding-bottom: 12px;
-    padding-left: 12px;
-    padding-right: 12px;
-    transform-origin: top;
-    transform: scaleY(0);
-    opacity: 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.navigation ul li ul.open {
-    display: block;
-    transform: scaleY(1);
-    opacity: 1;
-    overflow-y: scroll;
-    max-height: 60vh;
-}
-
-.navigation ul li ul.sub-open {
-    padding: 0;
-    display: block;
-    transform: scaleY(1);
-    opacity: 1;
-    @apply shadow-none;
-}
-
-.navigation ul li ul li {
-    display: block;
-    padding: 0;
-    width: 100%;
-}
-
-.navigation ul li ul li a {
-    display: block;
-    padding: 0.5rem 1rem;
-    font-size: 16px;
-    color: #4a5568;
-    text-align: left;
-    height: auto;
-    border-bottom: 1px solid #dfe4e9;
-}
-
-.navigation ul li ul li a:hover {
-    background-color: #f7fafc;
-}
-
-.navigation ul li ul li.active a {
-    border-left: 5px solid #e53940;
-    padding-left: 0.75rem;
-}
-
 .nav-dropdown-close {
     position: absolute;
     top: 5px;
@@ -255,16 +191,6 @@ fieldset legend {
 
 .nav-dropdown-close:hover {
     background-color: #f0f4f7;
-}
-
-/* Override display flex for nested lists */
-.navigation>ul {
-    display: flex;
-}
-
-.navigation ul li ul {
-    display: none;
-    flex-direction: column;
 }
 
 /* Navigation caret styles */

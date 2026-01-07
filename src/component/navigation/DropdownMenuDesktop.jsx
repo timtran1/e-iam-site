@@ -139,7 +139,7 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
             )}
           >
             <a
-              className="transition-all no-underline hover:no-underline hover:text-primary-main"
+              className="transition-all no-underline hover:no-underline"
               href={menuItem.href}
             >
               {menuItem.label}
