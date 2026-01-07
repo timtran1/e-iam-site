@@ -76,9 +76,16 @@ const Header = ({className, sticky = false}) => {
       >
         <div className="flex items-center gap-2.75 flex-1">
           {/*region logo*/}
-          <a href="/" aria-label={t('eIAM - Go to homepage')}>
+          <a
+            href="/"
+            aria-label={t('eIAM - Go to homepage')}
+            className="w-8.5 h-9.5 xl:w-64 xl:h-20 overflow-hidden"
+          >
             <div
-              className="w-64 h-20 bg-cover bg-no-repeat"
+              className={clsx(
+                'bg-cover bg-no-repeat overflow-hidden',
+                'w-62.5 h-20 -translate-y-2.5 -translate-x-2.5 xl:w-full xl:h-full xl:translate-x-0 xl:translate-y-0'
+              )}
               role="img"
               aria-label={t('Swiss Confederation logo')}
               style={{
@@ -92,12 +99,15 @@ const Header = ({className, sticky = false}) => {
           {/*region header and language actions (Figma: frame 4)*/}
           <div className="flex flex-1 justify-between items-center">
             {/*Frame 5*/}
-            <div className="flex items-start gap-6 flex-1">
+            <div className="flex gap-6 flex-1 items-center xl:items-start">
               <div className="w-0.25 h-13.75 bg-[var(--Color-Divider-Header)]" />
-              <p className="my-0 font-semibold flex-1 max-w-[var(--Header-Max-Width,1000px)]">
+              <p className="hidden xl:block my-0 font-semibold flex-1 max-w-[var(--Header-Max-Width,1000px)]">
                 eIAM - Federal Office of Information Technology, Systems and
                 Telecommunication & Federal Chancellery FCh, Digital
                 Transformation and ICT Governance DTI
+              </p>
+              <p className="xl:hidden my-0 font-semibold flex-1 max-w-[var(--Header-Max-Width,1000px)]">
+                eIAM
               </p>
             </div>
 
