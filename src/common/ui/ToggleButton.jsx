@@ -19,7 +19,7 @@ const ToggleButton = React.memo(({opened, className, onClick = () => {}}) => {
     <>
       <button
         className={clsx(
-          'flex flex-col justify-center items-center w-10 h-10 space-y-1.5 focus:outline-none relative z-[999]',
+          'flex flex-col justify-center items-center w-6 h-6 space-y-1.5 focus:outline-none relative z-[999]',
           className
         )}
         onClick={onClick}

@@ -107,7 +107,7 @@ const SearchInput = React.memo(() => {
               htmlFor={searchId}
               onFocus={() => setExpanded(true)}
               className={clsx(
-                'hidden sm:block',
+                'hidden xl:block',
                 'py-0 pr-6 transition opacity-0 cursor-pointer',
                 {
                   'opacity-100': !expanded,
@@ -126,7 +126,7 @@ const SearchInput = React.memo(() => {
                 'border-blue-cornflower hover:border-blue-cornflower active:border-blue-cornflower focus:border-blue-cornflower focus:outline-blue-cornflower',
                 '!pl-3 !pr-8 !py-1.5 transition-all',
                 expanded
-                  ? 'opacity-100 !w-44 sm:!w-56'
+                  ? 'opacity-100 !w-44 xl:!w-56'
                   : 'opacity-0 !w-20 hover:border-transparent active:border-transparent cursor-pointer'
               )}
               placeholder={t('search')}

@@ -112,9 +112,14 @@ const Header = ({className, sticky = false}) => {
             </div>
 
             {/*Frame 8*/}
-            <div className="flex h-18 min-w-50 flex-col items-end gap-6">
+            <div
+              className={clsx(
+                'flex justify-end items-center gap-6',
+                'xl:h-18 xl:min-w-50 xl:flex-col xl:items-end'
+              )}
+            >
               {/*region lang selector*/}
-              <div className="hidden lg:block text-end">
+              <div className="hidden xl:block text-end">
                 <LangSelector />
               </div>
               {/*endregion lang selector*/}
@@ -124,21 +129,21 @@ const Header = ({className, sticky = false}) => {
                 <SearchInput />
               </div>
               {/*endregion search input*/}
+
+              {/*region mobile nav*/}
+              <div className="xl:hidden">
+                <Navigation.Mobile
+                  opened={isMobileMenuOpened}
+                  setOpened={setIsMobileMenuOpened}
+                />
+              </div>
+              {/*endregion mobile nav*/}
             </div>
           </div>
           {/*endregion header and language actions*/}
         </div>
       </header>
       {/*endregion header*/}
-
-      {/*region mobile nav*/}
-      <div className="lg:hidden">
-        <Navigation.Mobile
-          opened={isMobileMenuOpened}
-          setOpened={setIsMobileMenuOpened}
-        />
-      </div>
-      {/*endregion mobile nav*/}
 
       {/*region navigation*/}
       <div className="hidden lg:block">
