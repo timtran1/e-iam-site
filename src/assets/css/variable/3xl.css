@@ -1,7 +1,16 @@
+/**
+ * CSS variables
+ * Applying as default screen and breakpoint: '3xl' - 1920px
+ *
+ * @see: tailwind.config.js:10 - Breakpoint screen config
+ */
 @screen 3xl {
     :root {
         /* Color and typography */
         --Color-Font-Maintitle-Font-Size: 48px;
         --Color-Font-Maintitle-Line-Height: 54px;
+
+        /*Container padding*/
+        --Basic-Body-Horizontal-padding: 5rem;
     }
 }

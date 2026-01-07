@@ -1,7 +1,16 @@
+/**
+ * CSS variables
+ * Applying as default screen and breakpoint: 'sm' - mobile
+ *
+ * @see: tailwind.config.js:10 - Breakpoint screen config
+ */
 :root {
     /* Color and typography */
     --Color-Font-Main: #1F2937;
     --Basic-Font-Family-Font-Family: "Noto Sans";
     --Color-Font-Maintitle-Font-Size: 36px;
     --Color-Font-Maintitle-Line-Height: 26px;
+
+    /*Container padding*/
+    --Basic-Body-Horizontal-padding: 1rem;
 }

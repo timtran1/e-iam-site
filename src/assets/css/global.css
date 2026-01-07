@@ -13,32 +13,32 @@
 
         /*Breakpoint: 'sm' - mobile*/
         @screen sm {
-            padding: 0 1rem;
+            padding: 0 var(--Basic-Body-Horizontal-padding, 1rem);
         }
 
         /*Breakpoint: 'md' - tablet*/
         @screen md {
-            padding: 0 2rem;
+            padding: 0 var(--Basic-Body-Horizontal-padding, 2rem);
         }
 
         /*Breakpoint: 'lg'*/
         @screen lg {
-            padding: 0 3rem;
+            padding: 0 var(--Basic-Body-Horizontal-padding, 3rem);
         }
 
         /*Breakpoint: 'xl'*/
         @screen xl {
-            padding: 0 4rem;
+            padding: 0 var(--Basic-Body-Horizontal-padding, 4rem);
         }
 
         /*Breakpoint: '2xl'*/
         @screen 2xl {
-            padding: 0 5rem;
+            padding: 0 var(--Basic-Body-Horizontal-padding, 5rem);
         }
 
         /*Breakpoint: '3xl'*/
         @screen 3xl {
-            padding: 0 5rem;
+            padding: 0 var(--Basic-Body-Horizontal-padding, 5rem);
         }
     }
 

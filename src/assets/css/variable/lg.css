@@ -1,7 +1,16 @@
+/**
+ * CSS variables
+ * Applying as default screen and breakpoint: 'lg' - 1024px
+ *
+ * @see: tailwind.config.js:10 - Breakpoint screen config
+ */
 @screen lg {
     :root {
         /* Color and typography */
         --Color-Font-Maintitle-Font-Size: 32px;
         --Color-Font-Maintitle-Line-Height: 43px;
+
+        /*Container padding*/
+        --Basic-Body-Horizontal-padding: 3rem;
     }
 }
