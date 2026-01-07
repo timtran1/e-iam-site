@@ -63,6 +63,7 @@ const Header = ({className, sticky = false}) => {
 
   return (
     <>
+      {/*region header*/}
       <header
         ref={headerRef}
         aria-label={t('Site header')}
@@ -71,81 +72,69 @@ const Header = ({className, sticky = false}) => {
             backgroundImage: headerMeta.backgroundImage,
           }),
         }}
-        className={clsx(
-          'border-b border-b-gray-geyser bg-white',
-          {'z-50 sticky top-0': sticky},
-          className
-        )}
+        className={clsx({'z-50 sticky top-0': sticky}, className)}
       >
-        {/*region header content*/}
-        <div className="lg:border-b border-b-gray-geyser">
-          <div className="container mx-auto flex items-center">
-            <div className="flex items-center gap-2.5 lg:gap-4 padding-4 w-full h-[50px] lg:h-[85px] transition-all duration-500">
-              <a
-                href="/"
-                aria-label={t('eIAM - Go to homepage')}
-                className="w-[43px] h-[58px] lg:w-[250px] lg:h-[80.6px] overflow-hidden block shrink-0"
-              >
-                <div
-                  className="w-[250px] h-[80.6px] bg-cover bg-no-repeat transition-all duration-500    "
-                  role="img"
-                  aria-label={t('Swiss Confederation logo')}
-                  style={{
-                    backgroundImage:
-                      "url('r/eidgenossenschaft/eidgenossenschaft_de.svg')",
-                  }}
-                ></div>
-              </a>
-              <div
-                className="border-l border-gray-geyser h-10 w-[1px]"
-                aria-hidden="true"
-              ></div>
-              <div className="text-6.5 font-bold text-gray-ebony-clay">
-                eIAM
-              </div>
-              <div className="font-bold text-base leading-6 text-gray-ebony-clay text-ellipsis hidden lg:block">
-                Federal Office of Information Technology, Systems and
+        <div className="flex items-center gap-2.75 flex-1">
+          {/*region logo*/}
+          <a href="/" aria-label={t('eIAM - Go to homepage')}>
+            <div
+              className="w-64 h-20 bg-cover bg-no-repeat"
+              role="img"
+              aria-label={t('Swiss Confederation logo')}
+              style={{
+                backgroundImage:
+                  "url('r/eidgenossenschaft/eidgenossenschaft_de.svg')",
+              }}
+            ></div>
+          </a>
+          {/*endregion logo*/}
+
+          {/*region header and language actions (Figma: frame 4)*/}
+          <div className="flex flex-1 justify-between items-center">
+            {/*Frame 5*/}
+            <div className="flex items-start gap-6 flex-1">
+              <div className="w-0.25 h-13.75 bg-[var(--Color-Divider-Header)]" />
+              <p className="my-0 font-semibold flex-1 max-w-[var(--Header-Max-Width,1000px)]">
+                eIAM - Federal Office of Information Technology, Systems and
                 Telecommunication & Federal Chancellery FCh, Digital
                 Transformation and ICT Governance DTI
-              </div>
+              </p>
             </div>
-            <div
-              className={clsx(
-                'ps-2 md:ps-4 py-1',
-                'flex items-center gap-3 flex-row-reverse lg:block'
-              )}
-            >
+
+            {/*Frame 8*/}
+            <div className="flex h-18 min-w-50 flex-col items-end gap-6">
               {/*region lang selector*/}
               <div className="hidden lg:block text-end">
                 <LangSelector />
               </div>
               {/*endregion lang selector*/}
 
-              {/*region mobile nav*/}
-              <div className="lg:hidden">
-                <Navigation.Mobile
-                  opened={isMobileMenuOpened}
-                  setOpened={setIsMobileMenuOpened}
-                />
-              </div>
-              {/*endregion mobile nav*/}
-
               {/*region search input*/}
-              <div className="pt-0  lg:pt-3">
+              <div className="pt-0">
                 <SearchInput />
               </div>
               {/*endregion search input*/}
             </div>
           </div>
+          {/*endregion header and language actions*/}
         </div>
-        {/*endregion header content*/}
-
-        {/*region navigation*/}
-        <div className="hidden lg:block">
-          <Navigation.Desktop />
-        </div>
-        {/*endregion navigation*/}
       </header>
+      {/*endregion header*/}
+
+      {/*region mobile nav*/}
+      <div className="lg:hidden">
+        <Navigation.Mobile
+          opened={isMobileMenuOpened}
+          setOpened={setIsMobileMenuOpened}
+        />
+      </div>
+      {/*endregion mobile nav*/}
+
+      {/*region navigation*/}
+      <div className="hidden lg:block">
+        <Navigation.Desktop />
+      </div>
+      {/*endregion navigation*/}
     </>
   );
 };

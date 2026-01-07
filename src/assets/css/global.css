@@ -92,4 +92,15 @@
         font-size: var(--Color-Font-Paragraph-Font-Size, 18px);
         line-height: var(--Color-Font-Paragraph-Line-Height, 28px); /* 155.556% */
     }
+
+    header {
+        display: flex;
+        padding: var(--Header-Vertical-Padding, 40px) var(--Basic-Body-Horizontal-padding, 80px);
+        align-items: flex-start;
+        gap: 10px;
+        align-self: stretch;
+
+        border-bottom: 1px solid var(--Color-Divider-Main, #E5E7EB);
+        background: #FFF;
+    }
 }

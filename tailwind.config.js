@@ -221,10 +221,6 @@ export default {
       black: '#000000',
       transparent: 'transparent',
     },
-    // fontWeight: {
-    //   normal: 400,
-    //   bold: 400,
-    // },
     fontSize: {
       xs: '0.75rem',
       sm: '0.875rem',
@@ -284,6 +280,20 @@ export default {
       },
       borderWidth: {
         3: '3px',
+      },
+      gap: {
+        2.75: '11px',
+      },
+      height: {
+        13.75: '55px',
+        18: '72px',
+      },
+      width: {
+        0.25: '1px',
+        50: '200px',
+      },
+      minWidth: {
+        50: '200px',
       },
     },
   },

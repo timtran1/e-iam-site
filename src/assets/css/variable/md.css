@@ -6,6 +6,10 @@
  */
 @screen md {
     :root {
+        /*Divider*/
+        --Color-Divider-Header: #D9D9D9;
+        --Color-Divider-Main: #E5E7EB;
+
         /*Container padding*/
         --Basic-Body-Horizontal-padding: 2rem;
 
@@ -28,5 +32,9 @@
 
         /*Link*/
         --Color-Font-Link: #D8232A;
+
+        /*Header*/
+        --Header-Vertical-Padding: 12px;
+        --Header-Max-Width: 1000px;
     }
 }
