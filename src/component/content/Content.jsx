@@ -2,6 +2,7 @@ import {useContext, useEffect, useMemo} from 'react';
 import AppContext from '../../common/context/app/app.context.js';
 import {
   mockContent,
+  MockingSearchResultsContent,
   mockMenu,
   mockRightContent,
 } from '../../common/constant/dummy.js';
@@ -33,7 +34,9 @@ const Content = () => {
     useContext(AppContext);
 
   // Search contents
-  const {isSearchResultPage, searchResults} = useSearchResult(content);
+  const {isSearchResultPage, searchResults} = useSearchResult(
+    isDevMode ? MockingSearchResultsContent : content
+  );
 
   // Init hash scroll
   useHashScroll({
@@ -99,20 +102,23 @@ const Content = () => {
       {/*Figma: Main Body*/}
       <article
         className={clsx(
-          'container body-content__container',
+          'container',
+          isSearchResultPage
+            ? 'body-content__container--search-result'
+            : 'body-content__container--standard',
 
           // Based on design, remove right padding for right sidebar with lg breakpoint
-          showRightSidebarPages && 'lg:!pr-0'
+          !isSearchResultPage && showRightSidebarPages && 'lg:!pr-0'
         )}
       >
         {/*Figma: Frame 7 - included LeftSidebar and MainContent*/}
         <div
-          className={clsx('body-content__container--left', {
+          className={clsx('body-content__container__left', {
             'justify-center': !menus.length,
           })}
         >
           {/*region navigations sidebar*/}
-          {!!menus.length && (
+          {!isSearchResultPage && !!menus.length && (
             <div className="body-content__left-content">
               <LeftSidebar menus={menus} />
             </div>
@@ -132,7 +138,7 @@ const Content = () => {
             )}
           >
             {isSearchResultPage ? (
-              <SearchResults searchResults={searchResults} />
+              <SearchResults className="w-full" searchResults={searchResults} />
             ) : (
               <div dangerouslySetInnerHTML={{__html: processedContent}} />
             )}
@@ -141,8 +147,8 @@ const Content = () => {
         </div>
 
         {/*region right sidebar*/}
-        {showRightSidebarPages && (
-          <div className="body-content__container--right">
+        {!isSearchResultPage && showRightSidebarPages && (
+          <div className="body-content__container__right">
             <RightSidebar content={rightSidebarContent} />
           </div>
         )}

@@ -10,6 +10,7 @@ import Spinner from '../../../../common/ui/Spinner.jsx';
  * Layout component for search results page
  *
  * @param {Object} props
+ * @param {string} props.className
  * @param {number} props.resultsCount - Number of search results
  * @param {React.ReactNode} props.children - Results content to render
  * @param {string} props.searchTerm - Current search term for empty state
@@ -17,6 +18,7 @@ import Spinner from '../../../../common/ui/Spinner.jsx';
  * @param props.setViewMode
  */
 const SearchResultsLayout = ({
+  className = '',
   resultsCount,
   children,
   searchTerm = '',
@@ -33,7 +35,7 @@ const SearchResultsLayout = ({
   });
 
   return (
-    <div>
+    <div className={clsx(className)}>
       {/* Search Header Section */}
       <div className="bg-gray-100">
         <div className="container py-20">

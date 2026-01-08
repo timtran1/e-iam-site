@@ -1,5 +1,15 @@
-/*Content*/
-article.body-content__container {
+/*Container for search result page*/
+article.body-content__container--search-result {
+    display: flex;
+    padding: var(--Basic-Body-Vertical-Padding, 54px) var(--Basic-Body-Horizontal-padding, 80px);
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+}
+
+/*Container for normal page*/
+article.body-content__container--standard {
     /*For base screen: mobile, table or small screen */
     display: flex;
     padding: var(--Basic-Body-Vertical-Padding, 16px) var(--Basic-Body-Horizontal-padding, 16px);
@@ -22,8 +32,9 @@ article.body-content__container {
     }
 }
 
+
 /*Right container region - included right sidebar*/
-article.body-content__container > .body-content__container--right {
+.body-content__container__right {
     /*For base screen: mobile, table or small screen */
     background: var(--Right-Sidebar-Background, #F0F4F7);
     display: flex;
@@ -41,7 +52,7 @@ article.body-content__container > .body-content__container--right {
 }
 
 /*Left container region - included left sidebar and main content*/
-article.body-content__container > .body-content__container--left {
+.body-content__container__left {
     display: flex;
     align-items: flex-start;
     gap: var(--Basic-Body-Horizontal-padding, 80px);
@@ -49,7 +60,7 @@ article.body-content__container > .body-content__container--left {
 }
 
 /*Left sidebar region - included left sidebar*/
-article.body-content__container > .body-content__container--left > .body-content__left-content {
+.body-content__container__left > .body-content__left-content {
     /*For base screen: mobile, table or small screen */
     display: none;
 
@@ -60,11 +71,21 @@ article.body-content__container > .body-content__container--left > .body-content
 }
 
 /*Main content region*/
-article.body-content__container > .body-content__container--left > .body-content__main-content {
+/*Override style of U5CM csslayout for #content*/
+#content {
+    vertical-align: initial;
+    margin-left: initial;
+    padding-right: initial;
+    border-right: initial;
+    min-height: initial;
+}
+.body-content__container__left > #content,
+.body-content__container__left > .body-content__main-content {
     display: flex;
     width: 100%;
     max-width: 1000px;
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
+    line-height: var(--Color-Font-Paragraph-Line-Height, 28px);
 }
