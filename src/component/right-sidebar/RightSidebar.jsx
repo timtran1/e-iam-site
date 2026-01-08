@@ -87,12 +87,26 @@ export default function RightSidebar({content, sticky = false}) {
     }
   }, [processedContent]);
 
+  /**
+   * Reset right container background color when sidebar is hidden
+   *
+   * Selector class name, please see: src/component/content/Content.jsx:100
+   */
+  React.useEffect(() => {
+    const rightContainerWrapper = document.querySelector(
+      '.body-content__container--right'
+    );
+    if (
+      rightContainerWrapper &&
+      (!showRightSidebarPages || !processedContent)
+    ) {
+      rightContainerWrapper.style.backgroundColor = 'initial';
+    }
+  }, [processedContent, showRightSidebarPages]);
+
   return (
     <aside
-      className={clsx(
-        'w-full overflow-hidden h-full break-words text-wrap',
-        showRightSidebarPages && !!processedContent && ''
-      )}
+      className={clsx('w-full overflow-hidden h-full break-words text-wrap')}
     >
       {showRightSidebarPages && (
         <>
