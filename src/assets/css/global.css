@@ -149,23 +149,18 @@
     /*Right container region - included right sidebar*/
     article.body-content__container > .body-content__container--right {
         /*For base screen: mobile, table or small screen */
+        background: var(--Right-Sidebar-Background, #F0F4F7);
         display: flex;
+        padding: var(--Right-Sidebar-Vertical-Padding, 16px) var(--Right-Sidebar-Horizontal-Padding, 16px);
         flex-direction: column;
         align-items: flex-start;
-        gap: 8px;
+        gap: 16px;
         align-self: stretch;
 
         /*For screen bigger than 'lg' */
         @screen lg {
-            display: flex;
             width: 300px;
-            padding: var(--Right-Sidebar-Vertical-Padding, 16px) var(--Right-Sidebar-Horizontal-Padding, 16px);
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 16px;
-            align-self: stretch;
         }
-
     }
 
     /*Left container region - included left sidebar and main content*/

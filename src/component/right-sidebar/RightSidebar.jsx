@@ -91,7 +91,7 @@ export default function RightSidebar({content, sticky = false}) {
     <aside
       className={clsx(
         'w-full overflow-hidden h-full break-words text-wrap',
-        showRightSidebarPages && !!processedContent && 'bg-gray-aqua-haze'
+        showRightSidebarPages && !!processedContent && ''
       )}
     >
       {showRightSidebarPages && (

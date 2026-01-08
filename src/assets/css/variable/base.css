@@ -51,4 +51,7 @@
     /*Main layout content*/
     --Right-Sidebar-Vertical-Padding: 16px;
     --Right-Sidebar-Horizontal-Padding: 16px;
+
+    /*Right sidebar content*/
+    --Right-Sidebar-Background: #F0F4F7;
 }
