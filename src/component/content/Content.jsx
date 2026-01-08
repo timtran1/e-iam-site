@@ -71,34 +71,38 @@ const Content = () => {
   }, [processedContent]);
 
   return (
-    <article className="container main-content">
-      <div className="flex flex-col md:flex-row gap-3 xl:gap-12 justify-between max-w-full">
-        {/*region navigations sidebar*/}
-        <LeftSidebar menus={menus} />
-        {/*endregion navigations sidebar*/}
+    <>
+      {/*Figma: Main Body*/}
+      <article className="container body-content__container">
+        {/*Figma: Frame 7 - included LeftSidebar and MainContent*/}
+        <div className="body-content__container--left">
+          {/*region navigations sidebar*/}
+          <div className="body-content__left-content">
+            <LeftSidebar menus={menus} />
+          </div>
+          {/*endregion navigations sidebar*/}
 
-        {/*region content*/}
-        {isSearchResultPage ? (
+          {/*region main content*/}
           <main
             {...(hasRemovedServerElements ? {id: ELEMENT_ID.CONTENT} : {})}
-            className="!w-full !p-0 !m-0 !border-none !min-h-0"
+            className="body-content__main-content"
           >
-            <SearchResults searchResults={searchResults} />
+            {isSearchResultPage ? (
+              <SearchResults searchResults={searchResults} />
+            ) : (
+              <div dangerouslySetInnerHTML={{__html: processedContent}} />
+            )}
           </main>
-        ) : (
-          <main
-            {...(hasRemovedServerElements ? {id: ELEMENT_ID.CONTENT} : {})}
-            className="relative flex-1 min-w-0 !mx-auto max-w-full !px-0 !border-none"
-            dangerouslySetInnerHTML={{__html: processedContent}}
-          />
-        )}
-        {/*endregion content*/}
+          {/*endregion main content*/}
+        </div>
 
         {/*region right sidebar*/}
-        <RightSidebar content={rightSidebarContent} />
+        <div className="body-content__container--right">
+          <RightSidebar content={rightSidebarContent} />
+        </div>
         {/*endregion right sidebar*/}
-      </div>
-    </article>
+      </article>
+    </>
   );
 };
 

@@ -10,36 +10,7 @@
 @layer components {
     .container {
         width: 100%;
-
-        /*Breakpoint: 'sm' - mobile*/
-        @screen sm {
-            padding: 0 var(--Basic-Body-Horizontal-padding, 1rem);
-        }
-
-        /*Breakpoint: 'md' - tablet*/
-        @screen md {
-            padding: 0 var(--Basic-Body-Horizontal-padding, 2rem);
-        }
-
-        /*Breakpoint: 'lg'*/
-        @screen lg {
-            padding: 0 var(--Basic-Body-Horizontal-padding, 3rem);
-        }
-
-        /*Breakpoint: 'xl'*/
-        @screen xl {
-            padding: 0 var(--Basic-Body-Horizontal-padding, 4rem);
-        }
-
-        /*Breakpoint: '2xl'*/
-        @screen 2xl {
-            padding: 0 var(--Basic-Body-Horizontal-padding, 5rem);
-        }
-
-        /*Breakpoint: '3xl'*/
-        @screen 3xl {
-            padding: 0 var(--Basic-Body-Horizontal-padding, 5rem);
-        }
+        padding: 0 var(--Basic-Body-Horizontal-padding, 1rem);
     }
 
     body {
@@ -151,13 +122,45 @@
     }
 
 
-    /*Main content*/
-    article.main-content {
+    /*Content*/
+    article.body-content__container {
         display: flex;
-        padding: var(--Basic-Body-Vertical-Padding, 16px) var(--Basic-Body-Horizontal-padding, 16px);
+        padding: var(--Basic-Body-Vertical-Padding, 54px) 0 0 var(--Basic-Body-Horizontal-padding, 80px);
+        justify-content: space-between;
         align-items: flex-start;
-        gap: 80px;
         flex: 1 0 0;
         align-self: stretch;
+    }
+
+    /*Right container region - included right sidebar*/
+    article.body-content__container > .body-content__container--right {
+        display: flex;
+        width: 300px;
+        padding: var(--Right-Sidebar-Vertical-Padding, 16px) var(--Right-Sidebar-Horizontal-Padding, 16px);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        align-self: stretch;
+    }
+
+    /*Left container region - included left sidebar and main content*/
+    article.body-content__container > .body-content__container--left {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--Basic-Body-Horizontal-padding, 80px);
+    }
+
+    /*Left sidebar region - included left sidebar*/
+    article.body-content__container > .body-content__container--left > .body-content__left-content {
+    }
+
+    /*Main content region*/
+    article.body-content__container > .body-content__container--left > .body-content__main-content {
+        display: flex;
+        width: 100%;
+        max-width: 1000px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
     }
 }
