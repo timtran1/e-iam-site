@@ -100,7 +100,8 @@ const Content = () => {
       <article
         className={clsx(
           'container body-content__container',
-          showRightSidebarPages && '!pr-0'
+          // Based on design, remove right padding for right sidebar with lg breakpoint
+          showRightSidebarPages && 'lg:!pr-0'
         )}
       >
         {/*Figma: Frame 7 - included LeftSidebar and MainContent*/}
