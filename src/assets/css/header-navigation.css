@@ -1,0 +1,57 @@
+/*Header region*/
+header {
+    display: flex;
+    padding: var(--Header-Vertical-Padding, 40px) var(--Basic-Body-Horizontal-padding, 80px);
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+
+    border-bottom: 1px solid var(--Color-Divider-Main, #E5E7EB);
+    background: #FFF;
+}
+
+/*Override style of U5CM csslayout for #navigation*/
+#navigation {
+    display: initial;
+    vertical-align: initial;
+    width: initial;
+    background: initial;
+    hyphens: initial;
+}
+
+nav > ul.navigation {
+    display: flex;
+    padding: 0 var(--Basic-Body-Horizontal-padding, 80px);
+    align-items: flex-start;
+    gap: var(--Navigation-Primary-Navigation-Navbar-Spacing, 48px);
+    align-self: stretch;
+    border-bottom: 1px solid var(--Color-Divider-Main, #E5E7EB);
+    background: #FFF;
+}
+
+nav > ul.navigation > li {
+    display: flex;
+    padding: var(--Navigation-Primary-Navigation-Item-Vertical-Padding, 24px) var(--Navigation-Primary-Navigation-Item-Horizontal-Padding, 0);
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 4px solid var(--Color-Highlight-Red, #D8232A);
+    background: #FFF;
+}
+
+nav > ul.navigation > li > a {
+    color: var(--Color-Font-Main, #1F2937);
+    font-family: var(--Basic-Font-Family-Font-Family, "Noto Sans"), sans-serif;
+    font-size: var(--Color-Font-Navigation-Font-Size, 16px);
+    font-style: normal;
+    font-weight: 500;
+    line-height: var(--Color-Font-Navigation-Line-Height, 24px); /* 150% */
+}
+
+nav > ul.navigation > li > a:visited {
+    color: var(--Color-Font-Main, #1F2937);
+}
+
+nav > ul.navigation > li > a:hover {
+    color: var(--Color-Highlight-Red, #D8232A);
+}
