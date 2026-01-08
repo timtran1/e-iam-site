@@ -10,6 +10,7 @@
 @layer components {
     .container {
         width: 100%;
+        max-width: 100%;
         padding: 0 var(--Basic-Body-Horizontal-padding, 1rem);
     }
 
@@ -135,14 +136,10 @@
 
         /*For screen bigger than 'lg' */
         @screen lg {
-            display: flex;
             flex-direction: row;
             padding: var(--Basic-Body-Vertical-Padding, 54px) 0 0 var(--Basic-Body-Horizontal-padding, 80px);
             justify-content: space-between;
-            align-items: flex-start;
-            gap: initial;
-            flex: 1 0 0;
-            align-self: stretch;
+            gap: var(--Basic-Body-Horizontal-padding, 64px);
         }
     }
 
