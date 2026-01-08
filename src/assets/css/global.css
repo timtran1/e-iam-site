@@ -4,6 +4,7 @@
 @import "./typography.css";
 @import "./main-content.css";
 @import "./left-sidebar.css";
+@import "./search-result.css";
 
 @tailwind components;
 @tailwind utilities;

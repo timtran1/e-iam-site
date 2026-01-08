@@ -35,21 +35,17 @@ const SearchResultsLayout = ({
   });
 
   return (
-    <div className={clsx(className)}>
+    <div className={clsx('search-result', className)}>
       {/* Search Header Section */}
-      <div className="bg-gray-100">
-        <div className="container py-20">
-          <h1 className="text-4xl font-bold mb-8 text-gray-900">
-            {t('search')}
-          </h1>
-
-          {/* Search Input */}
-          <SearchResultsInput />
+      <div className="search-result__input-container">
+        <div className="search-result__input-content">
+          <div className="search-result__input-label">{t('search')}</div>
+          <SearchResultsInput className="search-result__input-control" />
         </div>
       </div>
 
       {/* Results Info Bar */}
-      <div className={clsx('container')}>
+      <div className={clsx('')}>
         <div
           className={clsx(
             'flex items-center justify-between',
@@ -120,7 +116,7 @@ const SearchResultsLayout = ({
       </div>
 
       {/* Results Grid */}
-      <div className={clsx('container py-8')}>
+      <div className={clsx('')}>
         {isLoading ? (
           <div className="flex items-center py-6">
             <Spinner />

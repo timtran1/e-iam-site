@@ -62,4 +62,12 @@
     --Navigation-Secondary-Navigation-Item-All-Levels-Vertical-Padding: 16px;
     --Color-Font-Navigation-small-Font-Size: 16px;
     --Color-Font-Navigation-small-Line-Height: 24px;
+
+    /*Search result*/
+    --Search-Result-Input-Container-Bacground-Color: #F0F4F7;
+    --Basic-Search-Input-Upper-Padding: 56px;
+    --Basic-Search-Input-Horizontal-and-Bottom-Padding: 16px;
+    --Basic-Search-Input-Spacing: 12px;
+    --Color-Textfield-Border: #6B7280;
+    --Color-Textfield-Focus: #8655F6;
 }
