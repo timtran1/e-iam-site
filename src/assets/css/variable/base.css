@@ -72,4 +72,7 @@
     --Color-Textfield-Border: #6B7280;
     --Color-Textfield-Focus: #8655F6;
     --Basic-Search-Result-Horizontal-Padding: 16px;
+
+    /*Search result item*/
+    --Basic-Search-Result-Vertical-Padding: 16px;
 }

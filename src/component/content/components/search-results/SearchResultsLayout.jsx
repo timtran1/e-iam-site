@@ -109,7 +109,7 @@ const SearchResultsLayout = ({
       </div>
 
       {/* Results Grid */}
-      <div className={clsx('')}>
+      <div>
         {isLoading ? (
           <div className="flex items-center py-6">
             <Spinner />
