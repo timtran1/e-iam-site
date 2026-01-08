@@ -301,6 +301,12 @@ export default {
       },
       minWidth: {
         50: '200px',
+        225: '900px',
+        250: '1000px',
+      },
+      maxWidth: {
+        225: '900px',
+        250: '1000px',
       },
     },
   },

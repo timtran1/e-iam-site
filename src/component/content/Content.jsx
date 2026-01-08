@@ -100,6 +100,7 @@ const Content = () => {
       <article
         className={clsx(
           'container body-content__container',
+
           // Based on design, remove right padding for right sidebar with lg breakpoint
           showRightSidebarPages && 'lg:!pr-0'
         )}
@@ -121,7 +122,14 @@ const Content = () => {
           {/*region main content*/}
           <main
             {...(hasRemovedServerElements ? {id: ELEMENT_ID.CONTENT} : {})}
-            className="body-content__main-content"
+            className={clsx(
+              'body-content__main-content',
+
+              // Based on design, if there are no right and left content within 'xl' breakpoint, set max width to 225px
+              !showRightSidebarPages &&
+                !menu.length &&
+                'xl:!max-w-225 2xl:!max-w-250'
+            )}
           >
             {isSearchResultPage ? (
               <SearchResults searchResults={searchResults} />
