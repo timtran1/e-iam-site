@@ -99,7 +99,7 @@ const Content = () => {
 
   return (
     <>
-      {/*Figma: Main Body*/}
+      {/*Main Body*/}
       <article
         className={clsx(
           'container',
@@ -111,7 +111,7 @@ const Content = () => {
           !isSearchResultPage && showRightSidebarPages && 'lg:!pr-0'
         )}
       >
-        {/*Figma: Frame 7 - included LeftSidebar and MainContent*/}
+        {/*Element included LeftSidebar and MainContent*/}
         <div
           className={clsx('body-content__container__left', {
             'justify-center': !menus.length,

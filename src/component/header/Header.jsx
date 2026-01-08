@@ -96,7 +96,7 @@ const Header = ({className, sticky = false}) => {
           </a>
           {/*endregion logo*/}
 
-          {/*region header and language actions (Figma: frame 4)*/}
+          {/*region header and language actions*/}
           <div className="flex flex-1 justify-between items-center">
             {/*Frame 5*/}
             <div className="flex gap-6 flex-1 items-center xl:items-start">
