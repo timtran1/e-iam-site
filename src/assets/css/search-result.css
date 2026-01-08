@@ -50,3 +50,21 @@
     background: #FFF;
     box-shadow: 0 0 0 3px var(--Color-Textfield-Focus, #8655F6);
 }
+
+.search-result > .search-result__control-bar {
+    display: flex;
+    padding: 12px var(--Basic-Search-Result-Horizontal-Padding, 32px);
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--Color-Divider-Main, #E5E7EB);
+}
+
+.search-result__control-bar .search-result__counter-label {
+    color: var(--Color-Font-Secondary, #6B7280);
+    font-size: var(--Color-Font-Paragraph-Font-Size, 18px);
+    font-style: normal;
+    font-weight: 400;
+    line-height: var(--Color-Font-Paragraph-Line-Height, 28px);
+}
