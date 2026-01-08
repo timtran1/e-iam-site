@@ -24,6 +24,6 @@
         color: var(--Color-Font-Main, #1F2937);
         font-family: var(--Basic-Font-Family-Font-Family, "Noto Sans"), sans-serif;
         font-size: var(--Color-Font-Paragraph-Font-Size, 18px);
-        line-height: var(--Color-Font-Paragraph-Line-Height, 28px); /* 155.556% */
+        line-height: var(--Color-Font-Paragraph-Line-Height, 28px);
     }
 }

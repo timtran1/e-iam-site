@@ -45,7 +45,7 @@ nav > ul.navigation > li > a {
     font-size: var(--Color-Font-Navigation-Font-Size, 16px);
     font-style: normal;
     font-weight: 500;
-    line-height: var(--Color-Font-Navigation-Line-Height, 24px); /* 150% */
+    line-height: var(--Color-Font-Navigation-Line-Height, 24px);
 }
 
 nav > ul.navigation > li > a:visited {
