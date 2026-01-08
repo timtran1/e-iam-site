@@ -124,23 +124,48 @@
 
     /*Content*/
     article.body-content__container {
+        /*For base screen: mobile, table or small screen */
         display: flex;
-        padding: var(--Basic-Body-Vertical-Padding, 54px) 0 0 var(--Basic-Body-Horizontal-padding, 80px);
-        justify-content: space-between;
+        padding: var(--Basic-Body-Vertical-Padding, 16px) var(--Basic-Body-Horizontal-padding, 16px);
+        flex-direction: column;
         align-items: flex-start;
+        gap: var(--Basic-Body-Horizontal-padding, 16px);
         flex: 1 0 0;
         align-self: stretch;
+
+        /*For screen bigger than 'lg' */
+        @screen lg {
+            display: flex;
+            flex-direction: row;
+            padding: var(--Basic-Body-Vertical-Padding, 54px) 0 0 var(--Basic-Body-Horizontal-padding, 80px);
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: initial;
+            flex: 1 0 0;
+            align-self: stretch;
+        }
     }
 
     /*Right container region - included right sidebar*/
     article.body-content__container > .body-content__container--right {
+        /*For base screen: mobile, table or small screen */
         display: flex;
-        width: 300px;
-        padding: var(--Right-Sidebar-Vertical-Padding, 16px) var(--Right-Sidebar-Horizontal-Padding, 16px);
         flex-direction: column;
         align-items: flex-start;
-        gap: 16px;
+        gap: 8px;
         align-self: stretch;
+
+        /*For screen bigger than 'lg' */
+        @screen lg {
+            display: flex;
+            width: 300px;
+            padding: var(--Right-Sidebar-Vertical-Padding, 16px) var(--Right-Sidebar-Horizontal-Padding, 16px);
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+            align-self: stretch;
+        }
+
     }
 
     /*Left container region - included left sidebar and main content*/
@@ -152,6 +177,13 @@
 
     /*Left sidebar region - included left sidebar*/
     article.body-content__container > .body-content__container--left > .body-content__left-content {
+        /*For base screen: mobile, table or small screen */
+        display: none;
+
+        /*For screen bigger than 'xl' */
+        @screen xl {
+            display: block;
+        }
     }
 
     /*Main content region*/

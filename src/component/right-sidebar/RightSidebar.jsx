@@ -90,10 +90,8 @@ export default function RightSidebar({content, sticky = false}) {
   return (
     <aside
       className={clsx(
-        'right-sidebar overflow-hidden h-full break-words text-wrap w-0 lg:w-[200px] xl:w-[240px] 2xl:w-[260px]',
-        showRightSidebarPages &&
-          !!processedContent &&
-          'sm:max-w-[150px] lg:max-w-[200px] xl:max-w-[220px] 2xl:max-w-[260px] shrink-[5] bg-gray-aqua-haze'
+        'w-full overflow-hidden h-full break-words text-wrap',
+        showRightSidebarPages && !!processedContent && 'bg-gray-aqua-haze'
       )}
     >
       {showRightSidebarPages && (
