@@ -1,20 +1,21 @@
 import {useContext, useEffect, useMemo} from 'react';
 import AppContext from '../../common/context/app/app.context.js';
 import {
-  mockMenu,
   mockContent,
+  mockMenu,
   mockRightContent,
 } from '../../common/constant/dummy.js';
 import LeftSidebar from '../left-sidebar/LeftSidebar.jsx';
 import RightSidebar from '../right-sidebar/RightSidebar.jsx';
 import ArrowRightHTML from '../icons/ArrowRightHTML.js';
-// import useIsMobile from '../../common/hook/useIsMobile.js';
 import {handleResponsiveWidth} from '../../common/utils/responsiveWidthHandler.js';
 import {stripNavigationMarkers} from '../../common/helper/element-parsing.js';
 import useHashScroll from '../../common/hook/useHashScroll.js';
 import useSearchResult from './hooks/useSearchResult.js';
 import SearchResults from './components/search-results/index.jsx';
 import {ELEMENT_ID} from '../../common/constant/element-id.js';
+import clsx from 'clsx';
+import useQueryParam from '../../common/hook/useQueryParam.js';
 
 const isDevMode = import.meta.env.DEV;
 /**
@@ -24,6 +25,9 @@ const isDevMode = import.meta.env.DEV;
  * @constructor
  */
 const Content = () => {
+  // Get current page
+  const [currentPage] = useQueryParam('c'); // the 'c' letter is the page code of u5CMS
+
   // Get context data
   const {menu, right, news, content, headerMeta, hasRemovedServerElements} =
     useContext(AppContext);
@@ -39,7 +43,11 @@ const Content = () => {
   const menus = isDevMode ? mockMenu : menu;
   const rightSidebarContent = isDevMode
     ? mockRightContent
-    : [right, news].filter(Boolean).join('<br>');
+    : [right, news]
+        .filter(Boolean)
+        .join('<br>')
+        ?.replace(/⇨/g, ArrowRightHTML())
+        .replace(/→/g, ArrowRightHTML());
   const pageContent = isDevMode ? mockContent : content;
 
   const processedContent = useMemo(() => {
@@ -55,7 +63,23 @@ const Content = () => {
     }
   }, [pageContent]);
 
-  // const {isMobile} = useIsMobile();
+  /**
+   * Show sidebar for specific pages if window.showRightSidebarPages is defined
+   * @see htmltemplate.external-react.html:19
+   * @type {boolean}
+   */
+  const showRightSidebarPages = useMemo(() => {
+    if (!rightSidebarContent) {
+      return false;
+    }
+
+    if (Array.isArray(window?.showRightSidebarPages)) {
+      return !!window?.showRightSidebarPages.includes(currentPage || '');
+    } else {
+      // Show sidebar for all pages (because the showRightSidebarPages config is not defined)
+      return true;
+    }
+  }, [currentPage, rightSidebarContent]);
 
   useEffect(() => {
     if (processedContent) {
@@ -73,13 +97,24 @@ const Content = () => {
   return (
     <>
       {/*Figma: Main Body*/}
-      <article className="container body-content__container">
+      <article
+        className={clsx(
+          'container body-content__container',
+          showRightSidebarPages && '!pr-0'
+        )}
+      >
         {/*Figma: Frame 7 - included LeftSidebar and MainContent*/}
-        <div className="body-content__container--left">
+        <div
+          className={clsx('body-content__container--left', {
+            'justify-center': !menus.length,
+          })}
+        >
           {/*region navigations sidebar*/}
-          <div className="body-content__left-content">
-            <LeftSidebar menus={menus} />
-          </div>
+          {!!menus.length && (
+            <div className="body-content__left-content">
+              <LeftSidebar menus={menus} />
+            </div>
+          )}
           {/*endregion navigations sidebar*/}
 
           {/*region main content*/}
@@ -97,9 +132,11 @@ const Content = () => {
         </div>
 
         {/*region right sidebar*/}
-        <div className="body-content__container--right">
-          <RightSidebar content={rightSidebarContent} />
-        </div>
+        {showRightSidebarPages && (
+          <div className="body-content__container--right">
+            <RightSidebar content={rightSidebarContent} />
+          </div>
+        )}
         {/*endregion right sidebar*/}
       </article>
     </>

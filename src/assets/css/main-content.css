@@ -12,9 +12,13 @@ article.body-content__container {
     /*For screen bigger than 'lg' */
     @screen lg {
         flex-direction: row;
-        padding: var(--Basic-Body-Vertical-Padding, 54px) 0 0 var(--Basic-Body-Horizontal-padding, 80px);
         justify-content: space-between;
         gap: var(--Basic-Body-Horizontal-padding, 64px);
+    }
+
+    /*For screen bigger than '2xl' */
+    @screen 2xl {
+        padding: var(--Basic-Body-Vertical-Padding, 54px) 0 0 var(--Basic-Body-Horizontal-padding, 80px);
     }
 }
 
@@ -40,6 +44,7 @@ article.body-content__container > .body-content__container--left {
     display: flex;
     align-items: flex-start;
     gap: var(--Basic-Body-Horizontal-padding, 80px);
+    flex-grow: 1;
 }
 
 /*Left sidebar region - included left sidebar*/
