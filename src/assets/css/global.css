@@ -3,6 +3,7 @@
 @import "./header-navigation.css";
 @import "./typography.css";
 @import "./main-content.css";
+@import "./left-sidebar.css";
 
 @tailwind components;
 @tailwind utilities;

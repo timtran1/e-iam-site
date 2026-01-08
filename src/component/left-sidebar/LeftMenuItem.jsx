@@ -5,7 +5,7 @@ import Collapse from '../../common/ui/Collapse.jsx';
 import {hasChildActive} from '../../common/helper/menu.js';
 import useQueryParam from '../../common/hook/useQueryParam.js';
 
-export default function LeftMenuItem({menu, index}) {
+export default function LeftMenuItem({menu, index, className = ''}) {
   const hasChildren = menu.children && menu.children.length > 0;
   const isActive = linkIsCurrentPage(menu.href);
 
@@ -31,61 +31,66 @@ export default function LeftMenuItem({menu, index}) {
   };
 
   return (
-    <div className="border-b border-gray-aqua-haze">
-      <div
-        className={clsx(
-          'flex items-center justify-between transition-all border-l-4',
-          isActive
-            ? 'bg-gray-aqua-haze text-primary-main border-primary-main'
-            : hasActiveChild
-              ? 'bg-gray-athens-gray text-primary-main border-primary-main'
-              : 'hover:bg-gray-aqua-haze hover:text-primary-main border-white hover:border-primary-main hover:translate-x-1'
-        )}
-      >
-        <a
-          href={menu.href}
+    <>
+      <div className={clsx('left-sidebar__item--primary', className)}>
+        <div
           className={clsx(
-            'flex-1 px-2 !py-4 block text-secondary-text hover:!no-underline',
-            isActive || hasActiveChild ? '!text-primary-main' : ''
+            'left-sidebar__item-content',
+            isActive ? '' : hasActiveChild ? '' : ''
           )}
         >
-          <div className="text-[20px] font-medium">{menu.label}</div>
-        </a>
+          <a
+            href={menu.href}
+            className={clsx(
+              'flex-1 block text-secondary-text hover:!no-underline',
+              isActive || hasActiveChild ? '!text-primary-main' : ''
+            )}
+          >
+            {menu.label}
+          </a>
 
-        {hasChildren && (
-          <button onClick={toggleOpen} className="px-3 py-4 focus:outline-none">
-            <svg
-              ref={caretRef}
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+          {hasChildren && (
+            <button
+              onClick={toggleOpen}
+              className={clsx('focus:outline-none transition-transform', {
+                'rotate-90': isOpen,
+              })}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button>
-        )}
+              <svg
+                ref={caretRef}
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          )}
+        </div>
       </div>
 
       {hasChildren && (
-        <Collapse in={isOpen}>
-          <div className="pl-4">
-            {menu.children.map((childMenu, childIndex) => (
-              <LeftMenuItem
-                key={childIndex}
-                menu={childMenu}
-                index={`${index}-${childIndex}`}
-              />
-            ))}
-          </div>
+        <Collapse
+          in={isOpen}
+          className="min-w-full left-sidebar__item--secondary"
+        >
+          {menu.children.map((childMenu, childIndex) => (
+            <LeftMenuItem
+              key={childIndex}
+              menu={childMenu}
+              index={`${index}-${childIndex}`}
+              className="left-sidebar__item--secondary"
+            />
+          ))}
         </Collapse>
       )}
-    </div>
+    </>
   );
 }

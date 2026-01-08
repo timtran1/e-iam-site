@@ -86,12 +86,7 @@ export default function LeftSidebar({menus}) {
   }, [processedMenus]);
 
   return (
-    <nav
-      className={clsx(
-        'left-sidebar text-sm lg:text-base hidden lg:block',
-        widthClass
-      )}
-    >
+    <nav className={clsx('left-sidebar', widthClass)}>
       {processedMenus.map((menu, index) => (
         <LeftMenuItem key={index} menu={menu} index={index} />
       ))}
