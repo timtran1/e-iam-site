@@ -149,4 +149,15 @@
     nav > ul.navigation > li > a:hover {
         color: var(--Color-Highlight-Red, #D8232A);
     }
+
+
+    /*Main content*/
+    article.main-content {
+        display: flex;
+        padding: var(--Basic-Body-Vertical-Padding, 16px) var(--Basic-Body-Horizontal-padding, 16px);
+        align-items: flex-start;
+        gap: 80px;
+        flex: 1 0 0;
+        align-self: stretch;
+    }
 }

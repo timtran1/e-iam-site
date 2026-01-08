@@ -71,8 +71,8 @@ const Content = () => {
   }, [processedContent]);
 
   return (
-    <article className="container mx-auto">
-      <div className="flex flex-col md:flex-row gap-3 xl:gap-12 justify-between max-w-full py-3 lg:py-12">
+    <article className="container main-content">
+      <div className="flex flex-col md:flex-row gap-3 xl:gap-12 justify-between max-w-full">
         {/*region navigations sidebar*/}
         <LeftSidebar menus={menus} />
         {/*endregion navigations sidebar*/}

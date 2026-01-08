@@ -11,7 +11,8 @@
         --Color-Divider-Main: #E5E7EB;
 
         /*Container padding*/
-        --Basic-Body-Horizontal-padding: 4rem;
+        --Basic-Body-Horizontal-padding: 64px;
+        --Basic-Body-Vertical-Padding: 54px;
 
         /* Color and typography */
         /*Body*/

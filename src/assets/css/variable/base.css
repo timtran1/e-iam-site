@@ -10,7 +10,8 @@
     --Color-Divider-Main: #E5E7EB;
 
     /*Container padding*/
-    --Basic-Body-Horizontal-padding: 1rem;
+    --Basic-Body-Horizontal-padding: 16px;
+    --Basic-Body-Vertical-Padding: 16px;
 
     /* Color and typography */
     --Color-Font-Main: #1F2937;
