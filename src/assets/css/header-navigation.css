@@ -1,5 +1,8 @@
 /*Header region*/
 header {
+    /*Apply container element*/
+    @apply container mx-auto;
+
     display: flex;
     padding: var(--Header-Vertical-Padding, 40px) var(--Basic-Body-Horizontal-padding, 80px);
     align-items: flex-start;

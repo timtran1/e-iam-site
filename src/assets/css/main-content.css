@@ -1,5 +1,8 @@
 /*Container for search result page*/
 article.body-content__container--search-result {
+    /*Apply container element*/
+    @apply container mx-auto;
+
     display: flex;
     padding: var(--Basic-Body-Vertical-Padding, 54px) var(--Basic-Body-Horizontal-padding, 80px);
     flex-direction: column;
@@ -10,6 +13,9 @@ article.body-content__container--search-result {
 
 /*Container for normal page*/
 article.body-content__container--standard {
+    /*Apply container element*/
+    @apply container mx-auto;
+
     /*For base screen: mobile, table or small screen */
     display: flex;
     padding: var(--Basic-Body-Vertical-Padding, 16px) var(--Basic-Body-Horizontal-padding, 16px);

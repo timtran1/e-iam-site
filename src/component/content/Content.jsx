@@ -102,7 +102,6 @@ const Content = () => {
       {/*Main Body*/}
       <article
         className={clsx(
-          'container',
           isSearchResultPage
             ? 'body-content__container--search-result'
             : 'body-content__container--standard',
