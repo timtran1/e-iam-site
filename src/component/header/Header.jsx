@@ -74,7 +74,7 @@ const Header = ({className, sticky = false}) => {
         }}
         className={clsx({'z-50 sticky top-0': sticky}, className)}
       >
-        <div className="flex items-center gap-2.75 flex-1">
+        <div className="flex items-center gap-4 xl:gap-2.75 flex-1">
           {/*region logo*/}
           <a
             href="/"
@@ -99,7 +99,7 @@ const Header = ({className, sticky = false}) => {
           {/*region header and language actions*/}
           <div className="flex flex-1 justify-between items-center">
             {/*Frame 5*/}
-            <div className="flex gap-6 flex-1 items-center xl:items-start">
+            <div className="flex gap-4 xl:gap-6 flex-1 items-center xl:items-start">
               <div className="w-0.25 h-13.75 bg-[var(--Color-Divider-Header)]" />
               <p className="hidden xl:block my-0 font-semibold flex-1 max-w-[var(--Header-Max-Width,1000px)]">
                 eIAM - Federal Office of Information Technology, Systems and
