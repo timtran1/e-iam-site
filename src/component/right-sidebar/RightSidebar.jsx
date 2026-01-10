@@ -71,7 +71,7 @@ export default function RightSidebar({content, sticky = false}) {
         <div ref={asideRef} dangerouslySetInnerHTML={{__html: content}} />
 
         <div
-          className={clsx({sticky: sticky})}
+          className={clsx({'p-4': !!sideAnchors?.length, sticky})}
           style={{
             ...(sticky && {top: headerMeta.headerHeight + 16 || 10 * 16}),
           }}

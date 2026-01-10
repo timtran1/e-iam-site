@@ -44,11 +44,13 @@ article.body-content__container--standard {
     /*For base screen: mobile, table or small screen */
     background: var(--Right-Sidebar-Background, #F0F4F7);
     display: flex;
-    padding: var(--Right-Sidebar-Vertical-Padding, 16px) var(--Right-Sidebar-Horizontal-Padding, 16px);
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
     align-self: stretch;
+
+    /* U5CMS right sidebar already has padding (1rem). Comment out this line if you want to add padding based on design */
+    /*padding: var(--Right-Sidebar-Vertical-Padding, 16px) var(--Right-Sidebar-Horizontal-Padding, 16px);*/
 
     /*For screen bigger than 'lg' */
     @screen lg {
