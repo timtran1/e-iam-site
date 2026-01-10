@@ -21,6 +21,11 @@ nav.left-sidebar {
     width: calc(var(--Navigation-Item-Width, 220px) - var(--Navigation-Secondary-Navigation-Item-Padding, 220px));
 }
 
+.left-sidebar__item--primary[data-activated="true"],
+.left-sidebar__item--secondary[data-activated="true"] {
+    border-left: 3px solid var(--Color-Highlight-Red, #D8232A);
+}
+
 .left-sidebar__item-content {
     transition-property: transform;
     transition-duration: 0.25s;

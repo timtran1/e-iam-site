@@ -7,19 +7,19 @@ import useQueryParam from '../../common/hook/useQueryParam.js';
 
 export default function LeftMenuItem({menu, index, className = ''}) {
   const hasChildren = menu.children && menu.children.length > 0;
-  const isActive = linkIsCurrentPage(menu.href);
+  const isActivated = linkIsCurrentPage(menu.href);
 
   // Get current page
   const [currentPage] = useQueryParam('c');
 
   // Firstly, check if the current page is not the first page and the index is not 0
   // Secondly, check if the menu has children and if any of its children are active
-  const hasActiveChild =
+  const hasActivatedChild =
     (!currentPage && !index) ||
     (hasChildren && menu.children.some((child) => hasChildActive(child)));
 
   // Local state for this specific menu item only - initialize to open if it has an active child
-  const [isOpen, setIsOpen] = useState(hasActiveChild);
+  const [isOpen, setIsOpen] = useState(hasActivatedChild);
 
   // Refs for animation elements
   const caretRef = useRef(null);
@@ -32,22 +32,12 @@ export default function LeftMenuItem({menu, index, className = ''}) {
 
   return (
     <>
-      <div className={clsx('left-sidebar__item--primary', className)}>
-        <div
-          className={clsx(
-            'left-sidebar__item-content',
-            isActive ? '' : hasActiveChild ? '' : ''
-          )}
-        >
-          <a
-            href={menu.href}
-            className={clsx(
-              'flex-1 block text-secondary-text hover:!no-underline',
-              isActive || hasActiveChild ? '!text-primary-main' : ''
-            )}
-          >
-            {menu.label}
-          </a>
+      <div
+        className={clsx('left-sidebar__item--primary', className)}
+        data-activated={isActivated || hasActivatedChild}
+      >
+        <div className={clsx('left-sidebar__item-content')}>
+          <a href={menu.href}>{menu.label}</a>
 
           {hasChildren && (
             <button
@@ -86,7 +76,6 @@ export default function LeftMenuItem({menu, index, className = ''}) {
               key={childIndex}
               menu={childMenu}
               index={`${index}-${childIndex}`}
-              className="left-sidebar__item--secondary"
             />
           ))}
         </Collapse>
