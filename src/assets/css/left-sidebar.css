@@ -36,7 +36,10 @@ nav.left-sidebar {
     justify-content: space-between;
 }
 
-.left-sidebar__item-content:hover {
+.left-sidebar__item--primary[data-activated="false"] .left-sidebar__item-content:hover,
+.left-sidebar__item--secondary[data-activated="false"] .left-sidebar__item-content:hover,
+.left-sidebar__item--primary:not([data-activated]) .left-sidebar__item-content:hover,
+.left-sidebar__item--secondary:not([data-activated]) .left-sidebar__item-content:hover {
     color: var(--Color-Highlight-Red, #D8232A);
     transform: translateX(0.25rem);
 }
