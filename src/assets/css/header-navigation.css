@@ -23,6 +23,9 @@ header {
 }
 
 nav > ul.navigation {
+    /*Apply container element*/
+    @apply container mx-auto;
+
     display: flex;
     padding: 0 var(--Basic-Body-Horizontal-padding, 80px);
     align-items: flex-start;
