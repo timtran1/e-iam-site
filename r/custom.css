@@ -526,3 +526,12 @@ a:hover .arrow-right-icon {
 .showblock2close {
     display: none;
 }
+
+nav.left-sidebar a {
+
+}
+
+nav.left-sidebar a:visited {
+    color: inherit;
+    text-decoration: none;
+}

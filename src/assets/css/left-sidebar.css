@@ -36,12 +36,14 @@ nav.left-sidebar {
     transform: translateX(0.25rem);
 }
 
-.left-sidebar__item-content > a {
+.left-sidebar__item-content > a,
+.left-sidebar__item-content > a:visited {
     color: var(--Color-Font-Main, #1F2937);
     font-size: var(--Color-Font-Navigation-Font-Size, 18px);
     font-style: normal;
     font-weight: 500;
     line-height: var(--Color-Font-Navigation-Line-Height, 28px);
+    text-decoration: none;
 }
 
 .left-sidebar__item--secondary > .left-sidebar__item-content > a {
