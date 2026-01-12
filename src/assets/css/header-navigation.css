@@ -17,12 +17,16 @@ header {
 #navigation {
     display: initial !important;
     vertical-align: initial;
-    width: initial;
     background: initial;
     hyphens: initial;
+    width: auto !important;
 }
 
 /*Desktop navigation*/
+nav.desktop-navigation {
+    width: auto !important;
+}
+
 nav.desktop-navigation > ul.navigation {
     /*Apply container element*/
     @apply container mx-auto;
