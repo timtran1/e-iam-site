@@ -59,7 +59,7 @@ const DropdownMenuMobile = ({opened: openedProp, setOpened: setOpenedProp}) => {
   const menus = isDevMode ? mockMenu : appContext.menu;
 
   // Get current page
-  const currentPage = useQueryParam('c');
+  const [currentPage] = useQueryParam('c');
 
   // Menu depth
   const [currentMenuDepth, setCurrentMenuDepth] = React.useState(0);
@@ -153,30 +153,17 @@ const DropdownMenuMobile = ({opened: openedProp, setOpened: setOpenedProp}) => {
               </div>
             </div>
           )}
-
           {/*endregion lang selector*/}
+
           {/*region menu*/}
-          <nav>
-            <ul>
+          <nav className="mobile-navigation">
+            <ul className="navigation">
               {renderedListMenu.map((menuItem, i) => (
-                <li
-                  key={i}
-                  className={clsx(
-                    'flex gap-6 justify-between items-center',
-                    'cursor-pointer px-4 py-2 border-b transition border-b-gray-geyser border-s-danger-cinnabar',
-                    'hover:border-s-4',
-                    currentPage === menuItem.key ? 'border-s-4' : ''
-                  )}
-                >
-                  <a href={menuItem.href} className="flex-1 !no-underline">
-                    {menuItem.label}
-                  </a>
+                <li key={i} data-activated={currentPage === menuItem.key}>
+                  <a href={menuItem.href}>{menuItem.label}</a>
                   {menuItem.children && menuItem.children.length > 0 && (
                     <ChevronButton
-                      className={clsx(
-                        'px-2 transition'
-                        // opened ? '-rotate-45' : 'rotate-90'
-                      )}
+                      className="h-6 w-6 flex items-center justify-center"
                       onClick={() => handleClickExpand(menuItem)}
                     />
                   )}

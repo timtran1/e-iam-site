@@ -126,6 +126,7 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
   return (
     <nav
       aria-label={t('Header navigation')}
+      className="desktop-navigation"
       {...(hasRemovedServerElements ? {id: ELEMENT_ID.NAVIGATION} : {})}
     >
       <ul ref={wrapperRef} className="navigation w-full overflow-x-auto">
