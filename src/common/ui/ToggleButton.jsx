@@ -27,21 +27,21 @@ const ToggleButton = React.memo(({opened, className, onClick = () => {}}) => {
       >
         <span
           className={clsx(
-            'origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 mb-0 bg-gray-800',
+            'origin-center transition-transform duration-300 ease-in-out h-[1px] w-4 mb-0 bg-gray-800',
             {'rotate-[45deg] translate-y-[1px] origin-center': opened}
           )}
         ></span>
         {!opened && (
           <span
             className={clsx(
-              'origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 bg-gray-800',
+              'origin-center transition-transform duration-300 ease-in-out h-[1px] w-4 bg-gray-800',
               {hidden: opened}
             )}
           ></span>
         )}
         <span
           className={clsx(
-            'origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 bg-gray-800',
+            'origin-center transition-transform duration-300 ease-in-out h-[1px] w-4 bg-gray-800',
             {'rotate-[-45deg] !m-0': opened}
           )}
         ></span>
