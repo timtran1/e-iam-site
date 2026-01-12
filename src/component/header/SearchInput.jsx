@@ -106,7 +106,7 @@ const SearchInput = React.memo(() => {
               onFocus={() => setExpanded(true)}
               className={clsx(
                 'hidden xl:block',
-                'py-0 pr-6 transition opacity-0 cursor-pointer',
+                'py-0 pr-8 transition opacity-0 cursor-pointer',
                 {
                   'opacity-100': !expanded,
                 }
