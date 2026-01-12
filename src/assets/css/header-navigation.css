@@ -15,7 +15,7 @@ header {
 
 /*Override style of U5CM csslayout for #navigation*/
 #navigation {
-    display: initial;
+    display: initial !important;
     vertical-align: initial;
     width: initial;
     background: initial;
