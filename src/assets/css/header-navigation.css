@@ -21,6 +21,9 @@ header {
     hyphens: initial;
     width: auto !important;
 }
+nav#webapp_monalink {
+    display: none !important;
+}
 
 /*Desktop navigation*/
 nav.desktop-navigation {
