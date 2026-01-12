@@ -33,6 +33,7 @@
         line-height: var(--Color-Font-Paragraph-Line-Height, 28px);
     }
 
+    /*Override style of U5CM csslayout for #body*/
     body#body {
         max-width: initial !important;
         margin: initial !important;
