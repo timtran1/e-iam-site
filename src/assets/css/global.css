@@ -5,6 +5,7 @@
 @import "./main-content.css";
 @import "./left-sidebar.css";
 @import "./search-result.css";
+@import "./lang-selector.css";
 
 @tailwind components;
 @tailwind utilities;

@@ -37,6 +37,8 @@
         /*Header*/
         --Header-Vertical-Padding: 32px;
         --Header-Max-Width: 1000px;
+        --Color-Font-Header-Elements-Font-Size: 14px;
+        --Color-Font-Header-Elements-Line-Height: 18px;
 
         /*Navigation*/
         --Navigation-Primary-Navigation-Navbar-Spacing: 48px;
