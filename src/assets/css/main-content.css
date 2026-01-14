@@ -34,10 +34,9 @@ article.body-content__container--standard {
 
     /*For screen bigger than '2xl' */
     @screen 2xl {
-        padding: var(--Basic-Body-Vertical-Padding, 54px) 0 0 var(--Basic-Body-Horizontal-padding, 80px);
+        padding: var(--Basic-Body-Vertical-Padding, 54px) 0 var(--Basic-Body-Vertical-Padding, 54px) var(--Basic-Body-Horizontal-padding, 80px);
     }
 }
-
 
 /*Right container region - included right sidebar*/
 .body-content__container__right {
