@@ -1,12 +1,18 @@
 /*Override style of U5CM csslayout for #languages*/
 #languages {
-    margin-top: 0 !important;
-    float: none !important;
+    margin-top: unset !important;
+    float: unset !important;
+    margin-left: unset !important;
+    border-left: none !important;
+    padding-left: unset !important;
 }
 
 nav.lang-selector {
-    margin-top: 0 !important;
-    float: none !important;
+    margin-top: unset !important;
+    float: unset !important;
+    margin-left: unset !important;
+    border-left: none !important;
+    padding-left: unset !important;
     @apply relative mt-0 ml-auto inline-flex float-none;
 }
 
