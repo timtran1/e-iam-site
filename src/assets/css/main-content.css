@@ -81,11 +81,11 @@ article.body-content__container--standard {
 /*Main content region*/
 /*Override style of U5CM csslayout for #content*/
 #content {
-    vertical-align: initial;
-    margin-left: initial;
-    padding-right: initial;
-    border-right: initial;
-    min-height: initial;
+    vertical-align: unset !important;
+    margin-left: unset !important;
+    padding-right: unset !important;
+    border-right: unset !important;
+    min-height: unset !important;
 }
 .body-content__container__left > #content,
 .body-content__container__left > .body-content__main-content {
@@ -96,4 +96,11 @@ article.body-content__container--standard {
     align-items: flex-start;
     gap: 16px;
     line-height: var(--Color-Font-Paragraph-Line-Height, 28px);
+
+    /*Override style of U5CM csslayout for #content*/
+    vertical-align: unset !important;
+    margin-left: unset !important;
+    padding-right: unset !important;
+    border-right: unset !important;
+    min-height: unset !important;
 }

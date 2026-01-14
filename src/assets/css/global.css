@@ -6,6 +6,7 @@
 @import "./left-sidebar.css";
 @import "./search-result.css";
 @import "./lang-selector.css";
+@import "./accordion.css";
 
 @tailwind components;
 @tailwind utilities;
