@@ -8,18 +8,15 @@ export default {
   content: ['./index.html', './src/**/*.{js,jsx}'], // or more paths if needed
   theme: {
     screens: {
-      xs: '480px',
-      sm: '640px',
-      md: '768px',
+      xs: '360px', // smallest screen
+      sm: '480px', // mobile screen
+      md: '768px', // tablet screen
       lg: '1024px',
       xl: '1280px',
       '2xl': '1544px',
       '3xl': '1920px',
     },
-    container: {
-      '2xl': '1544px',
-      '3xl': '1676px',
-    },
+    container: {},
     scale: {
       102: '1.02',
       ...defaultTheme.scale,
@@ -224,10 +221,6 @@ export default {
       black: '#000000',
       transparent: 'transparent',
     },
-    // fontWeight: {
-    //   normal: 400,
-    //   bold: 400,
-    // },
     fontSize: {
       xs: '0.75rem',
       sm: '0.875rem',
@@ -287,6 +280,33 @@ export default {
       },
       borderWidth: {
         3: '3px',
+      },
+      gap: {
+        2.75: '11px',
+      },
+      height: {
+        0.25: '1px',
+        8.5: '34px',
+        9.5: '38px',
+        13.75: '55px',
+        18: '72px',
+        62.5: '250px',
+      },
+      width: {
+        0.25: '1px',
+        8.5: '34px',
+        9.5: '38px',
+        50: '200px',
+        62.5: '250px',
+      },
+      minWidth: {
+        50: '200px',
+        225: '900px',
+        250: '1000px',
+      },
+      maxWidth: {
+        225: '900px',
+        250: '1000px',
       },
     },
   },

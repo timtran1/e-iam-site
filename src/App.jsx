@@ -1,4 +1,4 @@
-import './App.css';
+import './assets/css/global.css';
 import './i18n.js';
 import Header from './component/header/Header.jsx';
 import Footer from './component/footer/Footer.jsx';

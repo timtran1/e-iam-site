@@ -19,7 +19,7 @@ const ToggleButton = React.memo(({opened, className, onClick = () => {}}) => {
     <>
       <button
         className={clsx(
-          'flex flex-col justify-center items-center w-10 h-10 space-y-1.5 focus:outline-none relative z-[999]',
+          'flex flex-col justify-center items-center w-6 h-6 space-y-1.5 focus:outline-none relative z-[999]',
           className
         )}
         onClick={onClick}
@@ -27,21 +27,21 @@ const ToggleButton = React.memo(({opened, className, onClick = () => {}}) => {
       >
         <span
           className={clsx(
-            'origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 mb-0 bg-gray-800',
+            'origin-center transition-transform duration-300 ease-in-out h-[1px] w-4 mb-0 bg-gray-800',
             {'rotate-[45deg] translate-y-[1px] origin-center': opened}
           )}
         ></span>
         {!opened && (
           <span
             className={clsx(
-              'origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 bg-gray-800',
+              'origin-center transition-transform duration-300 ease-in-out h-[1px] w-4 bg-gray-800',
               {hidden: opened}
             )}
           ></span>
         )}
         <span
           className={clsx(
-            'origin-center transition-transform duration-300 ease-in-out h-[1px] w-6 bg-gray-800',
+            'origin-center transition-transform duration-300 ease-in-out h-[1px] w-4 bg-gray-800',
             {'rotate-[-45deg] !m-0': opened}
           )}
         ></span>

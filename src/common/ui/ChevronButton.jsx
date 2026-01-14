@@ -46,7 +46,7 @@ const ChevronButton = forwardRef(
           {leftSection}
           <svg
             className={clsx(
-              'lang-caret w-4 h-4 transform transition-transform duration-300',
+              'lang-caret w-6 h-6 transform transition-transform duration-300',
               rotateChevron
             )}
             fill="none"

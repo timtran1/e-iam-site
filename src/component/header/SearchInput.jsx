@@ -2,8 +2,6 @@ import React from 'react';
 import AppContext from '../../common/context/app/app.context.js';
 import {useDebouncedCallback} from '@mantine/hooks';
 import {ELEMENT_ID} from '../../common/constant/element-id.js';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
 import useClickAway from '../../common/hook/useClickAway.js';
 import {useTranslation} from 'react-i18next';
@@ -107,8 +105,8 @@ const SearchInput = React.memo(() => {
               htmlFor={searchId}
               onFocus={() => setExpanded(true)}
               className={clsx(
-                'hidden sm:block',
-                'py-0 pr-6 transition opacity-0 cursor-pointer',
+                'hidden xl:block',
+                'py-0 pr-8 transition opacity-0 cursor-pointer',
                 {
                   'opacity-100': !expanded,
                 }
@@ -126,7 +124,7 @@ const SearchInput = React.memo(() => {
                 'border-blue-cornflower hover:border-blue-cornflower active:border-blue-cornflower focus:border-blue-cornflower focus:outline-blue-cornflower',
                 '!pl-3 !pr-8 !py-1.5 transition-all',
                 expanded
-                  ? 'opacity-100 !w-44 sm:!w-56'
+                  ? 'opacity-100 !w-44 xl:!w-56'
                   : 'opacity-0 !w-20 hover:border-transparent active:border-transparent cursor-pointer'
               )}
               placeholder={t('search')}
@@ -141,10 +139,18 @@ const SearchInput = React.memo(() => {
             className="absolute top-1/2 right-1.5 -translate-y-1/2 cursor-pointer"
             onClick={handleClickSearchBtn}
           >
-            <FontAwesomeIcon
-              icon={faSearch}
-              className="w-4 h-4 px-1 text-gray-chateau-2"
-            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M13.2999 12.8002C15.1999 10.6002 14.9999 7.20016 12.7999 5.30016C10.5999 3.40016 7.19992 3.60016 5.29992 5.80016C3.39992 8.00016 3.59992 11.4002 5.79992 13.3002C7.79992 15.0002 10.6999 15.0002 12.6999 13.3002L18.6999 19.3002L19.1999 18.8002L13.2999 12.8002ZM9.29992 13.8002C6.79992 13.8002 4.79992 11.8002 4.79992 9.30016C4.79992 6.80016 6.79992 4.80016 9.29992 4.80016C11.7999 4.80016 13.7999 6.80016 13.7999 9.30016C13.7999 11.8002 11.7999 13.8002 9.29992 13.8002Z"
+                fill="black"
+              />
+            </svg>
           </div>
         </div>
       )}

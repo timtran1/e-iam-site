@@ -55,32 +55,34 @@ const ResultItem = React.memo(({searchResult, viewMode}) => {
       <a
         href={fullHref}
         className={clsx(
-          'block no-underline cursor-pointer group focus:outline-none visited:!text-inherit focus:ring-2 focus:ring-primary-main focus:ring-offset-2',
+          'block !no-underline hover:no-underline cursor-pointer group focus:outline-none visited:!text-inherit focus:ring-2 focus:ring-primary-main',
           viewMode === VIEW_MODE.Grid &&
-            'rounded p-6 shadow transition hover:shadow-xl',
-          viewMode === VIEW_MODE.List && 'border-b pb-6'
+            'focus:ring-offset-2 rounded p-6 shadow search-result__view-item--grid',
+          viewMode === VIEW_MODE.List && 'search-result__view-item--list'
         )}
         aria-label={ariaLabel}
       >
-        <h5
-          aria-hidden="true"
-          className="font-bold text-lg truncate transition group-hover:text-primary-main"
-          dangerouslySetInnerHTML={{
-            __html: searchResult.heading?.innerHTML,
-          }}
-        ></h5>
+        <div>
+          <h5
+            aria-hidden="true"
+            className="truncate transition group-hover:text-[var(--Color-Highlight-Red)] search-result__view-item--list__title"
+            dangerouslySetInnerHTML={{
+              __html: searchResult.heading?.innerHTML,
+            }}
+          ></h5>
 
-        <p
-          aria-hidden="true"
-          className={clsx(
-            'break-words mb-0',
-            viewMode === VIEW_MODE.Grid && 'min-h-44 line-clamp-6',
-            viewMode === VIEW_MODE.List && 'min-h-24 line-clamp-3'
-          )}
-          dangerouslySetInnerHTML={{
-            __html: searchResult.description?.innerHTML,
-          }}
-        ></p>
+          <p
+            aria-hidden="true"
+            className={clsx(
+              'break-words mb-0 search-result__view-item--list__description',
+              viewMode === VIEW_MODE.Grid && 'min-h-44 line-clamp-6',
+              viewMode === VIEW_MODE.List && 'min-h-24 line-clamp-3'
+            )}
+            dangerouslySetInnerHTML={{
+              __html: searchResult.description?.innerHTML,
+            }}
+          ></p>
+        </div>
 
         {viewMode === VIEW_MODE.Grid && (
           <div className="flex justify-end mt-4">

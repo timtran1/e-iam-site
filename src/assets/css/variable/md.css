@@ -1,0 +1,77 @@
+/**
+ * CSS variables
+ * Applying as default screen and breakpoint: 'md' - tablet
+ *
+ * @see: tailwind.config.js:10 - Breakpoint screen config
+ */
+@screen md {
+    :root {
+        /*Divider*/
+        --Color-Divider-Header: #D9D9D9;
+        --Color-Divider-Main: #E5E7EB;
+
+        /*Container padding*/
+        --Basic-Body-Horizontal-padding: 32px;
+        --Basic-Body-Vertical-Padding: 24px;
+
+        /* Color and typography */
+        /*Body*/
+        --Color-Font-Paragraph-Font-Size: 16px;
+        --Color-Font-Paragraph-Line-Height: 24px;
+
+        /*H1*/
+        --Color-Font-Maintitle-Font-Size: 26px;
+        --Color-Font-Maintitle-Line-Height: 36px;
+
+        /*H2*/
+        --Color-Font-Subtitle-Font-Size: 22px;
+        --Color-Font-Subtitle-Line-Height: 33px;
+
+        /*H3*/
+        --Color-Font-Subsubtitle-Font-Size: 20px;
+        --Color-Font-Subsubtitle-Line-Height: 32px;
+
+        /*Link*/
+        --Color-Font-Link: #D8232A;
+
+        /*Header*/
+        --Header-Vertical-Padding: 12px;
+        --Header-Max-Width: 1000px;
+        --Color-Font-Header-Elements-Font-Size: 14px;
+        --Color-Font-Header-Elements-Line-Height: 18px;
+
+        /*Navigation*/
+        --Navigation-Primary-Navigation-Navbar-Spacing: 48px;
+        --Navigation-Primary-Navigation-Item-Vertical-Padding: 24px;
+        --Navigation-Primary-Navigation-Item-Horizontal-Padding: 0px;
+        --Color-Font-Navigation-Font-Size: 16px;
+        --Color-Font-Navigation-Line-Height: 24px;
+
+        /*Main layout content*/
+        --Right-Sidebar-Vertical-Padding: 16px;
+        --Right-Sidebar-Horizontal-Padding: 16px;
+
+        /*Right sidebar content*/
+        --Right-Sidebar-Background: #F0F4F7;
+
+        /*Left sidebar region*/
+        --Navigation-Item-Width: 218px;
+        --Navigation-Secondary-Navigation-Item-Padding: 12px;
+        --Navigation-Secondary-Navigation-Item-All-Levels-Horizontal-Padding: 16px;
+        --Navigation-Secondary-Navigation-Item-All-Levels-Vertical-Padding: 16px;
+        --Color-Font-Navigation-small-Font-Size: 16px;
+        --Color-Font-Navigation-small-Line-Height: 24px;
+
+        /*Search result*/
+        --Search-Result-Input-Container-Bacground-Color: #F0F4F7;
+        --Basic-Search-Input-Upper-Padding: 64px;
+        --Basic-Search-Input-Horizontal-and-Bottom-Padding: 24px;
+        --Basic-Search-Input-Spacing: 12px;
+        --Color-Textfield-Border: #6B7280;
+        --Color-Textfield-Focus: #8655F6;
+        --Basic-Search-Result-Horizontal-Padding: 24px;
+
+        /*Search result item*/
+        --Basic-Search-Result-Vertical-Padding: 24px;
+    }
+}

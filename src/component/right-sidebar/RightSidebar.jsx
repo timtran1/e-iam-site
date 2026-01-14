@@ -1,13 +1,8 @@
 import React from 'react';
-import ArrowRightHTML from '../icons/ArrowRightHTML.js';
 import AppContext from '../../common/context/app/app.context.js';
-import useQueryParam from '../../common/hook/useQueryParam.js';
 import clsx from 'clsx';
 
 export default function RightSidebar({content, sticky = false}) {
-  // Get current page
-  const [currentPage] = useQueryParam('c'); // the 'c' letter is the page code of u5CMS
-
   // Get app context
   const {headerMeta} = React.useContext(AppContext);
 
@@ -15,13 +10,6 @@ export default function RightSidebar({content, sticky = false}) {
   const asideRef = React.useRef(null);
   // Track if asideRef is rendered
   const [isAsideRendered, setIsAsideRendered] = React.useState(false);
-
-  // Replace all ⇨ with ArrowRightHTML
-  const processedContent = React.useMemo(
-    () =>
-      content?.replace(/⇨/g, ArrowRightHTML()).replace(/→/g, ArrowRightHTML()),
-    [content]
-  );
 
   /**
    * @type {Array<{
@@ -67,63 +55,41 @@ export default function RightSidebar({content, sticky = false}) {
   }, [content, isAsideRendered]);
 
   /**
-   * Show sidebar for specific pages if window.showRightSidebarPages is defined
-   * @see htmltemplate.external-react.html:19
-   * @type {boolean}
+   * Check when asideRef is rendered
    */
-  const showRightSidebarPages = React.useMemo(() => {
-    if (Array.isArray(window?.showRightSidebarPages)) {
-      return !!window?.showRightSidebarPages.includes(currentPage || '');
-    } else {
-      // Show sidebar for all pages (because the showRightSidebarPages config is not defined)
-      return true;
-    }
-  }, [currentPage]);
-
-  // Check when asideRef is rendered
   React.useEffect(() => {
     if (asideRef.current) {
       setIsAsideRendered(true);
     }
-  }, [processedContent]);
+  }, [content]);
 
   return (
     <aside
-      className={clsx(
-        'right-sidebar overflow-hidden h-full break-words text-wrap w-0 lg:w-[200px] xl:w-[240px] 2xl:w-[260px]',
-        showRightSidebarPages &&
-          !!processedContent &&
-          'sm:max-w-[150px] lg:max-w-[200px] xl:max-w-[220px] 2xl:max-w-[260px] shrink-[5] bg-gray-aqua-haze'
-      )}
+      className={clsx('w-full overflow-hidden h-full break-words text-wrap')}
     >
-      {showRightSidebarPages && (
-        <>
-          <div
-            ref={asideRef}
-            dangerouslySetInnerHTML={{__html: processedContent}}
-          />
+      <>
+        <div ref={asideRef} dangerouslySetInnerHTML={{__html: content}} />
 
-          <div
-            className={clsx({sticky: sticky})}
-            style={{
-              ...(sticky && {top: headerMeta.headerHeight + 16 || 10 * 16}),
-            }}
-          >
-            {sideAnchors?.map((anchor, _index) => (
-              <React.Fragment key={_index}>
-                {anchor.parentDiv && (
-                  <div
-                    className="leading-5 active:text-gray-shadow hover:underline"
-                    dangerouslySetInnerHTML={{
-                      __html: anchor.parentDiv.outerHTML,
-                    }}
-                  />
-                )}
-              </React.Fragment>
-            ))}
-          </div>
-        </>
-      )}
+        <div
+          className={clsx({'p-4': !!sideAnchors?.length, sticky})}
+          style={{
+            ...(sticky && {top: headerMeta.headerHeight + 16 || 10 * 16}),
+          }}
+        >
+          {sideAnchors?.map((anchor, _index) => (
+            <React.Fragment key={_index}>
+              {anchor.parentDiv && (
+                <div
+                  className="leading-5 active:text-gray-shadow hover:underline"
+                  dangerouslySetInnerHTML={{
+                    __html: anchor.parentDiv.outerHTML,
+                  }}
+                />
+              )}
+            </React.Fragment>
+          ))}
+        </div>
+      </>
     </aside>
   );
 }

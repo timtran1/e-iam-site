@@ -1,0 +1,99 @@
+/*Container for search result page*/
+article.body-content__container--search-result {
+    /*Apply container element*/
+    @apply container mx-auto overflow-x-auto;
+
+    display: flex;
+    padding: var(--Basic-Body-Vertical-Padding, 54px) var(--Basic-Body-Horizontal-padding, 80px);
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+}
+
+/*Container for normal page*/
+article.body-content__container--standard {
+    /*Apply container element*/
+    @apply container mx-auto overflow-x-auto;
+
+    /*For base screen: mobile, table or small screen */
+    display: flex;
+    padding: var(--Basic-Body-Vertical-Padding, 16px) var(--Basic-Body-Horizontal-padding, 16px);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--Basic-Body-Horizontal-padding, 16px);
+    flex: 1 0 0;
+    align-self: stretch;
+
+    /*For screen bigger than 'lg' */
+    @screen lg {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: var(--Basic-Body-Horizontal-padding, 64px);
+    }
+
+    /*For screen bigger than '2xl' */
+    @screen 2xl {
+        padding: var(--Basic-Body-Vertical-Padding, 54px) 0 0 var(--Basic-Body-Horizontal-padding, 80px);
+    }
+}
+
+
+/*Right container region - included right sidebar*/
+.body-content__container__right {
+    /*For base screen: mobile, table or small screen */
+    background: var(--Right-Sidebar-Background, #F0F4F7);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    align-self: stretch;
+
+    /* U5CMS right sidebar already has padding (1rem). Comment out this line if you want to add padding based on design */
+    /*padding: var(--Right-Sidebar-Vertical-Padding, 16px) var(--Right-Sidebar-Horizontal-Padding, 16px);*/
+
+    /*For screen bigger than 'lg' */
+    @screen lg {
+        max-width: 300px;
+        min-width: 300px;
+    }
+}
+
+/*Left container region - included left sidebar and main content*/
+.body-content__container__left {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--Basic-Body-Horizontal-padding, 80px);
+    flex-grow: 1;
+}
+
+/*Left sidebar region - included left sidebar*/
+.body-content__container__left > .body-content__left-content {
+    /*For base screen: mobile, table or small screen */
+    display: none;
+
+    /*For screen bigger than 'xl' */
+    @screen xl {
+        display: block;
+    }
+}
+
+/*Main content region*/
+/*Override style of U5CM csslayout for #content*/
+#content {
+    vertical-align: initial;
+    margin-left: initial;
+    padding-right: initial;
+    border-right: initial;
+    min-height: initial;
+}
+.body-content__container__left > #content,
+.body-content__container__left > .body-content__main-content {
+    display: flex;
+    width: 100%;
+    max-width: 1000px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    line-height: var(--Color-Font-Paragraph-Line-Height, 28px);
+}

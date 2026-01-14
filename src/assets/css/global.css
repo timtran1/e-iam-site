@@ -1,0 +1,42 @@
+@import "../../../r/input.css";
+@import "./variable/index.css";
+@import "./header-navigation.css";
+@import "./typography.css";
+@import "./main-content.css";
+@import "./left-sidebar.css";
+@import "./search-result.css";
+@import "./lang-selector.css";
+
+@tailwind components;
+@tailwind utilities;
+
+/*Do not import tailwind base. We have the replacement from custom css*/
+/*@tailwind base;*/
+
+@layer components {
+    .container {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 var(--Basic-Body-Horizontal-padding, 1rem);
+
+        /* Width always must be less than 1920px (3xl)*/
+        @screen 3xl {
+            max-width: 1920px;
+        }
+    }
+
+    body {
+        font-style: normal;
+        font-weight: 400;
+        color: var(--Color-Font-Main, #1F2937);
+        font-family: var(--Basic-Font-Family-Font-Family, "Noto Sans"), sans-serif;
+        font-size: var(--Color-Font-Paragraph-Font-Size, 18px);
+        line-height: var(--Color-Font-Paragraph-Line-Height, 28px);
+    }
+
+    /*Override style of U5CM csslayout for #body*/
+    body#body {
+        max-width: initial !important;
+        margin: initial !important;
+    }
+}

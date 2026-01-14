@@ -174,10 +174,7 @@ const LangSelector = ({className = ''}) => {
     <nav
       ref={wrapperRef}
       {...(hasRemovedServerElements ? {id: ELEMENT_ID.LANGUAGES} : {})}
-      className={clsx(
-        '!relative !mt-0 !ml-auto !inline-flex !float-none',
-        className
-      )}
+      className={clsx('lang-selector', className)}
       aria-label={t('Language selector')}
     >
       <ChevronButton
@@ -198,7 +195,7 @@ const LangSelector = ({className = ''}) => {
         role="listbox"
         aria-label={t('Available languages')}
         className={clsx(
-          'lang-dropdown w-[77px] border-t border-t-gray-geyser shadow-[0_3px_4px_1px_#828e9a] absolute right-0 mt-2 bg-white overflow-hidden z-50 transform origin-top',
+          'lang-dropdown w-20 border-t border-t-gray-geyser shadow-[0_3px_4px_1px_#828e9a] absolute mt-2 bg-white overflow-hidden z-50 transform origin-top',
           prefersReducedMotion ? 'top-6' : 'transition-all duration-300 top-6',
           opened
             ? 'scale-y-100 opacity-100'
@@ -214,9 +211,9 @@ const LangSelector = ({className = ''}) => {
             aria-selected={lang.key === currentLang}
             lang={lang.key}
             className={clsx(
-              'uppercase block px-3 py-2 hover:bg-gray-100',
+              'lang-selector__option uppercase no-underline px-3 py-2 hover:bg-gray-100',
               'focus:outline-none focus:bg-blue-100 focus:ring-2 focus:ring-inset focus:ring-blue-500',
-              activeIndex === index && 'bg-gray-100',
+              activeIndex === index && 'bg-gray-100 hover:no-underline',
               lang.key === currentLang && 'font-bold'
             )}
             onClick={() => {

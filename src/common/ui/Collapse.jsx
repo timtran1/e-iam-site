@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 
 /**
  * Collapse component that provides smooth expand/collapse animation
@@ -10,6 +11,7 @@ import React from 'react';
  * @param {Function} props.onTransitionEnd - Callback fired when transition completes
  * @param {number} props.transitionDuration - Duration of transition in milliseconds
  * @param {string} props.transitionTimingFunction - CSS timing function for transition
+ * @param {string} className
  * @param {React.ReactNode} props.children - Content to be collapsed/expanded
  */
 const Collapse = ({
@@ -18,6 +20,7 @@ const Collapse = ({
   onTransitionEnd,
   transitionDuration = 200,
   transitionTimingFunction = 'ease',
+  className = '',
   children,
   ...props
 }) => {
@@ -96,7 +99,7 @@ const Collapse = ({
 
   return (
     <div
-      className="overflow-hidden"
+      className={clsx('overflow-hidden', className)}
       style={{
         height: height === 'auto' ? 'auto' : `${height}px`,
         opacity: animateOpacity ? opacity : 1,

@@ -8,7 +8,7 @@ import useSearchInputControl from '../../../../common/hook/useSearchInputControl
  *
  * @returns {JSX.Element}
  */
-const SearchResultsInput = () => {
+const SearchResultsInput = ({className = ''}) => {
   // Translation
   const {t} = useTranslation();
 
@@ -17,15 +17,12 @@ const SearchResultsInput = () => {
     useSearchInputControl();
 
   return (
-    <div className="relative max-w-[62rem]">
+    <div className={clsx('relative', className)}>
       <input
         id={searchId}
         type="text"
         className={clsx(
-          'w-full !p-4 !pr-12 rounded-none',
-          'border-3 hover:border-3 active:border-3 focus:border-3',
-          'border-blue-cornflower hover:border-blue-cornflower hover:outline-blue-cornflower',
-          'focus:border-blue-cornflower focus:outline-blue-cornflower'
+          'border-[var(--Color-Textfield-Focus,#8655F6)] hover:border-[var(--Color-Textfield-Focus,#8655F6)] hover:outline-[var(--Color-Textfield-Focus,#8655F6)] focus:border-[var(--Color-Textfield-Focus,#8655F6)] focus:outline-[var(--Color-Textfield-Focus,#8655F6)]'
         )}
         placeholder={t('searchTerm')}
         value={searchValue || ''}

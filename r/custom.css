@@ -3,28 +3,6 @@
     font-family: 'Noto Sans', sans-serif;
 } */
 
-.navigation-mobile ul {
-    display: flex;
-    flex-direction: column;
-}
-
-.navigation-mobile li a {
-    border-bottom: 1px solid #dfe4e9;
-    width: 100%;
-    display: block;
-    padding: 8px 16px;
-    font-size: 16px;
-}
-
-.navigation-mobile li a:hover {
-    border-left: 3px solid #e53940;
-    background-color: #f0f4f7;
-}
-
-.navigation-mobile li a.active {
-    border-left: 3px solid #e53940;
-}
-
 footer a {
     color: white !important;
     text-decoration: underline !important;
@@ -55,95 +33,11 @@ footer a:hover {
     transform: translateY(-7px) rotate(-45deg);
 }
 
-/* Mobile menu slide animation */
-.navigation-mobile {
-    max-height: none;
-    height: 0;
-    overflow-y: auto;
-    visibility: hidden;
-    transition: transform 0.3s ease, visibility 0.3s ease, height 0.3s ease;
-}
-
-.navigation-mobile.open {
-    height: calc(100vh - 50px);
-    visibility: visible;
-}
-
 /*Override base styles*/
 
 a {
     color: #069;
 }
-
-.navigation-mobile a {
-    color: #1c2834;
-}
-
-.navigation-mobile a:visited {
-    color: #1c2834;
-}
-
-.navigation-mobile a:hover {
-    color: #1c2834;
-    text-decoration: none;
-}
-/* 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    margin-top: 0.5em;
-    margin-bottom: 0.25em;
-    color: #1c2834;
-}
-
-h1 {
-    font-size: 3em;
-    font-weight: 300;
-    line-height: 1.25;
-    letter-spacing: -.5px
-}
-
-h2 {
-    font-size: 2em;
-    font-weight: 300;
-    line-height: 1.2;
-    letter-spacing: -.5px;
-    margin-top: 1em;
-}
-
-h3 {
-    font-size: 1.6em;
-    font-weight: 400;
-    line-height: 1.375;
-    letter-spacing: .18px;
-    margin-top: 1em;
-}
-
-h4 {
-    font-size: 1.4em;
-    font-weight: 400;
-    line-height: 1.285715;
-    letter-spacing: .1px
-}
-
-h5 {
-    font-size: 1.2em;
-    font-weight: 500;
-    line-height: 1.4;
-    letter-spacing: .1px
-}
-
-h6 {
-    font-size: 1em;
-    font-weight: 500;
-    line-height: 1.333333;
-    letter-spacing: .2px
-} */
-
-
 
 .hot {
     color: #047857
@@ -232,70 +126,6 @@ fieldset legend {
     padding-left: 0.75rem;
 }
 
-/* Navigation Dropdown Styles */
-.navigation ul li ul {
-    display: none;
-    position: absolute;
-    top: 100%;
-    /* This positions it at the bottom of the parent element */
-    /*margin-top: 1px;*/
-    background-color: white;
-    min-width: 200px;
-    box-shadow: 0 3px 4px 1px #828e9a;
-    z-index: 999;
-    border-top: 1px solid #dfe4e9;
-    padding-top: 60px;
-    /* Space for close button */
-    padding-bottom: 12px;
-    padding-left: 12px;
-    padding-right: 12px;
-    transform-origin: top;
-    transform: scaleY(0);
-    opacity: 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.navigation ul li ul.open {
-    display: block;
-    transform: scaleY(1);
-    opacity: 1;
-    overflow-y: scroll;
-    max-height: 60vh;
-}
-
-.navigation ul li ul.sub-open {
-    padding: 0;
-    display: block;
-    transform: scaleY(1);
-    opacity: 1;
-    @apply shadow-none;
-}
-
-.navigation ul li ul li {
-    display: block;
-    padding: 0;
-    width: 100%;
-}
-
-.navigation ul li ul li a {
-    display: block;
-    padding: 0.5rem 1rem;
-    font-size: 16px;
-    color: #4a5568;
-    text-align: left;
-    height: auto;
-    border-bottom: 1px solid #dfe4e9;
-}
-
-.navigation ul li ul li a:hover {
-    background-color: #f7fafc;
-}
-
-.navigation ul li ul li.active a {
-    border-left: 5px solid #e53940;
-    padding-left: 0.75rem;
-}
-
 .nav-dropdown-close {
     position: absolute;
     top: 5px;
@@ -311,16 +141,6 @@ fieldset legend {
 
 .nav-dropdown-close:hover {
     background-color: #f0f4f7;
-}
-
-/* Override display flex for nested lists */
-.navigation>ul {
-    display: flex;
-}
-
-.navigation ul li ul {
-    display: none;
-    flex-direction: column;
 }
 
 /* Navigation caret styles */
@@ -341,38 +161,6 @@ fieldset legend {
 .nav-caret.rotate-180 {
     transform: rotate(0deg);
     /* When open, rotate to original position */
-}
-
-/* Mobile menu dropdown styles */
-.navigation-mobile ul li ul {
-    display: none;
-    position: fixed;
-    /* Fixed position for sliding */
-    top: 0;
-    right: -100%;
-    /* Start off-screen to the right */
-    height: 100vh;
-    width: 100%;
-    background-color: white;
-    z-index: 1000;
-    overflow-y: auto;
-    transition: right 0.3s ease;
-    /* Transition for sliding effect */
-    padding-top: 60px;
-    /* Space for back button */
-}
-
-.navigation-mobile ul li ul.open {
-    display: block;
-    right: 0;
-    /* Slide in from right */
-}
-
-/* Parent menu item with submenu indicator for mobile */
-.navigation-mobile ul li.has-submenu>a {
-    position: relative;
-    padding-right: 40px;
-    /* Make space for the caret */
 }
 
 /* Right-pointing caret for parent menu items in mobile */
@@ -658,8 +446,7 @@ a:hover .arrow-right-icon {
 }
 
 nav.left-sidebar a {
-    color: inherit;
-    text-decoration: none;
+
 }
 
 nav.left-sidebar a:visited {

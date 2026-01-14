@@ -63,6 +63,7 @@ const Header = ({className, sticky = false}) => {
 
   return (
     <>
+      {/*region header*/}
       <header
         ref={headerRef}
         aria-label={t('Site header')}
@@ -71,81 +72,84 @@ const Header = ({className, sticky = false}) => {
             backgroundImage: headerMeta.backgroundImage,
           }),
         }}
-        className={clsx(
-          'border-b border-b-gray-geyser bg-white',
-          {'z-50 sticky top-0': sticky},
-          className
-        )}
+        className={clsx({'z-50 sticky top-0': sticky}, className)}
       >
-        {/*region header content*/}
-        <div className="lg:border-b border-b-gray-geyser">
-          <div className="container mx-auto flex items-center">
-            <div className="flex items-center gap-2.5 lg:gap-4 padding-4 w-full h-[50px] lg:h-[85px] transition-all duration-500">
-              <a
-                href="/"
-                aria-label={t('eIAM - Go to homepage')}
-                className="w-[43px] h-[58px] lg:w-[250px] lg:h-[80.6px] overflow-hidden block shrink-0"
-              >
-                <div
-                  className="w-[250px] h-[80.6px] bg-cover bg-no-repeat transition-all duration-500    "
-                  role="img"
-                  aria-label={t('Swiss Confederation logo')}
-                  style={{
-                    backgroundImage:
-                      "url('r/eidgenossenschaft/eidgenossenschaft_de.svg')",
-                  }}
-                ></div>
-              </a>
-              <div
-                className="border-l border-gray-geyser h-10 w-[1px]"
-                aria-hidden="true"
-              ></div>
-              <div className="text-6.5 font-bold text-gray-ebony-clay">
-                eIAM
-              </div>
-              <div className="font-bold text-base leading-6 text-gray-ebony-clay text-ellipsis hidden lg:block">
-                Federal Office of Information Technology, Systems and
-                Telecommunication & Federal Chancellery FCh, Digital
-                Transformation and ICT Governance DTI
-              </div>
-            </div>
+        <div className="flex items-center gap-4 xl:gap-2.75 flex-1">
+          {/*region logo*/}
+          <a
+            href="/"
+            aria-label={t('eIAM - Go to homepage')}
+            className="w-8.5 h-9.5 xl:w-64 xl:h-20 overflow-hidden"
+          >
             <div
               className={clsx(
-                'ps-2 md:ps-4 py-1',
-                'flex items-center gap-3 flex-row-reverse lg:block'
+                'bg-cover bg-no-repeat overflow-hidden',
+                'w-62.5 h-20 -translate-y-2.5 -translate-x-2.5 xl:w-full xl:h-full xl:translate-x-0 xl:translate-y-0'
+              )}
+              role="img"
+              aria-label={t('Swiss Confederation logo')}
+              style={{
+                backgroundImage:
+                  "url('r/eidgenossenschaft/eidgenossenschaft_de.svg')",
+              }}
+            ></div>
+          </a>
+          {/*endregion logo*/}
+
+          {/*region header and language actions*/}
+          <div className="flex flex-1 justify-between items-center">
+            {/*Frame 5*/}
+            <div className="flex gap-4 xl:gap-6 flex-1 items-center xl:items-start">
+              <div className="w-0.25 h-13.75 bg-[var(--Color-Divider-Header)]" />
+              <p className="hidden xl:block my-0 font-semibold flex-1 max-w-[var(--Header-Max-Width,1000px)]">
+                eIAM - Federal Office of Information Technology, Systems and
+                Telecommunication & Federal Chancellery FCh, Digital
+                Transformation and ICT Governance DTI
+              </p>
+              <p className="xl:hidden my-0 font-semibold flex-1 max-w-[var(--Header-Max-Width,1000px)]">
+                eIAM
+              </p>
+            </div>
+
+            {/*Frame 8*/}
+            <div
+              className={clsx(
+                'flex justify-end items-center gap-6',
+                'xl:h-18 xl:min-w-50 xl:flex-col xl:items-end'
               )}
             >
               {/*region lang selector*/}
-              <div className="hidden lg:block text-end">
+              <div className="hidden xl:block text-end">
                 <LangSelector />
               </div>
               {/*endregion lang selector*/}
 
+              {/*region search input*/}
+              <div className="pt-0">
+                <SearchInput />
+              </div>
+              {/*endregion search input*/}
+
               {/*region mobile nav*/}
-              <div className="lg:hidden">
+              <div className="xl:hidden">
                 <Navigation.Mobile
                   opened={isMobileMenuOpened}
                   setOpened={setIsMobileMenuOpened}
                 />
               </div>
               {/*endregion mobile nav*/}
-
-              {/*region search input*/}
-              <div className="pt-0  lg:pt-3">
-                <SearchInput />
-              </div>
-              {/*endregion search input*/}
             </div>
           </div>
+          {/*endregion header and language actions*/}
         </div>
-        {/*endregion header content*/}
-
-        {/*region navigation*/}
-        <div className="hidden lg:block">
-          <Navigation.Desktop />
-        </div>
-        {/*endregion navigation*/}
       </header>
+      {/*endregion header*/}
+
+      {/*region navigation*/}
+      <div className="hidden xl:block">
+        <Navigation.Desktop />
+      </div>
+      {/*endregion navigation*/}
     </>
   );
 };

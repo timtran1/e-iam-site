@@ -6,6 +6,7 @@ import AppContext from '../../common/context/app/app.context.js';
 import useQueryParam from '../../common/hook/useQueryParam.js';
 import {mockMenu} from '../../common/constant/dummy.js';
 import ChevronButton from '../../common/ui/ChevronButton.jsx';
+import {useTranslation} from 'react-i18next';
 
 const isDevMode = import.meta.env.DEV;
 
@@ -36,12 +37,20 @@ const _markMenuDepth = (listMenu, currentDepth = 0) => {
  * This is bottom-sheet modal to render all of menu
  *
  * @param {Object} props
+ * @param {string} props.className
  * @param {boolean} [props.opened] - Controlled opened state (optional)
  * @param {Function} [props.setOpened] - Controlled setter for opened state (optional)
  * @returns {JSX.Element}
  * @constructor
  */
-const DropdownMenuMobile = ({opened: openedProp, setOpened: setOpenedProp}) => {
+const DropdownMenuMobile = ({
+  opened: openedProp,
+  setOpened: setOpenedProp,
+  className = '',
+}) => {
+  // Translation
+  const {t} = useTranslation();
+
   // Internal state for uncontrolled mode
   const [openedState, setOpenedState] = React.useState(false);
 
@@ -59,7 +68,7 @@ const DropdownMenuMobile = ({opened: openedProp, setOpened: setOpenedProp}) => {
   const menus = isDevMode ? mockMenu : appContext.menu;
 
   // Get current page
-  const currentPage = useQueryParam('c');
+  const [currentPage] = useQueryParam('c');
 
   // Menu depth
   const [currentMenuDepth, setCurrentMenuDepth] = React.useState(0);
@@ -128,7 +137,8 @@ const DropdownMenuMobile = ({opened: openedProp, setOpened: setOpenedProp}) => {
       {/*region content*/}
       <div
         className={clsx(
-          'fixed z-50 left-0  h-screen w-screen overflow-hidden',
+          'fixed z-50 left-0 h-screen w-screen overflow-hidden mt-6',
+          className,
           {'pointer-events-none': !opened}
         )}
       >
@@ -138,45 +148,31 @@ const DropdownMenuMobile = ({opened: openedProp, setOpened: setOpenedProp}) => {
             opened ? 'translate-y-0' : '-translate-y-full'
           )}
         >
-          {/*region lang selector*/}
-          {currentMenuDepth === 0 ? (
-            <div className="p-4 border-b border-b-gray-geyser">
+          {/*region lang selector and back button*/}
+          <div className="px-4 pt-2 pb-5 border-b border-b-[var(--Color-Divider-Main,#E5E7EB)]">
+            {currentMenuDepth === 0 ? (
               <LangSelector />
-            </div>
-          ) : (
-            <div className="px-4 py-4">
-              <div
-                className="cursor-pointer p-1 rounded transition hover:bg-gray-black-squeeze"
+            ) : (
+              <button
+                className="cursor-pointer flex gap-1 items-center"
                 onClick={handleClickBack}
               >
                 <ChevronButton className={clsx('transition rotate-180')} />
-              </div>
-            </div>
-          )}
+                <span>{t('Back')}</span>
+              </button>
+            )}
+          </div>
+          {/*endregion lang selector and back button*/}
 
-          {/*endregion lang selector*/}
           {/*region menu*/}
-          <nav>
-            <ul>
+          <nav className="mobile-navigation">
+            <ul className="navigation">
               {renderedListMenu.map((menuItem, i) => (
-                <li
-                  key={i}
-                  className={clsx(
-                    'flex gap-6 justify-between items-center',
-                    'cursor-pointer px-4 py-2 border-b transition border-b-gray-geyser border-s-danger-cinnabar',
-                    'hover:border-s-4',
-                    currentPage === menuItem.key ? 'border-s-4' : ''
-                  )}
-                >
-                  <a href={menuItem.href} className="flex-1 !no-underline">
-                    {menuItem.label}
-                  </a>
+                <li key={i} data-activated={currentPage === menuItem.key}>
+                  <a href={menuItem.href}>{menuItem.label}</a>
                   {menuItem.children && menuItem.children.length > 0 && (
                     <ChevronButton
-                      className={clsx(
-                        'px-2 transition'
-                        // opened ? '-rotate-45' : 'rotate-90'
-                      )}
+                      className="h-6 w-6 flex items-center justify-center"
                       onClick={() => handleClickExpand(menuItem)}
                     />
                   )}

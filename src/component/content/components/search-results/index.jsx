@@ -7,10 +7,11 @@ import {VIEW_MODE} from './constants.js';
 /**
  * Render list results of search
  *
+ * @param {string} className
  * @param {Array<SearchResult>} searchResults
  * @param {string} searchTerm - Current search term
  */
-const SearchResults = ({searchResults, searchTerm = ''}) => {
+const SearchResults = ({className = '', searchResults, searchTerm = ''}) => {
   // View mode state
   const [viewMode, setViewMode] = React.useState(VIEW_MODE.List);
 
@@ -20,12 +21,13 @@ const SearchResults = ({searchResults, searchTerm = ''}) => {
       setViewMode={setViewMode}
       resultsCount={searchResults.length}
       searchTerm={searchTerm}
+      className={clsx(className)}
     >
       <div
         className={clsx(
-          'grid gap-6 lg:gap-8 xl:gap-10',
+          'grid',
           viewMode === VIEW_MODE.Grid
-            ? 'grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'
+            ? 'grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 lg:gap-8 xl:gap-10 pt-3'
             : 'grid-cols-1'
         )}
       >

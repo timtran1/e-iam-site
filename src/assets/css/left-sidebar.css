@@ -1,0 +1,60 @@
+/*Left sidebar*/
+nav.left-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.left-sidebar__item--primary {
+    display: flex;
+    width: var(--Navigation-Item-Width, 218px);
+    padding: var(--Navigation-Secondary-Navigation-Item-All-Levels-Horizontal-Padding, 16px) var(--Navigation-Secondary-Navigation-Item-All-Levels-Vertical-Padding, 16px);
+    align-items: center;
+    align-self: stretch;
+
+    border-bottom: 1px solid var(--Color-Divider-Main, #E5E7EB);
+    background: #FFF;
+}
+
+.left-sidebar__item--secondary {
+    padding-left: var(--Navigation-Secondary-Navigation-Item-Padding, 12px);
+    width: calc(var(--Navigation-Item-Width, 220px) - var(--Navigation-Secondary-Navigation-Item-Padding, 220px));
+}
+
+.left-sidebar__item--primary[data-activated="true"],
+.left-sidebar__item--secondary[data-activated="true"] {
+    border-left: 3px solid var(--Color-Highlight-Red, #D8232A);
+}
+
+.left-sidebar__item-content {
+    transition-property: transform;
+    transition-duration: 0.25s;
+    display: flex;
+    flex-grow: 1;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.left-sidebar__item--primary[data-activated="false"] .left-sidebar__item-content:hover,
+.left-sidebar__item--secondary[data-activated="false"] .left-sidebar__item-content:hover,
+.left-sidebar__item--primary:not([data-activated]) .left-sidebar__item-content:hover,
+.left-sidebar__item--secondary:not([data-activated]) .left-sidebar__item-content:hover {
+    color: var(--Color-Highlight-Red, #D8232A);
+    transform: translateX(0.25rem);
+}
+
+.left-sidebar__item-content > a,
+.left-sidebar__item-content > a:visited {
+    color: var(--Color-Font-Main, #1F2937);
+    font-size: var(--Color-Font-Navigation-Font-Size, 18px);
+    font-style: normal;
+    font-weight: 500;
+    line-height: var(--Color-Font-Navigation-Line-Height, 28px);
+    text-decoration: none;
+}
+
+.left-sidebar__item--secondary > .left-sidebar__item-content > a {
+    font-size: var(--Color-Font-Navigation-small-Font-Size, 16px);
+    line-height: var(--Color-Font-Navigation-small-Line-Height, 24px);
+}

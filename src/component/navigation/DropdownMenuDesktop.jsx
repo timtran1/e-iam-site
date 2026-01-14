@@ -125,23 +125,22 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
 
   return (
     <nav
-      className="navigation container mx-auto !w-full !block"
       aria-label={t('Header navigation')}
+      className="desktop-navigation"
       {...(hasRemovedServerElements ? {id: ELEMENT_ID.NAVIGATION} : {})}
     >
-      <ul ref={wrapperRef} className="px-0 flex overflow-x-auto gap-6">
+      <ul ref={wrapperRef} className="navigation w-full overflow-x-auto">
         {menus.map((menuItem, i) => (
           <li
             key={menuItem.key || i}
             className={clsx(
-              'flex gap-1 border-b-[3px]',
               (!currentPage && !i) || hasChildActive(menuItem)
-                ? 'border-primary-main shadow-lg'
-                : 'border-transparent hover:border-primary-main'
+                ? 'border-primary-main'
+                : '!border-transparent hover:border-primary-main'
             )}
           >
             <a
-              className="p-4 transition-all text-gray-mirage visited:text-gray-mirage hover:no-underline hover:text-primary-main"
+              className="transition-all no-underline hover:no-underline"
               href={menuItem.href}
             >
               {menuItem.label}
