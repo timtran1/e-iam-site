@@ -15,7 +15,7 @@
     font-weight: 600;
     line-height: var(--Color-Font-Paragraph-Line-Height, 24px); /* 150% */
 
-    /*Replace r/custom.css*/
+    /*Override r/custom.css*/
     text-decoration-line: none !important;
     border: none !important;
     margin: unset !important;
@@ -39,7 +39,7 @@
     display: none;
 }
 
-/*Replace r/custom.css*/
+/*Override r/custom.css*/
 .showblockactivetab::after,
 .showblockinactivetab::after,
 .showblockinactivetab::after,
