@@ -88,6 +88,7 @@ article.body-content__container--standard {
 }
 .body-content__container__left > #content,
 .body-content__container__left > .body-content__main-content {
+    position: relative;
     display: flex;
     width: 100%;
     max-width: 1000px;

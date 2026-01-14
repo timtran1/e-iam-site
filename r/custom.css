@@ -227,7 +227,7 @@ fieldset legend {
     border-radius: 4px;
 }
 
-.showblock2inactivetab {
+.showblockinactivetab, .showblock2inactivetab {
     display: block;
     background: #F0F4F7;
     padding: 4px;
@@ -372,7 +372,7 @@ a:hover .arrow-right-icon {
 
 .showblockdivinner {
     display: block;
-    height: 0px;
+    height: 0;
     width: 100%;
     overflow: hidden;
     padding: 0;
