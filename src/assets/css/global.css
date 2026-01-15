@@ -4,8 +4,10 @@
 @import "./typography.css";
 @import "./main-content.css";
 @import "./left-sidebar.css";
+@import "./right-sidebar.css";
 @import "./search-result.css";
 @import "./lang-selector.css";
+@import "./accordion.css";
 
 @tailwind components;
 @tailwind utilities;

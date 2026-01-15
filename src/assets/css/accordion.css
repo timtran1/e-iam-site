@@ -1,0 +1,71 @@
+.showblockinactivetab, .showblock2inactivetab {
+    /*Wrapper*/
+    display: flex;
+    padding: var(--Accordion-Vertical-Padding, 0.75rem) var(--Accordion-Horizontal-Padding, 1rem);
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+    background: var(--Color-Background-Element, #F0F4F7);
+    min-height: var(--Accordion-Preview-Min-Height, 3.5rem);
+
+    /*Text*/
+    color: var(--Color-Font-Main, #1F2937);
+    font-size: var(--Color-Font-Paragraph-Font-Size, 16px);
+    font-style: normal;
+    font-weight: 600;
+    line-height: var(--Color-Font-Paragraph-Line-Height, 24px); /* 150% */
+
+    /*Override r/custom.css*/
+    text-decoration-line: none !important;
+    border: none !important;
+    margin: unset !important;
+}
+
+.showblockdivinner.expand,
+.showblock2divinner.expand {
+    margin: unset !important;
+    color: var(--Color-Font-Main, #1F2937);
+    font-size: var(--Color-Font-Paragraph-Font-Size, 16px);
+    font-style: normal;
+    font-weight: 400;
+    line-height: var(--Color-Font-Paragraph-Line-Height, 24px);
+    background: var(--Color-Background-Element, #F0F4F7);
+    border: none !important;
+    padding: 4px var(--Accordion-Horizontal-Padding, 1rem) var(--Accordion-Vertical-Padding, 1rem) var(--Accordion-Horizontal-Padding, 1rem);
+    overflow-y: hidden;
+}
+
+.showblockdivinner.expand > .showblockclose {
+    display: none;
+}
+
+/*Override r/custom.css*/
+.showblockactivetab::after,
+.showblockinactivetab::after,
+.showblockinactivetab::after,
+.showblock2activetab::after,
+.showblock2inactivetab::after {
+    right: var(--Accordion-Horizontal-Padding, 1rem);
+}
+
+.showblockinactivetab + a {
+    display: block;
+    overflow: hidden;
+    transition: height 0.3s ease;
+}
+
+.showblockinactivetab + a:not(.expand) {
+    height: 0 !important;
+}
+
+.showblockinactivetab + a.expand {
+    margin: unset !important;
+    font-size: var(--Color-Font-Paragraph-Font-Size, 16px);
+    font-style: normal;
+    font-weight: 400;
+    line-height: var(--Color-Font-Paragraph-Line-Height, 24px);
+    background: var(--Color-Background-Element, #F0F4F7);
+    border: none !important;
+    padding: 4px var(--Accordion-Horizontal-Padding, 1rem) var(--Accordion-Vertical-Padding, 1rem) var(--Accordion-Horizontal-Padding, 1rem);
+    overflow-y: hidden;
+}

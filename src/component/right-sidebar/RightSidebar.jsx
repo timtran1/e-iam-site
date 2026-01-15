@@ -46,6 +46,10 @@ export default function RightSidebar({content, sticky = false}) {
             parentDiv: clonedParentDiv,
           });
         });
+
+        // Sort alphabetically by text field
+        linkData.sort((a, b) => a.text.localeCompare(b.text));
+
         return linkData;
       }
 

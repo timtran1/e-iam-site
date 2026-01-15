@@ -227,7 +227,7 @@ fieldset legend {
     border-radius: 4px;
 }
 
-.showblock2inactivetab {
+.showblockinactivetab, .showblock2inactivetab {
     display: block;
     background: #F0F4F7;
     padding: 4px;
@@ -372,7 +372,7 @@ a:hover .arrow-right-icon {
 
 .showblockdivinner {
     display: block;
-    height: 0px;
+    height: 0;
     width: 100%;
     overflow: hidden;
     padding: 0;
@@ -401,22 +401,6 @@ a:hover .arrow-right-icon {
     background: inherit;
     border: 0;
     position: relative;
-}
-
-/* bottom line */
-.showblock2divinner:after {
-    content: "";
-    background: #acb4bd;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 1px;
-    width: 100%;
-    transition-property: all;
-    transition-duration: .3s;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: none;
-    display: none;
 }
 
 .showblock2divinner.expand:after {

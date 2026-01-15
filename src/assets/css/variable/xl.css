@@ -73,5 +73,10 @@
 
         /*Search result item*/
         --Basic-Search-Result-Vertical-Padding: 32px;
+
+        /*Accordion*/
+        --Accordion-Preview-Min-Height: 72px;
+        --Accordion-Vertical-Padding: 20px;
+        --Accordion-Horizontal-Padding: 24px;
     }
 }

@@ -55,17 +55,17 @@ const ResultItem = React.memo(({searchResult, viewMode}) => {
       <a
         href={fullHref}
         className={clsx(
-          'block !no-underline hover:no-underline cursor-pointer group focus:outline-none visited:!text-inherit focus:ring-2 focus:ring-primary-main',
+          'search-result__view-item block !no-underline hover:no-underline cursor-pointer group focus:outline-none visited:!text-inherit focus:ring-2 focus:ring-primary-main',
           viewMode === VIEW_MODE.Grid &&
             'focus:ring-offset-2 rounded p-6 shadow search-result__view-item--grid',
           viewMode === VIEW_MODE.List && 'search-result__view-item--list'
         )}
         aria-label={ariaLabel}
       >
-        <div>
+        <div className="space-y-2">
           <h5
             aria-hidden="true"
-            className="truncate transition group-hover:text-[var(--Color-Highlight-Red)] search-result__view-item--list__title"
+            className="line-clamp-1 transition group-hover:underline group-hover:text-[var(--Color-Highlight-Red)] search-result__view-item--list__title"
             dangerouslySetInnerHTML={{
               __html: searchResult.heading?.innerHTML,
             }}
@@ -75,8 +75,8 @@ const ResultItem = React.memo(({searchResult, viewMode}) => {
             aria-hidden="true"
             className={clsx(
               'break-words mb-0 search-result__view-item--list__description',
-              viewMode === VIEW_MODE.Grid && 'min-h-44 line-clamp-6',
-              viewMode === VIEW_MODE.List && 'min-h-24 line-clamp-3'
+              viewMode === VIEW_MODE.Grid && 'line-clamp-6',
+              viewMode === VIEW_MODE.List && 'line-clamp-3 md:line-clamp-2'
             )}
             dangerouslySetInnerHTML={{
               __html: searchResult.description?.innerHTML,
