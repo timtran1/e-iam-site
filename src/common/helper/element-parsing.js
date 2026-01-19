@@ -64,6 +64,9 @@ export const parseLangEle = (ele) => {
  * - If no such pattern is detected, the original content is returned unchanged.
  */
 export const stripNavigationMarkers = (content) => {
+  if (!content) {
+    return null;
+  }
   const lines = content
     .split('<br>')
     .map((line) => line.trim())

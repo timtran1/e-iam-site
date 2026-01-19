@@ -8,8 +8,6 @@ import {
 } from '../../common/constant/dummy.js';
 import LeftSidebar from '../left-sidebar/LeftSidebar.jsx';
 import RightSidebar from '../right-sidebar/RightSidebar.jsx';
-import ArrowRightHTML from '../icons/ArrowRightHTML.js';
-import {handleResponsiveWidth} from '../../common/utils/responsiveWidthHandler.js';
 import {stripNavigationMarkers} from '../../common/helper/element-parsing.js';
 import useHashScroll from '../../common/hook/useHashScroll.js';
 import useSearchResult from './hooks/useSearchResult.js';
@@ -18,6 +16,7 @@ import {ELEMENT_ID} from '../../common/constant/element-id.js';
 import clsx from 'clsx';
 import useQueryParam from '../../common/hook/useQueryParam.js';
 import linkIsCurrentPage from '../../common/helper/linkIsCurrentPage.js';
+import useResponsiveElementWidths from '../../common/hook/useResponsiveElementWidths.js';
 
 const isDevMode = import.meta.env.DEV;
 
@@ -124,9 +123,7 @@ const Content = () => {
     ? mockRightContent
     : [right, news]
         .filter(Boolean)
-        .join('<br>')
-        ?.replace(/⇨/g, ArrowRightHTML())
-        .replace(/→/g, ArrowRightHTML());
+        .join('<br>');
 
   /**
    * Show sidebar for specific pages if window.showRightSidebarPages is defined
@@ -150,31 +147,27 @@ const Content = () => {
    * Main content
    */
   const pageContent = isDevMode ? mockContent : content;
-  const processedContent = useMemo(() => {
-    if (pageContent) {
-      const arrowRight = ArrowRightHTML({width: 24, height: 24});
-      return stripNavigationMarkers(pageContent)
-        ?.replace(/⇨/g, arrowRight)
-        .replace(/→/g, arrowRight)
-        .replace(/&#8594;/g, arrowRight)
-        .replace(/&amp;#8594;/g, arrowRight);
-    } else {
-      return null;
-    }
-  }, [pageContent]);
+  const processedContent = useMemo(
+    () => stripNavigationMarkers(pageContent),
+    [pageContent]
+  );
 
-  useEffect(() => {
-    if (processedContent) {
-      // handle responsive width for YouTube elements
-      handleResponsiveWidth(true, [
-        '.dlYoutubeLarge',
-        '.dlYoutubeSmall',
-        'dlVideoLarge',
-        'iframe[src*="youtube"]',
-        'iframe[title*="YouTube"]',
-      ]);
-    }
-  }, [processedContent]);
+  /**
+   * Handle responsive width for fixed-width elements within the main content
+   */
+  useResponsiveElementWidths([
+    '.dlYoutubeLarge',
+    '.dlYoutubeSmall',
+    'dlVideoLarge',
+    'iframe[src*="youtube"]',
+    'iframe[title*="YouTube"]',
+    '.imgBoxLeft',
+    '.imgBoxCenter',
+    '.imgBoxRight',
+    '.freeImgLeft',
+    '.freeImgRight',
+    '.freeImgCenter',
+  ]);
 
   return (
     <>
@@ -219,7 +212,10 @@ const Content = () => {
             {isSearchResultPage ? (
               <SearchResults className="w-full" searchResults={searchResults} />
             ) : (
-              <div className='w-full' dangerouslySetInnerHTML={{__html: processedContent}} />
+              <div
+                className="w-full"
+                dangerouslySetInnerHTML={{__html: processedContent}}
+              />
             )}
           </main>
           {/*endregion main content*/}
