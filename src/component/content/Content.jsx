@@ -219,7 +219,7 @@ const Content = () => {
             {isSearchResultPage ? (
               <SearchResults className="w-full" searchResults={searchResults} />
             ) : (
-              <div dangerouslySetInnerHTML={{__html: processedContent}} />
+              <div className='w-full' dangerouslySetInnerHTML={{__html: processedContent}} />
             )}
           </main>
           {/*endregion main content*/}
