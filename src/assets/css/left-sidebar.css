@@ -22,13 +22,16 @@ nav.left-sidebar {
 }
 
 .left-sidebar__item--primary[data-activated="true"],
-.left-sidebar__item--secondary[data-activated="true"] {
+.left-sidebar__item--secondary[data-activated="true"],
+.left-sidebar__item--primary:hover {
     border-left: 3px solid var(--Color-Highlight-Red, #D8232A);
+    transition-property: border-left;
+    transition-duration: 0.1s;
 }
 
 .left-sidebar__item-content {
     transition-property: transform;
-    transition-duration: 0.25s;
+    transition-duration: 0.1s;
     display: flex;
     flex-grow: 1;
     gap: 1rem;

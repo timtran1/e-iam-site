@@ -49,9 +49,16 @@ nav.desktop-navigation  > ul.navigation > li {
     justify-content: center;
     align-items: center;
     gap: 10px;
-    border-bottom: 4px solid var(--Color-Highlight-Red, #D8232A);
+    border-bottom: 4px solid transparent;
     background: #FFF;
+    transition: border-bottom 0.1s;
 }
+
+nav.desktop-navigation  > ul.navigation > li.active, 
+nav.desktop-navigation  > ul.navigation > li:hover {
+    border-bottom: 4px solid var(--Color-Highlight-Red, #D8232A);
+}
+
 
 nav.desktop-navigation  > ul.navigation > li > a {
     color: var(--Color-Font-Main, #1F2937);

@@ -135,8 +135,8 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
             key={menuItem.key || i}
             className={clsx(
               (!currentPage && !i) || hasChildActive(menuItem)
-                ? 'border-primary-main'
-                : '!border-transparent hover:border-primary-main'
+                ? 'active'
+                : ''
             )}
           >
             <a
