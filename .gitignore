@@ -5,7 +5,6 @@ volumes
 
 .idea
 node_modules
-package-lock.json
 originals
 dist
 certbot

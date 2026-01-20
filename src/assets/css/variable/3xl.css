@@ -5,78 +5,78 @@
  * @see: tailwind.config.js:10 - Breakpoint screen config
  */
 @screen 3xl {
-    :root {
-        /*Divider*/
-        --Color-Divider-Header: #D9D9D9;
-        --Color-Divider-Main: #E5E7EB;
+  :root {
+    /*Divider*/
+    --Color-Divider-Header: #d9d9d9;
+    --Color-Divider-Main: #e5e7eb;
 
-        /*Container padding*/
-        --Basic-Body-Horizontal-padding: 80px;
-        --Basic-Body-Vertical-Padding: 54px;
+    /*Container padding*/
+    --Basic-Body-Horizontal-padding: 80px;
+    --Basic-Body-Vertical-Padding: 54px;
 
-        /* Color and typography */
-        /*Body*/
-        --Color-Font-Paragraph-Font-Size: 18px;
-        --Color-Font-Paragraph-Line-Height: 28px;
+    /* Color and typography */
+    /*Body*/
+    --Color-Font-Paragraph-Font-Size: 18px;
+    --Color-Font-Paragraph-Line-Height: 28px;
 
-        /*H1*/
-        --Color-Font-Maintitle-Font-Size: 48px;
-        --Color-Font-Maintitle-Line-Height: 54px;
+    /*H1*/
+    --Color-Font-Maintitle-Font-Size: 48px;
+    --Color-Font-Maintitle-Line-Height: 54px;
 
-        /*H2*/
-        --Color-Font-Subtitle-Font-Size: 40px;
-        --Color-Font-Subtitle-Line-Height: 48px;
+    /*H2*/
+    --Color-Font-Subtitle-Font-Size: 40px;
+    --Color-Font-Subtitle-Line-Height: 48px;
 
-        /*H3*/
-        --Color-Font-Subsubtitle-Font-Size: 32px;
-        --Color-Font-Subsubtitle-Line-Height: 43px;
+    /*H3*/
+    --Color-Font-Subsubtitle-Font-Size: 32px;
+    --Color-Font-Subsubtitle-Line-Height: 43px;
 
-        /*Link*/
-        --Color-Font-Link: #D8232A;
+    /*Link*/
+    --Color-Font-Link: #d8232a;
 
-        /*Header*/
-        --Header-Vertical-Padding: 40px;
-        --Header-Max-Width: 1000px;
-        --Color-Font-Header-Elements-Font-Size: 14px;
-        --Color-Font-Header-Elements-Line-Height: 18px;
+    /*Header*/
+    --Header-Vertical-Padding: 40px;
+    --Header-Max-Width: 1000px;
+    --Color-Font-Header-Elements-Font-Size: 14px;
+    --Color-Font-Header-Elements-Line-Height: 18px;
 
-        /*Navigation*/
-        --Navigation-Primary-Navigation-Navbar-Spacing: 48px;
-        --Navigation-Primary-Navigation-Item-Vertical-Padding: 24px;
-        --Navigation-Primary-Navigation-Item-Horizontal-Padding: 0px;
-        --Color-Font-Navigation-Font-Size: 16px;
-        --Color-Font-Navigation-Line-Height: 24px;
+    /*Navigation*/
+    --Navigation-Primary-Navigation-Navbar-Spacing: 48px;
+    --Navigation-Primary-Navigation-Item-Vertical-Padding: 24px;
+    --Navigation-Primary-Navigation-Item-Horizontal-Padding: 0px;
+    --Color-Font-Navigation-Font-Size: 16px;
+    --Color-Font-Navigation-Line-Height: 24px;
 
-        /*Main layout content*/
-        --Right-Sidebar-Vertical-Padding: 16px;
-        --Right-Sidebar-Horizontal-Padding: 16px;
+    /*Main layout content*/
+    --Right-Sidebar-Vertical-Padding: 16px;
+    --Right-Sidebar-Horizontal-Padding: 16px;
 
-        /*Right sidebar content*/
-        --Right-Sidebar-Background: #F0F4F7;
+    /*Right sidebar content*/
+    --Right-Sidebar-Background: #f0f4f7;
 
-        /*Left sidebar region*/
-        --Navigation-Item-Width: 220px;
-        --Navigation-Secondary-Navigation-Item-Padding: 12px;
-        --Navigation-Secondary-Navigation-Item-All-Levels-Horizontal-Padding: 16px;
-        --Navigation-Secondary-Navigation-Item-All-Levels-Vertical-Padding: 16px;
-        --Color-Font-Navigation-small-Font-Size: 16px;
-        --Color-Font-Navigation-small-Line-Height: 24px;
+    /*Left sidebar region*/
+    --Navigation-Item-Width: 220px;
+    --Navigation-Secondary-Navigation-Item-Padding: 12px;
+    --Navigation-Secondary-Navigation-Item-All-Levels-Horizontal-Padding: 16px;
+    --Navigation-Secondary-Navigation-Item-All-Levels-Vertical-Padding: 16px;
+    --Color-Font-Navigation-small-Font-Size: 16px;
+    --Color-Font-Navigation-small-Line-Height: 24px;
 
-        /*Search result*/
-        --Search-Result-Input-Container-Bacground-Color: #F0F4F7;
-        --Basic-Search-Input-Upper-Padding: 80px;
-        --Basic-Search-Input-Horizontal-and-Bottom-Padding: 32px;
-        --Basic-Search-Input-Spacing: 24px;
-        --Color-Textfield-Border: #6B7280;
-        --Color-Textfield-Focus: #8655F6;
-        --Basic-Search-Result-Horizontal-Padding: 32px;
+    /*Search result*/
+    --Search-Result-Input-Container-Bacground-Color: #f0f4f7;
+    --Basic-Search-Input-Upper-Padding: 80px;
+    --Basic-Search-Input-Horizontal-and-Bottom-Padding: 32px;
+    --Basic-Search-Input-Spacing: 24px;
+    --Color-Textfield-Border: #6b7280;
+    --Color-Textfield-Focus: #8655f6;
+    --Basic-Search-Result-Horizontal-Padding: 32px;
 
-        /*Search result item*/
-        --Basic-Search-Result-Vertical-Padding: 32px;
+    /*Search result item*/
+    --Basic-Search-Result-Vertical-Padding: 32px;
 
-        /*Accordion*/
-        --Accordion-Preview-Min-Height: 72px;
-        --Accordion-Vertical-Padding: 20px;
-        --Accordion-Horizontal-Padding: 24px;
-    }
+    /*Accordion*/
+    --Accordion-Preview-Min-Height: 72px;
+    --Accordion-Vertical-Padding: 20px;
+    --Accordion-Horizontal-Padding: 24px;
+  }
 }

@@ -1,6 +1,6 @@
 export const TranslationNamespace = {
   Footer: 'footer',
-  Header: 'Header', 
+  Header: 'Header',
   CookieConsent: 'Cookie Consent',
   HomePage: 'HomePage',
 };

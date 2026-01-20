@@ -1,7 +1,12 @@
 export default function ArrowRightHTML(props = {}) {
-    const { width = 18, height = 18, stroke = "currentColor", className = "" } = props;
-    
-    return `    
+  const {
+    width = 18,
+    height = 18,
+    stroke = 'currentColor',
+    className = '',
+  } = props;
+
+  return `    
 <svg 
     xmlns="http://www.w3.org/2000/svg" 
     width="${width}"
@@ -18,5 +23,5 @@ export default function ArrowRightHTML(props = {}) {
     <path d="M5 12h14" />
     <path d="m12 5 7 7-7 7" />
 </svg>
-`
+`;
 }

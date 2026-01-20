@@ -1,33 +1,33 @@
 input {
-    padding: 10px 20px;
-    color: var(--Basic-Fontsize-Main, #1F2937);
-    font-family: "Noto Sans";
-    font-size: var(--Basic-Fontsize-Paragraph-Font-Size, 18px);
-    font-style: normal;
-    font-weight: 400;
-    line-height: var(--Basic-Fontsize-Paragraph-Line-Height, 28px);
-    /* 155.556% */
-    border-radius: 1px;
-    border: 1px solid var(--Color-Textfield-Border, #6B7280);
-    background: #FFF;
+  padding: 10px 20px;
+  color: var(--Basic-Fontsize-Main, #1f2937);
+  font-family: 'Noto Sans';
+  font-size: var(--Basic-Fontsize-Paragraph-Font-Size, 18px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: var(--Basic-Fontsize-Paragraph-Line-Height, 28px);
+  /* 155.556% */
+  border-radius: 1px;
+  border: 1px solid var(--Color-Textfield-Border, #6b7280);
+  background: #fff;
 }
 
 input::placeholder {
-    color: var(--Basic-Fontsize-Secondary, #6B7280);
+  color: var(--Basic-Fontsize-Secondary, #6b7280);
 }
 
 input:focus {
-    outline: none;
-    border: 1px solid var(--Color-Textfield-Border, #6B7280);
-    box-shadow: 0 0 0 3px var(--Color-Textfield-Focus, #8655F6);
-    transition: all 0.1s ease;
+  outline: none;
+  border: 1px solid var(--Color-Textfield-Border, #6b7280);
+  box-shadow: 0 0 0 3px var(--Color-Textfield-Focus, #8655f6);
+  transition: all 0.1s ease;
 }
 
 input:disabled {
-    border: 1px solid var(--Color-Divider-Main, #E5E7EB);
-    cursor: not-allowed;
+  border: 1px solid var(--Color-Divider-Main, #e5e7eb);
+  cursor: not-allowed;
 }
 
 input:disabled::placeholder {
-    color: var(--Basic-Fontsize-Disabled, #9CA3AF);
+  color: var(--Basic-Fontsize-Disabled, #9ca3af);
 }

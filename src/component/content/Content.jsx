@@ -121,9 +121,7 @@ const Content = () => {
 
   const rightSidebarContent = isDevMode
     ? mockRightContent
-    : [right, news]
-        .filter(Boolean)
-        .join('<br>');
+    : [right, news].filter(Boolean).join('<br>');
 
   /**
    * Show sidebar for specific pages if window.showRightSidebarPages is defined

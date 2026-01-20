@@ -1,32 +1,32 @@
 /*Override style of U5CM csslayout for #languages*/
 #languages {
-    margin-top: unset !important;
-    float: unset !important;
-    margin-left: unset !important;
-    border-left: none !important;
-    padding-left: unset !important;
+  margin-top: unset !important;
+  float: unset !important;
+  margin-left: unset !important;
+  border-left: none !important;
+  padding-left: unset !important;
 }
 
 nav.lang-selector {
-    margin-top: unset !important;
-    float: unset !important;
-    margin-left: unset !important;
-    border-left: none !important;
-    padding-left: unset !important;
-    @apply relative mt-0 ml-auto inline-flex float-none;
+  margin-top: unset !important;
+  float: unset !important;
+  margin-left: unset !important;
+  border-left: none !important;
+  padding-left: unset !important;
+  @apply relative mt-0 ml-auto inline-flex float-none;
 }
 
 #languages a,
 nav.lang-selector .current-lang {
-    color: #000 !important;
-    font-size: var(--Color-Font-Header-Elements-Font-Size, 14px) !important;
-    font-style: normal !important;
-    font-weight: 400 !important;
-    line-height: var(--Color-Font-Header-Elements-Line-Height, 18px) !important;
+  color: #000 !important;
+  font-size: var(--Color-Font-Header-Elements-Font-Size, 14px) !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: var(--Color-Font-Header-Elements-Line-Height, 18px) !important;
 }
 
 nav.lang-selector .lang-selector__option {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -134,9 +134,7 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
           <li
             key={menuItem.key || i}
             className={clsx(
-              (!currentPage && !i) || hasChildActive(menuItem)
-                ? 'active'
-                : ''
+              (!currentPage && !i) || hasChildActive(menuItem) ? 'active' : ''
             )}
           >
             <a
