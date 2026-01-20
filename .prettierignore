@@ -1,7 +1,10 @@
-yarn.lock
-package-lock.json
-node_modules/
-dist/
-r/
-docs/
-fonts/
+# Ignore artifacts:
+build
+coverage
+dist
+node_modules
+public
+u5cms
+tailwind-config
+vite-config
+volumes

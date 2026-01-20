@@ -32,6 +32,7 @@ export default function useResponsiveElementWidths(selectors) {
           }
           // Remove fixed width to allow natural responsive behavior
           element.style.width = '';
+          element.removeAttribute('width');
           element.style.maxWidth = '100%';
         } else {
           // Restore original width if available

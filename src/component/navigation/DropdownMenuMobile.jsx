@@ -154,11 +154,14 @@ const DropdownMenuMobile = ({
               <LangSelector />
             ) : (
               <button
-                className="cursor-pointer flex gap-1 items-center"
+                className="cursor-pointer flex gap-[4px] items-center"
                 onClick={handleClickBack}
               >
-                <ChevronButton className={clsx('transition rotate-180')} />
-                <span>{t('Back')}</span>
+                <ChevronButton
+                  chevronType="left"
+                  className="w-[24px] h-[24px]"
+                />
+                <div>{t('Back')}</div>
               </button>
             )}
           </div>
@@ -172,7 +175,6 @@ const DropdownMenuMobile = ({
                   <a href={menuItem.href}>{menuItem.label}</a>
                   {menuItem.children && menuItem.children.length > 0 && (
                     <ChevronButton
-                      className="h-6 w-6 flex items-center justify-center"
                       onClick={() => handleClickExpand(menuItem)}
                     />
                   )}

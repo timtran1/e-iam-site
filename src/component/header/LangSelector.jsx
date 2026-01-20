@@ -177,19 +177,18 @@ const LangSelector = ({className = ''}) => {
       className={clsx('lang-selector', className)}
       aria-label={t('Language selector')}
     >
-      <ChevronButton
+      <button
         ref={buttonRef}
-        leftSection={
-          <span className="current-lang uppercase">{currentLang}</span>
-        }
-        rotateChevron="rotate-90"
         onClick={handleToggle}
         onKeyDown={handleKeyDown}
         aria-haspopup="listbox"
         aria-expanded={opened}
         aria-label={t(`Select language, current: ${currentLang}`)}
-        className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
-      />
+        className="flex items-center  gap-[4px] cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
+      >
+        <span className="current-lang uppercase">{currentLang}</span>
+        <ChevronButton chevronType="down" className="w-[24px] h-[24px]" />
+      </button>
       <div
         ref={dropdownRef}
         role="listbox"
