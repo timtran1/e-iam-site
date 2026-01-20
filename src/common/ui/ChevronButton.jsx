@@ -11,7 +11,7 @@ function DownChevron({className, rotateChevron, ...restProps}) {
       viewBox="0 0 15 5"
       fill="none"
       className={clsx(
-        'lang-caret transition-transform duration-300',
+        'lang-caret transition-transform duration-100',
         className,
         rotateChevron
       )}
@@ -34,7 +34,7 @@ function RightChevron({className, rotateChevron, ...restProps}) {
       viewBox="0 0 5 15"
       fill="none"
       className={clsx(
-        'lang-caret transition-transform duration-300',
+        'lang-caret transition-transform duration-100',
         className,
         rotateChevron
       )}
@@ -57,7 +57,7 @@ function LeftChevron({className, rotateChevron, ...restProps}) {
       viewBox="0 0 5 15"
       fill="none"
       className={clsx(
-        'lang-caret transition-transform duration-300',
+        'lang-caret transition-transform duration-100',
         className,
         rotateChevron
       )}

@@ -8,6 +8,16 @@ nav.left-sidebar {
 .left-sidebar__item--primary {
   display: flex;
   width: var(--Navigation-Item-Width, 218px);
+  align-items: center;
+  align-self: stretch;
+
+  border-bottom: 1px solid var(--Color-Divider-Main, #e5e7eb);
+  background: #fff;
+}
+
+.left-sidebar__item--primary > a,
+.left-sidebar__item--primary > a:visited {
+  flex-grow: 1;
   padding: var(
       --Navigation-Secondary-Navigation-Item-All-Levels-Horizontal-Padding,
       16px
@@ -16,11 +26,19 @@ nav.left-sidebar {
       --Navigation-Secondary-Navigation-Item-All-Levels-Vertical-Padding,
       16px
     );
-  align-items: center;
-  align-self: stretch;
+  color: var(--Color-Font-Main, #1f2937);
+  font-size: var(--Color-Font-Navigation-Font-Size, 18px);
+  font-style: normal;
+  font-weight: 500;
+  line-height: var(--Color-Font-Navigation-Line-Height, 28px);
+  text-decoration: none;
+}
 
-  border-bottom: 1px solid var(--Color-Divider-Main, #e5e7eb);
-  background: #fff;
+.left-sidebar__item--primary > button {
+  padding-right: var(
+    --Navigation-Secondary-Navigation-Item-All-Levels-Horizontal-Padding,
+    16px
+  );
 }
 
 .left-sidebar__item--secondary {
@@ -39,39 +57,7 @@ nav.left-sidebar {
   transition-duration: 0.1s;
 }
 
-.left-sidebar__item-content {
-  transition-property: transform;
-  transition-duration: 0.1s;
-  display: flex;
-  flex-grow: 1;
-  gap: 1rem;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.left-sidebar__item--primary[data-activated='false']
-  .left-sidebar__item-content:hover,
-.left-sidebar__item--secondary[data-activated='false']
-  .left-sidebar__item-content:hover,
-.left-sidebar__item--primary:not([data-activated])
-  .left-sidebar__item-content:hover,
-.left-sidebar__item--secondary:not([data-activated])
-  .left-sidebar__item-content:hover {
-  color: var(--Color-Highlight-Red, #d8232a);
-  transform: translateX(0.25rem);
-}
-
-.left-sidebar__item-content > a,
-.left-sidebar__item-content > a:visited {
-  color: var(--Color-Font-Main, #1f2937);
-  font-size: var(--Color-Font-Navigation-Font-Size, 18px);
-  font-style: normal;
-  font-weight: 500;
-  line-height: var(--Color-Font-Navigation-Line-Height, 28px);
-  text-decoration: none;
-}
-
-.left-sidebar__item--secondary > .left-sidebar__item-content > a {
+.left-sidebar__item--secondary > a {
   font-size: var(--Color-Font-Navigation-small-Font-Size, 16px);
   line-height: var(--Color-Font-Navigation-small-Line-Height, 24px);
 }

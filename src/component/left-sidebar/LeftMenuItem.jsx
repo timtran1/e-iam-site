@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import Collapse from '../../common/ui/Collapse.jsx';
 import {hasChildActive} from '../../common/helper/menu.js';
 import useQueryParam from '../../common/hook/useQueryParam.js';
+import ChevronButton from '../../common/ui/ChevronButton.jsx';
 
 export default function LeftMenuItem({menu, index, className = ''}) {
   const hasChildren = menu.children && menu.children.length > 0;
@@ -36,34 +37,16 @@ export default function LeftMenuItem({menu, index, className = ''}) {
         className={clsx('left-sidebar__item--primary', className)}
         data-activated={isActivated || hasActivatedChild}
       >
-        <div className={clsx('left-sidebar__item-content')}>
-          <a href={menu.href}>{menu.label}</a>
+        <a href={menu.href}>{menu.label}</a>
 
-          {hasChildren && (
-            <button
-              onClick={toggleOpen}
-              className={clsx('focus:outline-none transition-transform', {
-                'rotate-90': isOpen,
-              })}
-            >
-              <svg
-                ref={caretRef}
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-          )}
-        </div>
+        {hasChildren && (
+          <ChevronButton
+            ref={caretRef}
+            onClick={toggleOpen}
+            chevronType="right"
+            rotateChevron={isOpen ? 'rotate-90' : ''}
+          />
+        )}
       </div>
 
       {hasChildren && (
