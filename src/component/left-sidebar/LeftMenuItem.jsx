@@ -37,13 +37,14 @@ export default function LeftMenuItem({menu, index, className = ''}) {
         className={clsx('left-sidebar__item--primary', className)}
         data-activated={isActivated || hasActivatedChild}
       >
-        <a href={menu.href}>{menu.label}</a>
+        <a href={menu.href} className='hover:translate-x-0.5 transition-transform duration-100'>{menu.label}</a>
 
         {hasChildren && (
           <ChevronButton
             ref={caretRef}
             onClick={toggleOpen}
             chevronType="right"
+            className="w-[24px] h-full"
             rotateChevron={isOpen ? 'rotate-90' : ''}
           />
         )}

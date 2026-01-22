@@ -35,7 +35,7 @@ nav.left-sidebar {
 }
 
 .left-sidebar__item--primary > button {
-  padding-right: var(
+  margin-right: var(
     --Navigation-Secondary-Navigation-Item-All-Levels-Horizontal-Padding,
     16px
   );
