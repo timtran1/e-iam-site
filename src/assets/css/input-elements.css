@@ -1,4 +1,10 @@
-input {
+input[type=submit],
+input[type=text],
+input[type=email],
+input[type=number],
+input[type=password],
+textarea,
+select {
   padding: 10px 20px;
   color: var(--Basic-Fontsize-Main, #1f2937);
   font-family: 'Noto Sans';
@@ -12,22 +18,42 @@ input {
   background: #fff;
 }
 
-input::placeholder {
+input[type=submit]::placeholder,
+input[type=text]::placeholder,
+input[type=email]::placeholder,
+input[type=number]::placeholder,
+input[type=password]::placeholder,
+textarea::placeholder,
+select::placeholder {
   color: var(--Basic-Fontsize-Secondary, #6b7280);
 }
 
-input:focus {
+input[type=submit]:focus,
+input[type=text]:focus,
+input[type=email]:focus,
+input[type=number]:focus,
+input[type=password]:focus,
+textarea:focus,
+select:focus {
   outline: none;
   border: 1px solid var(--Color-Textfield-Border, #6b7280);
   box-shadow: 0 0 0 3px var(--Color-Textfield-Focus, #8655f6);
   transition: all 0.1s ease;
 }
 
-input:disabled {
+input[type=submit]:disabled,
+input[type=text]:disabled,
+input[type=email]:disabled,
+input[type=number]:disabled,
+input[type=password]:disabled,
+textarea:disabled,
+select:disabled {
   border: 1px solid var(--Color-Divider-Main, #e5e7eb);
   cursor: not-allowed;
 }
 
-input:disabled::placeholder {
+input:disabled::placeholder,
+textarea:disabled::placeholder,
+select:disabled::placeholder {
   color: var(--Basic-Fontsize-Disabled, #9ca3af);
 }
