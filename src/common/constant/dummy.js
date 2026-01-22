@@ -7,7 +7,7 @@ const mockLegalAndOrganisation = `
 `;
 
 export const mockNavigation = `Semantic navigation preview (without layout, e. g. for checking links):<br><br>#<a href="index.php?c=start&amp;l=de">Startseite</a><br>#<a href="index.php?c=trottinett&amp;l=de">Trottinett &amp; Kinder</a><br>##<a href="index.php?c=formatexamples&amp;l=de">Formatbeispiele</a><br>##<a href="index.php?c=formular&amp;l=de">Formular</a><br>###<a href="index.php?c=trottinettvideo&amp;l=de">Video</a><br>####<a href="index.php?c=onemorepage&amp;l=de">Ebene 4</a><br>#<a href="index.php?c=gotthardtunnel&amp;l=de">Gotthard-Tunnel</a>`;
-export const mockContent1 = `<h1>Main Title</h1><h2>Heading 2</h2>`;
+export const mockContent1 = `<h1>Main Title</h1><h2>Heading 2</h2><hr/>`;
 export const mockContent = `<p></p>
 <h1>eIAM</h1><span class="larger">eIAM is the Federal Administration's central access and permissions system for web
     applications and native mobile apps<a target="_blank" title="https://docs.eiam.swiss?c=intmobilapp"

@@ -26,6 +26,7 @@ article.body-content__container--standard {
   gap: var(--Basic-Body-Horizontal-padding, 16px);
   flex: 1 0 0;
   align-self: stretch;
+  align-items: stretch;
 
   /*For tablet */
   @screen md {
