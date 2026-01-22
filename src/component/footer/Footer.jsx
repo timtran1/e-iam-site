@@ -19,10 +19,19 @@ const Footer = () => {
   return (
     <footer
       {...(hasRemovedServerElements ? {id: ELEMENT_ID.FOOTER} : {})}
-      className="!bg-gray-pickled-bluewood !py-2 !m-0 !border-0 !text-3.2"
+      className="!bg-gray-pickled-bluewood !py-2 !m-0 !border-0"
+      // use inline here to avoid style shifts due to old u5cms css being applied first
+      style={{
+        fontStyle: 'normal',
+        fontWeight: 400,
+        fontFamily:
+          'var(--Basic-Font-Family-Font-Family, "Noto Sans"), sans-serif',
+        fontSize: 'var(--Color-Font-Header-Elements-Font-Size, 14)',
+        lineHeight: 'var(--Color-Font-Header-Elements-Line-Height, 18px)',
+      }}
     >
       <div
-        className="!container !mx-auto !text-white !text-3.2"
+        className="!container !mx-auto !text-white"
         dangerouslySetInnerHTML={{__html: footerHTML}}
       ></div>
     </footer>

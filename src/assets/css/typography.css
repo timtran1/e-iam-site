@@ -1,47 +1,58 @@
-h1 {
-  font-style: normal;
-  font-weight: 400;
-  color: var(--Color-Font-Main, #1f2937);
-  font-family: var(--Basic-Font-Family-Font-Family, 'Noto Sans'), sans-serif;
-  font-size: var(--Color-Font-Maintitle-Font-Size, 3rem);
-  line-height: var(--Color-Font-Maintitle-Line-Height, 3.375rem);
-  margin-top: 12px;
-  margin-bottom: 24px;
+main#app-root > header,
+main#app-root > article {
+  h1 {
+    font-style: normal;
+    font-weight: 400;
+    color: var(--Color-Font-Main, #1f2937);
+    font-family: var(--Basic-Font-Family-Font-Family, 'Noto Sans'), sans-serif;
+    font-size: var(--Color-Font-Maintitle-Font-Size, 3rem);
+    line-height: var(--Color-Font-Maintitle-Line-Height, 3.375rem);
+    margin-top: 12px;
+    margin-bottom: 24px;
+  }
+
+  h2 {
+    font-style: normal;
+    font-weight: 400;
+    color: var(--Color-Font-Main, #1f2937);
+    font-family: var(--Basic-Font-Family-Font-Family, 'Noto Sans'), sans-serif;
+    font-size: var(--Color-Font-Subtitle-Font-Size, 40px);
+    line-height: var(--Color-Font-Subtitle-Line-Height, 48px);
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-style: normal;
+    font-weight: 400;
+    color: var(--Color-Font-Main, #1f2937);
+    font-family: var(--Basic-Font-Family-Font-Family, 'Noto Sans'), sans-serif;
+    font-size: var(--Color-Font-Subsubtitle-Font-Size, 32px);
+    line-height: var(--Color-Font-Subsubtitle-Line-Height, 43px);
+    margin-top: 6px;
+    margin-bottom: 12px;
+  }
+
+  a {
+    font-style: normal;
+    font-weight: 400;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: auto;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
+    color: var(--Color-Font-Link, #d8232a);
+    font-family: var(--Basic-Font-Family-Font-Family, 'Noto Sans'), sans-serif;
+    font-size: var(--Color-Font-Paragraph-Font-Size, 18px);
+    line-height: var(--Color-Font-Paragraph-Line-Height, 28px);
+  }
 }
 
-h2 {
+main#app-root > footer a {
   font-style: normal;
   font-weight: 400;
-  color: var(--Color-Font-Main, #1f2937);
   font-family: var(--Basic-Font-Family-Font-Family, 'Noto Sans'), sans-serif;
-  font-size: var(--Color-Font-Subtitle-Font-Size, 40px);
-  line-height: var(--Color-Font-Subtitle-Line-Height, 48px);
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
-
-h3 {
-  font-style: normal;
-  font-weight: 400;
-  color: var(--Color-Font-Main, #1f2937);
-  font-family: var(--Basic-Font-Family-Font-Family, 'Noto Sans'), sans-serif;
-  font-size: var(--Color-Font-Subsubtitle-Font-Size, 32px);
-  line-height: var(--Color-Font-Subsubtitle-Line-Height, 43px);
-  margin-top: 6px;
-  margin-bottom: 12px;
-}
-
-a {
-  font-style: normal;
-  font-weight: 400;
-  text-decoration-line: underline;
-  text-decoration-style: solid;
-  text-decoration-skip-ink: auto;
-  text-decoration-thickness: auto;
-  text-underline-offset: auto;
-  text-underline-position: from-font;
-  color: var(--Color-Font-Link, #d8232a);
-  font-family: var(--Basic-Font-Family-Font-Family, 'Noto Sans'), sans-serif;
-  font-size: var(--Color-Font-Paragraph-Font-Size, 18px);
-  line-height: var(--Color-Font-Paragraph-Line-Height, 28px);
+  font-size: var(--Color-Font-Header-Elements-Font-Size, 14);
+  line-height: var(--Color-Font-Header-Elements-Line-Height, 18px);
 }
