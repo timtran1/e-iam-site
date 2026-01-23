@@ -1,5 +1,5 @@
-main#app-root > header,
-main#app-root > article {
+header,
+article {
   h1 {
     font-style: normal;
     font-weight: 400;
@@ -49,7 +49,7 @@ main#app-root > article {
   }
 }
 
-main#app-root > footer a {
+footer a {
   font-style: normal;
   font-weight: 400;
   font-family: var(--Basic-Font-Family-Font-Family, 'Noto Sans'), sans-serif;
