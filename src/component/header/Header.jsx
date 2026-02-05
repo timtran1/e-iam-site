@@ -28,6 +28,16 @@ const Header = ({className, sticky = false}) => {
   // Mobile navigation menu opened state
   const [isMobileMenuOpened, setIsMobileMenuOpened] = React.useState(false);
 
+  // Document title state
+  const [pageTitle, setPageTitle] = React.useState('');
+
+  /**
+   * Get document title on mount
+   */
+  React.useEffect(() => {
+    setPageTitle(document.title);
+  }, []);
+
   /**
    * Get header height and update to data context
    */
@@ -102,9 +112,7 @@ const Header = ({className, sticky = false}) => {
             <div className="flex gap-4 xl:gap-6 flex-1 items-center xl:items-start">
               <div className="w-0.25 h-13.75 bg-[var(--Color-Divider-Header)]" />
               <p className="hidden xl:block my-0 font-semibold flex-1 max-w-[var(--Header-Max-Width,1000px)]">
-                eIAM - Federal Office of Information Technology, Systems and
-                Telecommunication & Federal Chancellery FCh, Digital
-                Transformation and ICT Governance DTI
+                {pageTitle}
               </p>
               <p className="xl:hidden my-0 font-semibold flex-1 max-w-[var(--Header-Max-Width,1000px)]">
                 eIAM
