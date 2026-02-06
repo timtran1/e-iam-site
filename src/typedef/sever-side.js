@@ -9,4 +9,5 @@
  * @property {Element=} footer
  * @property {Element=} right
  * @property {Element=} news
+ * @property {Element=} bit - This is custom element id for header content
  */

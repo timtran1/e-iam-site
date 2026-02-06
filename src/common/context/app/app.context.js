@@ -25,6 +25,7 @@ const DefaultState = {
     right: undefined,
     news: undefined,
     content: undefined,
+    bit: undefined,
   },
   menu: [],
   languages: [],
