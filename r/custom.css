@@ -360,8 +360,8 @@ a:hover .arrow-right-icon {
 }
 
 .showblock2divinner {
-    display: block;
-    height: 0px;
+    display: block !important;
+    height: 0;
     width: 100%;
     overflow: hidden;
     padding: 0;

@@ -2,6 +2,7 @@
 .showblock2inactivetab {
   /*Wrapper*/
   display: flex;
+  gap: 1rem;
   padding: var(--Accordion-Vertical-Padding, 0.75rem)
     var(--Accordion-Horizontal-Padding, 1rem);
   justify-content: space-between;
@@ -21,6 +22,11 @@
   text-decoration-line: none !important;
   border: none !important;
   margin: unset !important;
+}
+
+.showblockinactivetab .smaller,
+.showblock2inactivetab .smaller {
+  padding-right: 2rem;
 }
 
 .showblockdivinner.expand,
