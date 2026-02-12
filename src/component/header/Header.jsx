@@ -23,10 +23,20 @@ const Header = ({className, sticky = false}) => {
   const {ref: headerRef, height: headerHeight} = useElementSize();
 
   // Get app context
-  const {headerMeta, setHeaderMeta} = React.useContext(AppContext);
+  const {serverSideData, headerMeta, setHeaderMeta} =
+    React.useContext(AppContext);
 
   // Mobile navigation menu opened state
   const [isMobileMenuOpened, setIsMobileMenuOpened] = React.useState(false);
+
+  // Document title state
+  const pageTitle = React.useMemo(() => {
+    if (serverSideData.bit) {
+      return serverSideData.bit.innerHTML;
+    } else {
+      return '';
+    }
+  }, [serverSideData.bit]);
 
   /**
    * Get header height and update to data context
@@ -101,11 +111,10 @@ const Header = ({className, sticky = false}) => {
             {/*Frame 5*/}
             <div className="flex gap-4 xl:gap-6 flex-1 items-center xl:items-start">
               <div className="w-0.25 h-13.75 bg-[var(--Color-Divider-Header)]" />
-              <p className="hidden xl:block my-0 font-semibold flex-1 max-w-[var(--Header-Max-Width,1000px)]">
-                eIAM - Federal Office of Information Technology, Systems and
-                Telecommunication & Federal Chancellery FCh, Digital
-                Transformation and ICT Governance DTI
-              </p>
+              <p
+                className="hidden xl:block my-0 font-semibold flex-1 max-w-[var(--Header-Max-Width,1000px)]"
+                dangerouslySetInnerHTML={{__html: pageTitle}}
+              />
               <p className="xl:hidden my-0 font-semibold flex-1 max-w-[var(--Header-Max-Width,1000px)]">
                 eIAM
               </p>

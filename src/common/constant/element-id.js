@@ -14,4 +14,5 @@ export const ELEMENT_ID = {
   FOOTER: 'footer',
   RIGHT: 'right',
   NEWS: 'news',
+  BIT: 'bit', // This is custom element id for header content
 };
