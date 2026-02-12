@@ -1,5 +1,7 @@
 .showblockinactivetab,
-.showblock2inactivetab {
+.showblockactivetab,
+.showblock2inactivetab,
+.showblock2activetab {
   /*Wrapper*/
   display: flex;
   gap: 1rem;
@@ -25,12 +27,14 @@
 }
 
 .showblockinactivetab .smaller,
-.showblock2inactivetab .smaller {
+.showblock2inactivetab .smaller,
+.showblock2activetab .smaller {
   padding-right: 2rem;
 }
 
-.showblockdivinner.expand,
-.showblock2divinner.expand {
+.showblockdivinner,
+.showblock2divinner {
+  width: 100%;
   margin: unset !important;
   color: var(--Color-Font-Main, #1f2937);
   font-size: var(--Color-Font-Paragraph-Font-Size, 16px);
@@ -45,13 +49,12 @@
   overflow-y: hidden;
 }
 
-.showblockdivinner.expand > .showblockclose {
+.showblockdivinner > .showblockclose {
   display: none;
 }
 
 /*Override r/custom.css*/
 .showblockactivetab::after,
-.showblockinactivetab::after,
 .showblockinactivetab::after,
 .showblock2activetab::after,
 .showblock2inactivetab::after {
@@ -64,11 +67,11 @@
   transition: height 0.3s ease;
 }
 
-.showblockinactivetab + a:not(.expand) {
+.showblockinactivetab + a {
   height: 0 !important;
 }
 
-.showblockinactivetab + a.expand {
+.showblockactivetab + a {
   margin: unset !important;
   font-size: var(--Color-Font-Paragraph-Font-Size, 16px);
   font-style: normal;

@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import {ELEMENT_ID} from './common/constant/element-id.js';
 import {isU5AdminPreview} from './common/helper/pageContext.js';
-import replaceU5CMSFunctions from './utils/replaceU5CMSFunctions.js';
+// import replaceU5CMSFunctions from './utils/replaceU5CMSFunctions.js';
 
 // Check if we're in u5admin preview mode - if so, exit early
 const isPreview = isU5AdminPreview();
@@ -186,7 +186,7 @@ function _renderReactAppInternal(containerId = CONTAINER_CONFIG.DEFAULT_ID) {
 
     console.log('App mounted successfully');
 
-    replaceU5CMSFunctions();
+    // replaceU5CMSFunctions();
   }
 }
 
