@@ -243,3 +243,8 @@ a:hover .arrow-right-icon {
 .showblock2close {
     display: none;
 }
+
+/* Custom table styling */
+tr:hover {
+    background:  #F9FAFB;
+}

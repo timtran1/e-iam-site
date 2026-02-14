@@ -38,7 +38,7 @@ nav.desktop-navigation > ul.navigation {
 
   display: flex;
   padding: 0 var(--Basic-Body-Horizontal-padding, 80px);
-  align-items: flex-start;
+  align-items: stretch;
   gap: var(--Navigation-Primary-Navigation-Navbar-Spacing, 48px);
   align-self: stretch;
   border-bottom: 1px solid var(--Color-Divider-Main, #e5e7eb);

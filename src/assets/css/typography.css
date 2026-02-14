@@ -33,7 +33,36 @@ article {
     margin-bottom: 12px;
   }
 
+  a {
+    font-style: normal;
+    font-weight: 400;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: auto;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
+    color: var(--Color-Font-Link, #d8232a);
+    font-family: var(--Basic-Font-Family-Font-Family, 'Noto Sans'), sans-serif;
+    font-size: var(--Color-Font-Paragraph-Font-Size, 18px);
+    line-height: var(--Color-Font-Paragraph-Line-Height, 28px);
+  }
 
+  /* Respect inline formatting by rich text editor */
+  span.smaller a,
+  span.larger a,
+  span.stabiloboss a,
+  span.bold a,
+  span.italic a,
+  span.mono a,
+  span.subscript a,
+  span.superscript a {
+    font-size: inherit;
+    font-weight: inherit;
+    font-style: inherit;
+    line-height: inherit;
+    font-family: inherit;
+  }
 }
 
 
