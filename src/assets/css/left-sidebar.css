@@ -32,6 +32,12 @@ nav.left-sidebar {
   font-weight: 500;
   line-height: var(--Color-Font-Navigation-Line-Height, 28px);
   text-decoration: none;
+
+  /* break words */
+  max-width: 100%;
+  hyphens: auto;
+  overflow-wrap: break-word; /* fallback */
+  word-break: normal;
 }
 
 .left-sidebar__item--primary > button {
