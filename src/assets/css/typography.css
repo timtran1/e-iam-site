@@ -33,26 +33,20 @@ article {
     margin-bottom: 12px;
   }
 
-  a {
-    font-style: normal;
-    font-weight: 400;
-    text-decoration-line: underline;
-    text-decoration-style: solid;
-    text-decoration-skip-ink: auto;
-    text-decoration-thickness: auto;
-    text-underline-offset: auto;
-    text-underline-position: from-font;
-    color: var(--Color-Font-Link, #d8232a);
-    font-family: var(--Basic-Font-Family-Font-Family, 'Noto Sans'), sans-serif;
-    font-size: var(--Color-Font-Paragraph-Font-Size, 18px);
-    line-height: var(--Color-Font-Paragraph-Line-Height, 28px);
-  }
+
 }
 
+
 footer a {
+  color: white !important;
+  text-decoration: underline !important;
   font-style: normal;
   font-weight: 400;
   font-family: var(--Basic-Font-Family-Font-Family, 'Noto Sans'), sans-serif;
   font-size: var(--Color-Font-Header-Elements-Font-Size, 14);
   line-height: var(--Color-Font-Header-Elements-Line-Height, 18px);
+}
+
+footer a:hover {
+    color: #dfe4e9 !important;
 }
