@@ -15,6 +15,14 @@ const ResultItem = React.memo(({searchResult, viewMode}) => {
    * @type {string}
    */
   const fullHref = React.useMemo(() => {
+    // If the href is already an absolute URL, use it directly
+    if (
+      searchResult.href?.startsWith('http://') ||
+      searchResult.href?.startsWith('https://')
+    ) {
+      return searchResult.href;
+    }
+
     const [endpoint] = location.href.split('?');
     const currentSearchParams = new URLSearchParams(location.search);
     const hrefPath = searchResult.href?.includes('?')
@@ -23,7 +31,7 @@ const ResultItem = React.memo(({searchResult, viewMode}) => {
     const hrefParams = new URLSearchParams(
       searchResult.href?.includes('?')
         ? searchResult.href?.split('?')[1]
-        : searchResult.href?.split[0]
+        : searchResult.href
     );
     for (const key of hrefParams.keys()) {
       if (currentSearchParams.has(key)) {

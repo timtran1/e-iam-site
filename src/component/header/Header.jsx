@@ -89,7 +89,7 @@ const Header = ({className, sticky = false}) => {
           <a
             href="/"
             aria-label={t('eIAM - Go to homepage')}
-            className="w-8.5 h-9.5 xl:w-64 xl:h-20 overflow-hidden"
+            className="xl:ml-[-12px] w-8.5 h-9.5 xl:w-64 xl:h-20 overflow-hidden"
           >
             <div
               className={clsx(
