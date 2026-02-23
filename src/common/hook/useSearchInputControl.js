@@ -1,5 +1,5 @@
 import React from 'react';
-import useQueryParam from './useQueryParam.js';
+import useQueryParam, {toQueryString} from './useQueryParam.js';
 import useEffectOnce from './useEffectOnce.js';
 
 const useSearchInputControl = () => {
@@ -30,7 +30,7 @@ const useSearchInputControl = () => {
       const [path, paramsStr] = href.split('?');
       const params = new URLSearchParams(paramsStr);
       params.set(searchKeyForU5cm, encodedSearchStr);
-      location.href = `${path}?${params.toString()}`;
+      location.href = `${path}?${toQueryString(params)}`;
     }
   }, [encodedSearchStr, searchValue]);
 

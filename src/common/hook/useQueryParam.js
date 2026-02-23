@@ -1,6 +1,22 @@
 import React from 'react';
 
 /**
+ * Converts URLSearchParams to a query string using encodeURIComponent,
+ * which preserves URL-safe characters (! ' ( ) ~ *) that URLSearchParams
+ * unnecessarily encodes.
+ *
+ * @param {URLSearchParams} params
+ * @returns {string}
+ */
+export const toQueryString = (params) => {
+  const parts = [];
+  for (const [key, value] of params) {
+    parts.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+  }
+  return parts.join('&');
+};
+
+/**
  * Use query param hook - provides both getter and setter for URL query parameters
  *
  * @param {string} key - The query parameter key
@@ -39,7 +55,8 @@ const useQueryParam = (key) => {
       }
 
       // Update URL without page reload
-      const newUrl = `${url.pathname}${params.toString() ? '?' + params.toString() : ''}${url.hash}`;
+      const queryStr = toQueryString(params);
+      const newUrl = `${url.pathname}${queryStr ? '?' + queryStr : ''}${url.hash}`;
       window.history.replaceState({}, '', newUrl);
     },
     [key]
