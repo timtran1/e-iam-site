@@ -6,29 +6,38 @@ import {hasChildActive} from '../../common/helper/menu.js';
 import useQueryParam from '../../common/hook/useQueryParam.js';
 import ChevronButton from '../../common/ui/ChevronButton.jsx';
 
-export default function LeftMenuItem({menu, index, className = ''}) {
+export default function LeftMenuItem({menu, index, className = '', isOpen, onToggle}) {
   const hasChildren = menu.children && menu.children.length > 0;
   const isActivated = linkIsCurrentPage(menu.href);
 
   // Get current page
   const [currentPage] = useQueryParam('c');
 
-  // Firstly, check if the current page is not the first page and the index is not 0
-  // Secondly, check if the menu has children and if any of its children are active
   const hasActivatedChild =
     (!currentPage && !index) ||
     (hasChildren && menu.children.some((child) => hasChildActive(child)));
 
-  // Local state for this specific menu item only - initialize to open if it has an active child
-  const [isOpen, setIsOpen] = useState(hasActivatedChild);
+  // Track which child is open for accordion behavior at this level
+  const [openChildIndex, setOpenChildIndex] = useState(() => {
+    if (!hasChildren) return null;
+    for (let i = 0; i < menu.children.length; i++) {
+      const child = menu.children[i];
+      const childHasChildren = child.children && child.children.length > 0;
+      if (childHasChildren && child.children.some((c) => hasChildActive(c))) return i;
+    }
+    return null;
+  });
 
   // Refs for animation elements
   const caretRef = useRef(null);
 
-  // Toggle this specific menu item only
   const toggleOpen = (e) => {
     e.preventDefault();
-    setIsOpen(!isOpen);
+    onToggle();
+  };
+
+  const handleChildToggle = (childIndex) => {
+    setOpenChildIndex((prev) => (prev === childIndex ? null : childIndex));
   };
 
   return (
@@ -60,6 +69,8 @@ export default function LeftMenuItem({menu, index, className = ''}) {
               key={childIndex}
               menu={childMenu}
               index={`${index}-${childIndex}`}
+              isOpen={openChildIndex === childIndex}
+              onToggle={() => handleChildToggle(childIndex)}
             />
           ))}
         </Collapse>
