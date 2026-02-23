@@ -1,14 +1,16 @@
+.showblockactivetab,
+.showblock2activetab {
+  display: block;
+}
+
 .showblockinactivetab,
 .showblockactivetab,
 .showblock2inactivetab,
 .showblock2activetab {
-  /*Wrapper*/
-  display: flex;
   gap: 1rem;
   padding: var(--Accordion-Vertical-Padding, 0.75rem)
     var(--Accordion-Horizontal-Padding, 1rem);
-  justify-content: space-between;
-  align-items: center;
+  padding-right: calc(var(--Accordion-Horizontal-Padding, 1rem) + 16px);
   align-self: stretch;
   background: var(--Color-Background-Element, #f0f4f7);
   min-height: var(--Accordion-Preview-Min-Height, 3.5rem);
