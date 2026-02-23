@@ -248,3 +248,8 @@ a:hover .arrow-right-icon {
 tr:hover {
     background:  #F9FAFB;
 }
+
+/* Override tailwind preflight */
+span img {
+    display: inline;
+}
