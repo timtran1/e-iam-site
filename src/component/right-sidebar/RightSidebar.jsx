@@ -1,15 +1,29 @@
 import React from 'react';
-import AppContext from '../../common/context/app/app.context.js';
 import clsx from 'clsx';
 
-export default function RightSidebar({content, sticky = false}) {
-  // Get app context
-  const {headerMeta} = React.useContext(AppContext);
-
+export default function RightSidebar({content}) {
   // Sidebar element ref
   const asideRef = React.useRef(null);
   // Track if asideRef is rendered
   const [isAsideRendered, setIsAsideRendered] = React.useState(false);
+
+  /**
+   * Whether the right sidebar should be sticky
+   * It is extracted from the wrapper element of the right sidebar content
+   *
+   * @type {boolean}
+   */
+  const isSideAnchorsFixed = React.useMemo(() => {
+    if (content && isAsideRendered && asideRef.current) {
+      /**@type {HTMLElement}*/
+      const wrapperElement = asideRef.current.querySelector('#sideanchors');
+      if (wrapperElement) {
+        const wrapperPositionStyle = wrapperElement.style.position;
+        return wrapperPositionStyle === 'fixed';
+      }
+    }
+    return false;
+  }, [content, isAsideRendered]);
 
   /**
    * @type {Array<{
@@ -75,10 +89,10 @@ export default function RightSidebar({content, sticky = false}) {
         <div ref={asideRef} dangerouslySetInnerHTML={{__html: content}} />
 
         <div
-          className={clsx({'p-4': !!sideAnchors?.length, sticky})}
-          style={{
-            ...(sticky && {top: headerMeta.headerHeight + 16 || 10 * 16}),
-          }}
+          className={clsx({
+            'p-4': !!sideAnchors?.length,
+            fixed: isSideAnchorsFixed,
+          })}
         >
           {sideAnchors?.map((anchor, _index) => (
             <React.Fragment key={_index}>

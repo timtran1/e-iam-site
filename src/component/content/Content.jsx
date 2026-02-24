@@ -1,4 +1,4 @@
-import {useContext, useEffect, useMemo} from 'react';
+import {useContext, useMemo} from 'react';
 import AppContext from '../../common/context/app/app.context.js';
 import {
   mockContent,
