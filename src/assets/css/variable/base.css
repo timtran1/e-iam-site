@@ -27,14 +27,20 @@
   /*H1*/
   --Color-Font-Maintitle-Font-Size: 26px;
   --Color-Font-Maintitle-Line-Height: 36px;
+  --Color-Font-Maintitle-Margin-Top: 0px;
+  --Color-Font-Maintitle-Margin-Bottom: 0px;
 
   /*H2*/
   --Color-Font-Subtitle-Font-Size: 22px;
   --Color-Font-Subtitle-Line-Height: 33px;
+  --Color-Font-Subtitle-Margin-Top: 12px;
+  --Color-Font-Subtitle-Margin-Bottom: 0px;
 
   /*H3*/
   --Color-Font-Subsubtitle-Font-Size: 20px;
   --Color-Font-Subsubtitle-Line-Height: 32px;
+  --Color-Font-Subsubtitle-Margin-Top: 8px;
+  --Color-Font-Subsubtitle-Margin-Bottom: 0px;
 
   /*Link*/
   --Color-Font-Link: #d8232a;
