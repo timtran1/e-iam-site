@@ -86,10 +86,14 @@ export default function RightSidebar({content}) {
       className={clsx('w-full overflow-hidden h-full break-words text-wrap')}
     >
       <>
-        <div ref={asideRef} dangerouslySetInnerHTML={{__html: content}} />
+        <div
+          className="body-content__container__right__normal-content"
+          ref={asideRef}
+          dangerouslySetInnerHTML={{__html: content}}
+        />
 
         <div
-          className={clsx({
+          className={clsx('body-content__container__right__anchors', {
             'p-4': !!sideAnchors?.length,
             fixed: isSideAnchorsFixed,
           })}
