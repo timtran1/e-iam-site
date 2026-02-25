@@ -60,6 +60,7 @@
 
     /*Right sidebar content*/
     --Right-Sidebar-Background: #f0f4f7;
+    --Right-Sidebar-Anchors-Width: 300px;
 
     /*Left sidebar region*/
     --Navigation-Item-Width: 218px;
