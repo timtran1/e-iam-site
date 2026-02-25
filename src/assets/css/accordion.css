@@ -26,6 +26,7 @@
   text-decoration-line: none !important;
   border: none !important;
   margin: unset !important;
+  margin-top: var(--Accordion-Margin-Top, 12px) !important;
 }
 
 .showblockinactivetab .smaller,

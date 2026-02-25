@@ -33,6 +33,10 @@ article {
     margin-bottom: var(--Color-Font-Subsubtitle-Margin-Bottom, 0px);
   }
 
+  p {
+    margin-top: var(--Basic-Fontsize-Paragraph-Margin-Top, 8px);
+  }
+
   a {
     font-style: normal;
     font-weight: 400;

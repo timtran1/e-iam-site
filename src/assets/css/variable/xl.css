@@ -18,6 +18,7 @@
     /*Body*/
     --Color-Font-Paragraph-Font-Size: 18px;
     --Color-Font-Paragraph-Line-Height: 28px;
+    --Basic-Fontsize-Paragraph-Margin-Top: 12px;
 
     /*H1*/
     --Color-Font-Maintitle-Font-Size: 40px;
@@ -84,5 +85,6 @@
     --Accordion-Preview-Min-Height: 72px;
     --Accordion-Vertical-Padding: 20px;
     --Accordion-Horizontal-Padding: 24px;
+    --Accordion-Margin-Top: 16px;
   }
 }
