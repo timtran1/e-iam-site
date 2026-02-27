@@ -76,7 +76,7 @@ footer a {
   font-style: normal;
   font-weight: 400;
   font-family: var(--Basic-Font-Family-Font-Family, 'Noto Sans'), sans-serif;
-  font-size: var(--Color-Font-Header-Elements-Font-Size, 14);
+  font-size: var(--Color-Font-Header-Elements-Font-Size, 14px);
   line-height: var(--Color-Font-Header-Elements-Line-Height, 18px);
 }
 
