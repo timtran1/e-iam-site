@@ -6,7 +6,13 @@ import {hasChildActive} from '../../common/helper/menu.js';
 import useQueryParam from '../../common/hook/useQueryParam.js';
 import ChevronButton from '../../common/ui/ChevronButton.jsx';
 
-export default function LeftMenuItem({menu, index, className = '', isOpen, onToggle}) {
+export default function LeftMenuItem({
+  menu,
+  index,
+  className = '',
+  isOpen,
+  onToggle,
+}) {
   const hasChildren = menu.children && menu.children.length > 0;
   const isActivated = linkIsCurrentPage(menu.href);
 
@@ -23,7 +29,8 @@ export default function LeftMenuItem({menu, index, className = '', isOpen, onTog
     for (let i = 0; i < menu.children.length; i++) {
       const child = menu.children[i];
       const childHasChildren = child.children && child.children.length > 0;
-      if (childHasChildren && child.children.some((c) => hasChildActive(c))) return i;
+      if (childHasChildren && child.children.some((c) => hasChildActive(c)))
+        return i;
     }
     return null;
   });
@@ -46,7 +53,12 @@ export default function LeftMenuItem({menu, index, className = '', isOpen, onTog
         className={clsx('left-sidebar__item--primary', className)}
         data-activated={isActivated || hasActivatedChild}
       >
-        <a href={menu.href} className='hover:translate-x-0.5 transition-transform duration-100'>{menu.label}</a>
+        <a
+          href={menu.href}
+          className="hover:translate-x-0.5 transition-transform duration-100"
+        >
+          {menu.label}
+        </a>
 
         {hasChildren && (
           <ChevronButton
