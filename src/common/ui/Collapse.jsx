@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+import useMeasure from '../hook/useMeasure.js';
 
 /**
  * Collapse component that provides smooth expand/collapse animation
@@ -24,7 +25,7 @@ const Collapse = ({
   children,
   ...props
 }) => {
-  const contentRef = React.useRef(null);
+  const [contentRef, {height: contentHeight}] = useMeasure();
   const [height, setHeight] = React.useState(isOpen ? 'auto' : 0);
   const [opacity, setOpacity] = React.useState(isOpen ? 1 : 0);
   const [isTransitioning, setIsTransitioning] = React.useState(false);
@@ -45,20 +46,29 @@ const Collapse = ({
    * Manages height and opacity transitions based on isOpen state
    */
   React.useEffect(() => {
-    if (!contentRef.current) return;
+    if (!contentRef) return;
 
-    const element = contentRef.current;
-    const scrollHeight = element.scrollHeight;
+    // Use double requestAnimationFrame to ensure browser has time to render the explicit height
+    const setHeightWithRequestAnimationFrame = (
+      height,
+      callbackFn = () => {}
+    ) => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setHeight(height);
+          callbackFn();
+        });
+      });
+    };
 
     if (isOpen) {
       // Opening animation
       setIsTransitioning(true);
-      setHeight(0);
+      setHeightWithRequestAnimationFrame(0);
       setOpacity(animateOpacity ? 0 : 1);
 
-      // Use requestAnimationFrame to ensure the initial state is applied
-      requestAnimationFrame(() => {
-        setHeight(scrollHeight);
+      // Set height to content height and opacity to 1
+      setHeightWithRequestAnimationFrame(contentHeight, () => {
         if (animateOpacity) {
           setOpacity(1);
         }
@@ -68,20 +78,17 @@ const Collapse = ({
       setIsTransitioning(true);
 
       // Set explicit height first (get current computed height)
-      setHeight(scrollHeight);
+      setHeightWithRequestAnimationFrame(contentHeight);
       setOpacity(animateOpacity ? 1 : 1);
 
-      // Use double requestAnimationFrame to ensure browser has time to render the explicit height
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          setHeight(0);
-          if (animateOpacity) {
-            setOpacity(0);
-          }
-        });
+      // Set height to 0 and opacity to 0
+      setHeightWithRequestAnimationFrame(0, () => {
+        if (animateOpacity) {
+          setOpacity(0);
+        }
       });
     }
-  }, [isOpen, animateOpacity]);
+  }, [isOpen, animateOpacity, contentRef, contentHeight]);
 
   /**
    * Effect to set height to auto after opening transition completes
