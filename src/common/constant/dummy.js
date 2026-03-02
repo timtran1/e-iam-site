@@ -8,6 +8,156 @@ const mockLegalAndOrganisation = `
 
 export const mockNavigation = `Semantic navigation preview (without layout, e. g. for checking links):<br><br>#<a href="index.php?c=start&amp;l=de">Startseite</a><br>#<a href="index.php?c=trottinett&amp;l=de">Trottinett &amp; Kinder</a><br>##<a href="index.php?c=formatexamples&amp;l=de">Formatbeispiele</a><br>##<a href="index.php?c=formular&amp;l=de">Formular</a><br>###<a href="index.php?c=trottinettvideo&amp;l=de">Video</a><br>####<a href="index.php?c=onemorepage&amp;l=de">Ebene 4</a><br>#<a href="index.php?c=gotthardtunnel&amp;l=de">Gotthard-Tunnel</a>`;
 export const mockContent1 = `<h1>Main Title</h1><h2>Heading 2</h2><hr/>`;
+
+// Mock content for page ?c=f!eiamglossary!pub
+export const mockContent2 = `<div class="w-full"><a name="content" style="pointer-events:none"></a>
+
+<script><!--
+function ifnone() {
+ifn=0;
+ifnlim=50;
+ifnonebis();
+}
+function ifnonebis() {
+ifn++;
+if(ifn==ifnlim)if(!document.getElementById('checkbox_de').checked&&!document.getElementById('checkbox_fr').checked&&!document.getElementById('checkbox_it').checked&&!document.getElementById('checkbox_en').checked) {
+//if(document.getElementById('checkbox_en'))document.getElementById('checkbox_en').click();
+//else document.getElementById('checkbox_de').click();
+}
+setTimeout("if(ifn<=ifnlim&&ifn>0&&!document.getElementById('checkbox_de').checked&&!document.getElementById('checkbox_fr').checked&&!document.getElementById('checkbox_it').checked&&!document.getElementById('checkbox_en').checked)ifnonebis()",111);
+}
+
+langwaiter=0;
+function checkbox_lang() {
+ifnone();
+if(document.getElementById('checkbox_de').checked)checkbox_lang_show('de');
+else checkbox_lang_hide('de');
+if(document.getElementById('checkbox_fr').checked)checkbox_lang_show('fr');
+else checkbox_lang_hide('fr');
+if(document.getElementById('checkbox_it').checked)checkbox_lang_show('it');
+else checkbox_lang_hide('it');
+if(document.getElementById('checkbox_en').checked)checkbox_lang_show('en');
+else checkbox_lang_hide('en');
+
+if(langwaiter>0) {
+if(document.getElementById('cbl_fr').style.visibility=='hidden'&&document.getElementById('checkbox_fr').checked)document.getElementById('checkbox_fr').click();
+if(document.getElementById('cbl_it').style.visibility=='hidden'&&document.getElementById('checkbox_it').checked)document.getElementById('checkbox_it').click();
+if(document.getElementById('cbl_en').style.visibility=='hidden'&&document.getElementById('checkbox_en').checked)document.getElementById('checkbox_en').click();
+}
+}
+setTimeout("langwaiter++",1333);
+
+function checkbox_lang_hide(that) {
+e=document.getElementsByClassName(that);
+for(i=0;i<e.length;i++) {
+e[i].style.display='none';
+e[i].setAttribute("lang", that); 
+}
+}
+
+function checkbox_lang_show(that) {
+e=document.getElementsByClassName(that);
+for(i=0;i<e.length;i++) {
+e[i].style.display='block';
+e[i].setAttribute("lang", that); 
+}
+}
+
+function it(lh) {
+lh=lh.replace(/&l=de/g,'');
+lh=lh.replace(/&l=fr/g,'');
+lh=lh.replace(/&l=en/g,'');
+lh=lh.replace(/&l=it/g,'');
+document.cookie='aclan=it';
+return lh+='&l=it';
+}
+
+function addit() {
+if(document.getElementById('languages')){
+if(document.getElementById('languages').innerHTML.indexOf('---it---')<0){
+if(document.getElementById('cbl_it').style.visibility!='hidden'){
+document.getElementById('languages').innerHTML=document.getElementById('languages').innerHTML.split('FR</a>')[0]+'FR</a>&nbsp;&nbsp;&nbsp;<a name="---it---" href="javascript:void(0)" onclick="this.href=it(location.href)">IT</a>'+document.getElementById('languages').innerHTML.split('FR</a>')[1];
+//document.getElementById('vline1').style.left=document.getElementById('vline1').style.left.replace(/px/,'')-20+'px';
+document.getElementById('vline2').style.left=document.getElementById('vline2').style.left.replace(/px/,'')-20+'px';
+}
+}
+}
+}
+
+function lastaco(thischecked,thisid) {
+//document.cookie=thisid+'='+thischecked;
+}
+--></script>
+<div style="float:right;display:none" id="checkboxlang">
+<span id="cbl_de"><input onclick="checkbox_lang();lastaco(this.checked,this.id)" type="checkbox" id="checkbox_de">DE</span>
+<span id="cbl_fr"><input onclick="checkbox_lang();lastaco(this.checked,this.id)" type="checkbox" id="checkbox_fr">FR</span>
+<span id="cbl_it"><input onclick="checkbox_lang();lastaco(this.checked,this.id)" type="checkbox" id="checkbox_it">IT</span>
+<span id="cbl_en"><input onclick="checkbox_lang();lastaco(this.checked,this.id)" type="checkbox" id="checkbox_en">EN</span>
+</div>
+
+
+
+
+<script>
+if('1'==='0')if(top!==self)top.location.href="/admin";
+</script>
+<br><h1>eIAM Glossary </h1><dl class="freeImgLeft" style="width:160px;height:110px;"><dt><a href="index.php?c=f!eiamglossary!pub&amp;l=en"><img style="width:160px;height:110px;" title="Tile eIAM Glossary" alt="Tile eIAM Glossary" src="f.php?f=r/glossar/glossar_de.jpg?t=1669877796"></a></dt><dd><span class="bold"><div class="center">eIAM Glossary</div></span></dd></dl> This glossary contains the technical terms used in eIAM. Unfortunately, you will currently find different technical terms and designations for identical eIAM services in the web documentation. We are continuously working on standardising these to make it easier for you to understand and recognise connections.<p class="clearing"></p><br>
+<div class="edde" style="display: block; background: yellow; position: fixed; top: -5px; left: 0px; z-index: 9999999; margin-left: 50%;"><div class="buttonDiv" onclick="location.href='index.php?c=f!eiamglossary!edit&amp;l=en'" type="button">add</div></div>
+<script>
+function listfilter() {
+q=document.getElementById('filter').value;
+document.cookie='f!eiamglossary='+escape(q);
+e=document.getElementsByClassName('d');
+
+for(i=0;i<e.length;i++) {
+e[i].style.display='block';
+if(q.replace(/\\s/g,'')!='') {
+qq=q.split(' ');
+for(ii=0;ii<qq.length;ii++) {
+if(qq[ii].toLowerCase()!='')
+{
+
+ishere=e[i].innerHTML.replace(/<[^>]*>?/gm, '');
+iswanted=qq[ii].toLowerCase();
+ishere=jQuery('<'+'textarea />').html(ishere).text().toLowerCase();
+ishere=ishere.normalize("NFD").replace(/[\u0300-\u036f]/gm, "");
+iswanted=iswanted.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+if(!(ishere.indexOf(iswanted)>-1))e[i].style.display='none';
+}
+}
+
+}
+}
+if(q.replace(/\\s/,'')=='')document.getElementById('emptying').style.display='none';
+else document.getElementById('emptying').style.display='block';
+}
+
+</script>
+
+<div id="emptying" style="display:none;position:absolute"><a style="cursor:pointer;text-decoration:none;color:red" href="javascript:void(0)" onclick="document.getElementById('filter').value=''">✘</a></div><div id="extras" style="float:right;font-size:70%;white-space:nowrap"><a style="white-space:nowrap;color:blue;text-decoration:underline" href="javascript:void(0)" onclick="hellipall()"><span onmouseover="if(hellipstat==1)this.title='alle Artikel ausklappen';else this.title='alle Artikel einklappen'" class="de" lang="de" style="display: none;">…alle</span><span onmouseover="if(hellipstat==1)this.title='déplier tous les articles';else this.title='réduire tous les articles'" class="fr" lang="fr" style="display: none;">…tous</span><span onmouseover="if(hellipstat==1)this.title='dispiegare tutti gli articoli';else this.title='comprimere tutti gli articoli'" class="it" lang="it" style="display: none;">…tutti</span><span onmouseover="if(hellipstat==1)this.title='unfold all articles';else this.title='collapse all articles'" class="en" lang="en" style="display: block;" title="unfold all articles">…all</span></a></div><input placeholder="🔎" type="text" id="filter" onkeyup="this.onchange()" onchange="listfilter()" style="margin-bottom:33px;">
+
+<script>
+function fiisIE() {
+    var ua = window.navigator.userAgent; //Check the userAgent property of the window.navigator object
+    var msie = ua.indexOf('MSIE '); // IE 10 or older
+    var trident = ua.indexOf('Trident/'); //IE 11
+    return (msie > 0 || trident > 0);
+}
+if(fiisIE())document.getElementById('filter').style.display='none';
+
+if(document.cookie.indexOf('f!eiamglossary=')>0){
+if(''.replace(/\\s/g,'')=='')document.getElementById('filter').value=unescape(document.cookie.split('f!eiamglossary=')[1].split(';')[0]);
+document.getElementById('filter').onchange();
+}
+
+function listfiltertimer() {
+listfilter();
+setTimeout("listfiltertimer()",777);
+}
+setTimeout("listfiltertimer()",777);
+</script>
+<br><div class="d" id="d14551" onclick="this.style.opacity=1" onmouseover="this.style.opacity=1" style="display: block; background: transparent; opacity: 1;"><a name="d14551"></a><div style="float: right; display: block;" class="edde" onmouseover="this.parentNode.style.background='yellow'" onmouseout="this.parentNode.style.background='transparent'"><span class="selector" id="i14551"><input autocomplete="off" type="text" onfocus="foundchangesoverruled=1" onclick="foundchangesoverruled=1;this.select()" onkeyup="if(this.value!=this.value.replace(/\\D/g,''))this.value=this.value.replace(/\\D/g,'')" onchange="document.getElementById('selectorifr').src='u5sys.content.php?c=!s!f!renumber&amp;i='+parentNode.id.replace(/i/,'')+'&amp;ff=f!eiamglossary!edit&amp;s='+this.value+'&amp;h=0d71e80d5be68642408ceb9582a45f2f7b2fe522'" id="s0" style="width:50px;text-align:right" value="1234"></span><a style="text-decoration:none" href="d?n=f!eiamglossary!edit&amp;id=14551" title="delete DB ID 14551">✘</a>&nbsp;<a style="text-decoration:none" href="e?n=f!eiamglossary!edit&amp;id=14551">✎</a></div><div class="de q" lang="de" style="display: none;"><span class="hot">STS</span> (Standard eIAM Implementierung)</div><div class="fr q" lang="fr" style="display: none;"><span class="hot">STS</span> (implémentation standard d'eIAM)</div><div class="it q" lang="it" style="display: none;"><span class="hot">STS</span> (Standard eIAM Implementierung)</div><div class="en q" lang="en" style="display: block;"><span class="hot">STS</span> (Standard eIAM Implementation)</div><div class="de a trnct" lang="de" style="display: none;"><div class="trsp trsp0"><p>Web Applikationen, welche aufgrund ihrer Schutzanforderungen nicht in Netzen mit erhöhten Schutzanforderungen betrieben werden (z.B. SZ oder komplett <a style="text-decoration:underline;color:blue" href="javascript:void(0)" onclick="trspfusp(0)">…</a></p></div><div class="fusp fusp0" style="display:none"><p>Web Applikationen, welche aufgrund ihrer Schutzanforderungen nicht in Netzen mit erhöhten Schutzanforderungen betrieben werden (z.B. SZ oder komplett ausserhalb der Netze der Bundesverwaltung), benötigen keinen RP-PEP. Solche Anwendungen föderieren direkt mit dem eIAM-Bundestrustbroker (BTB). In der Vergangenheit wurden Anwendungen über eine zusätzliche Föderationskomponente STS-PEP angebunden. Bestehende Anwendungen werden schrittweise auf das Integrationspattern ohne «STS-PEP» migriert. </p><p>Link auf weitere Informationen <a href="index.php?c=rppepstspep&amp;l=en">Migration RP-PEP zu STS</a>.</p></div></div><div class="fr a trnct" lang="fr" style="display: none;"><div class="trsp trsp1"><p>Les applications web qui, en raison de leurs exigences de protection, ne sont pas exploitées dans des réseaux <a style="text-decoration:underline;color:blue" href="javascript:void(0)" onclick="trspfusp(1)">…</a></p></div><div class="fusp fusp1" style="display:none"><p>Les applications web qui, en raison de leurs exigences de protection, ne sont pas exploitées dans des réseaux avec des exigences de protection accrues (p. ex. SZ ou complètement en dehors des réseaux de l'administration fédérale), n'ont pas besoin de RP-PEP. De telles applications se fédèrent directement avec l'eIAM-Bundestrustbroker (BTB). Dans le passé, les applications étaient connectées via un composant de fédération supplémentaire STS-PEP. Les applications existantes sont progressivement migrées vers le pattern d'intégration sans « STS-PEP ». </p><p>Lien vers plus d'informations <a href="index.php?c=rppepstspep&amp;l=en">Migration RP-PEP vers STS</a></p></div></div><div class="it a trnct" lang="it" style="display: none;"><div class="trsp trsp2"><p>Web Applikationen, welche aufgrund ihrer Schutzanforderungen nicht in Netzen mit erhöhten Schutzanforderungen betrieben werden (z.B. SZ oder komplett <a style="text-decoration:underline;color:blue" href="javascript:void(0)" onclick="trspfusp(2)">…</a></p></div><div class="fusp fusp2" style="display:none"><p>Web Applikationen, welche aufgrund ihrer Schutzanforderungen nicht in Netzen mit erhöhten Schutzanforderungen betrieben werden (z.B. SZ oder komplett ausserhalb der Netze der Bundesverwaltung), benötigen keinen RP-PEP. Solche Anwendungen föderieren direkt mit dem eIAM-Bundestrustbroker (BTB). In der Vergangenheit wurden Anwendungen über eine zusätzliche Föderationskomponente STS-PEP angebunden. Bestehende Anwendungen werden schrittweise auf das Integrationspattern ohne «STS-PEP» migriert. </p><p>Link auf weitere Informationen <a href="index.php?c=rppepstspep&amp;l=en">Migration RP-PEP zu STS</a>.</p></div></div><div class="en a trnct" lang="en" style="display: block;"><div class="trsp trsp3"><p>Web applications that, due to their protection requirements, are not operated in networks with increased protection requirements (e.g. <a style="text-decoration:underline;color:blue" href="javascript:void(0)" onclick="trspfusp(3)">…</a></p></div><div class="fusp fusp3" style="display:none"><p>Web applications that, due to their protection requirements, are not operated in networks with increased protection requirements (e.g. in the data centre or completely outside the Federal Administration networks) do not require an RP-PEP. Such applications federate directly with the eIAM-Bundestrustbroker (BTB). In the past, applications were connected via an additional federation component STS-PEP. Existing applications will be gradually migrated to the integration pattern without ‘STS-PEP’. </p><p>Link to further information <a href="index.php?c=rppepstspep&amp;l=en">Migration RP-PEP to STS</a>.</p></div></div><br></div><div class="d" id="d14553" onclick="this.style.opacity=1" onmouseover="this.style.opacity=1" style="display: block; opacity: 1; background: transparent;"><a name="d14553"></a><div style="float: right; display: block;" class="edde" onmouseover="this.parentNode.style.background='yellow'" onmouseout="this.parentNode.style.background='transparent'"><span class="selector" id="i14553"><input autocomplete="off" type="text" onfocus="foundchangesoverruled=1" onclick="foundchangesoverruled=1;this.select()" onkeyup="if(this.value!=this.value.replace(/\\D/g,''))this.value=this.value.replace(/\\D/g,'')" onchange="document.getElementById('selectorifr').src='u5sys.content.php?c=!s!f!renumber&amp;i='+parentNode.id.replace(/i/,'')+'&amp;ff=f!eiamglossary!edit&amp;s='+this.value+'&amp;h=0d71e80d5be68642408ceb9582a45f2f7b2fe522'" id="s1" style="width:50px;text-align:right" value="2"></span><a style="text-decoration:none" href="d?n=f!eiamglossary!edit&amp;id=14553" title="delete DB ID 14553">✘</a>&nbsp;<a style="text-decoration:none" href="e?n=f!eiamglossary!edit&amp;id=14553">✎</a></div><div class="de q" lang="de" style="display: none;"><span class="hot">Access Client</span> (AC)</div><div class="fr q" lang="fr" style="display: none;"><span class="hot">Access Client</span> (AC)</div><div class="it q" lang="it" style="display: none;"><span class="hot">Access Client</span> (AC)</div><div class="en q" lang="en" style="display: block;"><span class="hot">Access Client</span> (AC)</div><div class="de a trnct" lang="de" style="display: none;"><div class="trsp trsp4">Ein Access Client ist ein dedizierter Arbeitsraum für die Rechtevergabe, optional unterteilbar in Units zwecks Delegation der Rechtevergabetätigkeiten <a style="text-decoration:underline;color:blue" href="javascript:void(0)" onclick="trspfusp(4)">…</a></div><div class="fusp fusp4" style="display:none">Ein Access Client ist ein dedizierter Arbeitsraum für die Rechtevergabe, optional unterteilbar in Units zwecks Delegation der Rechtevergabetätigkeiten in diesen nach intern oder extern. Der Schnitt eines Access Client ist dem Fach überlassen, der häufigste Schnitt ist 1 Verwaltungseinheit (Amt) = 1 Mandant. Für Grossprojekte oder Applikationen mit Middleware-Charakter kann die Formel 1 Mandant pro Grossprojekt resp. Middleware sinnvoll sein.</div></div><div class="fr a trnct" lang="fr" style="display: none;"><div class="trsp trsp5">Un client d'accès est un espace de travail dédié à l'attribution des droits, qui peut éventuellement être divisé <a style="text-decoration:underline;color:blue" href="javascript:void(0)" onclick="trspfusp(5)">…</a></div><div class="fusp fusp5" style="display:none">Un client d'accès est un espace de travail dédié à l'attribution des droits, qui peut éventuellement être divisé en unités afin de déléguer les activités d'attribution des droits en interne ou en externe. Le découpage d'un Access Client est laissé à l'appréciation du métier, le découpage le plus fréquent étant 1 unité administrative (office) = 1 mandant. Pour les grands projets ou les applications à caractère de middleware, la formule 1 mandant par grand projet ou middleware peut être judicieuse.</div></div><div class="it a trnct" lang="it" style="display: none;"><div class="trsp trsp6">Ein Access Client ist ein dedizierter Arbeitsraum für die Rechtevergabe, optional unterteilbar in Units zwecks Delegation der Rechtevergabetätigkeiten <a style="text-decoration:underline;color:blue" href="javascript:void(0)" onclick="trspfusp(6)">…</a></div><div class="fusp fusp6" style="display:none">Ein Access Client ist ein dedizierter Arbeitsraum für die Rechtevergabe, optional unterteilbar in Units zwecks Delegation der Rechtevergabetätigkeiten in diesen nach intern oder extern. Der Schnitt eines Access Client ist dem Fach überlassen, der häufigste Schnitt ist 1 Verwaltungseinheit (Amt) = 1 Mandant. Für Grossprojekte oder Applikationen mit Middleware-Charakter kann die Formel 1 Mandant pro Grossprojekt resp. Middleware sinnvoll sein.</div></div><div class="en a trnct" lang="en" style="display: block;"><div class="trsp trsp7">An access client is a dedicated workspace for assigning rights, which can optionally be subdivided into units for <a style="text-decoration:underline;color:blue" href="javascript:void(0)" onclick="trspfusp(7)">…</a></div><div class="fusp fusp7" style="display:none">An access client is a dedicated workspace for assigning rights, which can optionally be subdivided into units for the purpose of delegating rights assignment activities in these units internally or externally. The cut of an access client is left to the specialist; the most common cut is 1 administrative unit (office) = 1 client. For large projects or applications with middleware character, the formula 1 client per large project or middleware can be useful.</div></div><br></div><br></div>`;
+
 export const mockContent = `<p></p>
 <h1>eIAM</h1><span class="larger">eIAM is the Federal Administration's central access and permissions system for web
     applications and native mobile apps<a target="_blank" title="https://docs.eiam.swiss?c=intmobilapp"
