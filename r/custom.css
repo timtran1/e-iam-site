@@ -253,3 +253,13 @@ tr:hover {
 span img {
     display: inline;
 }
+
+/* Override youtube video style */
+.dlYoutubeLarge {
+    width: 100% !important;
+}
+.dlYoutubeLarge iframe {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9; /* Youtube video aspect ratio */
+}
