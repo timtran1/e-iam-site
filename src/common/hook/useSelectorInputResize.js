@@ -46,8 +46,8 @@ const useSelectorInputResize = () => {
       const text = input.value || input.placeholder || '';
       const textWidth = ctx.measureText(text).width;
 
-      // Set width with padding (40px). This has minimum width of 50px
-      const newWidth = Math.max(Math.ceil(textWidth) + 40, 50);
+      // Set width with padding (44px). This has minimum width of 50px
+      const newWidth = Math.max(Math.ceil(textWidth) + 44, 50);
       input.style.width = `${newWidth}px`;
     };
 
