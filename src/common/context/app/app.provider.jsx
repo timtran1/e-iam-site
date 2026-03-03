@@ -9,25 +9,6 @@ import {
 import {ELEMENT_ID} from '../../constant/element-id.js';
 
 /**
- * Recursively filters menu tree by removing items with empty labels
- *
- * @param {Array<AppMenu>} menus
- * @returns {Array<AppMenu>}
- */
-const filterMenusRecursive = (menus) => {
-  const newValues = [];
-  menus.forEach((menu) => {
-    if (menu.label?.trim()) {
-      if (menu.children?.length) {
-        menu.children = filterMenusRecursive(menu.children);
-      }
-      newValues.push(menu);
-    }
-  });
-  return newValues;
-};
-
-/**
  * App data context
  *
  * @param children
@@ -46,8 +27,7 @@ const AppProvider = ({children}) => {
    */
   const menu = React.useMemo(() => {
     if (serverSideData.navigation) {
-      const menus = parseMenuEle(serverSideData.navigation.querySelector('ul'));
-      return filterMenusRecursive(menus);
+      return parseMenuEle(serverSideData.navigation.querySelector('ul'));
     } else {
       return [];
     }
