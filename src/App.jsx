@@ -6,6 +6,7 @@ import AppProvider from './common/context/app/app.provider.jsx';
 import Content from './component/content/Content.jsx';
 import useI18nSync from './common/hook/useI18nSync.js';
 import useGlobalStyleConfig from './common/hook/useGlobalStyleConfig.js';
+import useSelectorInputResize from './common/hook/useSelectorInputResize.js';
 
 const App = () => {
   // Sync i18next with cookie changes globally
@@ -13,6 +14,7 @@ const App = () => {
 
   // Use global style config script
   useGlobalStyleConfig();
+  useSelectorInputResize();
 
   return (
     <>
