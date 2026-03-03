@@ -41,6 +41,12 @@ export default function LeftMenuItem({
   /* When menu has no label, hide it */
   const isHiddenLabel = useMemo(() => !menu.label, [menu.label]);
 
+  /* Show the children menu collapse if there is any standard sub-menu item */
+  const showCollapse = useMemo(
+    () => menu.children && !!menu.children.filter((o) => !!o.label).length,
+    [menu.children]
+  );
+
   const toggleOpen = (e) => {
     e.preventDefault();
     onToggle();
@@ -64,7 +70,7 @@ export default function LeftMenuItem({
             {menu.label}
           </a>
 
-          {hasChildren && (
+          {showCollapse && (
             <ChevronButton
               ref={caretRef}
               onClick={toggleOpen}
@@ -76,7 +82,7 @@ export default function LeftMenuItem({
         </div>
       )}
 
-      {hasChildren && (
+      {showCollapse && (
         <Collapse
           in={isHiddenLabel || isOpen} // Always open when menu has no label
           className={clsx(
