@@ -1,4 +1,4 @@
-import {useState, useRef} from 'react';
+import {useState, useRef, useMemo} from 'react';
 import linkIsCurrentPage from '../../common/helper/linkIsCurrentPage.js';
 import clsx from 'clsx';
 import Collapse from '../../common/ui/Collapse.jsx';
@@ -38,6 +38,9 @@ export default function LeftMenuItem({
   // Refs for animation elements
   const caretRef = useRef(null);
 
+  /* When menu has no label, hide it */
+  const isHiddenLabel = useMemo(() => !menu.label, [menu.label]);
+
   const toggleOpen = (e) => {
     e.preventDefault();
     onToggle();
@@ -49,32 +52,39 @@ export default function LeftMenuItem({
 
   return (
     <>
-      <div
-        className={clsx('left-sidebar__item--primary', className)}
-        data-activated={isActivated || hasActivatedChild}
-      >
-        <a
-          href={menu.href}
-          className="hover:translate-x-0.5 transition-transform duration-100"
+      {!isHiddenLabel && (
+        <div
+          className={clsx('left-sidebar__item--primary', className)}
+          data-activated={isActivated || hasActivatedChild}
         >
-          {menu.label}
-        </a>
+          <a
+            href={menu.href}
+            className="hover:translate-x-0.5 transition-transform duration-100"
+          >
+            {menu.label}
+          </a>
 
-        {hasChildren && (
-          <ChevronButton
-            ref={caretRef}
-            onClick={toggleOpen}
-            chevronType="right"
-            className="w-[24px] h-full"
-            rotateChevron={isOpen ? 'rotate-90' : ''}
-          />
-        )}
-      </div>
+          {hasChildren && (
+            <ChevronButton
+              ref={caretRef}
+              onClick={toggleOpen}
+              chevronType="right"
+              className="w-[24px] h-full"
+              rotateChevron={isOpen ? 'rotate-90' : ''}
+            />
+          )}
+        </div>
+      )}
 
       {hasChildren && (
         <Collapse
-          in={isOpen}
-          className="min-w-full left-sidebar__item--secondary"
+          in={isHiddenLabel || isOpen} // Always open when menu has no label
+          className={clsx(
+            'min-w-full',
+            isHiddenLabel
+              ? 'left-sidebar__item--hidden'
+              : 'left-sidebar__item--secondary'
+          )}
         >
           {menu.children.map((childMenu, childIndex) => (
             <LeftMenuItem

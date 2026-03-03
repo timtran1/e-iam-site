@@ -55,6 +55,13 @@ nav.left-sidebar {
   );
 }
 
+.left-sidebar__item--hidden {
+  width: calc(
+    var(--Navigation-Item-Width, 220px) -
+      var(--Navigation-Secondary-Navigation-Item-Padding, 220px)
+  );
+}
+
 .left-sidebar__item--primary[data-activated='true'],
 .left-sidebar__item--secondary[data-activated='true'],
 .left-sidebar__item--primary:hover {
