@@ -1,3 +1,14 @@
+/**
+ * This function is used to check if a link is the current page.
+ *
+ * @deprecated: Use 'activeItem' from menu data instead. OUTDATED.
+ * @see: src/typedef/menu.js:4
+ *
+ * However, this function is still kept for backward compatibility because 'activeItem' has not been validated for all cases.
+ *
+ * @param {string} link
+ * @returns {boolean}
+ */
 export default function linkIsCurrentPage(link) {
   try {
     // Handle relative URLs by resolving them against the current page URL
