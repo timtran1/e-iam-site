@@ -14,7 +14,7 @@ export default function LeftMenuItem({
   onToggle,
 }) {
   const hasChildren = menu.children && menu.children.length > 0;
-  const isActivated = linkIsCurrentPage(menu.href);
+  const isActivated = menu.activeItem || linkIsCurrentPage(menu.href);
 
   // Get current page
   const [currentPage] = useQueryParam('c');
