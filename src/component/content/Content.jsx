@@ -15,32 +15,9 @@ import SearchResults from './components/search-results/index.jsx';
 import {ELEMENT_ID} from '../../common/constant/element-id.js';
 import clsx from 'clsx';
 import useQueryParam from '../../common/hook/useQueryParam.js';
-import linkIsCurrentPage from '../../common/helper/linkIsCurrentPage.js';
 import useResponsiveElementWidths from '../../common/hook/useResponsiveElementWidths.js';
 
 const isDevMode = import.meta.env.DEV;
-
-/**
- * Recursively checks if the given menu or any of its child menus is currently active.
- *
- * @param {AppMenu} menu
- * @return {boolean}
- */
-const hasActivatedMenu = (menu) => {
-  if (linkIsCurrentPage(menu.href)) {
-    return true;
-  } else {
-    // Check deeper levels
-    for (const menuItem of menu.children || []) {
-      if (hasActivatedMenu(menuItem)) {
-        return true;
-      }
-    }
-
-    // If no activated menu found
-    return false;
-  }
-};
 
 /**
  * Content
@@ -112,7 +89,7 @@ const Content = () => {
     }
 
     for (const menu of menus) {
-      if (hasActivatedMenu(menu)) {
+      if (menu.activeItem) {
         return menu.children || [];
       }
     }

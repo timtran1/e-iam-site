@@ -14,6 +14,7 @@ export const parseMenuEle = (ul) => {
       const params = new URLSearchParams(href.split('?')?.[1]);
       const c = params.get('c');
       const item = {
+        activeItem: a.classList.contains('activeItem'), // Class from U5CMS
         label: a?.textContent?.trim() || '',
         href,
         key: c,

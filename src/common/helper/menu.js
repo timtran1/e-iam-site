@@ -7,7 +7,7 @@ import linkIsCurrentPage from './linkIsCurrentPage.js';
  */
 export const hasChildActive = (menuItem) => {
   // Check if the current menu item is active
-  if (linkIsCurrentPage(menuItem.href)) {
+  if (menuItem.activeItem || linkIsCurrentPage(menuItem.href)) {
     return true;
   }
 
