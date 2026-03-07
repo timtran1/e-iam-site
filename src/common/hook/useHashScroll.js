@@ -40,6 +40,9 @@ const useHashScroll = (options = {}) => {
             block: block,
           });
         }
+
+        // Highlight the target element
+        element.style.background = 'lightyellow';
       }
     },
     [behavior, block, offset]
@@ -50,8 +53,7 @@ const useHashScroll = (options = {}) => {
      * Handle hash change events
      */
     const handleHashChange = () => {
-      const currentHash = window.location.hash;
-      scrollToElement(currentHash);
+      scrollToElement(window.location.hash);
     };
 
     /**
@@ -59,12 +61,25 @@ const useHashScroll = (options = {}) => {
      */
     const handleInitialHash = () => {
       const currentHash = window.location.hash;
-      if (currentHash) {
-        // Small delay to ensure DOM is fully rendered
-        setTimeout(() => {
+      if (!currentHash || currentHash === '#') return;
+
+      const elementId = currentHash.substring(1);
+      let attempts = 0;
+      const maxAttempts = 40; // 4 seconds max
+
+      const tryScroll = () => {
+        attempts++;
+        const el = document.getElementById(elementId);
+        const rect = el?.getBoundingClientRect();
+
+        if (el && rect && rect.height > 0) {
           scrollToElement(currentHash);
-        }, 100);
-      }
+        } else if (attempts < maxAttempts) {
+          setTimeout(tryScroll, 100);
+        }
+      };
+
+      tryScroll();
     };
 
     // Listen for hash changes

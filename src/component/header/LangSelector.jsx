@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import useClickAway from '../../common/hook/useClickAway.js';
 import AppContext from '../../common/context/app/app.context.js';
 import ChevronButton from '../../common/ui/ChevronButton.jsx';
-import useQueryParam, {toQueryString} from '../../common/hook/useQueryParam.js';
+import useQueryParam from '../../common/hook/useQueryParam.js';
 import useCookie from '../../common/hook/useCookie.js';
 import {ELEMENT_ID} from '../../common/constant/element-id.js';
 import {useTranslation} from 'react-i18next';
@@ -147,14 +147,7 @@ const LangSelector = ({className = ''}) => {
   React.useEffect(() => {
     if (!currentLang) {
       if (cookieLang) {
-        const params = new URLSearchParams(window.location.search);
         setCurrentLang(cookieLang);
-        const queryStr = toQueryString(params);
-        window.history.replaceState(
-          {},
-          '',
-          `${window.location.pathname}${queryStr ? '?' + queryStr : ''}`
-        );
       } else {
         const langKey =
           languages?.find((o) => o.key === 'en')?.key || languages?.[0]?.key;
@@ -164,10 +157,7 @@ const LangSelector = ({className = ''}) => {
           sameSite: 'lax',
           path: '/',
         });
-        const params = new URLSearchParams(window.location.search);
         setCurrentLang(langKey);
-        const queryStr = toQueryString(params);
-        window.location.href = `${window.location.pathname}${queryStr ? '?' + queryStr : ''}`;
       }
     }
   }, [cookieLang, currentLang, languages, setCookieLang, setCurrentLang]);

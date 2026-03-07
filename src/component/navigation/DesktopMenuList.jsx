@@ -17,7 +17,7 @@ const DesktopMenuList = React.memo(({listMenu}) => {
   const [openedItems, setOpenedItems] = React.useState({});
 
   // Get current page
-  const currentPage = useQueryParam('c');
+  const [currentPage] = useQueryParam('c');
 
   // Toggle open state for a specific item
   const toggleItem = (key) => {
