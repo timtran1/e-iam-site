@@ -42,7 +42,12 @@ const useHashScroll = (options = {}) => {
         }
 
         // Highlight the target element
+        element.style.transition = 'background 1s ease';
         element.style.background = 'lightyellow';
+        setTimeout(() => {
+          element.style.background = '';
+          setTimeout(() => { element.style.transition = ''; }, 300);
+        }, 3000);
       }
     },
     [behavior, block, offset]
