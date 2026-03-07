@@ -24,8 +24,7 @@ export default function LeftSidebar({menus}) {
           const hasChildren = menu.children && menu.children.length > 0;
           if (
             (!currentPage && i === 0) ||
-            (hasChildren &&
-              menu.children.some((child) => hasChildActive(child)))
+            (hasChildren && hasChildActive(menu))
           ) {
             return i;
           }

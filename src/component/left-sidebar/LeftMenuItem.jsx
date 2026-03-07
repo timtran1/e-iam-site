@@ -29,7 +29,7 @@ export default function LeftMenuItem({
     for (let i = 0; i < menu.children.length; i++) {
       const child = menu.children[i];
       const childHasChildren = child.children && child.children.length > 0;
-      if (childHasChildren && child.children.some((c) => hasChildActive(c)))
+      if (childHasChildren && hasChildActive(child))
         return i;
     }
     return null;
