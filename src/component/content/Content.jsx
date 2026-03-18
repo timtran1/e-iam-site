@@ -8,7 +8,7 @@ import {
 } from '../../common/constant/dummy.js';
 import LeftSidebar from '../left-sidebar/LeftSidebar.jsx';
 import RightSidebar from '../right-sidebar/RightSidebar.jsx';
-import {stripNavigationMarkers} from '../../common/helper/element-parsing.js';
+import {stripNavigationMarkers, wrapOrphanTextNodes} from '../../common/helper/element-parsing.js';
 import useHashScroll from '../../common/hook/useHashScroll.js';
 import useSearchResult from './hooks/useSearchResult.js';
 import SearchResults from './components/search-results/index.jsx';
@@ -123,7 +123,7 @@ const Content = () => {
    */
   const pageContent = isDevMode ? mockContent : content;
   const processedContent = useMemo(
-    () => stripNavigationMarkers(pageContent),
+    () => wrapOrphanTextNodes(stripNavigationMarkers(pageContent)),
     [pageContent]
   );
 

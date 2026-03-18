@@ -163,6 +163,86 @@ export const getFocusableElements = (container) => {
 };
 
 /**
+ * Block-level element tag names used to identify group boundaries
+ * when wrapping orphan text nodes.
+ */
+const BLOCK_ELEMENTS = new Set([
+  'ADDRESS', 'ARTICLE', 'ASIDE', 'BLOCKQUOTE', 'DD', 'DETAILS', 'DIALOG',
+  'DIV', 'DL', 'DT', 'FIELDSET', 'FIGCAPTION', 'FIGURE', 'FOOTER', 'FORM',
+  'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'HEADER', 'HGROUP', 'HR', 'LI',
+  'MAIN', 'NAV', 'OL', 'P', 'PRE', 'SECTION', 'TABLE', 'UL',
+]);
+
+/**
+ * Wraps orphan text nodes (and adjacent inline elements) in <p> tags.
+ *
+ * Orphan text is text content sitting directly between block-level elements
+ * without any wrapping tag. This function groups consecutive inline nodes
+ * and wraps each non-empty group in a <p> element.
+ *
+ * @param {string} html - The HTML string to process
+ * @returns {string|null} - The processed HTML string, or null if input is falsy
+ */
+export const wrapOrphanTextNodes = (html) => {
+  if (!html) return null;
+
+  const container = document.createElement('div');
+  container.innerHTML = html;
+
+  const childNodes = Array.from(container.childNodes);
+  let inlineGroup = [];
+
+  const flushGroup = () => {
+    if (!inlineGroup.length) return;
+
+    // Check if the group has any non-whitespace content
+    const hasContent = inlineGroup.some((node) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        return node.textContent.trim().length > 0;
+      }
+      // For elements, check if it's not just a <br>
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        if (node.tagName === 'BR') return false;
+        return true;
+      }
+      return false;
+    });
+
+    if (hasContent) {
+      const p = document.createElement('p');
+      const firstNode = inlineGroup[0];
+      container.insertBefore(p, firstNode);
+      for (const node of inlineGroup) {
+        p.appendChild(node);
+      }
+    }
+
+    inlineGroup = [];
+  };
+
+  for (const node of childNodes) {
+    // Treat <a> with a class as block-level to avoid breaking accordions 
+    // They are <a> with classes like .showblock2inactivetab .showblock2activetab .showblockactivetab etc.
+    const isBlock =
+      node.nodeType === Node.ELEMENT_NODE &&
+      (BLOCK_ELEMENTS.has(node.tagName) ||
+        (node.tagName === 'A' && node.className));
+
+    if (isBlock) {
+      flushGroup();
+      // leave block node in place
+    } else {
+      inlineGroup.push(node);
+    }
+  }
+
+  // Flush any remaining inline group
+  flushGroup();
+
+  return container.innerHTML;
+};
+
+/**
  * Execute scripts within an element
  * @param {HTMLElement} element - The element containing scripts
  */
