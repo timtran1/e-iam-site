@@ -1,0 +1,71 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "dev",
+			"problemMatcher": [],
+			"label": "Dev",
+			"detail": "npm run dev"
+		},
+		{
+			"type": "npm",
+			"script": "format",
+			"problemMatcher": [],
+			"label": "Format",
+			"detail": "npm run format"
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"problemMatcher": [],
+			"label": "Build",
+			"detail": "npm run build"
+		},
+		{
+			"type": "shell",
+			"command": "cd dist && python3 -m http.server 8000",
+			"problemMatcher": [],
+			"label": "Serve",
+			"detail": "Serve dist folder on port 8000",
+			"isBackground": true
+		},
+		{
+			"type": "shell",
+			"command": "ngrok http 8000",
+			"problemMatcher": [],
+			"label": "Ngrok",
+			"detail": "Run ngrok http 8000",
+			"isBackground": true
+		},
+		{
+			"type": "shell",
+			"command": "sleep 3 && NGROK_URL=$(curl -s http://localhost:4040/api/tunnels | python3 -c \"import sys,json; print(json.load(sys.stdin)['tunnels'][0]['public_url'])\") && open \"https://docs-r.eiam.admin.ch/?lowstage=on&l=en&designUrl=${NGROK_URL}/app-universal.iife.js\"",
+			"problemMatcher": [],
+			"label": "Open Docs-r",
+			"detail": "Open docs-r with ngrok design URL"
+		},
+		{
+			"label": "Serve + Ngrok",
+			"detail": "Run Serve and Ngrok in parallel",
+			"dependsOn": ["Serve", "Ngrok"],
+			"dependsOrder": "parallel",
+			"problemMatcher": []
+		},
+		{
+			"type": "shell",
+			"command": "bash .vscode/preview.sh",
+			"problemMatcher": [],
+			"label": "Build & Preview",
+			"detail": "Build, serve, ngrok, and open docs-r",
+			"isBackground": true
+		},
+		{
+			"type": "shell",
+			"command": "cp dist/app-universal.iife.js ../e-iam-site-nativeops/delivery2/jsreactapp.css",
+			"problemMatcher": [],
+			"label": "Copy",
+			"detail": "Copy built JS to e-iam-site-nativeops/delivery2/jsreactapp.css"
+		}
+	]
+}

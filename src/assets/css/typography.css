@@ -37,6 +37,11 @@ article {
     margin-top: var(--Basic-Fontsize-Paragraph-Margin-Top, 8px);
   }
 
+  ol,
+  ul {
+    margin-top: var(--Basic-Fontsize-Paragraph-Margin-Top, 8px);
+  }
+
   a {
     font-style: normal;
     font-weight: 400;

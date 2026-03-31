@@ -84,17 +84,17 @@ const Header = ({className, sticky = false}) => {
         }}
         className={clsx({'z-50 sticky top-0': sticky}, className)}
       >
-        <div className="flex items-center gap-4 xl:gap-2.75 flex-1">
+        <div className="flex items-center gap-4 lg:gap-2.75 flex-1">
           {/*region logo*/}
           <a
             href="/"
             aria-label={t('eIAM - Go to homepage')}
-            className="xl:ml-[-12px] w-8.5 h-9.5 xl:w-64 xl:h-20 overflow-hidden"
+            className="lg:ml-[-12px] w-8.5 h-9.5 lg:w-64 lg:h-20 overflow-hidden"
           >
             <div
               className={clsx(
                 'bg-cover bg-no-repeat overflow-hidden',
-                'w-62.5 h-20 -translate-y-2.5 -translate-x-2.5 xl:w-full xl:h-full xl:translate-x-0 xl:translate-y-0'
+                'w-62.5 h-20 -translate-y-2.5 -translate-x-2.5 lg:w-full lg:h-full lg:translate-x-0 lg:translate-y-0'
               )}
               role="img"
               aria-label={t('Swiss Confederation logo')}
@@ -109,13 +109,13 @@ const Header = ({className, sticky = false}) => {
           {/*region header and language actions*/}
           <div className="flex flex-1 justify-between items-center">
             {/*Frame 5*/}
-            <div className="flex gap-4 xl:gap-6 flex-1 items-center xl:items-start">
+            <div className="flex gap-4 lg:gap-6 flex-1 items-center lg:items-start">
               <div className="w-0.25 h-13.75 bg-[var(--Color-Divider-Header)]" />
               <p
-                className="hidden xl:block my-0 font-semibold flex-1 max-w-[var(--Header-Max-Width,1000px)]"
+                className="hidden lg:block my-0 font-semibold flex-1 max-w-[var(--Header-Max-Width,1000px)]"
                 dangerouslySetInnerHTML={{__html: pageTitle}}
               />
-              <p className="xl:hidden my-0 font-semibold flex-1 max-w-[var(--Header-Max-Width,1000px)]">
+              <p className="lg:hidden my-0 font-semibold flex-1 max-w-[var(--Header-Max-Width,1000px)]">
                 eIAM
               </p>
             </div>
@@ -124,11 +124,11 @@ const Header = ({className, sticky = false}) => {
             <div
               className={clsx(
                 'flex justify-end items-center gap-6',
-                'xl:h-18 xl:min-w-50 xl:flex-col xl:items-end'
+                'lg:h-18 lg:min-w-50 lg:flex-col lg:items-end'
               )}
             >
               {/*region lang selector*/}
-              <div className="hidden xl:block text-end">
+              <div className="hidden lg:block text-end">
                 <LangSelector />
               </div>
               {/*endregion lang selector*/}
@@ -140,7 +140,7 @@ const Header = ({className, sticky = false}) => {
               {/*endregion search input*/}
 
               {/*region mobile nav*/}
-              <div className="xl:hidden">
+              <div className="lg:hidden">
                 <Navigation.Mobile
                   opened={isMobileMenuOpened}
                   setOpened={setIsMobileMenuOpened}
@@ -155,7 +155,7 @@ const Header = ({className, sticky = false}) => {
       {/*endregion header*/}
 
       {/*region navigation*/}
-      <div className="hidden xl:block">
+      <div className="hidden lg:block">
         <Navigation.Desktop />
       </div>
       {/*endregion navigation*/}
