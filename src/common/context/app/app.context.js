@@ -6,6 +6,7 @@ import React from 'react';
  * @property {ServerSideData} serverSideData
  * @property {Array<AppMenu>} menu
  * @property {Array<AppLanguage>} languages
+ * @property {Array<{text: string, href: string}>} vlineLinks
  * @property {{backgroundImage?: string, headerHeight?: number}} headerMeta
  * @property {function} setHeaderMeta
  * @property {(id: string) => void} removeServerElement
@@ -26,9 +27,11 @@ const DefaultState = {
     news: undefined,
     content: undefined,
     bit: undefined,
+    vline2: undefined,
   },
   menu: [],
   languages: [],
+  vlineLinks: [],
   headerMeta: {},
   setHeaderMeta: () => {},
   removeServerElement: () => {},

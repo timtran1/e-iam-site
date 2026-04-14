@@ -80,6 +80,20 @@ export const stripNavigationMarkers = (content) => {
 };
 
 /**
+ * Extract all anchors within an element as {text, href} pairs.
+ *
+ * @param {Element} ele
+ * @returns {Array<{text: string, href: string}>}
+ */
+export const parseAnchors = (ele) => {
+  if (!ele) return [];
+  return Array.from(ele.querySelectorAll('a')).map((a) => ({
+    text: a.textContent?.trim() || '',
+    href: a.getAttribute('href') || '',
+  }));
+};
+
+/**
  * Whether Element is empty
  *
  * @param {Element} ele

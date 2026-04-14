@@ -15,4 +15,5 @@ export const ELEMENT_ID = {
   RIGHT: 'right',
   NEWS: 'news',
   BIT: 'bit', // This is custom element id for header content
+  VLINE: 'vline2', // Small header links like Start, Docs, Dossier
 };

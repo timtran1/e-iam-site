@@ -2,6 +2,7 @@ import React from 'react';
 import AppContext from './app.context.js';
 import useServerSideVariables from './hooks/useServerSideVariables.js';
 import {
+  parseAnchors,
   parseLangEle,
   parseMenuEle,
   wrapWithInline,
@@ -67,6 +68,17 @@ const AppProvider = ({children}) => {
   }, [serverSideData.right]);
 
   /**
+   * @type {Array<{text: string, href: string}>}
+   */
+  const vlineLinks = React.useMemo(() => {
+    if (serverSideData.vline2) {
+      return parseAnchors(serverSideData.vline2);
+    } else {
+      return [];
+    }
+  }, [serverSideData.vline2]);
+
+  /**
    * @type {string}
    */
   const content = React.useMemo(() => {
@@ -121,6 +133,7 @@ const AppProvider = ({children}) => {
           right,
           news,
           content,
+          vlineLinks,
           headerMeta,
           setHeaderMeta,
           removeServerElement,

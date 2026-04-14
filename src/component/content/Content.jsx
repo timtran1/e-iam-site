@@ -37,7 +37,12 @@ const Content = () => {
     content,
     headerMeta,
     hasRemovedServerElements,
+    vlineLinks,
   } = useContext(AppContext);
+
+  useMemo(() => {
+    vlineLinks.forEach(({text, href}) => console.log(text, href));
+  }, [vlineLinks]);
 
   // Search contents
   const {isSearchResultPage, searchResults} = useSearchResult(
