@@ -278,8 +278,45 @@ export const executeScriptsWithinElement = (element) => {
     // If script has inline code
     if (script.textContent) {
       try {
-        // Create a new script with the same content
-        newScript.textContent = script.textContent;
+        // Strip "trspfusp" and the truncation loop that follows it.
+        // This prevents the truncation script from re-running on already-processed elements.
+        // The "trspfusp" function is not idempotent and will cause issues if run multiple times.
+        // Its already run once when the page loads, so we don't want to run it again.
+        let code = script.textContent;
+        // Remove trspfusp function
+        const fnStart = code.indexOf('function trspfusp');
+        if (fnStart !== -1) {
+          let braceCount = 0;
+          let fnEnd = code.indexOf('{', fnStart);
+          for (let j = fnEnd; j < code.length; j++) {
+            if (code[j] === '{') braceCount++;
+            if (code[j] === '}') braceCount--;
+            if (braceCount === 0) {
+              fnEnd = j + 1;
+              break;
+            }
+          }
+          code = code.slice(0, fnStart) + code.slice(fnEnd);
+        }
+        // Remove truncation loop (numofwords ... getElementsByClassName('trnct') for-loop)
+        const loopStart = code.indexOf('numofwords');
+        if (loopStart !== -1) {
+          const forIdx = code.indexOf('for(', loopStart);
+          if (forIdx !== -1) {
+            let braceCount = 0;
+            let loopEnd = code.indexOf('{', forIdx);
+            for (let j = loopEnd; j < code.length; j++) {
+              if (code[j] === '{') braceCount++;
+              if (code[j] === '}') braceCount--;
+              if (braceCount === 0) {
+                loopEnd = j + 1;
+                break;
+              }
+            }
+            code = code.slice(0, loopStart) + code.slice(loopEnd);
+          }
+        }
+        newScript.textContent = code;
       } catch (error) {
         console.error('Error executing script:', error);
       }

@@ -93,23 +93,25 @@ export default function RightSidebar({content}) {
         />
 
         <div
-          className={clsx('body-content__container__right__anchors', {
+          className={clsx('body-content__container__right__anchors overflow-y-auto max-h-[calc(100vh-317px)] pb-[200px]', {
             'p-4': !!sideAnchors?.length,
             fixed: isSideAnchorsFixed,
           })}
         >
-          {sideAnchors?.map((anchor, _index) => (
-            <React.Fragment key={_index}>
-              {anchor.parentDiv && (
-                <div
-                  className="leading-5 active:text-gray-shadow hover:underline"
-                  dangerouslySetInnerHTML={{
-                    __html: anchor.parentDiv.outerHTML,
-                  }}
-                />
-              )}
-            </React.Fragment>
-          ))}
+          {/* <div className="overflow-y-auto max-h-[calc(100vh-317px)] pb-[200px]"> */}
+            {sideAnchors?.map((anchor, _index) => (
+              <React.Fragment key={_index}>
+                {anchor.parentDiv && (
+                  <div
+                    className="leading-5 active:text-gray-shadow hover:underline"
+                    dangerouslySetInnerHTML={{
+                      __html: anchor.parentDiv.outerHTML,
+                    }}
+                  />
+                )}
+              </React.Fragment>
+            ))}
+          {/* </div> */}
         </div>
       </>
     </aside>

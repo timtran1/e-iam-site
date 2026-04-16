@@ -8,7 +8,7 @@ import React from 'react';
  * @param {number} options.offset - Additional offset from top in pixels
  */
 const useHashScroll = (options = {}) => {
-  const {behavior = 'smooth', block = 'start', offset = 10 * 16} = options;
+  const {behavior = 'smooth', block = 'start', offset = 10 * 16, handleInitialHash = false} = options;
 
   /**
    * Scroll to element with given ID
@@ -64,7 +64,7 @@ const useHashScroll = (options = {}) => {
     /**
      * Handle initial page load with hash
      */
-    const handleInitialHash = () => {
+    const handleInitialHashFn = () => {
       const currentHash = window.location.hash;
       if (!currentHash || currentHash === '#') return;
 
@@ -91,7 +91,7 @@ const useHashScroll = (options = {}) => {
     window.addEventListener('hashchange', handleHashChange);
 
     // Handle initial hash on component mount
-    handleInitialHash();
+    if (handleInitialHash) handleInitialHashFn();
 
     // Cleanup event listener on unmount
     return () => {

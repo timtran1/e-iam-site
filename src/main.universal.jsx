@@ -19,7 +19,7 @@ if (isPreview) {
  * This prevents flickering and conflicts with React rendering
  */
 function hideServerSideElements() {
-  console.log('Hiding server-side elements for universal mode...');
+  // console.log('Hiding server-side elements for universal mode...');
 
   // Get all element IDs from the constant
   const elementIds = Object.values(ELEMENT_ID);
