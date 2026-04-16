@@ -8,7 +8,7 @@ import React from 'react';
  * @param {number} options.offset - Additional offset from top in pixels
  */
 const useHashScroll = (options = {}) => {
-  const {behavior = 'smooth', block = 'start', offset = 10 * 16, handleInitialHash = false} = options;
+  const {behavior = 'smooth', block = 'start', offset = 10 * 16, handleInitialHash = true} = options;
 
   /**
    * Scroll to element with given ID
@@ -53,6 +53,27 @@ const useHashScroll = (options = {}) => {
     [behavior, block, offset]
   );
 
+  /**
+   * Extract article ID from URL query parameters (legacy format: &did at end of URL)
+   * URLs like: page?param1&param2&123 where 123 is the article ID
+   */
+  const getArticleIdFromUrl = React.useCallback(() => {
+    const href = window.location.href;
+    if (href.indexOf('&') < 0 || href.indexOf('#') >= 0) return null;
+
+    const cleaned = href
+      .replace(/&l=de/g, '')
+      .replace(/&l=fr/g, '')
+      .replace(/&l=en/g, '')
+      .replace(/&l=it/g, '');
+
+    const parts = cleaned.split('&');
+    const did = parts[parts.length - 1];
+
+    if (did > 0) return did;
+    return null;
+  }, []);
+
   React.useEffect(() => {
     /**
      * Handle hash change events
@@ -87,17 +108,57 @@ const useHashScroll = (options = {}) => {
       tryScroll();
     };
 
+    /**
+     * Handle scrolling to article by ID from legacy URL format (e.g. ?foo&bar&123)
+     */
+    const handleArticleScroll = () => {
+      const did = getArticleIdFromUrl();
+      if (!did) return;
+
+      const elementId = 'd' + did;
+      let attempts = 0;
+      const maxAttempts = 40;
+
+      const tryScroll = () => {
+        attempts++;
+        const el = document.getElementById(elementId);
+        const rect = el?.getBoundingClientRect();
+
+        if (el && rect && rect.height > 0) {
+          scrollToElement('#' + elementId);
+
+          // Clear any active filter
+          const filter = document.getElementById('filter');
+          if (filter && filter.value !== '') {
+            filter.value = '';
+            if (filter.onchange) filter.onchange();
+          }
+        } else if (attempts < maxAttempts) {
+          setTimeout(tryScroll, 100);
+        }
+      };
+
+      tryScroll();
+    };
+
     // Listen for hash changes
     window.addEventListener('hashchange', handleHashChange);
 
-    // Handle initial hash on component mount
-    if (handleInitialHash) handleInitialHashFn();
+    // Handle initial hash or article scroll on component mount
+    if (handleInitialHash) {
+      const did = getArticleIdFromUrl();
+      if (did) {
+        handleArticleScroll();
+      } else {
+        handleInitialHashFn();
+      }
+    }
 
     // Cleanup event listener on unmount
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
     };
-  }, [behavior, block, offset, scrollToElement]);
+  }, [behavior, block, offset, scrollToElement, getArticleIdFromUrl]);
 
   // Return utility function for manual scrolling
   return {

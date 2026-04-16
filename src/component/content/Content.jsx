@@ -8,7 +8,7 @@ import {
 } from '../../common/constant/dummy.js';
 import LeftSidebar from '../left-sidebar/LeftSidebar.jsx';
 import RightSidebar from '../right-sidebar/RightSidebar.jsx';
-import {stripNavigationMarkers, wrapOrphanTextNodes, executeScriptsWithinElement} from '../../common/helper/element-parsing.js';
+import {stripNavigationMarkers, wrapOrphanTextNodes} from '../../common/helper/element-parsing.js';
 import useHashScroll from '../../common/hook/useHashScroll.js';
 import useSearchResult from './hooks/useSearchResult.js';
 import SearchResults from './components/search-results/index.jsx';
@@ -135,12 +135,6 @@ const Content = () => {
     () => wrapOrphanTextNodes(stripNavigationMarkers(pageContent)),
     [pageContent]
   );
-
-  useEffect(() => {
-    if (hasRemovedServerElements) {
-      executeScriptsWithinElement(contentRef.current);
-    }
-  }, [hasRemovedServerElements]);
 
   /**
    * Handle responsive width for fixed-width elements within the main content
