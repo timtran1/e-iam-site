@@ -10,5 +10,6 @@
   "checkSpelling": "Check the spelling of your search term",
   "useDifferentTerm": "Use a different or more general term",
   "useFewerTerms": "Use fewer search terms",
-  "useAnotherSite": "Use another site"
+  "useAnotherSite": "Use another site",
+  "more" : "More"
 }

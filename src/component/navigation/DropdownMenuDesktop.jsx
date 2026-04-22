@@ -10,6 +10,7 @@ import useQueryParam from '../../common/hook/useQueryParam.js';
 import {ELEMENT_ID} from '../../common/constant/element-id.js';
 import {getFocusableElements} from '../../common/helper/element-parsing.js';
 import {useTranslation} from 'react-i18next';
+import DropdownOverflowMenu from './DropdownOverflowMenu.jsx';
 
 const isDevMode = import.meta.env.DEV;
 
@@ -31,6 +32,10 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
 
   // Track open state for each menu item individually
   const [openedItems, setOpenedItems] = React.useState({});
+
+  // Track split menus: visible menus and overflow menus
+  const [visibleMenus, setVisibleMenus] = React.useState(menus);
+  const [overflowMenus, setOverflowMenus] = React.useState([]);
 
   // Store refs for chevron buttons to return focus
   const chevronButtonRefs = React.useRef({});
@@ -114,7 +119,12 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
   };
 
   // Main dropdown ref
-  const wrapperRef = React.useRef(null);
+  const wrapperRef = React.useRef(/**@type {HTMLLIElement | null}*/ null);
+
+  // Ref for overflow selector
+  const overflowSelectorRef = React.useRef(
+    /**@type {HTMLLIElement | null}*/ null
+  );
 
   /**
    * Handle click away
@@ -123,22 +133,76 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
     setOpenedItems({});
   });
 
+  React.useEffect(() => {
+    if (!wrapperRef.current) return;
+
+    const observer = new ResizeObserver(() => {
+      if (!overflowSelectorRef.current) return;
+
+      // Get overflow selector width
+      const overflowSelectorWidth = overflowSelectorRef.current.clientWidth;
+
+      const computedStyle = window.getComputedStyle(wrapperRef.current);
+      const gap = +computedStyle.gap.replace('px', '') || 0; // Exp value like 48, 56,...
+
+      const paddingLeft = +computedStyle.paddingLeft.replace('px', '') || 0;
+      const paddingRight = +computedStyle.paddingRight.replace('px', '') || 0;
+      const wrapperWidth =
+        wrapperRef.current.clientWidth - paddingLeft - paddingRight;
+
+      /** @type {Array<HTMLLIElement>} */
+      const liElements = wrapperRef.current.children;
+      // Exclude the last element (overflow selector) from menu items
+      const menuWidths = Array.from(liElements)
+        .slice(0, -1)
+        .map((li) => li.clientWidth);
+
+      // Available width for menus (wrapper width - overflow selector width - gap)
+      const availableWidth = wrapperWidth - overflowSelectorWidth - gap;
+
+      // Calculate which menus fit in available width
+      let accumulatedWidth = 0;
+      let splitIndex = 0;
+
+      for (let i = 0; i < menuWidths.length; i++) {
+        const totalWidth = accumulatedWidth + menuWidths[i] + (i > 0 ? gap : 0);
+        if (totalWidth <= availableWidth) {
+          accumulatedWidth = totalWidth;
+          splitIndex = i + 1;
+        } else {
+          break;
+        }
+      }
+
+      // Split menus into visible and overflow
+      const visible = menus.slice(0, splitIndex);
+      const overflow = menus.slice(splitIndex);
+
+      setVisibleMenus(visible);
+      setOverflowMenus(overflow);
+    });
+
+    observer.observe(wrapperRef.current);
+
+    return () => observer.disconnect();
+  }, [menus]);
+
   return (
     <nav
       aria-label={t('Header navigation')}
       className="desktop-navigation"
       {...(hasRemovedServerElements ? {id: ELEMENT_ID.NAVIGATION} : {})}
     >
-      <ul ref={wrapperRef} className="navigation w-full overflow-x-auto">
-        {menus.map((menuItem, i) => (
+      <ul ref={wrapperRef} className="navigation w-full">
+        {visibleMenus.map((menuItem, i) => (
           <li
-            key={menuItem.key || i}
+            key={menuItem.key + i}
             className={clsx(
               (!currentPage && !i) || hasChildActive(menuItem) ? 'active' : ''
             )}
           >
             <a
-              className="transition-all no-underline hover:no-underline"
+              className="transition-all no-underline hover:no-underline text-nowrap"
               href={menuItem.href}
             >
               {menuItem.label}
@@ -187,6 +251,10 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
             </>
           </li>
         ))}
+
+        <li ref={overflowSelectorRef}>
+          <DropdownOverflowMenu menus={overflowMenus} />
+        </li>
       </ul>
     </nav>
   );

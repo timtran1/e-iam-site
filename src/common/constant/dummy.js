@@ -61,7 +61,7 @@ export const mockMenu = [
     ],
   },
   {
-    label: 'CH-LOGIN to AGOV',
+    label: 'AGOV',
     href: 'index.php?c=agov&l=en',
     key: 'agov',
   },
@@ -335,6 +335,38 @@ export const mockMenu = [
         key: '!kontakt',
       },
     ],
+  },
+  {
+    label: 'Start page',
+    href: 'index.php?c=eiam&l=en',
+    key: 'eiam',
+  },
+  {
+    label: 'List of IdPs',
+    href: 'index.php?c=f!idps!pub&l=en',
+    key: 'f!idps!pub',
+  },
+  {
+    label: 'CH-LOGIN',
+    href: 'index.php?c=f!chlfaq!pub&l=en',
+    key: 'f!chlfaq!pub',
+    children: [
+      {
+        label: 'FAQ',
+        href: 'index.php?c=f!chlfaq!pub&l=en',
+        key: 'f!chlfaq!pub',
+      },
+      {
+        label: 'Help',
+        href: 'index.php?c=f!chhelp!pub&l=en',
+        key: 'f!chhelp!pub',
+      },
+    ],
+  },
+  {
+    label: 'CH-LOGIN to AGOV',
+    href: 'index.php?c=agov&l=en',
+    key: 'agov',
   },
 ];
 

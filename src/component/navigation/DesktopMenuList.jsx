@@ -56,7 +56,7 @@ const DesktopMenuList = React.memo(({listMenu}) => {
                 : 'hover:border-danger-cinnabar hover:shadow-soft'
             )}
           >
-            <div className="!ps-4 !py-2">
+            <div className="!px-4 !py-4">
               <div className="flex items-center justify-between gap-2">
                 <a
                   href={item.href}
