@@ -535,3 +535,6 @@ export const MockingExternalLinks = [
     href: 'https://www.eiam.swiss',
   },
 ];
+
+export const MockingPageTitle =
+  'Federal Office of Information Technology, Systems and Telecommunication& Federal Chancellery FCh, Digital Transformation and ICT Governance DTI';

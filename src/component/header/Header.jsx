@@ -6,7 +6,10 @@ import AppContext from '../../common/context/app/app.context.js';
 import {useElementSize} from '@mantine/hooks';
 import SearchInput from './SearchInput.jsx';
 import {useTranslation} from 'react-i18next';
-import {MockingExternalLinks} from '../../common/constant/dummy.js';
+import {
+  MockingExternalLinks,
+  MockingPageTitle,
+} from '../../common/constant/dummy.js';
 
 const isDevMode = import.meta.env.DEV;
 
@@ -55,6 +58,8 @@ const Header = ({className, sticky = false}) => {
 
   // Document title state
   const pageTitle = React.useMemo(() => {
+    if (isDevMode) return MockingPageTitle;
+
     if (serverSideData.bit) {
       return serverSideData.bit.innerHTML;
     } else {
@@ -142,7 +147,7 @@ const Header = ({className, sticky = false}) => {
             <div className="flex gap-4 lg:gap-6 flex-1 items-center lg:items-start">
               <div className="w-0.25 h-13.75 bg-[var(--Color-Divider-Header)]" />
               <p
-                className="hidden lg:block my-0 font-semibold flex-1 max-w-[var(--Header-Max-Width,1000px)]"
+                className="hidden lg:line-clamp-3 my-0 font-semibold max-w-[var(--Header-Max-Width,1000px)]"
                 dangerouslySetInnerHTML={{__html: pageTitle}}
               />
               <p className="lg:hidden my-0 font-semibold flex-1 max-w-[var(--Header-Max-Width,1000px)]">
@@ -153,7 +158,7 @@ const Header = ({className, sticky = false}) => {
             {/*Frame 8*/}
             <div
               className={clsx(
-                'flex justify-end items-center gap-6 lg:h-18 lg:flex-col lg:items-end'
+                'flex justify-end items-center gap-6 lg:h-18 lg:flex-col lg:items-end lg:justify-start'
               )}
             >
               {/*region lang selector*/}
