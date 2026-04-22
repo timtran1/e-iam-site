@@ -4,11 +4,32 @@ import clsx from 'clsx';
 import LangSelector from '../header/LangSelector.jsx';
 import AppContext from '../../common/context/app/app.context.js';
 import useQueryParam from '../../common/hook/useQueryParam.js';
-import {mockMenu} from '../../common/constant/dummy.js';
+import {MockingExternalLinks, mockMenu} from '../../common/constant/dummy.js';
 import ChevronButton from '../../common/ui/ChevronButton.jsx';
 import {useTranslation} from 'react-i18next';
 
 const isDevMode = import.meta.env.DEV;
+
+/**
+ * Render external links
+ *
+ * @param {Array<{text: string, href: string}>} externalLinks
+ * @returns {*}
+ * @constructor
+ */
+const ExternalLinks = ({externalLinks = []}) => {
+  return (
+    <>
+      <ul className="header-navigation__external-links-mobile">
+        {externalLinks.map((link, index) => (
+          <li key={index}>
+            <a href={link.href}>{link.text}</a>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+};
 
 /**
  * Recursively adds a `menuDepth` property to each item in the menu list to indicate its nesting level.
@@ -66,6 +87,12 @@ const DropdownMenuMobile = ({
    * @type {Array<AppMenu & {menuDepth: number}>}
    */
   const menus = isDevMode ? mockMenu : appContext.menu;
+
+  // External links
+  const externalLinks = React.useMemo(
+    () => (isDevMode ? MockingExternalLinks : appContext.vlineLinks) || [],
+    [appContext.vlineLinks]
+  );
 
   // Get current page
   const [currentPage] = useQueryParam('c');
@@ -169,6 +196,7 @@ const DropdownMenuMobile = ({
 
           {/*region menu*/}
           <nav className="mobile-navigation">
+            {/*region system menu*/}
             <ul className="navigation">
               {renderedListMenu.map((menuItem, i) => (
                 <li key={i} data-activated={currentPage === menuItem.key}>
@@ -181,6 +209,11 @@ const DropdownMenuMobile = ({
                 </li>
               ))}
             </ul>
+            {/*region system menu*/}
+
+            {/*region external links*/}
+            <ExternalLinks externalLinks={externalLinks} />
+            {/*endregion external links*/}
           </nav>
           {/*endregion menu*/}
         </div>

@@ -6,6 +6,30 @@ import AppContext from '../../common/context/app/app.context.js';
 import {useElementSize} from '@mantine/hooks';
 import SearchInput from './SearchInput.jsx';
 import {useTranslation} from 'react-i18next';
+import {MockingExternalLinks} from '../../common/constant/dummy.js';
+
+const isDevMode = import.meta.env.DEV;
+
+/**
+ * Render external links
+ *
+ * @param {Array<{text: string, href: string}>} externalLinks
+ * @returns {*}
+ * @constructor
+ */
+const ExternalLinks = ({externalLinks = []}) => {
+  return (
+    <>
+      <ul className="header-navigation__external-links">
+        {externalLinks.map((link, index) => (
+          <li key={index}>
+            <a href={link.href}>{link.text}</a>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+};
 
 /**
  * Header
@@ -23,7 +47,7 @@ const Header = ({className, sticky = false}) => {
   const {ref: headerRef, height: headerHeight} = useElementSize();
 
   // Get app context
-  const {serverSideData, headerMeta, setHeaderMeta} =
+  const {serverSideData, headerMeta, setHeaderMeta, vlineLinks} =
     React.useContext(AppContext);
 
   // Mobile navigation menu opened state
@@ -37,6 +61,12 @@ const Header = ({className, sticky = false}) => {
       return '';
     }
   }, [serverSideData.bit]);
+
+  // External links
+  const externalLinks = React.useMemo(
+    () => (isDevMode ? MockingExternalLinks : vlineLinks) || [],
+    [vlineLinks]
+  );
 
   /**
    * Get header height and update to data context
@@ -107,7 +137,7 @@ const Header = ({className, sticky = false}) => {
           {/*endregion logo*/}
 
           {/*region header and language actions*/}
-          <div className="flex flex-1 justify-between items-center">
+          <div className="flex flex-1 justify-between items-center gap-8">
             {/*Frame 5*/}
             <div className="flex gap-4 lg:gap-6 flex-1 items-center lg:items-start">
               <div className="w-0.25 h-13.75 bg-[var(--Color-Divider-Header)]" />
@@ -123,12 +153,12 @@ const Header = ({className, sticky = false}) => {
             {/*Frame 8*/}
             <div
               className={clsx(
-                'flex justify-end items-center gap-6',
-                'lg:h-18 lg:min-w-50 lg:flex-col lg:items-end'
+                'flex justify-end items-center gap-6 lg:h-18 lg:flex-col lg:items-end'
               )}
             >
               {/*region lang selector*/}
-              <div className="hidden lg:block text-end">
+              <div className="text-end hidden lg:flex lg:gap-6">
+                <ExternalLinks externalLinks={externalLinks} />
                 <LangSelector />
               </div>
               {/*endregion lang selector*/}

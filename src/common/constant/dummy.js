@@ -520,3 +520,18 @@ export const MockingSearchResultsContent = `<main class="grow mx-auto max-w-[740
     <iframe style="display:none" src="u5sys.content.php?c=teleworkagov&amp;x=_search&amp;l=en&amp;q=search&amp;q2=search"></iframe>
 </main>
 `;
+
+export const MockingExternalLinks = [
+  {
+    text: 'Start',
+    href: 'https://www.eiam.swiss',
+  },
+  {
+    text: 'Docs',
+    href: 'https://www.eiam.swiss',
+  },
+  {
+    text: 'Dossier',
+    href: 'https://www.eiam.swiss',
+  },
+];

@@ -1,4 +1,4 @@
-import {useContext, useEffect, useMemo, useRef} from 'react';
+import {useContext, useMemo, useRef} from 'react';
 import AppContext from '../../common/context/app/app.context.js';
 import {
   mockContent,
@@ -8,7 +8,10 @@ import {
 } from '../../common/constant/dummy.js';
 import LeftSidebar from '../left-sidebar/LeftSidebar.jsx';
 import RightSidebar from '../right-sidebar/RightSidebar.jsx';
-import {stripNavigationMarkers, wrapOrphanTextNodes} from '../../common/helper/element-parsing.js';
+import {
+  stripNavigationMarkers,
+  wrapOrphanTextNodes,
+} from '../../common/helper/element-parsing.js';
 import useHashScroll from '../../common/hook/useHashScroll.js';
 import useSearchResult from './hooks/useSearchResult.js';
 import SearchResults from './components/search-results/index.jsx';
@@ -37,14 +40,7 @@ const Content = () => {
     content,
     headerMeta,
     hasRemovedServerElements,
-    vlineLinks,
   } = useContext(AppContext);
-
-  useMemo(() => {
-    if (vlineLinks && vlineLinks.length > 0) {
-      console.log({vlineLinks});
-    }
-  }, [vlineLinks]);
 
   // Search contents
   const {isSearchResultPage, searchResults} = useSearchResult(
