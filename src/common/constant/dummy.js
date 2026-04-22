@@ -560,11 +560,11 @@ export const MockingExternalLinks = [
   },
   {
     text: 'Docs',
-    href: 'https://www.eiam.swiss',
+    href: 'https://docs.eiam.swiss',
   },
   {
     text: 'Dossier',
-    href: 'https://www.eiam.swiss',
+    href: 'https://dossier.eiam.swiss',
   },
 ];
 
