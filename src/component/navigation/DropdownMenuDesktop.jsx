@@ -153,6 +153,7 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
       /** @type {Array<HTMLLIElement>} */
       const liElements = wrapperRef.current.children;
       // Exclude the last element (overflow selector) from menu items
+      // Note: clientWidth already includes padding
       const menuWidths = Array.from(liElements)
         .slice(0, -1)
         .map((li) => li.clientWidth);
@@ -252,9 +253,7 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
           </li>
         ))}
 
-        <li ref={overflowSelectorRef}>
-          <DropdownOverflowMenu menus={overflowMenus} />
-        </li>
+        <DropdownOverflowMenu ref={overflowSelectorRef} menus={overflowMenus} />
       </ul>
     </nav>
   );

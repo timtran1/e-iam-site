@@ -83,7 +83,7 @@ export const mockMenu = [
     ],
   },
   {
-    label: 'Availability & Security',
+    label: 'Security',
     href: 'index.php?c=vk3!&l=en',
     key: 'vk3!',
   },

@@ -106,7 +106,7 @@ const SearchInput = React.memo(() => {
                 htmlFor={searchId}
                 onFocus={() => setExpanded(true)}
                 className={clsx(
-                  'hidden xl:block py-0 pr-8 transition opacity-0 cursor-pointer',
+                  'hidden lg:block py-0 pr-8 transition opacity-0 cursor-pointer',
                   {
                     'opacity-100': !expanded,
                   }
@@ -139,14 +139,6 @@ const SearchInput = React.memo(() => {
               className="absolute top-1/2 right-1.5 -translate-y-1/2 cursor-pointer flex gap-2"
               onClick={handleClickSearchBtn}
             >
-              <div
-                className={clsx(
-                  'invisible lg:visible transition-opacity text-[length:var(--Color-Font-Header-Elements-Font-Size)]',
-                  expanded ? 'opacity-0 w-0' : 'lg:opacity-100 w-auto'
-                )}
-              >
-                {t('Search')}
-              </div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"

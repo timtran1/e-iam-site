@@ -1,7 +1,8 @@
+import {forwardRef, useMemo, useState} from 'react';
 import clsx from 'clsx';
 import {useTranslation} from 'react-i18next';
-import {useState} from 'react';
 import DesktopMenuList from './DesktopMenuList.jsx';
+import {hasChildActive} from '../../common/helper/menu.js';
 
 const ThreeDots = () => {
   return (
@@ -29,28 +30,50 @@ const ThreeDots = () => {
 
 /**
  * Overflow menu selector
- *
- * @param {string} className
- * @param {Array<AppMenu>} menus
- * @returns {JSX.Element}
- * @constructor
+ * @type {React.ForwardRefExoticComponent<React.PropsWithoutRef<{
+ * readonly className?: string,
+ * readonly menus?: Array<AppMenu>}
+ * > & React.RefAttributes<unknown>>}
  */
-const DropdownOverflowMenu = ({className, menus = []}) => {
+const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
   const {t} = useTranslation();
   const [isExtended, setIsExtended] = useState(false);
+  const activeMenu = useMemo(
+    () => menus.some((menu) => hasChildActive(menu)),
+    [menus]
+  );
 
+  /**
+   * Toggle menu
+   */
   const toggleMenu = () => {
     setIsExtended((prev) => !prev);
   };
 
+  /**
+   * Close menu
+   */
   const closeMenu = () => {
     setIsExtended(false);
   };
 
   return (
     <>
-      <div className={clsx('overflow-menu-selector', className)}>
-        <button className="overflow-menu-selector__button" onClick={toggleMenu}>
+      <li
+        ref={ref}
+        className={clsx(
+          'overflow-menu-selector',
+          isExtended && 'shadow-xl',
+          className
+        )}
+      >
+        <button
+          className={clsx(
+            'overflow-menu-selector__button',
+            activeMenu && 'active'
+          )}
+          onClick={toggleMenu}
+        >
           <span className="overflow-menu-selector__label">{t('more')}</span>
           <ThreeDots />
         </button>
@@ -62,15 +85,36 @@ const DropdownOverflowMenu = ({className, menus = []}) => {
               onClick={closeMenu}
             ></div>
             <div className="overflow-menu-selector__popover">
-              <ul className="">
+              <button
+                className="overflow-menu-selector__popover__close-button"
+                onClick={closeMenu}
+              >
+                <span> {t('Close')}</span>
+                <span className="h-4 w-4 flex items-center justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="8"
+                    height="8"
+                    viewBox="0 0 8 8"
+                    fill="none"
+                  >
+                    <path
+                      d="M6.73933 0L3.53933 3.20067L0.353333 0.0146666L0 0.368667L3.186 3.554L0.0146666 6.72467L0.368667 7.07867L3.53933 3.90733L6.72467 7.09333L7.07867 6.74L3.89267 3.554L7.09333 0.354L6.73933 0Z"
+                      fill="#6B7280"
+                    />
+                  </svg>
+                </span>
+              </button>
+              <ul>
                 <DesktopMenuList listMenu={menus} />
               </ul>
             </div>
           </>
         )}
-      </div>
+      </li>
     </>
   );
-};
+});
 
+DropdownOverflowMenu.displayName = 'DropdownOverflowMenu';
 export default DropdownOverflowMenu;

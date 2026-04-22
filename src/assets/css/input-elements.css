@@ -6,8 +6,7 @@ input[type='password'],
 textarea,
 select {
   padding: 10px 20px;
-  color: var(--Basic-Fontsize-Main, #1f2937);
-  font-family: 'Noto Sans';
+  color: var(--Color-Font-Main, #1f2937);
   font-size: var(--Basic-Fontsize-Paragraph-Font-Size, 18px);
   font-style: normal;
   font-weight: 400;
