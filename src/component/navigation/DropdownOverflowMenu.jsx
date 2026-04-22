@@ -1,4 +1,4 @@
-import {forwardRef, useMemo, useState} from 'react';
+import {forwardRef, useEffect, useMemo, useState} from 'react';
 import clsx from 'clsx';
 import {useTranslation} from 'react-i18next';
 import DesktopMenuList from './DesktopMenuList.jsx';
@@ -56,6 +56,26 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
   const closeMenu = () => {
     setIsExtended(false);
   };
+
+  /**
+   * Prevent scroll when menu is extended
+   */
+  useEffect(() => {
+    if (isExtended) {
+      const scrollbarWidth =
+        window.innerWidth - document.documentElement.clientWidth;
+      document.documentElement.style.overflow = 'hidden';
+      document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
+    } else {
+      document.documentElement.style.overflow = '';
+      document.documentElement.style.paddingRight = '';
+    }
+
+    return () => {
+      document.documentElement.style.overflow = '';
+      document.documentElement.style.paddingRight = '';
+    };
+  }, [isExtended]);
 
   return (
     <>
