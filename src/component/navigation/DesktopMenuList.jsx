@@ -56,31 +56,29 @@ const DesktopMenuList = React.memo(({listMenu}) => {
                 : 'hover:border-danger-cinnabar hover:shadow-soft'
             )}
           >
-            <div className="!px-4 !py-4">
-              <div className="flex items-center justify-between gap-2">
-                <a
-                  href={item.href}
-                  role="menuitem"
-                  className="flex-1 !p-0 !border-none !text-gray-mirage hover:no-underline"
-                  aria-current={currentPage === item.key ? 'page' : undefined}
-                >
-                  {item.label}
-                </a>
+            <div className="flex items-center justify-between gap-2">
+              <a
+                href={item.href}
+                role="menuitem"
+                className="flex-1 !border-none !text-gray-mirage hover:no-underline p-4"
+                aria-current={currentPage === item.key ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
 
-                {item.children && item.children.length > 0 && (
-                  <ChevronButton
-                    className="px-2.5"
-                    rotateChevron={
-                      openedItems[item.key] ? 'rotate-90' : 'rotate-0'
-                    }
-                    onClick={() => toggleItem(item.key)}
-                    onKeyDown={(e) => handleChevronKeyDown(e, item.key)}
-                    aria-expanded={!!openedItems[item.key]}
-                    aria-controls={`submenu-${item.key}`}
-                    aria-label={t(`Toggle ${item.label} submenu`)}
-                  />
-                )}
-              </div>
+              {item.children && item.children.length > 0 && (
+                <ChevronButton
+                  className="p-4"
+                  rotateChevron={
+                    openedItems[item.key] ? 'rotate-90' : 'rotate-0'
+                  }
+                  onClick={() => toggleItem(item.key)}
+                  onKeyDown={(e) => handleChevronKeyDown(e, item.key)}
+                  aria-expanded={!!openedItems[item.key]}
+                  aria-controls={`submenu-${item.key}`}
+                  aria-label={t(`Toggle ${item.label} submenu`)}
+                />
+              )}
             </div>
           </div>
 
