@@ -3,6 +3,9 @@ import clsx from 'clsx';
 import useQueryParam from '../../common/hook/useQueryParam.js';
 import ChevronButton from '../../common/ui/ChevronButton.jsx';
 import {useTranslation} from 'react-i18next';
+import useEffectOnce from '../../common/hook/useEffectOnce.js';
+import fromPairs from '../../common/helper/fromPairs.js';
+import {hasChildActive} from '../../common/helper/menu.js';
 
 /**
  * @type {React.NamedExoticComponent<{
@@ -38,6 +41,19 @@ const DesktopMenuList = React.memo(({listMenu}) => {
       toggleItem(itemKey);
     }
   };
+
+  /**
+   * Set default opened items
+   */
+  useEffectOnce(() => {
+    setOpenedItems(() => {
+      return {
+        ...fromPairs(
+          listMenu.map((menuItem) => [[menuItem.key], hasChildActive(menuItem)])
+        ),
+      };
+    });
+  });
 
   return (
     <>

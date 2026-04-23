@@ -7,6 +7,7 @@ import useQueryParam from '../../common/hook/useQueryParam.js';
 import {MockingExternalLinks, mockMenu} from '../../common/constant/dummy.js';
 import ChevronButton from '../../common/ui/ChevronButton.jsx';
 import {useTranslation} from 'react-i18next';
+import {useElementSize} from '@mantine/hooks';
 
 const isDevMode = import.meta.env.DEV;
 
@@ -71,6 +72,9 @@ const DropdownMenuMobile = ({
 }) => {
   // Translation
   const {t} = useTranslation();
+
+  // External links ref
+  const {ref: externalLinksRef, height: externalLinksHeight} = useElementSize();
 
   // Internal state for uncontrolled mode
   const [openedState, setOpenedState] = React.useState(false);
@@ -174,10 +178,10 @@ const DropdownMenuMobile = ({
       >
         <div
           className={clsx(
-            'h-full bg-white transition-transform duration-300 ease-in-out transform'
+            'h-full bg-white transition-transform duration-300 ease-in-out'
           )}
           style={{
-            transform: `translateY(${opened ? 0 : `calc(-100% - ${+appContext.headerMeta.headerHeight || 0}px - ${6 * 4}px)`})`,
+            transform: `translateY(${opened ? 0 : `calc(-100% - ${+appContext.headerMeta.headerHeight || 0}px - ${+externalLinksHeight || 0}px - ${6 * 4}px)`})`,
           }}
         >
           {/*region lang selector and back button*/}
@@ -214,7 +218,7 @@ const DropdownMenuMobile = ({
                 </li>
               ))}
 
-              <li className="!block">
+              <li ref={externalLinksRef} className="!block">
                 {/*region external links*/}
                 <ExternalLinks externalLinks={externalLinks} />
                 {/*endregion external links*/}
