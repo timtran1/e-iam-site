@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import {useTranslation} from 'react-i18next';
 import DesktopMenuList from './DesktopMenuList.jsx';
 import {hasChildActive} from '../../common/helper/menu.js';
+import {getScrollbarWidth} from '../../common/helper/scrollbar.js';
 
 const ThreeDots = () => {
   return (
@@ -62,8 +63,7 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
    */
   useEffect(() => {
     if (isExtended) {
-      const scrollbarWidth =
-        window.innerWidth - document.documentElement.clientWidth;
+      const scrollbarWidth = getScrollbarWidth();
       document.documentElement.style.overflow = 'hidden';
       document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
     } else {
