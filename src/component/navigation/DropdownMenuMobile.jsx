@@ -181,7 +181,7 @@ const DropdownMenuMobile = ({
             'h-full bg-white transition-transform duration-300 ease-in-out'
           )}
           style={{
-            transform: `translateY(${opened ? 0 : `calc(-100% - ${+appContext.headerMeta.headerHeight || 0}px - ${+externalLinksHeight || 0}px - ${6 * 4}px)`})`,
+            transform: `translateY(${opened ? 0 : `calc(-100vh - ${+appContext.headerMeta.headerHeight || 0}px - ${+externalLinksHeight || 0}px - ${6 * 4}px)`})`,
           }}
         >
           {/*region lang selector and back button*/}
