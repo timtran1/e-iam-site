@@ -69,10 +69,10 @@ const DesktopMenuList = React.memo(({listMenu}) => {
 
                 {item.children && item.children.length > 0 && (
                   <ChevronButton
-                    className={clsx(
-                      'px-2 transition',
-                      openedItems[item.key] ? 'rotate-0' : 'rotate-90'
-                    )}
+                    className="px-2.5"
+                    rotateChevron={
+                      openedItems[item.key] ? 'rotate-90' : 'rotate-0'
+                    }
                     onClick={() => toggleItem(item.key)}
                     onKeyDown={(e) => handleChevronKeyDown(e, item.key)}
                     aria-expanded={!!openedItems[item.key]}

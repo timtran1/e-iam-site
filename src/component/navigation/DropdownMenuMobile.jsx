@@ -163,17 +163,22 @@ const DropdownMenuMobile = ({
 
       {/*region content*/}
       <div
+        style={{
+          height: `calc(100vh - ${+appContext.headerMeta.headerHeight || 0}px)`,
+        }}
         className={clsx(
-          'fixed z-50 left-0 h-screen w-screen overflow-hidden mt-6',
+          'fixed z-50 left-0 h-screen w-screen overflow-y-scroll mt-6',
           className,
           {'pointer-events-none': !opened}
         )}
       >
         <div
           className={clsx(
-            'h-full bg-white transition-transform duration-300 ease-in-out transform',
-            opened ? 'translate-y-0' : '-translate-y-full'
+            'h-full bg-white transition-transform duration-300 ease-in-out transform'
           )}
+          style={{
+            transform: `translateY(${opened ? 0 : `calc(-100% - ${+appContext.headerMeta.headerHeight || 0}px - ${6 * 4}px)`})`,
+          }}
         >
           {/*region lang selector and back button*/}
           <div className="px-4 pt-2 pb-5 border-b border-b-[var(--Color-Divider-Main,#E5E7EB)]">
@@ -208,12 +213,14 @@ const DropdownMenuMobile = ({
                   )}
                 </li>
               ))}
+
+              <li className="!block">
+                {/*region external links*/}
+                <ExternalLinks externalLinks={externalLinks} />
+                {/*endregion external links*/}
+              </li>
             </ul>
             {/*region system menu*/}
-
-            {/*region external links*/}
-            <ExternalLinks externalLinks={externalLinks} />
-            {/*endregion external links*/}
           </nav>
           {/*endregion menu*/}
         </div>
