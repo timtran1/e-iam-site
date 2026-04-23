@@ -144,8 +144,8 @@ const Header = ({className, sticky = false}) => {
           {/*region header and language actions*/}
           <div className="flex flex-1 justify-between items-center gap-8">
             {/*Frame 5*/}
-            <div className="flex gap-4 lg:gap-6 flex-1 items-center lg:items-start">
-              <div className="w-0.25 h-13.75 bg-[var(--Color-Divider-Header)]" />
+            <div className="flex gap-4 lg:gap-6 flex-1 items-center">
+              <div className="w-0.25 self-stretch bg-[var(--Color-Divider-Header)]" />
               <p
                 className="hidden lg:line-clamp-3 my-0 font-semibold max-w-[var(--Header-Max-Width,1000px)]"
                 dangerouslySetInnerHTML={{__html: pageTitle}}

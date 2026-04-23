@@ -36,6 +36,7 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
   // Track split menus: visible menus and overflow menus
   const [visibleMenus, setVisibleMenus] = React.useState(menus);
   const [overflowMenus, setOverflowMenus] = React.useState([]);
+  const [hasMenuBeenSeparated, setHasMenuBeenSeparated] = React.useState(false);
 
   // Store refs for chevron buttons to return focus
   const chevronButtonRefs = React.useRef({});
@@ -133,11 +134,18 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
     setOpenedItems({});
   });
 
+  /**
+   * Handle resize observer to calculate menu width
+   */
   React.useEffect(() => {
-    if (!wrapperRef.current) return;
+    // Guard: Skip calculation if the menu has been separated or the wrapper ref is not available
+    if (hasMenuBeenSeparated || !wrapperRef.current) return;
 
     const observer = new ResizeObserver(() => {
-      if (!overflowSelectorRef.current) return;
+      // Guard: Skip calculation if menus are not loaded yet
+      if (!overflowSelectorRef.current || !menus?.length) {
+        return;
+      }
 
       // Get overflow selector width
       const overflowSelectorWidth = overflowSelectorRef.current.clientWidth;
@@ -152,6 +160,13 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
 
       /** @type {Array<HTMLLIElement>} */
       const liElements = wrapperRef.current.children;
+
+      // Guard: Skip calculation if menus are not loaded yet
+      // liElements should have at least 2 children: menu items + overflow selector
+      if (liElements.length <= 1) {
+        return;
+      }
+
       // Exclude the last element (overflow selector) from menu items
       // Note: clientWidth already includes padding
       const menuWidths = Array.from(liElements)
@@ -181,12 +196,13 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
 
       setVisibleMenus(visible);
       setOverflowMenus(overflow);
+      setHasMenuBeenSeparated(true);
     });
 
     observer.observe(wrapperRef.current);
 
     return () => observer.disconnect();
-  }, [menus]);
+  }, [hasMenuBeenSeparated, menus]);
 
   return (
     <nav
@@ -195,7 +211,7 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
       {...(hasRemovedServerElements ? {id: ELEMENT_ID.NAVIGATION} : {})}
     >
       <ul ref={wrapperRef} className="navigation w-full">
-        {visibleMenus.map((menuItem, i) => (
+        {(hasMenuBeenSeparated ? visibleMenus : menus).map((menuItem, i) => (
           <li
             key={menuItem.key + i}
             className={clsx(
@@ -253,7 +269,11 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
           </li>
         ))}
 
-        <DropdownOverflowMenu ref={overflowSelectorRef} menus={overflowMenus} />
+        <DropdownOverflowMenu
+          ref={overflowSelectorRef}
+          className={clsx(overflowMenus.length > 0 ? 'visible' : 'invisible')}
+          menus={overflowMenus}
+        />
       </ul>
     </nav>
   );
