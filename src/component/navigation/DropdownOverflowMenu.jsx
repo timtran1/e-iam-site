@@ -82,14 +82,18 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
    * Calculate and set max-height for popover based on its position
    */
   useEffect(() => {
-    if (isExtended && popoverRef.current) {
-      const popoverRect = popoverRef.current.getBoundingClientRect();
-      const popoverTop = popoverRect.top;
-      const viewportHeight = window.innerHeight;
-      const bottomGap = 160; // 10rem
-      const maxHeight = viewportHeight - popoverTop - bottomGap;
+    if (popoverRef.current) {
+      if (isExtended) {
+        const popoverRect = popoverRef.current.getBoundingClientRect();
+        const popoverTop = popoverRect.top;
+        const viewportHeight = window.innerHeight;
+        const bottomGap = 160; // 10rem
+        const maxHeight = viewportHeight - popoverTop - bottomGap;
 
-      popoverRef.current.style.maxHeight = `${maxHeight}px`;
+        popoverRef.current.style.maxHeight = `${maxHeight}px`;
+      } else {
+        popoverRef.current.style.maxHeight = `${0}px`;
+      }
     }
   }, [isExtended]);
 
@@ -114,39 +118,43 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
           <ThreeDots />
         </button>
 
-        {isExtended && (
-          <>
-            <div
-              className="overflow-menu-selector__backdrop"
+        <div
+          className={clsx(
+            'overflow-menu-selector__backdrop transition-opacity duration-300',
+            isExtended ? 'opacity-100 visible' : 'opacity-0 invisible'
+          )}
+          onClick={closeMenu}
+        ></div>
+        <div
+          ref={popoverRef}
+          className="overflow-menu-selector__popover transition-all duration-300"
+        >
+          <div className="overflow-menu-selector__popover__wrapper">
+            <button
+              className="overflow-menu-selector__popover__close-button"
               onClick={closeMenu}
-            ></div>
-            <div ref={popoverRef} className="overflow-menu-selector__popover">
-              <button
-                className="overflow-menu-selector__popover__close-button"
-                onClick={closeMenu}
-              >
-                <span> {t('Close')}</span>
-                <span className="h-4 w-4 flex items-center justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="8"
-                    height="8"
-                    viewBox="0 0 8 8"
-                    fill="none"
-                  >
-                    <path
-                      d="M6.73933 0L3.53933 3.20067L0.353333 0.0146666L0 0.368667L3.186 3.554L0.0146666 6.72467L0.368667 7.07867L3.53933 3.90733L6.72467 7.09333L7.07867 6.74L3.89267 3.554L7.09333 0.354L6.73933 0Z"
-                      fill="#6B7280"
-                    />
-                  </svg>
-                </span>
-              </button>
-              <ul>
-                <DesktopMenuList listMenu={menus} />
-              </ul>
-            </div>
-          </>
-        )}
+            >
+              <span> {t('Close')}</span>
+              <span className="h-4 w-4 flex items-center justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="8"
+                  height="8"
+                  viewBox="0 0 8 8"
+                  fill="none"
+                >
+                  <path
+                    d="M6.73933 0L3.53933 3.20067L0.353333 0.0146666L0 0.368667L3.186 3.554L0.0146666 6.72467L0.368667 7.07867L3.53933 3.90733L6.72467 7.09333L7.07867 6.74L3.89267 3.554L7.09333 0.354L6.73933 0Z"
+                    fill="#6B7280"
+                  />
+                </svg>
+              </span>
+            </button>
+            <ul>
+              <DesktopMenuList listMenu={menus} />
+            </ul>
+          </div>
+        </div>
       </li>
     </>
   );
