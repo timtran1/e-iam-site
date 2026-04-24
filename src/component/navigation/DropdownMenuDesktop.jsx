@@ -28,7 +28,7 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
 
   // Get context data
   const {menu, hasRemovedServerElements} = React.useContext(AppContext);
-  const menus = isDevMode ? mockMenu : menu;
+  const menus = isDevMode ? [...mockMenu, ...mockMenu] : menu;
 
   // Track open state for each menu item individually
   const [openedItems, setOpenedItems] = React.useState({});
@@ -210,71 +210,79 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
       className="desktop-navigation"
       {...(hasRemovedServerElements ? {id: ELEMENT_ID.NAVIGATION} : {})}
     >
-      <ul ref={wrapperRef} className="navigation w-full">
-        {(hasMenuBeenSeparated ? visibleMenus : menus).map((menuItem, i) => (
-          <li
-            key={menuItem.key + i}
-            className={clsx(
-              (!currentPage && !i) || hasChildActive(menuItem) ? 'active' : ''
-            )}
-          >
-            <a
-              className="transition-all no-underline hover:no-underline text-nowrap"
-              href={menuItem.href}
-            >
-              {menuItem.label}
-            </a>{' '}
-            <>
-              {!!withSubmenuDropdown && menuItem.children?.length > 0 && (
-                <>
-                  <ChevronButton
-                    ref={(el) => (chevronButtonRefs.current[menuItem.key] = el)}
-                    className={clsx(
-                      'transition',
-                      openedItems[menuItem.key] ? 'rotate-90' : ''
-                    )}
-                    onClick={() => toggleItem(menuItem.key)}
-                    onKeyDown={(e) => handleChevronKeyDown(e, menuItem.key)}
-                    aria-expanded={!!openedItems[menuItem.key] || false}
-                    aria-controls={`header-nav-dropdown-${menuItem.key}`}
-                    aria-label={t(`Toggle ${menuItem.label} submenu`)}
-                  />
-                  <ul
-                    ref={(el) => (dropdownRefs.current[menuItem.key] = el)}
-                    id={`header-nav-dropdown-${menuItem.key}`}
-                    role="menu"
-                    aria-label={`${menuItem.label} submenu`}
-                    aria-hidden={!openedItems[menuItem.key] ? 'true' : 'false'}
-                    onKeyDown={(e) => handleDropdownKeyDown(e, menuItem.key)}
-                    className={clsx(
-                      'transition-all overflow-y-scroll max-h-[80vh]',
-                      openedItems[menuItem.key] ? 'open' : 'inactive'
-                    )}
-                  >
-                    <button
-                      ref={(el) => (closeButtonRefs.current[menuItem.key] = el)}
-                      type="button"
-                      className="nav-dropdown-close transition-all hover:translate-y-0.5"
-                      onClick={() => toggleItem(menuItem.key, true)}
-                      aria-label={t('Close submenu')}
-                    >
-                      <span aria-hidden="true">×</span>
-                      <span className="ml-1">Close</span>
-                    </button>
-                    <DesktopMenuList listMenu={menuItem.children} />
-                  </ul>
-                </>
+      <div className="navigation">
+        <ul ref={wrapperRef} className="navigation__wrapper">
+          {(hasMenuBeenSeparated ? visibleMenus : menus).map((menuItem, i) => (
+            <li
+              key={menuItem.key + i}
+              className={clsx(
+                (!currentPage && !i) || hasChildActive(menuItem) ? 'active' : ''
               )}
-            </>
-          </li>
-        ))}
+            >
+              <a
+                className="transition-all no-underline hover:no-underline text-nowrap"
+                href={menuItem.href}
+              >
+                {menuItem.label}
+              </a>{' '}
+              <>
+                {!!withSubmenuDropdown && menuItem.children?.length > 0 && (
+                  <>
+                    <ChevronButton
+                      ref={(el) =>
+                        (chevronButtonRefs.current[menuItem.key] = el)
+                      }
+                      className={clsx(
+                        'transition',
+                        openedItems[menuItem.key] ? 'rotate-90' : ''
+                      )}
+                      onClick={() => toggleItem(menuItem.key)}
+                      onKeyDown={(e) => handleChevronKeyDown(e, menuItem.key)}
+                      aria-expanded={!!openedItems[menuItem.key] || false}
+                      aria-controls={`header-nav-dropdown-${menuItem.key}`}
+                      aria-label={t(`Toggle ${menuItem.label} submenu`)}
+                    />
+                    <ul
+                      ref={(el) => (dropdownRefs.current[menuItem.key] = el)}
+                      id={`header-nav-dropdown-${menuItem.key}`}
+                      role="menu"
+                      aria-label={`${menuItem.label} submenu`}
+                      aria-hidden={
+                        !openedItems[menuItem.key] ? 'true' : 'false'
+                      }
+                      onKeyDown={(e) => handleDropdownKeyDown(e, menuItem.key)}
+                      className={clsx(
+                        'transition-all overflow-y-scroll max-h-[80vh]',
+                        openedItems[menuItem.key] ? 'open' : 'inactive'
+                      )}
+                    >
+                      <button
+                        ref={(el) =>
+                          (closeButtonRefs.current[menuItem.key] = el)
+                        }
+                        type="button"
+                        className="nav-dropdown-close transition-all hover:translate-y-0.5"
+                        onClick={() => toggleItem(menuItem.key, true)}
+                        aria-label={t('Close submenu')}
+                      >
+                        <span aria-hidden="true">×</span>
+                        <span className="ml-1">Close</span>
+                      </button>
+                      <DesktopMenuList listMenu={menuItem.children} />
+                    </ul>
+                  </>
+                )}
+              </>
+            </li>
+          ))}
 
-        <DropdownOverflowMenu
-          ref={overflowSelectorRef}
-          className={clsx(overflowMenus.length > 0 ? 'visible' : 'invisible')}
-          menus={overflowMenus}
-        />
-      </ul>
+          <DropdownOverflowMenu
+            ref={overflowSelectorRef}
+            className={clsx(overflowMenus.length > 0 ? 'visible' : 'invisible')}
+            menus={overflowMenus}
+          />
+        </ul>
+      </div>
     </nav>
   );
 };
