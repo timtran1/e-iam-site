@@ -61,7 +61,7 @@ export const mockMenu = [
     ],
   },
   {
-    label: 'CH-LOGIN to AGOV',
+    label: 'AGOV',
     href: 'index.php?c=agov&l=en',
     key: 'agov',
   },
@@ -83,7 +83,7 @@ export const mockMenu = [
     ],
   },
   {
-    label: 'Availability & Security',
+    label: 'Security',
     href: 'index.php?c=vk3!&l=en',
     key: 'vk3!',
   },
@@ -336,6 +336,38 @@ export const mockMenu = [
       },
     ],
   },
+  {
+    label: 'Start page',
+    href: 'index.php?c=eiam&l=en',
+    key: 'eiam',
+  },
+  {
+    label: 'List of IdPs',
+    href: 'index.php?c=f!idps!pub&l=en',
+    key: 'f!idps!pub',
+  },
+  {
+    label: 'CH-LOGIN',
+    href: 'index.php?c=f!chlfaq!pub&l=en',
+    key: 'f!chlfaq!pub',
+    children: [
+      {
+        label: 'FAQ',
+        href: 'index.php?c=f!chlfaq!pub&l=en',
+        key: 'f!chlfaq!pub',
+      },
+      {
+        label: 'Help',
+        href: 'index.php?c=f!chhelp!pub&l=en',
+        key: 'f!chhelp!pub',
+      },
+    ],
+  },
+  {
+    label: 'CH-LOGIN to AGOV',
+    href: 'index.php?c=agov&l=en',
+    key: 'agov',
+  },
 ];
 
 // Mocking Right Content with normal element
@@ -520,3 +552,21 @@ export const MockingSearchResultsContent = `<main class="grow mx-auto max-w-[740
     <iframe style="display:none" src="u5sys.content.php?c=teleworkagov&amp;x=_search&amp;l=en&amp;q=search&amp;q2=search"></iframe>
 </main>
 `;
+
+export const MockingExternalLinks = [
+  {
+    text: 'Start',
+    href: 'https://www.eiam.swiss',
+  },
+  {
+    text: 'Docs',
+    href: 'https://docs.eiam.swiss',
+  },
+  {
+    text: 'Dossier',
+    href: 'https://dossier.eiam.swiss',
+  },
+];
+
+export const MockingPageTitle =
+  'Federal Office of Information Technology, Systems and Telecommunication& Federal Chancellery FCh, Digital Transformation and ICT Governance DTI';

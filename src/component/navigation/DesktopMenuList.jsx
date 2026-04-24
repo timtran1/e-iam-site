@@ -3,6 +3,9 @@ import clsx from 'clsx';
 import useQueryParam from '../../common/hook/useQueryParam.js';
 import ChevronButton from '../../common/ui/ChevronButton.jsx';
 import {useTranslation} from 'react-i18next';
+import useEffectOnce from '../../common/hook/useEffectOnce.js';
+import fromPairs from '../../common/helper/fromPairs.js';
+import {hasChildActive} from '../../common/helper/menu.js';
 
 /**
  * @type {React.NamedExoticComponent<{
@@ -39,6 +42,19 @@ const DesktopMenuList = React.memo(({listMenu}) => {
     }
   };
 
+  /**
+   * Set default opened items
+   */
+  useEffectOnce(() => {
+    setOpenedItems(() => {
+      return {
+        ...fromPairs(
+          listMenu.map((menuItem) => [[menuItem.key], hasChildActive(menuItem)])
+        ),
+      };
+    });
+  });
+
   return (
     <>
       {listMenu.map((item, index) => (
@@ -56,31 +72,29 @@ const DesktopMenuList = React.memo(({listMenu}) => {
                 : 'hover:border-danger-cinnabar hover:shadow-soft'
             )}
           >
-            <div className="!ps-4 !py-2">
-              <div className="flex items-center justify-between gap-2">
-                <a
-                  href={item.href}
-                  role="menuitem"
-                  className="flex-1 !p-0 !border-none !text-gray-mirage hover:no-underline"
-                  aria-current={currentPage === item.key ? 'page' : undefined}
-                >
-                  {item.label}
-                </a>
+            <div className="flex items-center justify-between gap-2">
+              <a
+                href={item.href}
+                role="menuitem"
+                className="flex-1 !border-none !text-gray-mirage hover:no-underline p-4"
+                aria-current={currentPage === item.key ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
 
-                {item.children && item.children.length > 0 && (
-                  <ChevronButton
-                    className={clsx(
-                      'px-2 transition',
-                      openedItems[item.key] ? 'rotate-0' : 'rotate-90'
-                    )}
-                    onClick={() => toggleItem(item.key)}
-                    onKeyDown={(e) => handleChevronKeyDown(e, item.key)}
-                    aria-expanded={!!openedItems[item.key]}
-                    aria-controls={`submenu-${item.key}`}
-                    aria-label={t(`Toggle ${item.label} submenu`)}
-                  />
-                )}
-              </div>
+              {item.children && item.children.length > 0 && (
+                <ChevronButton
+                  className="p-4"
+                  rotateChevron={
+                    openedItems[item.key] ? 'rotate-90' : 'rotate-0'
+                  }
+                  onClick={() => toggleItem(item.key)}
+                  onKeyDown={(e) => handleChevronKeyDown(e, item.key)}
+                  aria-expanded={!!openedItems[item.key]}
+                  aria-controls={`submenu-${item.key}`}
+                  aria-label={t(`Toggle ${item.label} submenu`)}
+                />
+              )}
             </div>
           </div>
 

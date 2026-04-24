@@ -4,11 +4,33 @@ import clsx from 'clsx';
 import LangSelector from '../header/LangSelector.jsx';
 import AppContext from '../../common/context/app/app.context.js';
 import useQueryParam from '../../common/hook/useQueryParam.js';
-import {mockMenu} from '../../common/constant/dummy.js';
+import {MockingExternalLinks, mockMenu} from '../../common/constant/dummy.js';
 import ChevronButton from '../../common/ui/ChevronButton.jsx';
 import {useTranslation} from 'react-i18next';
+import {useElementSize} from '@mantine/hooks';
 
 const isDevMode = import.meta.env.DEV;
+
+/**
+ * Render external links
+ *
+ * @param {Array<{text: string, href: string}>} externalLinks
+ * @returns {*}
+ * @constructor
+ */
+const ExternalLinks = ({externalLinks = []}) => {
+  return (
+    <>
+      <ul className="header-navigation__external-links-mobile">
+        {externalLinks.map((link, index) => (
+          <li key={index}>
+            <a href={link.href}>{link.text}</a>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+};
 
 /**
  * Recursively adds a `menuDepth` property to each item in the menu list to indicate its nesting level.
@@ -51,6 +73,9 @@ const DropdownMenuMobile = ({
   // Translation
   const {t} = useTranslation();
 
+  // External links ref
+  const {ref: externalLinksRef, height: externalLinksHeight} = useElementSize();
+
   // Internal state for uncontrolled mode
   const [openedState, setOpenedState] = React.useState(false);
 
@@ -66,6 +91,12 @@ const DropdownMenuMobile = ({
    * @type {Array<AppMenu & {menuDepth: number}>}
    */
   const menus = isDevMode ? mockMenu : appContext.menu;
+
+  // External links
+  const externalLinks = React.useMemo(
+    () => (isDevMode ? MockingExternalLinks : appContext.vlineLinks) || [],
+    [appContext.vlineLinks]
+  );
 
   // Get current page
   const [currentPage] = useQueryParam('c');
@@ -136,17 +167,22 @@ const DropdownMenuMobile = ({
 
       {/*region content*/}
       <div
+        style={{
+          height: `calc(100vh - ${+appContext.headerMeta.headerHeight || 0}px)`,
+        }}
         className={clsx(
-          'fixed z-50 left-0 h-screen w-screen overflow-hidden mt-6',
+          'fixed z-50 left-0 h-screen w-screen overflow-y-scroll mt-6',
           className,
           {'pointer-events-none': !opened}
         )}
       >
         <div
           className={clsx(
-            'h-full bg-white transition-transform duration-300 ease-in-out transform',
-            opened ? 'translate-y-0' : '-translate-y-full'
+            'h-full bg-white transition-transform duration-300 ease-in-out'
           )}
+          style={{
+            transform: `translateY(${opened ? 0 : `calc(-100vh - ${+appContext.headerMeta.headerHeight || 0}px - ${+externalLinksHeight || 0}px - ${6 * 4}px)`})`,
+          }}
         >
           {/*region lang selector and back button*/}
           <div className="px-4 pt-2 pb-5 border-b border-b-[var(--Color-Divider-Main,#E5E7EB)]">
@@ -169,6 +205,7 @@ const DropdownMenuMobile = ({
 
           {/*region menu*/}
           <nav className="mobile-navigation">
+            {/*region system menu*/}
             <ul className="navigation">
               {renderedListMenu.map((menuItem, i) => (
                 <li key={i} data-activated={currentPage === menuItem.key}>
@@ -180,7 +217,14 @@ const DropdownMenuMobile = ({
                   )}
                 </li>
               ))}
+
+              <li ref={externalLinksRef} className="!block">
+                {/*region external links*/}
+                <ExternalLinks externalLinks={externalLinks} />
+                {/*endregion external links*/}
+              </li>
             </ul>
+            {/*region system menu*/}
           </nav>
           {/*endregion menu*/}
         </div>
