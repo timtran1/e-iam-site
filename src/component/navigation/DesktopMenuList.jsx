@@ -78,7 +78,7 @@ const DesktopMenuList = React.memo(({listMenu, level = 0}) => {
           <div
             className={clsx(
               'transition-all border-s-4 border-transparent hover:text-danger-cinnabar',
-              currentPage === item.key
+              hasChildActive(item)
                 ? 'border-s-danger-cinnabar'
                 : 'hover:border-danger-cinnabar'
             )}

@@ -87,7 +87,7 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
         const popoverRect = popoverRef.current.getBoundingClientRect();
         const popoverTop = popoverRect.top;
         const viewportHeight = window.innerHeight;
-        const bottomGap = 160; // 10rem
+        const bottomGap = 100;
         const maxHeight = viewportHeight - popoverTop - bottomGap;
 
         popoverRef.current.style.maxHeight = `${maxHeight}px`;
