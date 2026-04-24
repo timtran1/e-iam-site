@@ -242,7 +242,6 @@ ul.header-navigation__external-links-mobile {
     overflow: hidden;
     transform: translateX(-50%) translateY(calc(var(--Color-Divider-Width, 1px)));
     background-color: var(--Color-Font-Main, #1f2937);
-    opacity: 0.2;
     z-index: 99;
   }
 

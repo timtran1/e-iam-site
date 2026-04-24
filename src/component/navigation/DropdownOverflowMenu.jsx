@@ -121,7 +121,7 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
         <div
           className={clsx(
             'overflow-menu-selector__backdrop transition-opacity duration-300',
-            isExtended ? 'opacity-100 visible' : 'opacity-0 invisible'
+            isExtended ? 'opacity-20 visible' : 'opacity-0 invisible'
           )}
           onClick={closeMenu}
         ></div>
