@@ -146,16 +146,12 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
     const liElements = hiddenMenuRef.current.children;
 
     // Guard: Skip calculation if menus are not loaded yet
-    // liElements should have at least 2 children: menu items + overflow selector
-    if (liElements.length <= 1) {
+    if (liElements.length === 0) {
       return;
     }
 
-    // Exclude the last element (overflow selector) from menu items
     // Note: clientWidth already includes padding
-    const menuWidths = Array.from(liElements)
-      .slice(0, -1)
-      .map((li) => li.clientWidth);
+    const menuWidths = Array.from(liElements).map((li) => li.clientWidth);
 
     // Get overflow selector width
     const overflowSelectorWidth = overflowSelectorRef.current.clientWidth;
