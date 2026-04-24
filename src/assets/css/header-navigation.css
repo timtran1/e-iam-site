@@ -113,8 +113,12 @@ nav.mobile-navigation > ul.navigation > li[data-activated='true'] {
   border-left: 3px solid var(--Color-Highlight-Red, #d8232a);
 }
 
-nav.mobile-navigation > ul.navigation > li[data-activated='false']:hover,
-nav.mobile-navigation > ul.navigation > li:not([data-activated]):hover {
+nav.mobile-navigation .mobile-navigation__external-links {
+  display: block !important;
+}
+
+nav.mobile-navigation > ul.navigation > li[data-activated='false']:not(.mobile-navigation__external-links):hover,
+nav.mobile-navigation > ul.navigation > li:not([data-activated]):not(.mobile-navigation__external-links):hover {
   border-left: 3px solid var(--Color-Highlight-Red, #d8232a);
   transition: border-left 0.1s;
 
@@ -239,6 +243,7 @@ ul.header-navigation__external-links-mobile {
   }
 
   .overflow-menu-selector__popover {
+    overflow-y: auto;
     padding: 2rem;
     background-color: white;
     position: absolute;

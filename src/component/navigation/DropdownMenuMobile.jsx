@@ -218,7 +218,10 @@ const DropdownMenuMobile = ({
                 </li>
               ))}
 
-              <li ref={externalLinksRef} className="!block">
+              <li
+                ref={externalLinksRef}
+                className="mobile-navigation__external-links"
+              >
                 {/*region external links*/}
                 <ExternalLinks externalLinks={externalLinks} />
                 {/*endregion external links*/}

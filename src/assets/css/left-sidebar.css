@@ -13,6 +13,7 @@ nav.left-sidebar {
   border-left: 3px solid transparent;
   border-bottom: 1px solid var(--Color-Divider-Main, #e5e7eb);
   background: #fff;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
 .left-sidebar__item--primary > a,
@@ -70,13 +71,11 @@ nav.left-sidebar {
   transition-duration: 0.1s;
 }
 
-.left-sidebar__item--primary[data-activated='true'] > a,
-.left-sidebar__item--secondary[data-activated='true'] > a,
-.left-sidebar__item--primary:hover > a,
-.left-sidebar__item--primary[data-activated='true'] > a:visited,
-.left-sidebar__item--secondary[data-activated='true'] > a:visited,
-.left-sidebar__item--primary:hover > a:visited {
-  color: var(--Color-Highlight-Red, #d8232a);
+.left-sidebar__item--primary > a,
+.left-sidebar__item--secondary > a {
+  &:hover {
+    color: var(--Color-Highlight-Red, #d8232a);
+  }
 }
 
 .left-sidebar__item--secondary > a {

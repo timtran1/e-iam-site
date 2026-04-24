@@ -61,22 +61,21 @@ const DesktopMenuList = React.memo(({listMenu}) => {
         <li
           key={item.key || index}
           role="none"
-          className={clsx('border-b !cursor-pointer', 'last:border-none')}
+          className={clsx('border-b !cursor-pointer last:border-none')}
         >
           <div
             className={clsx(
-              'transition-all border-s-4 border-transparent hover:translate-x-0.5',
-              ' hover:bg-gray-black-squeeze',
+              'transition-all border-s-4 border-transparent hover:text-danger-cinnabar',
               currentPage === item.key
-                ? 'border-s-danger-cinnabar shadow-soft'
-                : 'hover:border-danger-cinnabar hover:shadow-soft'
+                ? 'border-s-danger-cinnabar'
+                : 'hover:border-danger-cinnabar'
             )}
           >
             <div className="flex items-center justify-between gap-2">
               <a
                 href={item.href}
                 role="menuitem"
-                className="flex-1 !border-none !text-gray-mirage hover:no-underline p-4"
+                className="p-4 flex-1 font-medium !border-none !text-gray-mirage transition-all hover:no-underline hover:!text-danger-cinnabar"
                 aria-current={currentPage === item.key ? 'page' : undefined}
               >
                 {item.label}

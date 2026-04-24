@@ -62,12 +62,7 @@ export default function LeftMenuItem({
           className={clsx('left-sidebar__item--primary', className)}
           data-activated={isActivated || hasActivatedChild}
         >
-          <a
-            href={menu.href}
-            className="hover:translate-x-0.5 transition-transform duration-100"
-          >
-            {menu.label}
-          </a>
+          <a href={menu.href}>{menu.label}</a>
 
           {showCollapse && (
             <ChevronButton

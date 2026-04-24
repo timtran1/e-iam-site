@@ -1,4 +1,4 @@
-import {forwardRef, useEffect, useMemo, useState} from 'react';
+import {forwardRef, useEffect, useMemo, useRef, useState} from 'react';
 import clsx from 'clsx';
 import {useTranslation} from 'react-i18next';
 import DesktopMenuList from './DesktopMenuList.jsx';
@@ -39,6 +39,7 @@ const ThreeDots = () => {
 const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
   const {t} = useTranslation();
   const [isExtended, setIsExtended] = useState(false);
+  const popoverRef = useRef(null);
   const activeMenu = useMemo(
     () => menus.some((menu) => hasChildActive(menu)),
     [menus]
@@ -77,6 +78,21 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
     };
   }, [isExtended]);
 
+  /**
+   * Calculate and set max-height for popover based on its position
+   */
+  useEffect(() => {
+    if (isExtended && popoverRef.current) {
+      const popoverRect = popoverRef.current.getBoundingClientRect();
+      const popoverTop = popoverRect.top;
+      const viewportHeight = window.innerHeight;
+      const bottomGap = 160; // 10rem
+      const maxHeight = viewportHeight - popoverTop - bottomGap;
+
+      popoverRef.current.style.maxHeight = `${maxHeight}px`;
+    }
+  }, [isExtended]);
+
   return (
     <>
       <li
@@ -104,7 +120,7 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
               className="overflow-menu-selector__backdrop"
               onClick={closeMenu}
             ></div>
-            <div className="overflow-menu-selector__popover">
+            <div ref={popoverRef} className="overflow-menu-selector__popover">
               <button
                 className="overflow-menu-selector__popover__close-button"
                 onClick={closeMenu}
