@@ -28,10 +28,7 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
 
   // Get context data
   const {menu, hasRemovedServerElements} = React.useContext(AppContext);
-  const menus = React.useMemo(
-    () => (isDevMode ? [...mockMenu, ...mockMenu] : menu),
-    [menu]
-  );
+  const menus = React.useMemo(() => (isDevMode ? [...mockMenu] : menu), [menu]);
 
   // Track open state for each menu item individually
   const [openedItems, setOpenedItems] = React.useState({});
@@ -163,6 +160,21 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
     // Get overflow selector width
     const overflowSelectorWidth = overflowSelectorRef.current.clientWidth;
     const gap = +computedStyle.gap.replace('px', '') || 0; // Exp value like 48, 56,...
+
+    // Check if all menus fit without overflow selector.
+    // The overflow selector is always rendered (visibility:hidden, not display:none),
+    // so it still occupies space — account for its fixed width of 120px (magic number).
+    const OVERFLOW_SELECTOR_WIDTH = 120;
+    const totalMenusWidth = menuWidths.reduce(
+      (sum, w, i) => sum + w + (i > 0 ? gap : 0),
+      0
+    );
+
+    if (totalMenusWidth + OVERFLOW_SELECTOR_WIDTH + gap <= wrapperWidth) {
+      setVisibleMenus(menus);
+      setOverflowMenus([]);
+      return;
+    }
 
     // Available width for menus (wrapper width - overflow selector width - gap)
     const availableWidth = wrapperWidth - overflowSelectorWidth - gap;

@@ -239,6 +239,7 @@ ul.header-navigation__external-links-mobile {
     left: 0;
     width: calc(100vw * 2);
     height: 100vh;
+    overflow: hidden;
     transform: translateX(-50%) translateY(calc(var(--Color-Divider-Width, 1px)));
     background-color: var(--Color-Font-Main, #1f2937);
     opacity: 0.2;
