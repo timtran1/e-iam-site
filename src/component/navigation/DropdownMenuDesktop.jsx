@@ -37,9 +37,8 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
   const [openedItems, setOpenedItems] = React.useState({});
 
   // Track split menus: visible menus and overflow menus
-  const [visibleMenus, setVisibleMenus] = React.useState(menus);
+  const [visibleMenus, setVisibleMenus] = React.useState([]);
   const [overflowMenus, setOverflowMenus] = React.useState([]);
-  const [hasMenuBeenSeparated, setHasMenuBeenSeparated] = React.useState(false);
 
   // Store refs for chevron buttons to return focus
   const chevronButtonRefs = React.useRef({});
@@ -211,7 +210,6 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
       return;
     const observer = new ResizeObserver(() => {
       separateMenus();
-      setHasMenuBeenSeparated(true);
     });
     observer.observe(wrapperRef.current);
 
@@ -244,7 +242,7 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
         {/*endregion: render hidden nav to measure menu width*/}
 
         <ul ref={wrapperRef} className="navigation__wrapper">
-          {(hasMenuBeenSeparated ? visibleMenus : menus).map((menuItem, i) => (
+          {visibleMenus.map((menuItem, i) => (
             <li
               key={menuItem.key + i}
               className={clsx(
