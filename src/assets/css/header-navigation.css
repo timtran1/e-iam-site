@@ -36,7 +36,7 @@ nav.desktop-navigation > .navigation {
   border-bottom: 1px solid var(--Color-Divider-Main, #e5e7eb);
 }
 
-nav.desktop-navigation > .navigation > ul.navigation__wrapper {
+nav.desktop-navigation .navigation ul.navigation__wrapper {
   /*Apply container element*/
   @apply container mx-auto;
 
@@ -47,7 +47,7 @@ nav.desktop-navigation > .navigation > ul.navigation__wrapper {
   background: #fff;
 }
 
-nav.desktop-navigation > .navigation > ul.navigation__wrapper > li {
+nav.desktop-navigation .navigation ul.navigation__wrapper > li {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -57,14 +57,14 @@ nav.desktop-navigation > .navigation > ul.navigation__wrapper > li {
   padding: 0 calc(var(--Navigation-Primary-Navigation-Navbar-Spacing, 48px)/2);
 }
 
-nav.desktop-navigation > .navigation > ul.navigation__wrapper > li.active,
-nav.desktop-navigation > .navigation > ul.navigation__wrapper > li:hover {
+nav.desktop-navigation .navigation ul.navigation__wrapper > li.active,
+nav.desktop-navigation .navigation ul.navigation__wrapper > li:hover {
   a {
     border-bottom: 4px solid var(--Color-Highlight-Red, #d8232a);
   }
 }
 
-nav.desktop-navigation > .navigation > ul.navigation__wrapper > li > a {
+nav.desktop-navigation .navigation ul.navigation__wrapper > li > a {
   color: var(--Color-Font-Main, #1f2937);
   font-family: var(--Basic-Font-Family-Font-Family, 'Noto Sans'), sans-serif;
   font-size: var(--Color-Font-Navigation-Font-Size, 16px);
@@ -75,11 +75,11 @@ nav.desktop-navigation > .navigation > ul.navigation__wrapper > li > a {
     var(--Navigation-Primary-Navigation-Item-Horizontal-Padding, 0);
 }
 
-nav.desktop-navigation > .navigation > ul.navigation__wrapper > li > a:visited {
+nav.desktop-navigation .navigation ul.navigation__wrapper > li > a:visited {
   color: var(--Color-Font-Main, #1f2937);
 }
 
-nav.desktop-navigation > .navigation > ul.navigation__wrapper > li > a:hover {
+nav.desktop-navigation .navigation ul.navigation__wrapper > li > a:hover {
   color: var(--Color-Highlight-Red, #d8232a);
 }
 

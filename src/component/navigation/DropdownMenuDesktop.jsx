@@ -28,7 +28,10 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
 
   // Get context data
   const {menu, hasRemovedServerElements} = React.useContext(AppContext);
-  const menus = isDevMode ? [...mockMenu, ...mockMenu] : menu;
+  const menus = React.useMemo(
+    () => (isDevMode ? [...mockMenu, ...mockMenu] : menu),
+    [menu]
+  );
 
   // Track open state for each menu item individually
   const [openedItems, setOpenedItems] = React.useState({});
@@ -120,12 +123,73 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
   };
 
   // Main dropdown ref
+  const hiddenMenuRef = React.useRef(/**@type {HTMLLIElement | null}*/ null);
   const wrapperRef = React.useRef(/**@type {HTMLLIElement | null}*/ null);
 
   // Ref for overflow selector
   const overflowSelectorRef = React.useRef(
     /**@type {HTMLLIElement | null}*/ null
   );
+
+  /**
+   * Separate menus into visible and overflow
+   * @type {(function(): void)|*}
+   */
+  const separateMenus = React.useCallback(() => {
+    if (!hiddenMenuRef.current) {
+      return;
+    }
+
+    const computedStyle = window.getComputedStyle(hiddenMenuRef.current);
+    const paddingLeft = +computedStyle.paddingLeft.replace('px', '') || 0;
+    const paddingRight = +computedStyle.paddingRight.replace('px', '') || 0;
+    const wrapperWidth =
+      hiddenMenuRef.current.clientWidth - paddingLeft - paddingRight;
+
+    /** @type {Array<HTMLLIElement>} */
+    const liElements = hiddenMenuRef.current.children;
+
+    // Guard: Skip calculation if menus are not loaded yet
+    // liElements should have at least 2 children: menu items + overflow selector
+    if (liElements.length <= 1) {
+      return;
+    }
+
+    // Exclude the last element (overflow selector) from menu items
+    // Note: clientWidth already includes padding
+    const menuWidths = Array.from(liElements)
+      .slice(0, -1)
+      .map((li) => li.clientWidth);
+
+    // Get overflow selector width
+    const overflowSelectorWidth = overflowSelectorRef.current.clientWidth;
+    const gap = +computedStyle.gap.replace('px', '') || 0; // Exp value like 48, 56,...
+
+    // Available width for menus (wrapper width - overflow selector width - gap)
+    const availableWidth = wrapperWidth - overflowSelectorWidth - gap;
+
+    // Calculate which menus fit in available width
+    let accumulatedWidth = 0;
+    let splitIndex = 0;
+
+    for (let i = 0; i < menuWidths.length; i++) {
+      const totalWidth = accumulatedWidth + menuWidths[i] + (i > 0 ? gap : 0);
+      if (totalWidth <= availableWidth) {
+        accumulatedWidth = totalWidth;
+        splitIndex = i + 1;
+      } else {
+        break;
+      }
+    }
+
+    // Split menus into visible and overflow
+    const visible = menus.slice(0, splitIndex);
+    const overflow = menus.slice(splitIndex);
+
+    // Update state
+    setVisibleMenus(visible);
+    setOverflowMenus(overflow);
+  }, [menus]);
 
   /**
    * Handle click away
@@ -138,71 +202,21 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
    * Handle resize observer to calculate menu width
    */
   React.useEffect(() => {
-    // Guard: Skip calculation if the menu has been separated or the wrapper ref is not available
-    if (hasMenuBeenSeparated || !wrapperRef.current) return;
-
+    // Guard: Skip calculation if menus are not loaded yet
+    if (
+      !hiddenMenuRef.current ||
+      !wrapperRef.current ||
+      !overflowSelectorRef.current
+    )
+      return;
     const observer = new ResizeObserver(() => {
-      // Guard: Skip calculation if menus are not loaded yet
-      if (!overflowSelectorRef.current || !menus?.length) {
-        return;
-      }
-
-      // Get overflow selector width
-      const overflowSelectorWidth = overflowSelectorRef.current.clientWidth;
-
-      const computedStyle = window.getComputedStyle(wrapperRef.current);
-      const gap = +computedStyle.gap.replace('px', '') || 0; // Exp value like 48, 56,...
-
-      const paddingLeft = +computedStyle.paddingLeft.replace('px', '') || 0;
-      const paddingRight = +computedStyle.paddingRight.replace('px', '') || 0;
-      const wrapperWidth =
-        wrapperRef.current.clientWidth - paddingLeft - paddingRight;
-
-      /** @type {Array<HTMLLIElement>} */
-      const liElements = wrapperRef.current.children;
-
-      // Guard: Skip calculation if menus are not loaded yet
-      // liElements should have at least 2 children: menu items + overflow selector
-      if (liElements.length <= 1) {
-        return;
-      }
-
-      // Exclude the last element (overflow selector) from menu items
-      // Note: clientWidth already includes padding
-      const menuWidths = Array.from(liElements)
-        .slice(0, -1)
-        .map((li) => li.clientWidth);
-
-      // Available width for menus (wrapper width - overflow selector width - gap)
-      const availableWidth = wrapperWidth - overflowSelectorWidth - gap;
-
-      // Calculate which menus fit in available width
-      let accumulatedWidth = 0;
-      let splitIndex = 0;
-
-      for (let i = 0; i < menuWidths.length; i++) {
-        const totalWidth = accumulatedWidth + menuWidths[i] + (i > 0 ? gap : 0);
-        if (totalWidth <= availableWidth) {
-          accumulatedWidth = totalWidth;
-          splitIndex = i + 1;
-        } else {
-          break;
-        }
-      }
-
-      // Split menus into visible and overflow
-      const visible = menus.slice(0, splitIndex);
-      const overflow = menus.slice(splitIndex);
-
-      setVisibleMenus(visible);
-      setOverflowMenus(overflow);
+      separateMenus();
       setHasMenuBeenSeparated(true);
     });
-
     observer.observe(wrapperRef.current);
 
     return () => observer.disconnect();
-  }, [hasMenuBeenSeparated, menus]);
+  }, [menus, separateMenus]);
 
   return (
     <nav
@@ -211,6 +225,24 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
       {...(hasRemovedServerElements ? {id: ELEMENT_ID.NAVIGATION} : {})}
     >
       <div className="navigation">
+        {/*region: render hidden nav to measure menu width*/}
+        <ul
+          ref={hiddenMenuRef}
+          className="navigation__wrapper !overflow-hidden !h-0 !opacity-0 !invisible"
+        >
+          {menus.map((menuItem, index) => (
+            <li key={menuItem.key + index}>
+              <a className="text-nowrap">{menuItem.label}</a>
+              <>
+                {!!withSubmenuDropdown && menuItem.children?.length > 0 && (
+                  <ChevronButton />
+                )}
+              </>
+            </li>
+          ))}
+        </ul>
+        {/*endregion: render hidden nav to measure menu width*/}
+
         <ul ref={wrapperRef} className="navigation__wrapper">
           {(hasMenuBeenSeparated ? visibleMenus : menus).map((menuItem, i) => (
             <li
