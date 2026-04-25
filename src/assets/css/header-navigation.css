@@ -1,6 +1,6 @@
 /*Header region*/
 header {
-  border-bottom: var(--Color-Divider-Width, 1px) solid var(--Color-Divider-Main, #e5e7eb);
+  border-bottom: var(--Divider-Width, 1px) solid var(--Color-Divider-Main, #e5e7eb);
 
   .header__wrapper {
     /*Apply container element*/
@@ -243,7 +243,7 @@ ul.header-navigation__external-links-mobile {
     width: calc(100vw * 2);
     height: 100vh;
     overflow: hidden;
-    transform: translateX(-50%) translateY(calc(var(--Color-Divider-Width, 1px)));
+    transform: translateX(-50%) translateY(calc(var(--Divider-Width, 1px)));
     background-color: var(--Color-Font-Main, #1f2937);
     z-index: 99;
   }
@@ -254,7 +254,7 @@ ul.header-navigation__external-links-mobile {
     position: absolute;
     top: 100%;
     left: 100%;
-    transform: translateX(-100%) translateY(calc(var(--Color-Divider-Width, 1px)));
+    transform: translateX(-100%) translateY(calc(var(--Divider-Width, 1px)));
     z-index: 100;
 
     .overflow-menu-selector__popover__wrapper {
