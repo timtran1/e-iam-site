@@ -63,7 +63,7 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
    * Prevent scroll when menu is extended
    */
   useEffect(() => {
-    const scrollLockTargets = [document.documentElement, document.body];
+    const scrollLockTargets = [document.documentElement];
 
     if (isExtended) {
       const scrollbarWidth = getScrollbarWidth();
