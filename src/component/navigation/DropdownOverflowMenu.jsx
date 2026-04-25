@@ -63,18 +63,26 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
    * Prevent scroll when menu is extended
    */
   useEffect(() => {
+    const scrollLockTargets = [document.documentElement, document.body];
+
     if (isExtended) {
       const scrollbarWidth = getScrollbarWidth();
-      document.documentElement.style.overflow = 'hidden';
-      document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
+      scrollLockTargets.forEach((el) => {
+        el.style.overflow = 'hidden';
+        el.style.paddingRight = `${scrollbarWidth}px`;
+      });
     } else {
-      document.documentElement.style.overflow = '';
-      document.documentElement.style.paddingRight = '';
+      scrollLockTargets.forEach((el) => {
+        el.style.overflow = '';
+        el.style.paddingRight = '';
+      });
     }
 
     return () => {
-      document.documentElement.style.overflow = '';
-      document.documentElement.style.paddingRight = '';
+      scrollLockTargets.forEach((el) => {
+        el.style.overflow = '';
+        el.style.paddingRight = '';
+      });
     };
   }, [isExtended]);
 
@@ -150,6 +158,9 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
                 </svg>
               </span>
             </button>
+            <div className="overflow-menu-selector__popover__heading">
+              {t('furtherTopics')}
+            </div>
             <ul>
               <DesktopMenuList listMenu={menus} />
             </ul>

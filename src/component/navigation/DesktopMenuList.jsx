@@ -73,14 +73,14 @@ const DesktopMenuList = React.memo(({listMenu, level = 0}) => {
         <li
           key={`${level}_${index}`}
           role="none"
-          className={clsx('border-b !cursor-pointer last:border-none')}
+          className={clsx('!cursor-pointer last:border-none')}
         >
           <div
             className={clsx(
-              'transition-all border-s-4 border-transparent hover:text-danger-cinnabar',
+              'transition-all border-b border-s-4 hover:text-danger-cinnabar',
               hasChildActive(item)
                 ? 'border-s-danger-cinnabar'
-                : 'hover:border-danger-cinnabar'
+                : 'border-s-transparent hover:border-s-danger-cinnabar'
             )}
           >
             <div className="flex items-center justify-between gap-2">

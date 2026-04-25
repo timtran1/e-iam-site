@@ -273,12 +273,22 @@ ul.header-navigation__external-links-mobile {
       gap: 0.125rem;
       justify-content: end;
       align-items: center;
+      margin-bottom: 1rem;
 
       color: var(--Color-Font-Secondary, #6B7280);
       font-size: var(--Color-Font-Header-Elements-Font-Size, 14px);
       font-style: normal;
       font-weight: 400;
       line-height: var(--Color-Font-Header-Elements-Line-Height, 18px);
+    }
+
+    .overflow-menu-selector__popover__heading {
+      color: var(--Color-Font-Main, #1F2937);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 24px;
+      margin-bottom: 0.75rem;
     }
   }
 
