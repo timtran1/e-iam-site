@@ -126,9 +126,12 @@ nav.mobile-navigation > ul.navigation > li:not([data-activated]):not(.mobile-nav
   transition: border-left 0.1s;
 
   a {
-    color: var(--Color-Highlight-Red, #d8232a);
     transition: color 0.1s;
   }
+}
+
+nav.mobile-navigation > ul.navigation > li:not(.mobile-navigation__external-links):hover a {
+  color: var(--Color-Highlight-Red, #d8232a);
 }
 
 nav.mobile-navigation > ul.navigation > li > a {

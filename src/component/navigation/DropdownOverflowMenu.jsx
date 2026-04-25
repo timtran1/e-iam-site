@@ -142,7 +142,7 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
               className="overflow-menu-selector__popover__close-button"
               onClick={closeMenu}
             >
-              <span> {t('Close')}</span>
+              <span> {t('close')}</span>
               <span className="h-4 w-4 flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
