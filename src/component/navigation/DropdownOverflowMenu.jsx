@@ -1,4 +1,5 @@
 import {forwardRef, useEffect, useMemo, useRef, useState} from 'react';
+import useHtmlZoom from '../../common/hook/useHtmlZoom.js';
 import clsx from 'clsx';
 import {useTranslation} from 'react-i18next';
 import DesktopMenuList from './DesktopMenuList.jsx';
@@ -38,6 +39,7 @@ const ThreeDots = () => {
  */
 const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
   const {t} = useTranslation();
+  const htmlZoom = useHtmlZoom();
   const [isExtended, setIsExtended] = useState(false);
   const popoverRef = useRef(null);
   const activeMenu = useMemo(
@@ -131,6 +133,10 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
             'overflow-menu-selector__backdrop transition-opacity duration-300',
             isExtended ? 'opacity-20 visible' : 'opacity-0 invisible'
           )}
+          style={{
+            width: `${200 / htmlZoom}vw`,
+            height: `calc(100vh / ${htmlZoom})`,
+          }}
           onClick={closeMenu}
         ></div>
         <div
