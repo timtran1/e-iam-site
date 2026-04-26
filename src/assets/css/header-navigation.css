@@ -237,7 +237,8 @@ ul.header-navigation__external-links-mobile {
   }
 
   .overflow-menu-selector__backdrop {
-    position: absolute;
+    position: fixed;
+    left: 0;
     background-color: var(--Color-Font-Main, #1f2937);
     z-index: 99;
   }

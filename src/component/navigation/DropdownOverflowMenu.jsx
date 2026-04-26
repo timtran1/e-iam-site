@@ -53,7 +53,7 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
     [menus]
   );
   const {
-    headerMeta: {navigationHeight},
+    headerMeta: {navigationTop},
     contentMeta: {width: contentWidth, height: contentHeight},
   } = useContext(AppContext);
 
@@ -146,7 +146,7 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
           style={{
             width: `${contentWidth}px`,
             height: `${contentHeight}px`,
-            top: `${navigationHeight}px`,
+            top: `${navigationTop + navigationTop}px`,
           }}
           onClick={closeMenu}
         ></div>
