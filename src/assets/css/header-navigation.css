@@ -237,13 +237,10 @@ ul.header-navigation__external-links-mobile {
   }
 
   .overflow-menu-selector__backdrop {
-    position: absolute;
-    top: 100%;
+    position: fixed;
     left: 0;
-    width: calc(100vw * 2);
+    width: 100vw;
     height: 100vh;
-    overflow: hidden;
-    transform: translateX(-50%) translateY(calc(var(--Divider-Width, 1px)));
     background-color: var(--Color-Font-Main, #1f2937);
     z-index: 99;
   }

@@ -2,6 +2,7 @@ import React from 'react';
 import ChevronButton from '../../common/ui/ChevronButton.jsx';
 import clsx from 'clsx';
 import AppContext from '../../common/context/app/app.context.js';
+import {useElementSize} from '@mantine/hooks';
 import {mockMenu} from '../../common/constant/dummy.js';
 import DesktopMenuList from './DesktopMenuList.jsx';
 import useClickAway from '../../common/hook/useClickAway.js';
@@ -27,7 +28,24 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
   const {t} = useTranslation();
 
   // Get context data
-  const {menu, hasRemovedServerElements} = React.useContext(AppContext);
+  const {menu, hasRemovedServerElements, setHeaderMeta} =
+    React.useContext(AppContext);
+
+  // Track nav element height
+  const {ref: navRef, height: navHeight} = useElementSize();
+
+  /**
+   * Sync desktop navigation height to AppContext whenever it changes
+   */
+  React.useEffect(() => {
+    if (navHeight) {
+      setHeaderMeta((prev) => ({
+        ...prev,
+        navigationHeight: navHeight,
+      }));
+    }
+  }, [navHeight, setHeaderMeta]);
+
   const menus = React.useMemo(() => (isDevMode ? [...mockMenu] : menu), [menu]);
 
   // Track open state for each menu item individually
@@ -226,6 +244,7 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
 
   return (
     <nav
+      ref={navRef}
       aria-label={t('Header navigation')}
       className="desktop-navigation"
       {...(hasRemovedServerElements ? {id: ELEMENT_ID.NAVIGATION} : {})}

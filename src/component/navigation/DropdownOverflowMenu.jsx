@@ -1,4 +1,12 @@
-import {forwardRef, useEffect, useMemo, useRef, useState} from 'react';
+import {
+  forwardRef,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import AppContext from '../../common/context/app/app.context.js';
 import useHtmlZoom from '../../common/hook/useHtmlZoom.js';
 import clsx from 'clsx';
 import {useTranslation} from 'react-i18next';
@@ -46,6 +54,9 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
     () => menus.some((menu) => hasChildActive(menu)),
     [menus]
   );
+  const {
+    headerMeta: {headerHeight, navigationHeight},
+  } = useContext(AppContext);
 
   /**
    * Toggle menu
@@ -134,8 +145,9 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
             isExtended ? 'opacity-20 visible' : 'opacity-0 invisible'
           )}
           style={{
-            width: `${200 / htmlZoom}vw`,
+            width: `calc(100vw / ${htmlZoom})`,
             height: `calc(100vh / ${htmlZoom})`,
+            top: `${headerHeight + navigationHeight}px`,
           }}
           onClick={closeMenu}
         ></div>

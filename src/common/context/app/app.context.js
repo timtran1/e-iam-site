@@ -7,7 +7,7 @@ import React from 'react';
  * @property {Array<AppMenu>} menu
  * @property {Array<AppLanguage>} languages
  * @property {Array<{text: string, href: string}>} vlineLinks
- * @property {{backgroundImage?: string, headerHeight?: number}} headerMeta
+ * @property {{backgroundImage?: string, headerHeight?: number, navigationHeight?: number}} headerMeta
  * @property {function} setHeaderMeta
  * @property {(id: string) => void} removeServerElement
  * @property {boolean} hasRemovedServerElements
