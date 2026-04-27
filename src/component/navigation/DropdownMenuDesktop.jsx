@@ -35,32 +35,16 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
   const {ref: navRef, height: navHeight} = useElementSize();
 
   /**
-   * Sync desktop navigation height and top offset to AppContext whenever they change
+   * Sync desktop navigation height to AppContext whenever it changes
    */
   React.useEffect(() => {
-    if (navHeight && navRef.current) {
-      const top = navRef.current.getBoundingClientRect().top + window.scrollY;
+    if (navHeight) {
       setHeaderMeta((prev) => ({
         ...prev,
         navigationHeight: navHeight,
-        navigationTop: top,
       }));
     }
-  }, [navHeight, navRef, setHeaderMeta]);
-
-  /**
-   * Update navigation top offset on window resize
-   */
-  React.useEffect(() => {
-    const handleResize = () => {
-      if (navRef.current) {
-        const top = navRef.current.getBoundingClientRect().top + window.scrollY;
-        setHeaderMeta((prev) => ({...prev, navigationTop: top}));
-      }
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [navRef, setHeaderMeta]);
+  }, [navHeight, setHeaderMeta]);
 
   const menus = React.useMemo(() => (isDevMode ? [...mockMenu] : menu), [menu]);
 

@@ -53,9 +53,34 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
     [menus]
   );
   const {
-    headerMeta: {navigationTop},
     contentMeta: {width: contentWidth, height: contentHeight},
   } = useContext(AppContext);
+
+  const [centerToLeft, setCenterToLeft] = useState(0);
+  console.log('centerToLeft: ', centerToLeft);
+
+  /**
+   * Calculate and update the distance from the horizontal center of the element to the left edge of the screen
+   */
+  useEffect(() => {
+    const el = ref?.current;
+    if (!el) return;
+
+    const update = () => {
+      const rect = el.getBoundingClientRect();
+      setCenterToLeft(rect.left + rect.width / 2);
+    };
+
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
+    window.addEventListener('resize', update);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', update);
+    };
+  }, [ref]);
 
   /**
    * Toggle menu
@@ -146,7 +171,8 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
           style={{
             width: `${contentWidth}px`,
             height: `${contentHeight}px`,
-            top: `${navigationTop + navigationTop}px`,
+            top: '100%',
+            transform: `translateX(calc(50% - ${centerToLeft}px))`,
           }}
           onClick={closeMenu}
         ></div>
