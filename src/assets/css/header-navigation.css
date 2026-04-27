@@ -97,6 +97,14 @@ nav.mobile-navigation > ul.navigation > li {
   transition-property: color, transform;
 }
 
+nav.mobile-navigation > ul.navigation::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1rem;
+  background: white;
+}
+
 nav.mobile-navigation > ul.navigation > li > button {
   display: flex;
   justify-content: center;

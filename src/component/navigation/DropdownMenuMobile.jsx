@@ -173,7 +173,7 @@ const DropdownMenuMobile = ({
       <div
         style={{
           width: `${100 / htmlZoom}vw`,
-          height: `calc((100vh - ${+appContext.headerMeta.headerHeight || 0}px) / ${htmlZoom})`,
+          height: `calc((100vh - ${(+appContext.headerMeta.headerHeight || 0) * htmlZoom}px) / ${htmlZoom})`,
         }}
         className={clsx('fixed z-50 left-0 overflow-y-scroll mt-6', className, {
           'pointer-events-none': !opened,
