@@ -57,7 +57,6 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
   } = useContext(AppContext);
 
   const [centerToLeft, setCenterToLeft] = useState(0);
-  console.log('centerToLeft: ', centerToLeft);
 
   /**
    * Calculate and update the distance from the horizontal center of the element to the left edge of the screen
