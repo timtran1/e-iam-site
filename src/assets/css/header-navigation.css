@@ -191,6 +191,10 @@ ul.header-navigation__external-links-mobile {
     align-self: stretch;
     border-bottom: 1px solid var(--Color-Divider-Main, #E5E7EB);
     background: var(--Color-Background-Element, #F0F4F7);
+
+    &:last-child {
+      border-bottom: none;
+    }
   }
 
   li a {
