@@ -2,6 +2,7 @@ import React from 'react';
 import ChevronButton from '../../common/ui/ChevronButton.jsx';
 import clsx from 'clsx';
 import AppContext from '../../common/context/app/app.context.js';
+import {useElementSize} from '@mantine/hooks';
 import {mockMenu} from '../../common/constant/dummy.js';
 import DesktopMenuList from './DesktopMenuList.jsx';
 import useClickAway from '../../common/hook/useClickAway.js';
@@ -27,16 +28,32 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
   const {t} = useTranslation();
 
   // Get context data
-  const {menu, hasRemovedServerElements} = React.useContext(AppContext);
-  const menus = isDevMode ? mockMenu : menu;
+  const {menu, hasRemovedServerElements, setHeaderMeta} =
+    React.useContext(AppContext);
+
+  // Track nav element height
+  const {ref: navRef, height: navHeight} = useElementSize();
+
+  /**
+   * Sync desktop navigation height to AppContext whenever it changes
+   */
+  React.useEffect(() => {
+    if (navHeight) {
+      setHeaderMeta((prev) => ({
+        ...prev,
+        navigationHeight: navHeight,
+      }));
+    }
+  }, [navHeight, setHeaderMeta]);
+
+  const menus = React.useMemo(() => (isDevMode ? [...mockMenu] : menu), [menu]);
 
   // Track open state for each menu item individually
   const [openedItems, setOpenedItems] = React.useState({});
 
   // Track split menus: visible menus and overflow menus
-  const [visibleMenus, setVisibleMenus] = React.useState(menus);
+  const [visibleMenus, setVisibleMenus] = React.useState([]);
   const [overflowMenus, setOverflowMenus] = React.useState([]);
-  const [hasMenuBeenSeparated, setHasMenuBeenSeparated] = React.useState(false);
 
   // Store refs for chevron buttons to return focus
   const chevronButtonRefs = React.useRef({});
@@ -120,12 +137,84 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
   };
 
   // Main dropdown ref
+  const hiddenMenuRef = React.useRef(/**@type {HTMLLIElement | null}*/ null);
   const wrapperRef = React.useRef(/**@type {HTMLLIElement | null}*/ null);
 
   // Ref for overflow selector
   const overflowSelectorRef = React.useRef(
     /**@type {HTMLLIElement | null}*/ null
   );
+
+  /**
+   * Separate menus into visible and overflow
+   * @type {(function(): void)|*}
+   */
+  const separateMenus = React.useCallback(() => {
+    if (!hiddenMenuRef.current) {
+      return;
+    }
+
+    const computedStyle = window.getComputedStyle(hiddenMenuRef.current);
+    const paddingLeft = +computedStyle.paddingLeft.replace('px', '') || 0;
+    const paddingRight = +computedStyle.paddingRight.replace('px', '') || 0;
+    const wrapperWidth =
+      hiddenMenuRef.current.clientWidth - paddingLeft - paddingRight;
+
+    /** @type {Array<HTMLLIElement>} */
+    const liElements = hiddenMenuRef.current.children;
+
+    // Guard: Skip calculation if menus are not loaded yet
+    if (liElements.length === 0) {
+      return;
+    }
+
+    // Note: clientWidth already includes padding
+    const menuWidths = Array.from(liElements).map((li) => li.clientWidth);
+
+    // Get overflow selector width
+    const overflowSelectorWidth = overflowSelectorRef.current.clientWidth;
+    const gap = +computedStyle.gap.replace('px', '') || 0; // Exp value like 48, 56,...
+
+    // Check if all menus fit without overflow selector.
+    // The overflow selector is always rendered (visibility:hidden, not display:none),
+    // so it still occupies space — account for its fixed width of 120px (magic number).
+    const OVERFLOW_SELECTOR_WIDTH = 120;
+    const totalMenusWidth = menuWidths.reduce(
+      (sum, w, i) => sum + w + (i > 0 ? gap : 0),
+      0
+    );
+
+    if (totalMenusWidth + OVERFLOW_SELECTOR_WIDTH + gap <= wrapperWidth) {
+      setVisibleMenus(menus);
+      setOverflowMenus([]);
+      return;
+    }
+
+    // Available width for menus (wrapper width - overflow selector width - gap)
+    const availableWidth = wrapperWidth - overflowSelectorWidth - gap;
+
+    // Calculate which menus fit in available width
+    let accumulatedWidth = 0;
+    let splitIndex = 0;
+
+    for (let i = 0; i < menuWidths.length; i++) {
+      const totalWidth = accumulatedWidth + menuWidths[i] + (i > 0 ? gap : 0);
+      if (totalWidth <= availableWidth) {
+        accumulatedWidth = totalWidth;
+        splitIndex = i + 1;
+      } else {
+        break;
+      }
+    }
+
+    // Split menus into visible and overflow
+    const visible = menus.slice(0, splitIndex);
+    const overflow = menus.slice(splitIndex);
+
+    // Update state
+    setVisibleMenus(visible);
+    setOverflowMenus(overflow);
+  }, [menus]);
 
   /**
    * Handle click away
@@ -138,143 +227,119 @@ const DropdownMenuDesktop = ({withSubmenuDropdown = false}) => {
    * Handle resize observer to calculate menu width
    */
   React.useEffect(() => {
-    // Guard: Skip calculation if the menu has been separated or the wrapper ref is not available
-    if (hasMenuBeenSeparated || !wrapperRef.current) return;
-
+    // Guard: Skip calculation if menus are not loaded yet
+    if (
+      !hiddenMenuRef.current ||
+      !wrapperRef.current ||
+      !overflowSelectorRef.current
+    )
+      return;
     const observer = new ResizeObserver(() => {
-      // Guard: Skip calculation if menus are not loaded yet
-      if (!overflowSelectorRef.current || !menus?.length) {
-        return;
-      }
-
-      // Get overflow selector width
-      const overflowSelectorWidth = overflowSelectorRef.current.clientWidth;
-
-      const computedStyle = window.getComputedStyle(wrapperRef.current);
-      const gap = +computedStyle.gap.replace('px', '') || 0; // Exp value like 48, 56,...
-
-      const paddingLeft = +computedStyle.paddingLeft.replace('px', '') || 0;
-      const paddingRight = +computedStyle.paddingRight.replace('px', '') || 0;
-      const wrapperWidth =
-        wrapperRef.current.clientWidth - paddingLeft - paddingRight;
-
-      /** @type {Array<HTMLLIElement>} */
-      const liElements = wrapperRef.current.children;
-
-      // Guard: Skip calculation if menus are not loaded yet
-      // liElements should have at least 2 children: menu items + overflow selector
-      if (liElements.length <= 1) {
-        return;
-      }
-
-      // Exclude the last element (overflow selector) from menu items
-      // Note: clientWidth already includes padding
-      const menuWidths = Array.from(liElements)
-        .slice(0, -1)
-        .map((li) => li.clientWidth);
-
-      // Available width for menus (wrapper width - overflow selector width - gap)
-      const availableWidth = wrapperWidth - overflowSelectorWidth - gap;
-
-      // Calculate which menus fit in available width
-      let accumulatedWidth = 0;
-      let splitIndex = 0;
-
-      for (let i = 0; i < menuWidths.length; i++) {
-        const totalWidth = accumulatedWidth + menuWidths[i] + (i > 0 ? gap : 0);
-        if (totalWidth <= availableWidth) {
-          accumulatedWidth = totalWidth;
-          splitIndex = i + 1;
-        } else {
-          break;
-        }
-      }
-
-      // Split menus into visible and overflow
-      const visible = menus.slice(0, splitIndex);
-      const overflow = menus.slice(splitIndex);
-
-      setVisibleMenus(visible);
-      setOverflowMenus(overflow);
-      setHasMenuBeenSeparated(true);
+      separateMenus();
     });
-
     observer.observe(wrapperRef.current);
 
     return () => observer.disconnect();
-  }, [hasMenuBeenSeparated, menus]);
+  }, [menus, separateMenus]);
 
   return (
     <nav
+      ref={navRef}
       aria-label={t('Header navigation')}
       className="desktop-navigation"
       {...(hasRemovedServerElements ? {id: ELEMENT_ID.NAVIGATION} : {})}
     >
-      <ul ref={wrapperRef} className="navigation w-full">
-        {(hasMenuBeenSeparated ? visibleMenus : menus).map((menuItem, i) => (
-          <li
-            key={menuItem.key + i}
-            className={clsx(
-              (!currentPage && !i) || hasChildActive(menuItem) ? 'active' : ''
-            )}
-          >
-            <a
-              className="transition-all no-underline hover:no-underline text-nowrap"
-              href={menuItem.href}
-            >
-              {menuItem.label}
-            </a>{' '}
-            <>
-              {!!withSubmenuDropdown && menuItem.children?.length > 0 && (
-                <>
-                  <ChevronButton
-                    ref={(el) => (chevronButtonRefs.current[menuItem.key] = el)}
-                    className={clsx(
-                      'transition',
-                      openedItems[menuItem.key] ? 'rotate-90' : ''
-                    )}
-                    onClick={() => toggleItem(menuItem.key)}
-                    onKeyDown={(e) => handleChevronKeyDown(e, menuItem.key)}
-                    aria-expanded={!!openedItems[menuItem.key] || false}
-                    aria-controls={`header-nav-dropdown-${menuItem.key}`}
-                    aria-label={t(`Toggle ${menuItem.label} submenu`)}
-                  />
-                  <ul
-                    ref={(el) => (dropdownRefs.current[menuItem.key] = el)}
-                    id={`header-nav-dropdown-${menuItem.key}`}
-                    role="menu"
-                    aria-label={`${menuItem.label} submenu`}
-                    aria-hidden={!openedItems[menuItem.key] ? 'true' : 'false'}
-                    onKeyDown={(e) => handleDropdownKeyDown(e, menuItem.key)}
-                    className={clsx(
-                      'transition-all overflow-y-scroll max-h-[80vh]',
-                      openedItems[menuItem.key] ? 'open' : 'inactive'
-                    )}
-                  >
-                    <button
-                      ref={(el) => (closeButtonRefs.current[menuItem.key] = el)}
-                      type="button"
-                      className="nav-dropdown-close transition-all hover:translate-y-0.5"
-                      onClick={() => toggleItem(menuItem.key, true)}
-                      aria-label={t('Close submenu')}
-                    >
-                      <span aria-hidden="true">×</span>
-                      <span className="ml-1">Close</span>
-                    </button>
-                    <DesktopMenuList listMenu={menuItem.children} />
-                  </ul>
-                </>
-              )}
-            </>
-          </li>
-        ))}
+      <div className="navigation">
+        {/*region: render hidden nav to measure menu width*/}
+        <ul
+          ref={hiddenMenuRef}
+          className="navigation__wrapper !overflow-hidden !h-0 !opacity-0 !invisible"
+        >
+          {menus.map((menuItem, index) => (
+            <li key={menuItem.key + index}>
+              <a className="text-nowrap">{menuItem.label}</a>
+              <>
+                {!!withSubmenuDropdown && menuItem.children?.length > 0 && (
+                  <ChevronButton />
+                )}
+              </>
+            </li>
+          ))}
+        </ul>
+        {/*endregion: render hidden nav to measure menu width*/}
 
-        <DropdownOverflowMenu
-          ref={overflowSelectorRef}
-          className={clsx(overflowMenus.length > 0 ? 'visible' : 'invisible')}
-          menus={overflowMenus}
-        />
-      </ul>
+        <ul ref={wrapperRef} className="navigation__wrapper">
+          {visibleMenus.map((menuItem, i) => (
+            <li
+              key={menuItem.key + i}
+              className={clsx(
+                (!currentPage && !i) || hasChildActive(menuItem) ? 'active' : ''
+              )}
+            >
+              <a
+                className="transition-all no-underline hover:no-underline text-nowrap"
+                href={menuItem.href}
+              >
+                {menuItem.label}
+              </a>{' '}
+              <>
+                {!!withSubmenuDropdown && menuItem.children?.length > 0 && (
+                  <>
+                    <ChevronButton
+                      ref={(el) =>
+                        (chevronButtonRefs.current[menuItem.key] = el)
+                      }
+                      className={clsx(
+                        'transition',
+                        openedItems[menuItem.key] ? 'rotate-90' : ''
+                      )}
+                      onClick={() => toggleItem(menuItem.key)}
+                      onKeyDown={(e) => handleChevronKeyDown(e, menuItem.key)}
+                      aria-expanded={!!openedItems[menuItem.key] || false}
+                      aria-controls={`header-nav-dropdown-${menuItem.key}`}
+                      aria-label={t(`Toggle ${menuItem.label} submenu`)}
+                    />
+                    <ul
+                      ref={(el) => (dropdownRefs.current[menuItem.key] = el)}
+                      id={`header-nav-dropdown-${menuItem.key}`}
+                      role="menu"
+                      aria-label={`${menuItem.label} submenu`}
+                      aria-hidden={
+                        !openedItems[menuItem.key] ? 'true' : 'false'
+                      }
+                      onKeyDown={(e) => handleDropdownKeyDown(e, menuItem.key)}
+                      className={clsx(
+                        'transition-all overflow-y-scroll max-h-[80vh]',
+                        openedItems[menuItem.key] ? 'open' : 'inactive'
+                      )}
+                    >
+                      <button
+                        ref={(el) =>
+                          (closeButtonRefs.current[menuItem.key] = el)
+                        }
+                        type="button"
+                        className="nav-dropdown-close transition-all hover:translate-y-0.5"
+                        onClick={() => toggleItem(menuItem.key, true)}
+                        aria-label={t('Close submenu')}
+                      >
+                        <span aria-hidden="true">×</span>
+                        <span className="ml-1">Close</span>
+                      </button>
+                      <DesktopMenuList listMenu={menuItem.children} />
+                    </ul>
+                  </>
+                )}
+              </>
+            </li>
+          ))}
+
+          <DropdownOverflowMenu
+            ref={overflowSelectorRef}
+            className={clsx(overflowMenus.length > 0 ? 'visible' : 'invisible')}
+            menus={overflowMenus}
+          />
+        </ul>
+      </div>
     </nav>
   );
 };

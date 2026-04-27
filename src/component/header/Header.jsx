@@ -119,72 +119,74 @@ const Header = ({className, sticky = false}) => {
         }}
         className={clsx({'z-50 sticky top-0': sticky}, className)}
       >
-        <div className="flex items-center gap-4 lg:gap-2.75 flex-1">
-          {/*region logo*/}
-          <a
-            href="/"
-            aria-label={t('eIAM - Go to homepage')}
-            className="lg:ml-[-12px] w-8.5 h-9.5 lg:w-64 lg:h-20 overflow-hidden"
-          >
-            <div
-              className={clsx(
-                'bg-cover bg-no-repeat overflow-hidden',
-                'w-62.5 h-20 -translate-y-2.5 -translate-x-2.5 lg:w-full lg:h-full lg:translate-x-0 lg:translate-y-0'
-              )}
-              role="img"
-              aria-label={t('Swiss Confederation logo')}
-              style={{
-                backgroundImage:
-                  "url('r/eidgenossenschaft/eidgenossenschaft_de.svg')",
-              }}
-            ></div>
-          </a>
-          {/*endregion logo*/}
-
-          {/*region header and language actions*/}
-          <div className="flex flex-1 justify-between items-center gap-8">
-            {/*Frame 5*/}
-            <div className="flex gap-4 lg:gap-6 flex-1 items-center">
-              <div className="w-0.25 self-stretch bg-[var(--Color-Divider-Header)]" />
-              <p
-                className="hidden lg:line-clamp-3 my-0 font-semibold max-w-[var(--Header-Max-Width,1000px)]"
-                dangerouslySetInnerHTML={{__html: pageTitle}}
-              />
-              <p className="lg:hidden my-0 font-semibold flex-1 max-w-[var(--Header-Max-Width,1000px)]">
-                eIAM
-              </p>
-            </div>
-
-            {/*Frame 8*/}
-            <div
-              className={clsx(
-                'flex justify-end items-center gap-6 lg:h-18 lg:flex-col lg:items-end lg:justify-start'
-              )}
+        <div className="header__wrapper">
+          <div className="flex items-center gap-4 lg:gap-2.75 flex-1">
+            {/*region logo*/}
+            <a
+              href="/"
+              aria-label={t('eIAM - Go to homepage')}
+              className="lg:ml-[-12px] w-8.5 h-9.5 lg:w-64 lg:h-20 overflow-hidden"
             >
-              {/*region lang selector*/}
-              <div className="text-end hidden lg:flex lg:gap-6">
-                <ExternalLinks externalLinks={externalLinks} />
-                <LangSelector />
-              </div>
-              {/*endregion lang selector*/}
+              <div
+                className={clsx(
+                  'bg-cover bg-no-repeat overflow-hidden',
+                  'w-62.5 h-20 -translate-y-2.5 -translate-x-2.5 lg:w-full lg:h-full lg:translate-x-0 lg:translate-y-0'
+                )}
+                role="img"
+                aria-label={t('Swiss Confederation logo')}
+                style={{
+                  backgroundImage:
+                    "url('r/eidgenossenschaft/eidgenossenschaft_de.svg')",
+                }}
+              ></div>
+            </a>
+            {/*endregion logo*/}
 
-              {/*region search input*/}
-              <div className="pt-0">
-                <SearchInput />
-              </div>
-              {/*endregion search input*/}
-
-              {/*region mobile nav*/}
-              <div className="lg:hidden">
-                <Navigation.Mobile
-                  opened={isMobileMenuOpened}
-                  setOpened={setIsMobileMenuOpened}
+            {/*region header and language actions*/}
+            <div className="flex flex-1 justify-between items-center gap-8">
+              {/*Frame 5*/}
+              <div className="flex gap-4 lg:gap-6 flex-1 items-center">
+                <div className="w-0.25 self-stretch bg-[var(--Color-Divider-Header)]" />
+                <p
+                  className="hidden lg:line-clamp-3 my-0 font-semibold max-w-[var(--Header-Max-Width,1000px)]"
+                  dangerouslySetInnerHTML={{__html: pageTitle}}
                 />
+                <p className="lg:hidden my-0 font-semibold flex-1 max-w-[var(--Header-Max-Width,1000px)]">
+                  eIAM
+                </p>
               </div>
-              {/*endregion mobile nav*/}
+
+              {/*Frame 8*/}
+              <div
+                className={clsx(
+                  'flex justify-end items-center gap-6 lg:h-18 lg:flex-col lg:items-end lg:justify-start'
+                )}
+              >
+                {/*region lang selector*/}
+                <div className="text-end hidden lg:flex lg:gap-6">
+                  <ExternalLinks externalLinks={externalLinks} />
+                  <LangSelector />
+                </div>
+                {/*endregion lang selector*/}
+
+                {/*region search input*/}
+                <div className="pt-0">
+                  <SearchInput />
+                </div>
+                {/*endregion search input*/}
+
+                {/*region mobile nav*/}
+                <div className="lg:hidden">
+                  <Navigation.Mobile
+                    opened={isMobileMenuOpened}
+                    setOpened={setIsMobileMenuOpened}
+                  />
+                </div>
+                {/*endregion mobile nav*/}
+              </div>
             </div>
+            {/*endregion header and language actions*/}
           </div>
-          {/*endregion header and language actions*/}
         </div>
       </header>
       {/*endregion header*/}

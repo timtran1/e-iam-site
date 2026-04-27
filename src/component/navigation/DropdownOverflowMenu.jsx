@@ -1,4 +1,12 @@
-import {forwardRef, useEffect, useMemo, useState} from 'react';
+import {
+  forwardRef,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import AppContext from '../../common/context/app/app.context.js';
 import clsx from 'clsx';
 import {useTranslation} from 'react-i18next';
 import DesktopMenuList from './DesktopMenuList.jsx';
@@ -39,10 +47,39 @@ const ThreeDots = () => {
 const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
   const {t} = useTranslation();
   const [isExtended, setIsExtended] = useState(false);
+  const popoverRef = useRef(null);
   const activeMenu = useMemo(
     () => menus.some((menu) => hasChildActive(menu)),
     [menus]
   );
+  const {
+    contentMeta: {width: contentWidth, height: contentHeight},
+  } = useContext(AppContext);
+
+  const [centerToLeft, setCenterToLeft] = useState(0);
+
+  /**
+   * Calculate and update the distance from the horizontal center of the element to the left edge of the screen
+   */
+  useEffect(() => {
+    const el = ref?.current;
+    if (!el) return;
+
+    const update = () => {
+      const rect = el.getBoundingClientRect();
+      setCenterToLeft(rect.left + rect.width / 2);
+    };
+
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
+    window.addEventListener('resize', update);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', update);
+    };
+  }, [ref]);
 
   /**
    * Toggle menu
@@ -62,19 +99,46 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
    * Prevent scroll when menu is extended
    */
   useEffect(() => {
+    const scrollLockTargets = [document.documentElement];
+
     if (isExtended) {
       const scrollbarWidth = getScrollbarWidth();
-      document.documentElement.style.overflow = 'hidden';
-      document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
+      scrollLockTargets.forEach((el) => {
+        el.style.overflow = 'hidden';
+        el.style.paddingRight = `${scrollbarWidth}px`;
+      });
     } else {
-      document.documentElement.style.overflow = '';
-      document.documentElement.style.paddingRight = '';
+      scrollLockTargets.forEach((el) => {
+        el.style.overflow = '';
+        el.style.paddingRight = '';
+      });
     }
 
     return () => {
-      document.documentElement.style.overflow = '';
-      document.documentElement.style.paddingRight = '';
+      scrollLockTargets.forEach((el) => {
+        el.style.overflow = '';
+        el.style.paddingRight = '';
+      });
     };
+  }, [isExtended]);
+
+  /**
+   * Calculate and set max-height for popover based on its position
+   */
+  useEffect(() => {
+    if (popoverRef.current) {
+      if (isExtended) {
+        const popoverRect = popoverRef.current.getBoundingClientRect();
+        const popoverTop = popoverRect.top;
+        const viewportHeight = window.innerHeight;
+        const bottomGap = 100;
+        const maxHeight = viewportHeight - popoverTop - bottomGap;
+
+        popoverRef.current.style.maxHeight = `${maxHeight}px`;
+      } else {
+        popoverRef.current.style.maxHeight = `${0}px`;
+      }
+    }
   }, [isExtended]);
 
   return (
@@ -98,39 +162,52 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
           <ThreeDots />
         </button>
 
-        {isExtended && (
-          <>
-            <div
-              className="overflow-menu-selector__backdrop"
+        <div
+          className={clsx(
+            'overflow-menu-selector__backdrop transition-opacity duration-300',
+            isExtended ? 'opacity-20 visible' : 'opacity-0 invisible'
+          )}
+          style={{
+            width: `${contentWidth}px`,
+            height: `${contentHeight}px`,
+            top: '100%',
+            transform: `translateX(calc(50% - ${centerToLeft}px))`,
+          }}
+          onClick={closeMenu}
+        ></div>
+        <div
+          ref={popoverRef}
+          className="overflow-menu-selector__popover transition-all duration-300"
+        >
+          <div className="overflow-menu-selector__popover__wrapper">
+            <button
+              className="overflow-menu-selector__popover__close-button"
               onClick={closeMenu}
-            ></div>
-            <div className="overflow-menu-selector__popover">
-              <button
-                className="overflow-menu-selector__popover__close-button"
-                onClick={closeMenu}
-              >
-                <span> {t('Close')}</span>
-                <span className="h-4 w-4 flex items-center justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="8"
-                    height="8"
-                    viewBox="0 0 8 8"
-                    fill="none"
-                  >
-                    <path
-                      d="M6.73933 0L3.53933 3.20067L0.353333 0.0146666L0 0.368667L3.186 3.554L0.0146666 6.72467L0.368667 7.07867L3.53933 3.90733L6.72467 7.09333L7.07867 6.74L3.89267 3.554L7.09333 0.354L6.73933 0Z"
-                      fill="#6B7280"
-                    />
-                  </svg>
-                </span>
-              </button>
-              <ul>
-                <DesktopMenuList listMenu={menus} />
-              </ul>
+            >
+              <span> {t('close')}</span>
+              <span className="h-4 w-4 flex items-center justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="8"
+                  height="8"
+                  viewBox="0 0 8 8"
+                  fill="none"
+                >
+                  <path
+                    d="M6.73933 0L3.53933 3.20067L0.353333 0.0146666L0 0.368667L3.186 3.554L0.0146666 6.72467L0.368667 7.07867L3.53933 3.90733L6.72467 7.09333L7.07867 6.74L3.89267 3.554L7.09333 0.354L6.73933 0Z"
+                    fill="#6B7280"
+                  />
+                </svg>
+              </span>
+            </button>
+            <div className="overflow-menu-selector__popover__heading">
+              {t('furtherTopics')}
             </div>
-          </>
-        )}
+            <ul>
+              <DesktopMenuList listMenu={menus} />
+            </ul>
+          </div>
+        </div>
       </li>
     </>
   );

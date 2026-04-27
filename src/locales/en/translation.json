@@ -11,5 +11,7 @@
   "useDifferentTerm": "Use a different or more general term",
   "useFewerTerms": "Use fewer search terms",
   "useAnotherSite": "Use another site",
-  "more" : "More"
+  "more" : "More",
+  "furtherTopics": "Further Topics",
+  "close": "Close"
 }

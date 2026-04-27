@@ -8,6 +8,7 @@ import {MockingExternalLinks, mockMenu} from '../../common/constant/dummy.js';
 import ChevronButton from '../../common/ui/ChevronButton.jsx';
 import {useTranslation} from 'react-i18next';
 import {useElementSize} from '@mantine/hooks';
+import useHtmlZoom from '../../common/hook/useHtmlZoom.js';
 
 const isDevMode = import.meta.env.DEV;
 
@@ -72,6 +73,9 @@ const DropdownMenuMobile = ({
 }) => {
   // Translation
   const {t} = useTranslation();
+
+  // HTML zoom compensation for position: fixed elements
+  const htmlZoom = useHtmlZoom();
 
   // External links ref
   const {ref: externalLinksRef, height: externalLinksHeight} = useElementSize();
@@ -168,20 +172,19 @@ const DropdownMenuMobile = ({
       {/*region content*/}
       <div
         style={{
-          height: `calc(100vh - ${+appContext.headerMeta.headerHeight || 0}px)`,
+          width: `${100 / htmlZoom}vw`,
+          height: `calc((100vh - ${(+appContext.headerMeta.headerHeight || 0) * htmlZoom}px) / ${htmlZoom})`,
         }}
-        className={clsx(
-          'fixed z-50 left-0 h-screen w-screen overflow-y-scroll mt-6',
-          className,
-          {'pointer-events-none': !opened}
-        )}
+        className={clsx('fixed z-50 left-0 overflow-y-scroll mt-6', className, {
+          'pointer-events-none': !opened,
+        })}
       >
         <div
           className={clsx(
             'h-full bg-white transition-transform duration-300 ease-in-out'
           )}
           style={{
-            transform: `translateY(${opened ? 0 : `calc(-100vh - ${+appContext.headerMeta.headerHeight || 0}px - ${+externalLinksHeight || 0}px - ${6 * 4}px)`})`,
+            transform: `translateY(${opened ? 0 : `calc(-${(100 / htmlZoom) * 2}vh - ${+appContext.headerMeta.headerHeight || 0}px - ${+externalLinksHeight || 0}px - ${6 * 4}px)`})`,
           }}
         >
           {/*region lang selector and back button*/}
@@ -218,7 +221,10 @@ const DropdownMenuMobile = ({
                 </li>
               ))}
 
-              <li ref={externalLinksRef} className="!block">
+              <li
+                ref={externalLinksRef}
+                className="mobile-navigation__external-links"
+              >
                 {/*region external links*/}
                 <ExternalLinks externalLinks={externalLinks} />
                 {/*endregion external links*/}
