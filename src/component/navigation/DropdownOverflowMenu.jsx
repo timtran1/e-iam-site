@@ -61,6 +61,19 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
   const [centerToLeft, setCenterToLeft] = useState(0);
 
   /**
+   * @type {@type {React.CSSProperties}}
+   */
+  const backdropStyles = useMemo(
+    () => ({
+      width: `${contentWidth}px`,
+      height: `${contentHeight}px`,
+      top: '100%',
+      transform: `translateX(calc(50% - ${centerToLeft}px))`,
+    }),
+    [centerToLeft, contentHeight, contentWidth]
+  );
+
+  /**
    * Calculate and update the distance from the horizontal center of the element to the left edge of the screen.
    * Divides by htmlZoom to compensate for CSS zoom applied to <html>, since getBoundingClientRect()
    * returns values in the zoomed coordinate space while CSS transforms operate in layout space.
@@ -170,12 +183,7 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
             'overflow-menu-selector__backdrop transition-opacity duration-300',
             isExtended ? 'opacity-20 visible' : 'opacity-0 invisible'
           )}
-          style={{
-            width: `${contentWidth}px`,
-            height: `${contentHeight}px`,
-            top: '100%',
-            transform: `translateX(calc(50% - ${centerToLeft}px))`,
-          }}
+          style={backdropStyles}
           onClick={closeMenu}
         ></div>
         <div
