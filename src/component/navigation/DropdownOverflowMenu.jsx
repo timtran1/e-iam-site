@@ -12,6 +12,7 @@ import {useTranslation} from 'react-i18next';
 import DesktopMenuList from './DesktopMenuList.jsx';
 import {hasChildActive} from '../../common/helper/menu.js';
 import {getScrollbarWidth} from '../../common/helper/scrollbar.js';
+import useHtmlZoom from '../../common/hook/useHtmlZoom.js';
 
 const ThreeDots = () => {
   return (
@@ -56,10 +57,13 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
     contentMeta: {width: contentWidth, height: contentHeight},
   } = useContext(AppContext);
 
+  const htmlZoom = useHtmlZoom();
   const [centerToLeft, setCenterToLeft] = useState(0);
 
   /**
-   * Calculate and update the distance from the horizontal center of the element to the left edge of the screen
+   * Calculate and update the distance from the horizontal center of the element to the left edge of the screen.
+   * Divides by htmlZoom to compensate for CSS zoom applied to <html>, since getBoundingClientRect()
+   * returns values in the zoomed coordinate space while CSS transforms operate in layout space.
    */
   useEffect(() => {
     const el = ref?.current;
@@ -67,19 +71,18 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
 
     const update = () => {
       const rect = el.getBoundingClientRect();
-      setCenterToLeft(rect.left + rect.width / 2);
+      setCenterToLeft((rect.left + rect.width / 2) / htmlZoom);
     };
 
     update();
     const observer = new ResizeObserver(update);
     observer.observe(el);
-    window.addEventListener('resize', update);
+    observer.observe(document.documentElement);
 
     return () => {
       observer.disconnect();
-      window.removeEventListener('resize', update);
     };
-  }, [ref]);
+  }, [ref, htmlZoom]);
 
   /**
    * Toggle menu
