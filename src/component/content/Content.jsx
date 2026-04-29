@@ -1,4 +1,5 @@
-import {useContext, useMemo, useRef} from 'react';
+import {useContext, useEffect, useMemo, useRef} from 'react';
+import {useElementSize} from '@mantine/hooks';
 import AppContext from '../../common/context/app/app.context.js';
 import {
   mockContent,
@@ -39,8 +40,29 @@ const Content = () => {
     news,
     content,
     headerMeta,
+    setContentMeta,
     hasRemovedServerElements,
   } = useContext(AppContext);
+
+  // Track article element size
+  const {
+    ref: articleRef,
+    width: articleWidth,
+    height: articleHeight,
+  } = useElementSize();
+
+  /**
+   * Sync article element width and height to AppContext whenever they change
+   */
+  useEffect(() => {
+    if (articleWidth || articleHeight) {
+      setContentMeta((prev) => ({
+        ...prev,
+        width: articleWidth,
+        height: articleHeight,
+      }));
+    }
+  }, [articleWidth, articleHeight, setContentMeta]);
 
   // Search contents
   const {isSearchResultPage, searchResults} = useSearchResult(
@@ -153,6 +175,7 @@ const Content = () => {
     <>
       {/*Main Body*/}
       <article
+        ref={articleRef}
         className={clsx(
           isSearchResultPage
             ? 'body-content__container--search-result'

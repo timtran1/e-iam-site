@@ -23,6 +23,9 @@ const AppProvider = ({children}) => {
   // Header meta state
   const [headerMeta, setHeaderMeta] = React.useState({});
 
+  // Content meta state
+  const [contentMeta, setContentMeta] = React.useState({});
+
   /**
    * @type {Array<AppMenu>}
    */
@@ -136,6 +139,8 @@ const AppProvider = ({children}) => {
           vlineLinks,
           headerMeta,
           setHeaderMeta,
+          contentMeta,
+          setContentMeta,
           removeServerElement,
           hasRemovedServerElements,
         }}

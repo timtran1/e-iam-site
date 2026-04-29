@@ -3,16 +3,16 @@ import clsx from 'clsx';
 import useQueryParam from '../../common/hook/useQueryParam.js';
 import ChevronButton from '../../common/ui/ChevronButton.jsx';
 import {useTranslation} from 'react-i18next';
-import useEffectOnce from '../../common/hook/useEffectOnce.js';
 import fromPairs from '../../common/helper/fromPairs.js';
 import {hasChildActive} from '../../common/helper/menu.js';
 
 /**
  * @type {React.NamedExoticComponent<{
  *        readonly listMenu?: Array<AppMenu>
+ *        readonly level?: number // level of menu item
  *     }>}
  */
-const DesktopMenuList = React.memo(({listMenu}) => {
+const DesktopMenuList = React.memo(({listMenu, level = 0}) => {
   // Translation
   const {t} = useTranslation();
 
@@ -22,61 +22,72 @@ const DesktopMenuList = React.memo(({listMenu}) => {
   // Get current page
   const [currentPage] = useQueryParam('c');
 
+  /**
+   * Get toggle key - format: level_index
+   * @type {function(index: number): string} - index is the index of menu item
+   */
+  const getToggleKey = React.useCallback(
+    (index) => `${level}_${index}`,
+    [level]
+  );
+
   // Toggle open state for a specific item
-  const toggleItem = (key) => {
+  const toggleItem = (index) => {
     setOpenedItems((prev) => ({
       ...prev,
-      [key]: !prev[key],
+      [getToggleKey(index)]: !prev[getToggleKey(index)],
     }));
   };
 
   /**
    * Handle keyboard events for chevron button
    * @param {KeyboardEvent} e
-   * @param {string} itemKey
+   * @param {number} itemIndex
    */
-  const handleChevronKeyDown = (e, itemKey) => {
+  const handleChevronKeyDown = (e, itemIndex) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      toggleItem(itemKey);
+      toggleItem(itemIndex);
     }
   };
 
   /**
    * Set default opened items
    */
-  useEffectOnce(() => {
+  React.useEffect(() => {
     setOpenedItems(() => {
       return {
         ...fromPairs(
-          listMenu.map((menuItem) => [[menuItem.key], hasChildActive(menuItem)])
+          listMenu.map((menuItem, index) => [
+            [getToggleKey(index)],
+            hasChildActive(menuItem),
+          ])
         ),
       };
     });
-  });
+  }, [getToggleKey, level, listMenu]);
 
   return (
     <>
       {listMenu.map((item, index) => (
         <li
-          key={item.key || index}
+          key={`${level}_${index}`}
           role="none"
-          className={clsx('border-b !cursor-pointer', 'last:border-none')}
+          className={clsx('!cursor-pointer last:border-none')}
         >
           <div
             className={clsx(
-              'transition-all border-s-4 border-transparent hover:translate-x-0.5',
-              ' hover:bg-gray-black-squeeze',
-              currentPage === item.key
-                ? 'border-s-danger-cinnabar shadow-soft'
-                : 'hover:border-danger-cinnabar hover:shadow-soft'
+              'transition-all border-b border-s-4 hover:text-danger-cinnabar',
+              hasChildActive(item)
+                ? 'border-s-danger-cinnabar'
+                : 'border-s-transparent hover:border-s-danger-cinnabar'
             )}
           >
             <div className="flex items-center justify-between gap-2">
               <a
                 href={item.href}
                 role="menuitem"
-                className="flex-1 !border-none !text-gray-mirage hover:no-underline p-4"
+                className="p-4 flex-1 font-medium !border-none !text-gray-mirage transition-all hover:no-underline hover:!text-danger-cinnabar"
                 aria-current={currentPage === item.key ? 'page' : undefined}
               >
                 {item.label}
@@ -86,12 +97,12 @@ const DesktopMenuList = React.memo(({listMenu}) => {
                 <ChevronButton
                   className="p-4"
                   rotateChevron={
-                    openedItems[item.key] ? 'rotate-90' : 'rotate-0'
+                    openedItems[getToggleKey(index)] ? 'rotate-90' : 'rotate-0'
                   }
-                  onClick={() => toggleItem(item.key)}
-                  onKeyDown={(e) => handleChevronKeyDown(e, item.key)}
-                  aria-expanded={!!openedItems[item.key]}
-                  aria-controls={`submenu-${item.key}`}
+                  onClick={() => toggleItem(index)}
+                  onKeyDown={(e) => handleChevronKeyDown(e, index)}
+                  aria-expanded={!!openedItems[getToggleKey(index)]}
+                  aria-controls={`submenu-${getToggleKey(index)}`}
                   aria-label={t(`Toggle ${item.label} submenu`)}
                 />
               )}
@@ -100,16 +111,18 @@ const DesktopMenuList = React.memo(({listMenu}) => {
 
           {item.children && item.children.length > 0 && (
             <ul
-              id={`submenu-${item.key}`}
+              id={`submenu-${getToggleKey(index)}`}
               role="menu"
               aria-label={`${item.label} submenu`}
-              aria-hidden={!openedItems[item.key] ? 'true' : 'false'}
+              aria-hidden={!openedItems[getToggleKey(index)] ? 'true' : 'false'}
               className={clsx(
                 'sub-open overflow-hidden !static !ps-3 transition',
-                openedItems[item.key] ? 'visible h-auto' : 'invisible h-0'
+                openedItems[getToggleKey(index)]
+                  ? 'visible h-auto'
+                  : 'invisible h-0'
               )}
             >
-              <DesktopMenuList listMenu={item.children} />
+              <DesktopMenuList listMenu={item.children} level={level + 1} />
             </ul>
           )}
         </li>
