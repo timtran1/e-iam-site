@@ -120,7 +120,7 @@ const Header = ({className, sticky = false}) => {
         className={clsx({'z-50 sticky top-0': sticky}, className)}
       >
         <div className="header__wrapper">
-          <div className="flex items-center gap-4 lg:gap-2.75 flex-1">
+          <div className="flex items-center gap-4 lg:gap-1.5 flex-1">
             {/*region logo*/}
             <a
               href="/"
@@ -142,11 +142,18 @@ const Header = ({className, sticky = false}) => {
             </a>
             {/*endregion logo*/}
 
+            {/*region divider */}
+            <div id="header-divider" className="w-0.25 h-[55px] lg:h-[72px] bg-[var(--Color-Divider-Header)]" />
+            {/*endregion divider */}
+
             {/*region header and language actions*/}
             <div className="flex flex-1 justify-between items-center gap-8">
               {/*Frame 5*/}
               <div className="flex gap-4 lg:gap-6 flex-1 items-center">
-                <div className="w-0.25 self-stretch bg-[var(--Color-Divider-Header)]" />
+
+                {/* old divider, invisible, kept for spacing */}
+                <div className="w-0.25 self-stretch" />
+
                 <p
                   className="hidden lg:line-clamp-3 my-0 font-semibold max-w-[var(--Header-Max-Width,1000px)]"
                   dangerouslySetInnerHTML={{__html: pageTitle}}
