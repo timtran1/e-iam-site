@@ -112,8 +112,8 @@ article.body-content__container--standard {
   /*For base screen: mobile, table or small screen */
   display: none;
 
-  /*For screen bigger than 'xl' */
-  @screen xl {
+  /*For screen bigger than 'lg' */
+  @screen lg {
     display: block;
   }
 }

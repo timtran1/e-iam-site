@@ -41,7 +41,7 @@ nav.desktop-navigation .navigation ul.navigation__wrapper {
   @apply container mx-auto;
 
   display: flex;
-  padding: 0 var(--Basic-Body-Horizontal-padding, 80px);
+  padding: 0 var(--Navigation-Primary-Navigation-Navbar-Vertical-Padding, 24px);
   align-items: stretch;
   align-self: stretch;
   background: #fff;
