@@ -7,6 +7,7 @@ import Content from './component/content/Content.jsx';
 import useI18nSync from './common/hook/useI18nSync.js';
 import useGlobalStyleConfig from './common/hook/useGlobalStyleConfig.js';
 import useSelectorInputResize from './common/hook/useSelectorInputResize.js';
+import useOSDetect from './common/hook/useOSDetect.js';
 
 const App = () => {
   // Sync i18next with cookie changes globally
@@ -16,28 +17,35 @@ const App = () => {
   useGlobalStyleConfig();
   useSelectorInputResize();
 
+  // Shrink the whole app on Windows
+  const {os} = useOSDetect();
+  console.log('[App] OS:', os);
+
   return (
-    <>
-      <>
-        <AppProvider>
-          <div className="min-h-screen flex flex-col justify-between">
-            <section>
-              {/*region header*/}
-              <Header />
-              {/*endregion header*/}
+    <AppProvider>
+      <div
+        className="min-h-screen flex flex-col justify-between"
+        style={
+          os === 'Windows'
+            ? {zoom: 0.8, minHeight: 'calc(100vh / 0.8)'}
+            : undefined
+        }
+      >
+        <section>
+          {/*region header*/}
+          <Header />
+          {/*endregion header*/}
 
-              {/*region body content*/}
-              <Content />
-              {/*endregion body content*/}
-            </section>
+          {/*region body content*/}
+          <Content />
+          {/*endregion body content*/}
+        </section>
 
-            {/*region footer*/}
-            <Footer />
-            {/*endregion footer*/}
-          </div>
-        </AppProvider>
-      </>
-    </>
+        {/*region footer*/}
+        <Footer />
+        {/*endregion footer*/}
+      </div>
+    </AppProvider>
   );
 };
 export default App;

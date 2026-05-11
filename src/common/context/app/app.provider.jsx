@@ -1,6 +1,7 @@
 import React from 'react';
 import AppContext from './app.context.js';
 import useServerSideVariables from './hooks/useServerSideVariables.js';
+import useOSDetect from '../../hook/useOSDetect.js';
 import {
   parseAnchors,
   parseLangEle,
@@ -19,6 +20,9 @@ import {ELEMENT_ID} from '../../constant/element-id.js';
 const AppProvider = ({children}) => {
   // Get server-side data
   const {serverSideData, hasRemovedServerElements} = useServerSideVariables();
+
+  // Detect user's OS
+  const {os} = useOSDetect();
 
   // Header meta state
   const [headerMeta, setHeaderMeta] = React.useState({});
@@ -143,6 +147,7 @@ const AppProvider = ({children}) => {
           setContentMeta,
           removeServerElement,
           hasRemovedServerElements,
+          os,
         }}
       >
         {children}

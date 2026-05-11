@@ -13,6 +13,7 @@ import React from 'react';
  * @property {function} setContentMeta
  * @property {(id: string) => void} removeServerElement
  * @property {boolean} hasRemovedServerElements
+ * @property {'macOS' | 'Windows' | 'Linux' | 'iOS' | 'Android' | 'unknown'} os
  */
 
 /**
@@ -40,6 +41,7 @@ const DefaultState = {
   setContentMeta: () => {},
   removeServerElement: () => {},
   hasRemovedServerElements: false,
+  os: 'unknown',
 };
 
 /**
