@@ -5,3 +5,4 @@ node_modules
 originals
 dist
 certbot
+.playwright-mcp

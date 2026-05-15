@@ -62,10 +62,10 @@
 		},
 		{
 			"type": "shell",
-			"command": "cp dist/app-universal.iife.js ../e-iam-site-nativeops/delivery2/jsreactapp.css",
+			"command": "rsync -a --delete src/ ../e-iam-site-nativeops/src/ && rsync -a --delete public/ ../e-iam-site-nativeops/public/ && rsync -a --delete r/ ../e-iam-site-nativeops/r/ && rsync -a --delete vite-config/ ../e-iam-site-nativeops/vite-config/ && cp vite.config.js tailwind.config.js postcss.config.js package.json package-lock.json index.html ../e-iam-site-nativeops/",
 			"problemMatcher": [],
 			"label": "Copy",
-			"detail": "Copy built JS to e-iam-site-nativeops/delivery2/jsreactapp.css"
+			"detail": "Sync CI build inputs to e-iam-site-nativeops"
 		}
 	]
 }
