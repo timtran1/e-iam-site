@@ -53,7 +53,6 @@ nav.desktop-navigation .navigation ul.navigation__wrapper > li {
   align-items: center;
   gap: 10px;
   background: #fff;
-  transition: border-bottom 0.1s;
   padding: 0 calc(var(--Navigation-Primary-Navigation-Navbar-Spacing, 48px)/2);
 }
 
@@ -73,6 +72,8 @@ nav.desktop-navigation .navigation ul.navigation__wrapper > li > a {
   line-height: var(--Color-Font-Navigation-Line-Height, 24px);
   padding: var(--Navigation-Primary-Navigation-Item-Vertical-Padding, 24px)
     var(--Navigation-Primary-Navigation-Item-Horizontal-Padding, 0);
+  border-bottom: 4px solid transparent;
+  transition: border-color 0.1s;
 }
 
 nav.desktop-navigation .navigation ul.navigation__wrapper > li > a:visited {
@@ -227,7 +228,8 @@ ul.header-navigation__external-links-mobile {
     gap: 0.25rem;
     justify-content: center;
     align-items: center;
-    transition: border-bottom 0.1s;
+    border-bottom: 4px solid transparent;
+    transition: border-color 0.1s;
 
     &.active, &:hover {
       border-bottom: 4px solid var(--Color-Highlight-Red, #d8232a);
