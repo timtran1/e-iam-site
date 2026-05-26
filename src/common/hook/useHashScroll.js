@@ -11,6 +11,47 @@ const useHashScroll = (options = {}) => {
   const {behavior = 'smooth', block = 'start', offset = 10 * 16, handleInitialHash = true} = options;
 
   /**
+   * Look up an element by ID, falling back to <a name="..."> if not found.
+   */
+  const findTarget = (id) =>
+    document.getElementById(id) ||
+    document.querySelector(`a[name="${CSS.escape(id)}"]`);
+
+  /**
+   * True when the element has been laid out enough to scroll to.
+   * Empty <a name> anchors have no box of their own — use the parent.
+   */
+  const isLaidOut = (el) => {
+    const r = el.getBoundingClientRect();
+    if (r.height > 0) return true;
+    const p = el.parentElement;
+    if (!p) return false;
+    const pr = p.getBoundingClientRect();
+    return pr.height > 0 && (pr.top !== 0 || pr.bottom !== 0);
+  };
+
+  /**
+   * Resolve an element's absolute Y position, with fallbacks for empty
+   * inline elements whose own rect/offsetTop may be zero.
+   */
+  const getScrollY = (el) => {
+    const r = el.getBoundingClientRect();
+    if (r.height > 0) return r.top + window.pageYOffset;
+    // Walk offsetTop chain (for empty inline elements)
+    let offsetY = 0;
+    let cur = el;
+    while (cur) {
+      offsetY += cur.offsetTop || 0;
+      cur = cur.offsetParent;
+    }
+    if (offsetY > 0) return offsetY;
+    if (el.parentElement) {
+      return el.parentElement.getBoundingClientRect().top + window.pageYOffset;
+    }
+    return 0;
+  };
+
+  /**
    * Scroll to element with given ID
    * @param {string} hash - The hash string (including #)
    */
@@ -20,13 +61,12 @@ const useHashScroll = (options = {}) => {
 
       // Remove # from hash to get element ID
       const elementId = hash.substring(1);
-      const element = document.getElementById(elementId);
+      const element = findTarget(elementId);
 
       if (element) {
         // Calculate position with offset
         if (offset > 0) {
-          const elementPosition =
-            element.getBoundingClientRect().top + window.pageYOffset;
+          const elementPosition = getScrollY(element);
           const offsetPosition = elementPosition - offset;
 
           window.scrollTo({
@@ -95,10 +135,9 @@ const useHashScroll = (options = {}) => {
 
       const tryScroll = () => {
         attempts++;
-        const el = document.getElementById(elementId);
-        const rect = el?.getBoundingClientRect();
+        const el = findTarget(elementId);
 
-        if (el && rect && rect.height > 0) {
+        if (el && isLaidOut(el)) {
           scrollToElement(currentHash);
         } else if (attempts < maxAttempts) {
           setTimeout(tryScroll, 100);
@@ -121,10 +160,9 @@ const useHashScroll = (options = {}) => {
 
       const tryScroll = () => {
         attempts++;
-        const el = document.getElementById(elementId);
-        const rect = el?.getBoundingClientRect();
+        const el = findTarget(elementId);
 
-        if (el && rect && rect.height > 0) {
+        if (el && isLaidOut(el)) {
           scrollToElement('#' + elementId);
 
           // Clear any active filter
