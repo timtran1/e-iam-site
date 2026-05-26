@@ -9,27 +9,78 @@ const mockLegalAndOrganisation = `
 export const mockNavigation = `Semantic navigation preview (without layout, e. g. for checking links):<br><br>#<a href="index.php?c=start&amp;l=de">Startseite</a><br>#<a href="index.php?c=trottinett&amp;l=de">Trottinett &amp; Kinder</a><br>##<a href="index.php?c=formatexamples&amp;l=de">Formatbeispiele</a><br>##<a href="index.php?c=formular&amp;l=de">Formular</a><br>###<a href="index.php?c=trottinettvideo&amp;l=de">Video</a><br>####<a href="index.php?c=onemorepage&amp;l=de">Ebene 4</a><br>#<a href="index.php?c=gotthardtunnel&amp;l=de">Gotthard-Tunnel</a>`;
 
 export const mockContent = `
-   <a name="content" style="pointer-events:none"></a>
-   <p>
-   <h1>Support Organization</h1>
-   <h2>Employees and affiliates such as cantons</h2>
-   According to internal guidelines.<br />
-   <h2>E-Government <span class="smaller">(Private individuals and business representatives)</span> </h2>
-   <h3>Principle</h3>
-   For your support,the Federal Office of Information Technology and Telecommunications (FOITT)  <span class="bold">is not</span> responsible, but rather the administrative unit whose application you intend to use.</p>
-   <p>
-   <h3>End-to-End Responsibility</h3>
-   Your support by the administrative unit whose application you intend to use must be provided across the entire usage journey&mdash;from registration, to login, to the use of the application. The administrative unit has internal escalation options for technical special cases. The administrative unit may delegate end-to-end responsibility and communicate the resulting support contacts accordingly.</p>
-   <p>
-   <h3>Procedure for you</h3>
+<div class="w-full">
+   <p><a name="content" style="pointer-events:none"></a></p>
+   <p></p>
+   <h1>eIAM Automation (CI/CD)</h1>
+   <p>Continuous Integration | Continuous Delivery | Continuous Deployment </p>
+   <p></p>
+   <p></p>
+   <h2>eIAM Automation of Service Release &amp; Application Integrations</h2>
+   <p>The new eIAM automation platform will meet the following objectives:<br></p>
+   <ul>
+      <li>An eIAM application integration via the REF/ABN/PROD instances can be individually planned and executed (detailed informations under: <span class="bold"><a href="index.php?c=intbitccplan&amp;l=en">CC-PLan</a></span>).<br></li>
+      <li>The eIAM service changes and new features can be introduced continuously and without service interruptions.</li>
+      <li>With the <span class="bold"><span class="italic"><a href="index.php?c=canary&amp;l=en">Testing in Canary mode</a></span></span>, a service change, a new feature can first be made available to only a small subset of users for testing before it is activated for all.</li>
+   </ul>
+   <br>
+   <dl style="width:570px" class="imgBoxCenter dlCenterLarge">
+      <dt data-fancybox="" href="thumb.php?h=2000&amp;w=2000&amp;t=1683639437&amp;f=r/cicdb1/cicdb1_en.jpg">
+         <img title="click to zoom" width="570" src="https://docs-r.eiam.admin.ch/r/cicdb1/cicdb1_en.jpg?t=1683639437" alt="[c]eIAM automation of service release &amp; application integrations[-]">
+      </dt>
+      <dd>
+         <div class="center">eIAM automation of service release &amp; application integrations</div>
+      </dd>
+   </dl>
+   <p class="clearing"></p>
+   <p></p>
+   <p></p>
    <ol>
+      <li><span class="bold">Application integration data sources</span> </li>
+      <ul>
+         <li>The eIAM doser provides all data needed for the eIAM integration REF/ABN/PROD. </li>
+         <li>In the context of the eIAM integration project, the necessary system configurations for REF/ABN/PROD are also created</li>
+      </ul>
+      .<br>
+      <li><span class="bold">Filing / Repository</span> </li>
+      <ul>
+         <li>The integration team places all information from the eIAM dossier and the necessary system configuration in the central repository, the Central Configuration Repository (CCRepo).<br> </li>
+      </ul>
+      <li><span class="bold">Code generation</span></li>
+      <ul>
+         <li>The <span class="italic">Generation Engine</span>, together with the eIAM configuration data and the Central Configuration Repository, forms the core of the CI/CD architecture to generate the corresponding codes required per eIAM instance and component.<br></li>
+         <li>Using the Jenkins pipeline, the project/service code updates can be individually created and continuously updated. </li>
+      </ul>
+      <li><span class="bold">Konfigurationsdaten</span></li>
+      <ul>
+         <li>This configuration data is then pushed through the different levels of DEV respectively for applications from REF to PROD (export/import functionality) </li>
+      </ul>
+      <li><span class="bold">Lieferung</span></li>
+      <ul>
+         <li>The respective components are prepared here for "delivery" to the Bundestrustbroker (BTB) and container infrastructures per eIAM instance and can then be specifically activated.</li>
+      </ul>
+      <li><span class="bold">Operation</span></li>
+      <ul>
+         <li>
+            The operation is based on the <span class="bold"><a href="index.php?c=btbinfos&amp;l=en">Bundestrustbroker (BTB)</a></span> for the identity and attribute switches and a container infrastructure (Kubernetes) which include the following CI/CD advantages:
+            <ul>
+               <li>High availability thanks to failover facilities<br></li>
+               <li>high scalability</li>
+               <li>uninterrupted maintenance</li>
+               <li>Canary deployments </li>
+            </ul>
+         </li>
+         <li>
+            The eIAM service changes and new features can be introduced continuously and without service interruptions.
+         </li>
+      </ul>
       <li>
-         <span class="bold">Self-help:</span> The Federal Administration supports several million e-government end users. Therefore, it is absolutely essential that you use the help articles on <script>s="https://help.eiam.admin.ch"</script><script src="js/url.js"></script> to assist yourself whenever possible.
-      </li>
-      <li>
-         <span class="bold">Contact the responsible administrative unit:</span> Open a support ticket on <script>s="https://help.eiam.admin.ch"</script><script src="js/url.js"></script>; it will automatically be forwarded to the administrative unit responsible for your case. Alternatively, you may use any contact information published by this administrative unit as the support organization for its applications.
+         With the <span class="bold"><span class="italic"><a href="index.php?c=canary&amp;l=en">Testing in Canary mode</a></span></span>, a service change, a new feature can first be made available to only a small subset of users for testing before it is activated for all.
       </li>
    </ol>
+   <h3> Implementation Plan (CI/CD) </h3>
+   <p>  <br>The eIAM integrated applications will be gradually migrated to the BTB and CI/CD container infrastructure. This migration should be completed transparently and without disruption for all applications by the end of 1st quarter 2024.</p>
+</div>
 `;
 
 export const mockMenu = [

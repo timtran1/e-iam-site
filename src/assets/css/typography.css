@@ -42,6 +42,12 @@ article {
     margin-top: var(--Basic-Fontsize-Paragraph-Margin-Top, 8px);
   }
 
+  ol:has(ol, ul),
+  ul:has(ol, ul),
+  li:has(> ol, > ul) {
+    padding-bottom: var(--Basic-Fontsize-Paragraph-Margin-Top, 8px);
+  }
+
   a {
     /* font-style: normal; */
     /* font-weight: 400; */
