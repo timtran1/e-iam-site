@@ -251,7 +251,11 @@ ul.header-navigation__external-links-mobile {
   }
 
   .overflow-menu-selector__backdrop {
-    position: absolute;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* top is set inline: viewport-relative, zoom-corrected, just below the nav bar */
     background-color: var(--Color-Font-Main, #1f2937);
     z-index: 99;
   }

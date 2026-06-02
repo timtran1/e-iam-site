@@ -1,12 +1,4 @@
-import {
-  forwardRef,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import AppContext from '../../common/context/app/app.context.js';
+import {forwardRef, useEffect, useMemo, useRef, useState} from 'react';
 import clsx from 'clsx';
 import {useTranslation} from 'react-i18next';
 import DesktopMenuList from './DesktopMenuList.jsx';
@@ -53,30 +45,26 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
     () => menus.some((menu) => hasChildActive(menu)),
     [menus]
   );
-  const {
-    contentMeta: {width: contentWidth, height: contentHeight},
-  } = useContext(AppContext);
-
   const htmlZoom = useHtmlZoom();
-  const [centerToLeft, setCenterToLeft] = useState(0);
+  const [backdropTop, setBackdropTop] = useState(0);
 
   /**
-   * @type {@type {React.CSSProperties}}
+   * Backdrop is a viewport-anchored (position: fixed) overlay covering everything
+   * below the navigation bar. Only `top` is dynamic; left/right/bottom come from CSS.
+   * @type {React.CSSProperties}
    */
   const backdropStyles = useMemo(
     () => ({
-      width: `${contentWidth}px`,
-      height: `${contentHeight}px`,
-      top: '100%',
-      transform: `translateX(calc(50% - ${centerToLeft}px))`,
+      top: `${backdropTop}px`,
     }),
-    [centerToLeft, contentHeight, contentWidth]
+    [backdropTop]
   );
 
   /**
-   * Calculate and update the distance from the horizontal center of the element to the left edge of the screen.
-   * Divides by htmlZoom to compensate for CSS zoom applied to <html>, since getBoundingClientRect()
-   * returns values in the zoomed coordinate space while CSS transforms operate in layout space.
+   * Track the bottom edge of the nav item so the fixed backdrop starts right below
+   * the header. Divides by htmlZoom to compensate for CSS zoom applied to <html>:
+   * getBoundingClientRect() returns values in the zoomed coordinate space, while the
+   * backdrop's `top` is resolved in layout space.
    */
   useEffect(() => {
     const el = ref?.current;
@@ -84,7 +72,7 @@ const DropdownOverflowMenu = forwardRef(({className, menus = []}, ref) => {
 
     const update = () => {
       const rect = el.getBoundingClientRect();
-      setCenterToLeft((rect.left + rect.width / 2) / htmlZoom);
+      setBackdropTop(rect.bottom / htmlZoom);
     };
 
     update();
