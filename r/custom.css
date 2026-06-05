@@ -255,9 +255,6 @@ span img {
 }
 
 /* Override youtube video style */
-.dlYoutubeLarge {
-    width: 100% !important;
-}
 .dlYoutubeLarge iframe {
     width: 100%;
     height: auto;
@@ -269,5 +266,6 @@ span img {
    stays within the accordion container without causing horizontal scroll. */
 .showblockdivinner > .dlYoutubeLarge,
 .showblock2divinner > .dlYoutubeLarge {
+    width: 100% !important;
     margin-right: 0;
 }
