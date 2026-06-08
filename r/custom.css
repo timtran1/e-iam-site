@@ -255,11 +255,17 @@ span img {
 }
 
 /* Override youtube video style */
-.dlYoutubeLarge {
-    width: 100% !important;
-}
 .dlYoutubeLarge iframe {
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9; /* Youtube video aspect ratio */
+}
+/* Fix: YouTube embed inside accordion overflows horizontally because dlYoutubeLarge
+   has an inline style="width:570px;margin-right:Xpx" set by the CMS.
+   Selecting via .showblock2divinner resets margin-right to 0 so the iframe
+   stays within the accordion container without causing horizontal scroll. */
+.showblockdivinner > .dlYoutubeLarge,
+.showblock2divinner > .dlYoutubeLarge {
+    width: 100% !important;
+    margin-right: 0;
 }
