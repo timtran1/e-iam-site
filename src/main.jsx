@@ -172,7 +172,7 @@ function handlePageEvents() {
 }
 
 // Initialize everything
-console.log('Initializing app app with u5cms compatibility...');
+console.log('Initializing app with u5cms compatibility...');
 
 // Handle page events
 handlePageEvents();
