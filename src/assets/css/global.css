@@ -9,6 +9,7 @@
 @import './search-result.css';
 @import './lang-selector.css';
 @import './accordion.css';
+@import './footer.css';
 
 @tailwind components;
 @tailwind utilities;
