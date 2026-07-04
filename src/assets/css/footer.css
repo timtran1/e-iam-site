@@ -1,0 +1,19 @@
+footer {
+  @apply bg-gray-pickled-bluewood !important;
+
+  border: unset !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-weight: 400 !important;
+  font-family:
+    var(--Basic-Font-Family-Font-Family, 'Noto Sans'), sans-serif !important;
+  font-size: var(--Color-Font-Header-Elements-Font-Size, 14px) !important;
+  line-height: var(--Color-Font-Header-Elements-Line-Height, 18px) !important;
+
+  .footer-container {
+    @apply container py-2 !important;
+
+    margin: 0 auto !important;
+    color: white !important;
+  }
+}
