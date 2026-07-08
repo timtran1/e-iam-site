@@ -6,9 +6,26 @@ import React from 'react';
  * @param {string} options.behavior - Scroll behavior ('smooth' or 'auto')
  * @param {string} options.block - Vertical alignment ('start', 'center', 'end', 'nearest')
  * @param {number} options.offset - Additional offset from top in pixels
+ * @param {boolean} options.ready - Whether the target content is ready to be
+ *   searched/scrolled to. Defaults to true so consumers that never pass it
+ *   keep the previous behavior. Pass false while content is still loading
+ *   asynchronously (e.g. legacy server-rendered markup) so the initial-hash
+ *   and article-id retry loops only start once it actually lands, instead of
+ *   racing a fixed timeout.
  */
 const useHashScroll = (options = {}) => {
-  const {behavior = 'smooth', block = 'start', offset = 10 * 16, handleInitialHash = true} = options;
+  const {
+    behavior = 'smooth',
+    block = 'start',
+    offset = 10 * 16,
+    handleInitialHash = true,
+    ready = true,
+  } = options;
+
+  // Guards the initial-hash/article-id handling so it only completes once —
+  // flips true only when a scroll is actually dispatched (see tryScroll
+  // below), not merely when a retry loop starts.
+  const hasHandledInitialHashRef = React.useRef(false);
 
   /**
    * Look up an element by ID, falling back to <a name="..."> if not found.
@@ -86,7 +103,9 @@ const useHashScroll = (options = {}) => {
         element.style.background = 'lightyellow';
         setTimeout(() => {
           element.style.background = '';
-          setTimeout(() => { element.style.transition = ''; }, 300);
+          setTimeout(() => {
+            element.style.transition = '';
+          }, 300);
         }, 3000);
       }
     },
@@ -126,6 +145,8 @@ const useHashScroll = (options = {}) => {
      * Handle initial page load with hash
      */
     const handleInitialHashFn = () => {
+      if (hasHandledInitialHashRef.current) return;
+
       const currentHash = window.location.hash;
       if (!currentHash || currentHash === '#') return;
 
@@ -139,8 +160,18 @@ const useHashScroll = (options = {}) => {
 
         if (el && isLaidOut(el)) {
           scrollToElement(currentHash);
+          hasHandledInitialHashRef.current = true;
         } else if (attempts < maxAttempts) {
           setTimeout(tryScroll, 100);
+        } else if (el) {
+          // Retry budget exhausted but something matched — scroll to it
+          // anyway rather than silently giving up.
+          scrollToElement(currentHash);
+          hasHandledInitialHashRef.current = true;
+        } else {
+          console.warn(
+            `[useHashScroll] gave up scrolling to "${currentHash}" — element never appeared in the DOM`
+          );
         }
       };
 
@@ -151,6 +182,8 @@ const useHashScroll = (options = {}) => {
      * Handle scrolling to article by ID from legacy URL format (e.g. ?foo&bar&123)
      */
     const handleArticleScroll = () => {
+      if (hasHandledInitialHashRef.current) return;
+
       const did = getArticleIdFromUrl();
       if (!did) return;
 
@@ -158,21 +191,34 @@ const useHashScroll = (options = {}) => {
       let attempts = 0;
       const maxAttempts = 40;
 
+      const finishScroll = () => {
+        scrollToElement('#' + elementId);
+        hasHandledInitialHashRef.current = true;
+
+        // Clear any active filter
+        const filter = document.getElementById('filter');
+        if (filter && filter.value !== '') {
+          filter.value = '';
+          if (filter.onchange) filter.onchange();
+        }
+      };
+
       const tryScroll = () => {
         attempts++;
         const el = findTarget(elementId);
 
         if (el && isLaidOut(el)) {
-          scrollToElement('#' + elementId);
-
-          // Clear any active filter
-          const filter = document.getElementById('filter');
-          if (filter && filter.value !== '') {
-            filter.value = '';
-            if (filter.onchange) filter.onchange();
-          }
+          finishScroll();
         } else if (attempts < maxAttempts) {
           setTimeout(tryScroll, 100);
+        } else if (el) {
+          // Retry budget exhausted but something matched — scroll to it
+          // anyway rather than silently giving up.
+          finishScroll();
+        } else {
+          console.warn(
+            `[useHashScroll] gave up scrolling to "#${elementId}" — element never appeared in the DOM`
+          );
         }
       };
 
@@ -182,8 +228,11 @@ const useHashScroll = (options = {}) => {
     // Listen for hash changes
     window.addEventListener('hashchange', handleHashChange);
 
-    // Handle initial hash or article scroll on component mount
-    if (handleInitialHash) {
+    // Handle initial hash or article scroll once the target content is
+    // ready. When ready flips false -> true (e.g. slow-loading legacy
+    // content lands late), this effect re-runs and starts the retry loop
+    // then, instead of depending on a fixed wall-clock timeout.
+    if (handleInitialHash && ready) {
       const did = getArticleIdFromUrl();
       if (did) {
         handleArticleScroll();
@@ -196,7 +245,15 @@ const useHashScroll = (options = {}) => {
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
     };
-  }, [behavior, block, offset, scrollToElement, getArticleIdFromUrl]);
+  }, [
+    behavior,
+    block,
+    offset,
+    ready,
+    scrollToElement,
+    getArticleIdFromUrl,
+    handleInitialHash,
+  ]);
 
   // Return utility function for manual scrolling
   return {

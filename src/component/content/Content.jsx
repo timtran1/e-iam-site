@@ -41,7 +41,8 @@ const Content = () => {
     content,
     headerMeta,
     setContentMeta,
-    hasRemovedServerElements,
+    contentReady,
+    contentRemoved,
   } = useContext(AppContext);
 
   // Track article element size
@@ -69,9 +70,12 @@ const Content = () => {
     isDevMode ? MockingSearchResultsContent : content
   );
 
-  // Init hash scroll
+  // Init hash scroll — gated on contentReady so the retry loop starts once
+  // the legacy #content markup has actually been captured, rather than
+  // racing a fixed timeout that may fire before slow-loading content arrives
   useHashScroll({
     offset: (Number(headerMeta.headerHeight) || 10 * 16) + 5 * 16,
+    ready: contentReady,
   });
 
   /**
@@ -202,7 +206,11 @@ const Content = () => {
 
           {/*region main content*/}
           <main
-            {...(hasRemovedServerElements ? {id: ELEMENT_ID.CONTENT} : {})}
+            // Gate on contentRemoved (not the global hasRemovedServerElements)
+            // — the global flag can flip true while the raw #content node is
+            // still present-and-empty on slow-loading pages, which would
+            // reintroduce a duplicate id="content" collision window.
+            {...(contentRemoved ? {id: ELEMENT_ID.CONTENT} : {})}
             className={clsx(
               'body-content__main-content',
 
