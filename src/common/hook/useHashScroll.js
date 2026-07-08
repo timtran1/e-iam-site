@@ -15,7 +15,7 @@ import React from 'react';
  */
 const useHashScroll = (options = {}) => {
   const {
-    behavior = 'smooth',
+    behavior,
     block = 'start',
     offset = 10 * 16,
     handleInitialHash = true,
