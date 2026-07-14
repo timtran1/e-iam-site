@@ -27,12 +27,22 @@ const useHashScroll = (options = {}) => {
   // below), not merely when a retry loop starts.
   const hasHandledInitialHashRef = React.useRef(false);
 
+  // Holds the pending retry setTimeout so a re-run of the effect (deps
+  // changing, e.g. `ready` flipping) or unmount can cancel the in-flight
+  // loop instead of leaving a second one running alongside it.
+  const retryTimeoutRef = React.useRef(null);
+
   /**
-   * Look up an element by ID, falling back to <a name="..."> if not found.
+   * Look up an element by ID first (e.g. #abcxyz -> id="abcxyz"). If no id
+   * matches, fall back to a `name` attribute — preferring `<a name="...">`
+   * (the conventional legacy anchor) since the same `name` value can also
+   * appear on unrelated elements in the content, and only then falling back
+   * to any element carrying that `name`.
    */
   const findTarget = (id) =>
     document.getElementById(id) ||
-    document.querySelector(`a[name="${CSS.escape(id)}"]`);
+    document.querySelector(`a[name="${CSS.escape(id)}"]`) ||
+    document.querySelector(`[name="${CSS.escape(id)}"]`);
 
   /**
    * True when the element has been laid out enough to scroll to.
@@ -155,6 +165,7 @@ const useHashScroll = (options = {}) => {
       const maxAttempts = 40; // 4 seconds max
 
       const tryScroll = () => {
+        if (hasHandledInitialHashRef.current) return;
         attempts++;
         const el = findTarget(elementId);
 
@@ -162,7 +173,7 @@ const useHashScroll = (options = {}) => {
           scrollToElement(currentHash);
           hasHandledInitialHashRef.current = true;
         } else if (attempts < maxAttempts) {
-          setTimeout(tryScroll, 100);
+          retryTimeoutRef.current = setTimeout(tryScroll, 100);
         } else if (el) {
           // Retry budget exhausted but something matched — scroll to it
           // anyway rather than silently giving up.
@@ -204,13 +215,14 @@ const useHashScroll = (options = {}) => {
       };
 
       const tryScroll = () => {
+        if (hasHandledInitialHashRef.current) return;
         attempts++;
         const el = findTarget(elementId);
 
         if (el && isLaidOut(el)) {
           finishScroll();
         } else if (attempts < maxAttempts) {
-          setTimeout(tryScroll, 100);
+          retryTimeoutRef.current = setTimeout(tryScroll, 100);
         } else if (el) {
           // Retry budget exhausted but something matched — scroll to it
           // anyway rather than silently giving up.
@@ -241,9 +253,15 @@ const useHashScroll = (options = {}) => {
       }
     }
 
-    // Cleanup event listener on unmount
+    // Cleanup event listener and any in-flight retry loop on unmount (or
+    // before the effect re-runs), so a re-run never races an old retry
+    // chain into a duplicate scroll.
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
+      if (retryTimeoutRef.current) {
+        clearTimeout(retryTimeoutRef.current);
+        retryTimeoutRef.current = null;
+      }
     };
   }, [
     behavior,
