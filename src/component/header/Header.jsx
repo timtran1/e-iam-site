@@ -143,14 +143,16 @@ const Header = ({className, sticky = false}) => {
             {/*endregion logo*/}
 
             {/*region divider */}
-            <div id="header-divider" className="w-0.25 h-[55px] lg:h-[72px] bg-[var(--Color-Divider-Header)]" />
+            <div
+              id="header-divider"
+              className="w-0.25 h-[55px] lg:h-[72px] bg-[var(--Color-Divider-Header)]"
+            />
             {/*endregion divider */}
 
             {/*region header and language actions*/}
             <div className="flex flex-1 justify-between items-center gap-8">
               {/*Frame 5*/}
               <div className="flex gap-4 lg:gap-6 flex-1 items-center">
-
                 {/* old divider, invisible, kept for spacing */}
                 <div className="w-0.25 self-stretch" />
 

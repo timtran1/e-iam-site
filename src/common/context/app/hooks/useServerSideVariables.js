@@ -11,7 +11,23 @@ import {cloneIframe} from '../../../helper/iframe.js';
 const RENDER_CONFIG = {
   DEBOUNCE_DELAY: 330, // Interval between polling attempts (ms)
   POLLING_TIMEOUT: 3000, // Maximum time to poll before giving up (ms)
+  // Absolute upper bound for elements in EAGER_REMOVE_ELEMENT_IDS (e.g.
+  // #content), whose legacy markup can legitimately arrive after
+  // POLLING_TIMEOUT on slow-loading pages. Prevents polling forever if the
+  // legacy content never arrives at all (genuine server failure).
+  CONTENT_CAPTURE_HARD_CAP_MS: 15000,
 };
+
+/**
+ * Element ids that must be captured into state and have their raw DOM node
+ * removed the instant their content becomes non-empty, instead of waiting
+ * for the shared POLLING_TIMEOUT sweep in `removeElements`. Without this,
+ * the shared sweep would delete a still-empty raw node (e.g. #content on a
+ * slow-loading page) before its legacy content ever arrives, permanently
+ * losing anchors inside it. Add more element ids here if they need the same
+ * "capture as soon as ready, however long it takes" treatment.
+ */
+const EAGER_REMOVE_ELEMENT_IDS = new Set([ELEMENT_ID.CONTENT]);
 
 /**
  * Handles form and iframe elements by cloning pre-fill iframes from U5CMS structure
@@ -73,8 +89,90 @@ const useServerSideVariables = () => {
   const [hasRemovedServerElements, setHasRemovedServerElements] =
     React.useState(false);
 
+  // Per-eager-element "raw node removed" flags, keyed by ELEMENT_ID. Content.jsx
+  // (and any future eager consumer) needs a plain boolean derived from this.
+  const [eagerRemovedState, setEagerRemovedState] = React.useState(() =>
+    Array.from(EAGER_REMOVE_ELEMENT_IDS).reduce((acc, id) => {
+      acc[id] = false;
+      return acc;
+    }, {})
+  );
+
   // Ref to store interval ID for cleanup
   const intervalRef = React.useRef(null);
+
+  // Refs to the two safety setTimeout ids so they can be cancelled on
+  // unmount, preventing a stray removeElements()/console.warn call from
+  // firing after the component using this hook is gone.
+  const sweepTimeoutRef = React.useRef(null);
+  const hardCapTimeoutRef = React.useRef(null);
+
+  // Timestamp the shared poll started, used to know when POLLING_TIMEOUT has
+  // elapsed even when the interval is kept alive past it for eager elements.
+  const pollStartRef = React.useRef(null);
+
+  // Guards each eager element's capture-then-remove transition so it fires
+  // exactly once, even though the poll may keep running afterwards. Without
+  // this, a later tick could re-query the id, find the React-rendered
+  // replacement that reused it, and remove that instead of the raw node.
+  const eagerCapturedRef = React.useRef({});
+
+  /**
+   * Stops the shared polling interval once it's no longer needed: the fixed
+   * POLLING_TIMEOUT window has elapsed AND every eager element has been
+   * captured. Called both when that fixed window elapses and immediately
+   * after a late eager capture, so polling never continues longer than
+   * necessary, but is never stopped before non-eager elements had their full
+   * normal window.
+   */
+  const maybeStopPolling = React.useCallback(() => {
+    const elapsed = Date.now() - (pollStartRef.current ?? 0);
+    const allEagerCaptured = Array.from(EAGER_REMOVE_ELEMENT_IDS).every(
+      (id) => eagerCapturedRef.current[id]
+    );
+
+    if (elapsed >= RENDER_CONFIG.POLLING_TIMEOUT && allEagerCaptured) {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    }
+  }, []);
+
+  /**
+   * Captures an eagerly-handled element (see EAGER_REMOVE_ELEMENT_IDS) into
+   * state and immediately removes the exact raw DOM node reference that was
+   * cloned — never a re-query — so a later poll tick can never delete the
+   * React-rendered replacement that later reuses the same id.
+   *
+   * @param {string} eleId
+   * @param {Element} ele - the raw DOM node that was cloned
+   * @param {Element} clonedEle - the prepared clone to store in state
+   */
+  const captureAndRemoveEagerly = React.useCallback(
+    (eleId, ele, clonedEle) => {
+      if (eagerCapturedRef.current[eleId]) return;
+      eagerCapturedRef.current[eleId] = true;
+
+      setServerSideData((prevState) => ({
+        ...prevState,
+        [eleId]: prevState[eleId] || clonedEle,
+      }));
+
+      ele.remove();
+
+      setEagerRemovedState((prevState) => ({
+        ...prevState,
+        [eleId]: true,
+      }));
+
+      // An eager capture may complete after POLLING_TIMEOUT already elapsed
+      // (slow-loading content) — stop polling right away in that case
+      // instead of waiting for the next interval tick.
+      maybeStopPolling();
+    },
+    [maybeStopPolling]
+  );
 
   /**
    * Get server side variables for elements that are not empty
@@ -83,6 +181,16 @@ const useServerSideVariables = () => {
     if (!document) return;
 
     Object.values(ELEMENT_ID).forEach((eleId) => {
+      // Eager elements are fully owned by captureAndRemoveEagerly once
+      // captured — skip re-querying so a later tick can never pick up the
+      // React-rendered replacement that reuses the same id.
+      if (
+        EAGER_REMOVE_ELEMENT_IDS.has(eleId) &&
+        eagerCapturedRef.current[eleId]
+      ) {
+        return;
+      }
+
       // Get element
       const ele = document.querySelector(`#${eleId}`);
 
@@ -100,6 +208,11 @@ const useServerSideVariables = () => {
             break;
         }
 
+        if (EAGER_REMOVE_ELEMENT_IDS.has(eleId)) {
+          captureAndRemoveEagerly(eleId, ele, clonedEle);
+          return;
+        }
+
         // Update state
         setServerSideData((prevState) => {
           return {
@@ -109,13 +222,19 @@ const useServerSideVariables = () => {
         });
       }
     });
-  }, []);
+  }, [captureAndRemoveEagerly]);
 
   /**
-   * Remove DOM elements immediately after data collection is complete
+   * Remove DOM elements immediately after data collection is complete.
+   * Eager elements (EAGER_REMOVE_ELEMENT_IDS) are excluded: they are owned
+   * solely by captureAndRemoveEagerly, so this sweep can never delete a
+   * still-empty raw eager node prematurely, nor the React-rendered
+   * replacement that later reuses the same id.
    */
   const removeElements = React.useCallback(() => {
     Object.values(ELEMENT_ID).forEach((id) => {
+      if (EAGER_REMOVE_ELEMENT_IDS.has(id)) return;
+
       const element = document.getElementById(id);
       if (element) {
         element.remove();
@@ -133,20 +252,39 @@ const useServerSideVariables = () => {
       clearInterval(intervalRef.current);
     }
 
+    pollStartRef.current = Date.now();
+
     // Start interval to check for data with debounced delay
     intervalRef.current = setInterval(() => {
       getServerSideVariables();
     }, RENDER_CONFIG.DEBOUNCE_DELAY);
 
-    // Safety timeout - stop polling after configured timeout regardless
-    setTimeout(() => {
+    // Fixed-window sweep — non-eager elements keep their exact original
+    // timing. Eager elements are excluded from removeElements and may keep
+    // polling past this point (see maybeStopPolling).
+    sweepTimeoutRef.current = setTimeout(() => {
+      removeElements();
+      maybeStopPolling();
+    }, RENDER_CONFIG.POLLING_TIMEOUT);
+
+    // Absolute upper bound so polling can't continue forever if an eager
+    // element's legacy content never arrives (genuine server failure).
+    hardCapTimeoutRef.current = setTimeout(() => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
-        removeElements();
       }
-    }, RENDER_CONFIG.POLLING_TIMEOUT);
-  }, [getServerSideVariables, removeElements]);
+
+      const uncapturedIds = Array.from(EAGER_REMOVE_ELEMENT_IDS).filter(
+        (id) => !eagerCapturedRef.current[id]
+      );
+      uncapturedIds.forEach((id) => {
+        console.warn(
+          `[useServerSideVariables] content capture hard cap reached (${RENDER_CONFIG.CONTENT_CAPTURE_HARD_CAP_MS}ms) — #${id} never populated`
+        );
+      });
+    }, RENDER_CONFIG.CONTENT_CAPTURE_HARD_CAP_MS);
+  }, [getServerSideVariables, removeElements, maybeStopPolling]);
 
   /**
    * Use effect once
@@ -161,9 +299,15 @@ const useServerSideVariables = () => {
    */
   React.useEffect(() => {
     return () => {
-      // Cleanup intervals on unmount
+      // Cleanup intervals and pending safety timeouts on unmount
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
+      }
+      if (sweepTimeoutRef.current) {
+        clearTimeout(sweepTimeoutRef.current);
+      }
+      if (hardCapTimeoutRef.current) {
+        clearTimeout(hardCapTimeoutRef.current);
       }
     };
   }, []);
@@ -238,6 +382,10 @@ const useServerSideVariables = () => {
   return {
     serverSideData,
     hasRemovedServerElements,
+    // Plain boolean specifically for #content — flips true only once the
+    // raw eager node has actually been removed (see EAGER_REMOVE_ELEMENT_IDS
+    // and captureAndRemoveEagerly above).
+    contentRemoved: eagerRemovedState[ELEMENT_ID.CONTENT],
   };
 };
 

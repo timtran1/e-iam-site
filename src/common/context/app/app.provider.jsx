@@ -19,7 +19,8 @@ import {ELEMENT_ID} from '../../constant/element-id.js';
  */
 const AppProvider = ({children}) => {
   // Get server-side data
-  const {serverSideData, hasRemovedServerElements} = useServerSideVariables();
+  const {serverSideData, hasRemovedServerElements, contentRemoved} =
+    useServerSideVariables();
 
   // Detect user's OS
   const {os} = useOSDetect();
@@ -97,6 +98,15 @@ const AppProvider = ({children}) => {
   }, [serverSideData.content]);
 
   /**
+   * Whether the legacy #content markup has been captured into serverSideData
+   * yet — used by consumers (e.g. hash scroll) that must wait for the actual
+   * content instead of the fixed POLLING_TIMEOUT window.
+   *
+   * @type {boolean}
+   */
+  const contentReady = content != null;
+
+  /**
    * Remove sever element by id
    *
    * @type {(id: string) => void}
@@ -147,6 +157,8 @@ const AppProvider = ({children}) => {
           setContentMeta,
           removeServerElement,
           hasRemovedServerElements,
+          contentReady,
+          contentRemoved,
           os,
         }}
       >

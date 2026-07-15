@@ -13,6 +13,8 @@ import React from 'react';
  * @property {function} setContentMeta
  * @property {(id: string) => void} removeServerElement
  * @property {boolean} hasRemovedServerElements
+ * @property {boolean} contentReady - true once legacy #content markup has been captured
+ * @property {boolean} contentRemoved - true once the raw #content DOM node has been removed
  * @property {'macOS' | 'Windows' | 'Linux' | 'iOS' | 'Android' | 'unknown'} os
  */
 
@@ -41,6 +43,8 @@ const DefaultState = {
   setContentMeta: () => {},
   removeServerElement: () => {},
   hasRemovedServerElements: false,
+  contentReady: false,
+  contentRemoved: false,
   os: 'unknown',
 };
 
