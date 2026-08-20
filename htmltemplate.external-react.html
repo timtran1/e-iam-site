@@ -36,6 +36,25 @@
 })();
 </script>
 
+<script>
+  // Query param that forces the alternate layout script when present (edit this key if the param name changes)
+  const LAYOUT_OVERRIDE_PARAM = 'usetheotherlayout';
+  // Layout script loaded when the override param is present and not falsy
+  const LAYOUT_OVERRIDE_SRC = 'https://www.your-domain.com/app-universal.iife.js';
+
+  if (top === self) {
+    const params = new URLSearchParams(location.search);
+    const overrideValue = (params.get(LAYOUT_OVERRIDE_PARAM) || '').toLowerCase();
+    const useOverrideLayout = params.has(LAYOUT_OVERRIDE_PARAM) && !['false', '0'].includes(overrideValue);
+
+    if (useOverrideLayout) {
+      document.write('<script src="' + LAYOUT_OVERRIDE_SRC + '"><\/script>');
+    } else {
+      // Default branch — add any other environment-specific scripts your production setup needs here
+    }
+  }
+</script>
+
 </head>
 <body id="body">
 <section class="skipLinks">{{{skiplinks}}}</section>
