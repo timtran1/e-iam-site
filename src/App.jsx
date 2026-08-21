@@ -8,6 +8,7 @@ import useI18nSync from './common/hook/useI18nSync.js';
 import useGlobalStyleConfig from './common/hook/useGlobalStyleConfig.js';
 import useSelectorInputResize from './common/hook/useSelectorInputResize.js';
 import useOSDetect from './common/hook/useOSDetect.js';
+import {WINDOWS_ZOOM_FACTOR} from './common/constant/zoom.js';
 
 const App = () => {
   // Sync i18next with cookie changes globally
@@ -28,7 +29,10 @@ const App = () => {
         className="min-h-screen flex flex-col justify-between"
         style={
           os === 'Windows'
-            ? {zoom: 0.8, minHeight: 'calc(100vh / 0.8)'}
+            ? {
+                zoom: WINDOWS_ZOOM_FACTOR,
+                minHeight: `calc(100vh / ${WINDOWS_ZOOM_FACTOR})`,
+              }
             : undefined
         }
       >
