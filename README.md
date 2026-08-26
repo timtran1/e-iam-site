@@ -48,7 +48,7 @@ The regular build mode is designed for traditional u5CMS integration where React
 **Process:**
 1. Builds React application using standard Vite configuration with `src/main.jsx` as entry point
 2. Generates separate CSS and JavaScript assets in the `dist` directory
-3. Executes post-build script (`merge-built-files.js`) to inline JavaScript into HTML
+3. Executes post-build script (`vite-config/merge-built-files.js`) to inline JavaScript into HTML
 4. Minifies and optimizes JavaScript code with Terser
 5. Injects cssbase.css link reference into the HTML template
 6. Removes external JavaScript files, creating a self-contained HTML file

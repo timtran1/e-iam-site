@@ -1,15 +1,4 @@
-import path from 'path';
-import fs from 'fs/promises';
 import {minify} from 'terser';
-
-console.log('Start - Merging built files...');
-
-const distDir = 'dist';
-const htmlPath = path.join(distDir, 'index.html');
-let html = await fs.readFile(htmlPath, 'utf-8');
-
-const reactScriptRegex =
-  /<script type="module" crossorigin [^>]*src="\/assets\/(index[^"]+\.js)"[^>]*><\/script>/;
 
 /**
  * Minify js content
@@ -18,7 +7,7 @@ const reactScriptRegex =
  * @param {string} jsContent
  * @returns {Promise<string>}
  */
-const minifyJsContent = async (jsContent) => {
+export const minifyJsContent = async (jsContent) => {
   // Minify the JS content
   console.log('Minifying JavaScript code...');
   try {
@@ -46,6 +35,9 @@ const minifyJsContent = async (jsContent) => {
         max_line_len: 200,
         semicolons: true,
         wrap_func_args: true,
+        // Escape non-ASCII chars (e.g. German "Ü") to \uXXXX so the bundle
+        // stays valid regardless of what charset u5CMS serves/stores it with.
+        ascii_only: true,
       },
     });
 
@@ -70,32 +62,3 @@ const minifyJsContent = async (jsContent) => {
     return jsContent;
   }
 };
-
-const match = html.match(reactScriptRegex);
-if (!match) {
-  console.error(`Error: Could not find the <script> tag to inline.`);
-} else {
-  // Merge the built js file to html file
-  const jsTag = match[0];
-  const jsFilename = match[1];
-  const jsFilePath = path.join(distDir, 'assets', jsFilename);
-  const jsContent = await fs.readFile(jsFilePath, 'utf-8');
-
-  // Minify the JS content
-  const minifiedJsContent = await minifyJsContent(jsContent);
-  const inlineScript = `<script type="module" crossorigin>\n${minifiedJsContent}\n</script>`;
-  html = html.split(jsTag).join(inlineScript);
-
-  // Insert cssbase.css to html
-  const cssBasePositionHook = `<!--CSS_BASE-->`;
-  const cssBaseTag = `<link rel="stylesheet" href="/r/cssbase.css" type="text/css"/>`;
-  html = html.replace(cssBasePositionHook, cssBaseTag);
-
-  // Save file
-  await fs.writeFile(htmlPath, html, 'utf-8');
-
-  // Delete file js
-  await fs.unlink(jsFilePath);
-
-  console.log('Finished - Successfully minified, merged and inlined assets.');
-}
