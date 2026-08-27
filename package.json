@@ -7,7 +7,7 @@
     "dev": "vite --host",
     "build": "vite build --mode universal",
     "build:universal": "vite build --mode universal",
-    "build:regular": "vite build && node merge-built-files.js",
+    "build:regular": "vite build && node vite-config/merge-built-files.js",
     "format:check": "prettier --check 'src/**/(*.jsx|*.js|*.tsx|*.ts|*.css|*.scss)'",
     "format": "prettier --write 'src/**/(*.jsx|*.js|*.tsx|*.ts|*.css|*.scss)'"
   },
