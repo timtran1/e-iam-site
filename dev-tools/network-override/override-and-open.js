@@ -1,4 +1,7 @@
 import {chromium} from 'playwright';
+import {mkdirSync} from 'node:fs';
+import {dirname, join} from 'node:path';
+import {fileURLToPath} from 'node:url';
 
 /**
  * Launches a browser, intercepts network requests matching a URL pattern,
@@ -36,6 +39,12 @@ const pageUrl = getArg('url');
 const matchPattern = getArg('match');
 const replaceUrl = getArg('replace');
 const headless = hasFlag('headless');
+
+// Playwright normally saves downloads to its own temp dir under a random
+// id with no filename/extension. Save them here instead so they can
+// actually be opened.
+const downloadsDir = join(dirname(fileURLToPath(import.meta.url)), 'downloads');
+mkdirSync(downloadsDir, {recursive: true});
 
 if (!pageUrl || !matchPattern || !replaceUrl) {
   console.error(
@@ -79,6 +88,14 @@ await context.route(matchPattern, async (route) => {
 
 page.on('console', (msg) => console.log(`[page] ${msg.text()}`));
 page.on('pageerror', (err) => console.error(`[page error] ${err.message}`));
+
+page.on('download', async (download) => {
+  const savePath = join(downloadsDir, download.suggestedFilename());
+  await download.saveAs(savePath);
+  console.log(
+    `[download] Saved ${download.suggestedFilename()} -> ${savePath}`
+  );
+});
 
 await page.goto(pageUrl, {waitUntil: 'domcontentloaded'});
 
