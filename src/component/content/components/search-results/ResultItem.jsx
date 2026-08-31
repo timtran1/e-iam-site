@@ -15,6 +15,11 @@ const ResultItem = React.memo(({searchResult, viewMode}) => {
    * @type {string}
    */
   const fullHref = React.useMemo(() => {
+    // Return href immediately if the value is empty
+    if (!searchResult.href) {
+      return searchResult.href;
+    }
+
     // If the href is already an absolute URL, use it directly
     if (
       searchResult.href?.startsWith('http://') ||
@@ -23,22 +28,27 @@ const ResultItem = React.memo(({searchResult, viewMode}) => {
       return searchResult.href;
     }
 
+    // href points to its own script (e.g. "f.php"), not the current
+    // page — use it as-is instead of merging in the current search params.
+    const queryIndex = searchResult.href.indexOf('?');
+    const hrefPath =
+      queryIndex >= 0
+        ? searchResult.href.slice(0, queryIndex)
+        : searchResult.href;
+    if (hrefPath) {
+      return searchResult.href;
+    }
+
+    // Default, return fully url with merging current search params
     const [endpoint] = location.href.split('?');
     const currentSearchParams = new URLSearchParams(location.search);
-    const hrefPath = searchResult.href?.includes('?')
-      ? searchResult.href.split('?')[0]
-      : '';
     const hrefParams = new URLSearchParams(
-      searchResult.href?.includes('?')
-        ? searchResult.href?.split('?')[1]
-        : searchResult.href
+      queryIndex >= 0 ? searchResult.href.slice(queryIndex + 1) : ''
     );
     for (const key of hrefParams.keys()) {
-      if (currentSearchParams.has(key)) {
-        currentSearchParams.set(key, hrefParams.get(key));
-      }
+      currentSearchParams.set(key, hrefParams.get(key));
     }
-    return endpoint + hrefPath + `?${currentSearchParams.toString()}`;
+    return endpoint + `?${currentSearchParams.toString()}`;
   }, [searchResult.href]);
 
   /**
