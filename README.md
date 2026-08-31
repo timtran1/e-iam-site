@@ -149,4 +149,12 @@ Determines whether the right sidebar content renders:
 - If line removed or `window.showRightSidebarPages` undefined → Right sidebar visible on every page
 
 *See `src/component/right-sidebar/RightSidebar.jsx:77` for implementation logic.*
- 
+
+## Dev Tools
+
+`dev-tools/` contains helper scripts for testing a local build without deploy access:
+
+- **[`dev-tools/network-override/`](dev-tools/network-override/README.md)** — swap a live page's script for your local build, entirely in your own browser (no internet exposure).
+- **[`dev-tools/dev-tunnel/`](dev-tools/dev-tunnel/README.md)** — expose a local build publicly (ngrok/localtunnel) for testing from another device or sharing a link.
+
+See each tool's own README for setup and usage.

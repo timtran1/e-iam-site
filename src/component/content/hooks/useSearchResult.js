@@ -90,10 +90,15 @@ const useSearchResult = (content = null) => {
         href = anchorTag.getAttribute('href') || '';
       }
 
-      // Create new heading element with plain text only
+      // Create new heading element, keeping its inner markup (e.g. type
+      // markers) but unwrapping any anchor since the card is already
+      // wrapped in a link by ResultItem.
       const newHeading = document.createElement('h5');
       newHeading.className = 'heading';
-      newHeading.textContent = heading.textContent || '';
+      newHeading.innerHTML = heading.innerHTML;
+      newHeading.querySelectorAll('a').forEach((anchor) => {
+        anchor.replaceWith(...anchor.childNodes);
+      });
 
       results.push({
         heading: newHeading,
