@@ -1,15 +1,22 @@
 #!/usr/bin/env bash
 # dev-tunnel.sh
 # Build the project, serve dist/app-universal.iife.js via Python HTTP server,
-# then expose it publicly through ngrok.
+# then expose it publicly through ngrok or localtunnel.
 # Features: initial build, health check, manual rebuild (press r), quit (press q).
 #
-# Custom domain (optional):
+# Tunnel provider (optional):
+#   Defaults to ngrok. Switch with:
+#     TUNNEL_PROVIDER=localtunnel ./dev-tools/dev-tunnel/dev-tunnel.sh
+#
+# Custom domain (optional, ngrok only):
 #   Free static domain  → set NGROK_DOMAIN to your claimed domain, e.g.:
-#     NGROK_DOMAIN=my-app.ngrok-free.app ./dev-tunnel.sh
+#     NGROK_DOMAIN=my-app.ngrok-free.app ./dev-tools/dev-tunnel/dev-tunnel.sh
 #   Paid subdomain      → same flag, e.g.:
-#     NGROK_DOMAIN=my-app.ngrok.io ./dev-tunnel.sh
+#     NGROK_DOMAIN=my-app.ngrok.io ./dev-tools/dev-tunnel/dev-tunnel.sh
 #   Or edit the variable below to hardcode it.
+#
+# Custom subdomain (optional, localtunnel only — not guaranteed available):
+#     TUNNEL_PROVIDER=localtunnel TUNNEL_SUBDOMAIN=my-app ./dev-tools/dev-tunnel/dev-tunnel.sh
 
 set -euo pipefail
 
@@ -20,14 +27,24 @@ PORT=8899
 FILE_NAME="app-universal.iife.js"
 HEALTH_CHECK_INTERVAL=300   # seconds between automatic health checks
 NGROK_API="http://localhost:4040/api/tunnels"
-ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+ROOT_DIR="$(cd "$(dirname "$0")/../.." && pwd)"
 DIST_DIR="$ROOT_DIR/dist"
+
+# Tunnel provider: "ngrok" (default) or "localtunnel".
+TUNNEL_PROVIDER="${TUNNEL_PROVIDER:-ngrok}"
 
 # Set to your ngrok static/custom domain to keep a stable URL.
 # Leave empty to use a random ephemeral URL (free tier default).
 # Free static domain: claim one at https://dashboard.ngrok.com/domains
-# Usage: NGROK_DOMAIN=abc-xyz.ngrok-free.app ./dev-tunnel.sh
+# Usage: NGROK_DOMAIN=abc-xyz.ngrok-free.app ./dev-tools/dev-tunnel/dev-tunnel.sh
 NGROK_DOMAIN="${NGROK_DOMAIN:-}"
+
+# Optional custom subdomain when using localtunnel (best-effort — the
+# provider may hand out a different one if the requested name is taken).
+TUNNEL_SUBDOMAIN="${TUNNEL_SUBDOMAIN:-}"
+
+# Captures localtunnel's stdout so we can parse the assigned public URL from it.
+LT_OUTPUT_FILE="$(mktemp -t dev-tunnel-lt.XXXXXX)"
 
 # ---------------------------------------------------------------------------
 # Colors
@@ -44,7 +61,7 @@ NC='\033[0m'
 # Process tracking
 # ---------------------------------------------------------------------------
 PYTHON_PID=""
-NGROK_PID=""
+TUNNEL_PID=""
 PUBLIC_URL=""
 
 # ---------------------------------------------------------------------------
@@ -53,7 +70,8 @@ PUBLIC_URL=""
 cleanup() {
     echo -e "\n${YELLOW}Shutting down...${NC}"
     [[ -n "$PYTHON_PID" ]] && kill "$PYTHON_PID" 2>/dev/null || true
-    [[ -n "$NGROK_PID" ]]  && kill "$NGROK_PID"  2>/dev/null || true
+    [[ -n "$TUNNEL_PID" ]] && kill "$TUNNEL_PID" 2>/dev/null || true
+    rm -f "$LT_OUTPUT_FILE" 2>/dev/null || true
     stty echo 2>/dev/null || true
     exit 0
 }
@@ -71,9 +89,22 @@ log_ts()      { echo -e "${CYAN}[$(date '+%H:%M:%S')]${NC} $*"; }
 check_deps() {
     local missing=()
     command -v python3 &>/dev/null || missing+=("python3")
-    command -v ngrok   &>/dev/null || missing+=("ngrok")
     command -v curl    &>/dev/null || missing+=("curl")
     command -v npm     &>/dev/null || missing+=("npm")
+
+    case "$TUNNEL_PROVIDER" in
+        ngrok)
+            command -v ngrok &>/dev/null || missing+=("ngrok")
+            ;;
+        localtunnel)
+            command -v npx &>/dev/null || missing+=("npx (ships with npm)")
+            ;;
+        *)
+            log_error "Unknown TUNNEL_PROVIDER: '$TUNNEL_PROVIDER' (expected 'ngrok' or 'localtunnel')"
+            exit 1
+            ;;
+    esac
+
     if [[ ${#missing[@]} -gt 0 ]]; then
         log_error "Missing dependencies: ${missing[*]}"
         exit 1
@@ -127,11 +158,28 @@ start_python_server() {
 }
 
 # ---------------------------------------------------------------------------
+# Tunnel — provider dispatch
+# ---------------------------------------------------------------------------
+start_tunnel() {
+    case "$TUNNEL_PROVIDER" in
+        ngrok)       start_ngrok ;;
+        localtunnel) start_localtunnel ;;
+    esac
+}
+
+fetch_tunnel_url() {
+    case "$TUNNEL_PROVIDER" in
+        ngrok)       fetch_ngrok_url ;;
+        localtunnel) fetch_localtunnel_url ;;
+    esac
+}
+
+# ---------------------------------------------------------------------------
 # ngrok
 # ---------------------------------------------------------------------------
 start_ngrok() {
-    if [[ -n "$NGROK_PID" ]] && kill -0 "$NGROK_PID" 2>/dev/null; then
-        kill "$NGROK_PID" 2>/dev/null || true
+    if [[ -n "$TUNNEL_PID" ]] && kill -0 "$TUNNEL_PID" 2>/dev/null; then
+        kill "$TUNNEL_PID" 2>/dev/null || true
         sleep 1
     fi
     pkill -f "ngrok http $PORT" 2>/dev/null || true
@@ -144,11 +192,11 @@ start_ngrok() {
         log_info "Starting ngrok with ephemeral URL..."
         ngrok http "$PORT" --log=false &>/dev/null &
     fi
-    NGROK_PID=$!
+    TUNNEL_PID=$!
     sleep 2
 
-    if kill -0 "$NGROK_PID" 2>/dev/null; then
-        log_ok "ngrok started (PID: $NGROK_PID)"
+    if kill -0 "$TUNNEL_PID" 2>/dev/null; then
+        log_ok "ngrok started (PID: $TUNNEL_PID)"
         return 0
     else
         log_error "Failed to start ngrok. Is it installed and authenticated?"
@@ -187,6 +235,52 @@ except Exception:
 }
 
 # ---------------------------------------------------------------------------
+# localtunnel
+# ---------------------------------------------------------------------------
+start_localtunnel() {
+    if [[ -n "$TUNNEL_PID" ]] && kill -0 "$TUNNEL_PID" 2>/dev/null; then
+        kill "$TUNNEL_PID" 2>/dev/null || true
+        sleep 1
+    fi
+    pkill -f "localtunnel --port $PORT" 2>/dev/null || true
+    sleep 1
+
+    : > "$LT_OUTPUT_FILE"
+
+    if [[ -n "$TUNNEL_SUBDOMAIN" ]]; then
+        log_info "Starting localtunnel with subdomain: ${CYAN}${TUNNEL_SUBDOMAIN}${NC}"
+        npx --yes localtunnel --port "$PORT" --subdomain "$TUNNEL_SUBDOMAIN" &>"$LT_OUTPUT_FILE" &
+    else
+        log_info "Starting localtunnel with ephemeral URL..."
+        npx --yes localtunnel --port "$PORT" &>"$LT_OUTPUT_FILE" &
+    fi
+    TUNNEL_PID=$!
+    sleep 2
+
+    if kill -0 "$TUNNEL_PID" 2>/dev/null; then
+        log_ok "localtunnel started (PID: $TUNNEL_PID)"
+        return 0
+    else
+        log_error "Failed to start localtunnel."
+        return 1
+    fi
+}
+
+fetch_localtunnel_url() {
+    local retries=20
+    local url=""
+    for ((i=1; i<=retries; i++)); do
+        url=$(grep -o 'https://[^[:space:]]*' "$LT_OUTPUT_FILE" 2>/dev/null | head -n1)
+        if [[ -n "$url" ]]; then
+            echo "$url"
+            return 0
+        fi
+        sleep 1
+    done
+    return 1
+}
+
+# ---------------------------------------------------------------------------
 # Health check
 # ---------------------------------------------------------------------------
 health_check() {
@@ -197,11 +291,11 @@ health_check() {
         start_python_server || return 1
     fi
 
-    if ! kill -0 "$NGROK_PID" 2>/dev/null; then
-        log_warn "ngrok is down. Restarting..."
-        start_ngrok || return 1
+    if ! kill -0 "$TUNNEL_PID" 2>/dev/null; then
+        log_warn "$TUNNEL_PROVIDER is down. Restarting..."
+        start_tunnel || return 1
         local new_base
-        new_base=$(fetch_ngrok_url) || { log_error "Could not get ngrok URL after restart."; return 1; }
+        new_base=$(fetch_tunnel_url) || { log_error "Could not get $TUNNEL_PROVIDER URL after restart."; return 1; }
         PUBLIC_URL="${new_base}/${FILE_NAME}"
         print_url
     fi
@@ -240,12 +334,14 @@ echo -e "${NC}"
 
 check_deps
 
+log_info "Tunnel provider: ${CYAN}${TUNNEL_PROVIDER}${NC}"
+
 do_build          || exit 1
 start_python_server || exit 1
-start_ngrok       || exit 1
+start_tunnel      || exit 1
 
-log_info "Waiting for ngrok tunnel URL..."
-BASE_URL=$(fetch_ngrok_url) || { log_error "Could not retrieve ngrok URL."; cleanup; }
+log_info "Waiting for $TUNNEL_PROVIDER tunnel URL..."
+BASE_URL=$(fetch_tunnel_url) || { log_error "Could not retrieve $TUNNEL_PROVIDER URL."; cleanup; }
 PUBLIC_URL="${BASE_URL}/${FILE_NAME}"
 
 print_url

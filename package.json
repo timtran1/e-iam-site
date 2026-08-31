@@ -9,7 +9,9 @@
     "build:universal": "vite build --mode universal",
     "build:regular": "vite build && node vite-config/merge-built-files.js",
     "format:check": "prettier --check 'src/**/(*.jsx|*.js|*.tsx|*.ts|*.css|*.scss)'",
-    "format": "prettier --write 'src/**/(*.jsx|*.js|*.tsx|*.ts|*.css|*.scss)'"
+    "format": "prettier --write 'src/**/(*.jsx|*.js|*.tsx|*.ts|*.css|*.scss)'",
+    "network-override": "./dev-tools/network-override/test-with-local-build.sh",
+    "dev-tunnel": "./dev-tools/dev-tunnel/dev-tunnel.sh"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
@@ -38,6 +40,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "eslint-plugin-unused-imports": "^4.1.3",
+    "playwright": "^1.62.1",
     "postcss": "^8.5.15",
     "postcss-simple-vars": "^7.0.1",
     "prettier": "3.8.0",
