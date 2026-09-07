@@ -15,7 +15,6 @@ const ResultItem = React.memo(({searchResult, viewMode}) => {
    * @type {string}
    */
   const fullHref = React.useMemo(() => {
-    // If the href is already an absolute URL, use it directly
     if (
       searchResult.href?.startsWith('http://') ||
       searchResult.href?.startsWith('https://')
@@ -23,22 +22,23 @@ const ResultItem = React.memo(({searchResult, viewMode}) => {
       return searchResult.href;
     }
 
+    // Href with a path component (e.g. f.php?f=...) — use as-is, browser resolves it relative to the current page
+    if (searchResult.href && !searchResult.href.startsWith('?')) {
+      return searchResult.href;
+    }
+
+    // Query-only href (e.g. ?c=pagename&l=de) — merge with current search params
     const [endpoint] = location.href.split('?');
     const currentSearchParams = new URLSearchParams(location.search);
-    const hrefPath = searchResult.href?.includes('?')
-      ? searchResult.href.split('?')[0]
-      : '';
     const hrefParams = new URLSearchParams(
-      searchResult.href?.includes('?')
-        ? searchResult.href?.split('?')[1]
+      searchResult.href?.startsWith('?')
+        ? searchResult.href.slice(1)
         : searchResult.href
     );
     for (const key of hrefParams.keys()) {
-      if (currentSearchParams.has(key)) {
-        currentSearchParams.set(key, hrefParams.get(key));
-      }
+      currentSearchParams.set(key, hrefParams.get(key));
     }
-    return endpoint + hrefPath + `?${currentSearchParams.toString()}`;
+    return endpoint + `?${currentSearchParams.toString()}`;
   }, [searchResult.href]);
 
   /**
