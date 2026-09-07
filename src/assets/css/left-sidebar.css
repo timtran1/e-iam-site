@@ -30,7 +30,7 @@ nav.left-sidebar {
   color: var(--Color-Font-Main, #1f2937);
   font-size: var(--Color-Font-Navigation-Font-Size, 18px);
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   line-height: var(--Color-Font-Navigation-Line-Height, 28px);
   text-decoration: none;
 
