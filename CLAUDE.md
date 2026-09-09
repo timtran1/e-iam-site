@@ -1,0 +1,4 @@
+- this project is built and injected into eIAM (swiss login authorities) sites as a script tag. purpose is to re-style the entire site without altering the original HTML/CSS/JS, which are managed by a legacy system called u5cms.
+- restyling must be done without altering existing features or functionality of the old site pre-injection. these ftesteatures may be implemented using jquery or vanilla javascript on the old site.
+- injection is automatic and happens on every page load, but maybe overridden by a query parameter `x=usetheotherlayout` to skip injection and use the old theme.
+- the live site is at https://www.eiam.admin.ch. to test CSS changes visually, navigate to that site in the browser and inject test elements via JS (e.g. `document.querySelector('#content').prepend(el)`) rather than using a blank page.

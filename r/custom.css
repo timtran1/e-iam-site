@@ -249,6 +249,10 @@ tr:hover {
     background:  #F9FAFB;
 }
 
+.abbroracro {
+    text-decoration: none;
+}
+
 /* Override tailwind preflight */
 span img {
     display: inline;
