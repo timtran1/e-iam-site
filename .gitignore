@@ -6,3 +6,5 @@ originals
 dist
 certbot
 .playwright-mcp
+.playwright-cli
+.playwright
