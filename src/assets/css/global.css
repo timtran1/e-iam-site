@@ -29,6 +29,10 @@
     }
   }
 
+  html {
+    scrollbar-gutter: stable;
+  }
+
   body {
     font-style: normal;
     font-weight: 400;
