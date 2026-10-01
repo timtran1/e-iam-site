@@ -29,8 +29,9 @@ const useSearchInputControl = () => {
         fsearch.action.split(`javascript:location.href='`)?.[1] || 'index.php?';
       const [path, paramsStr] = href.split('?');
       const params = new URLSearchParams(paramsStr);
-      params.set(searchKeyForU5cm, encodedSearchStr);
-      const newUrl = `${path}?${new URLSearchParams(params).toString()}`;
+      params.delete(searchKeyForU5cm);
+      // The search string is encoded already, URLSearchParams would encode it a second time
+      const newUrl = `${path}?${params.toString()}&${searchKeyForU5cm}=${encodedSearchStr}`;
       location.href = newUrl;
     }
   }, [encodedSearchStr, searchValue]);
