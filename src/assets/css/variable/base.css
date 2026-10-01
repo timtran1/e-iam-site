@@ -22,6 +22,9 @@
   --Color-Background-Element: #f0f4f7;
   --Basic-Fontsize-Paragraph-Font-Size: 18px;
   --Basic-Fontsize-Paragraph-Line-Height: 28px;
+  --Basic-Fontsize-Paragraph-small-Font-Size: 14px;
+  --Basic-Fontsize-Paragraph-small-Line-Height: 18px;
+  --Color-Font-Search-Helper: #4b5563;
 
   /*Body*/
   --Color-Font-Paragraph-Font-Size: 16px;
@@ -90,6 +93,17 @@
 
   /*Search result item*/
   --Basic-Search-Result-Vertical-Padding: 16px;
+
+  /*Search result item of other sites*/
+  --Basic-Search-Cross-Site-Result-Horizontal-Padding: 16px;
+  --Basic-Search-Cross-Site-Result-Vertical-Padding: 16px;
+
+  /*Badge*/
+  --Badge-Background: #f0f4f7;
+  --Badge-Horizontal-Padding: 12px;
+  --Badge-Vertical-Padding: 6px;
+  --Badge-Font-Size: 12px;
+  --Badge-Line-Height: 16px;
 
   /*Accordion*/
   --Accordion-Preview-Min-Height: 56px;

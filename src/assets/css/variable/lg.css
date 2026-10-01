@@ -83,6 +83,14 @@
     /*Search result item*/
     --Basic-Search-Result-Vertical-Padding: 24px;
 
+    /*Search result item of other sites*/
+    --Basic-Search-Cross-Site-Result-Horizontal-Padding: 24px;
+    --Basic-Search-Cross-Site-Result-Vertical-Padding: 16px;
+
+    /*Badge*/
+    --Badge-Font-Size: 14px;
+    --Badge-Line-Height: 18px;
+
     /*Accordion*/
     --Accordion-Preview-Min-Height: 56px;
     --Accordion-Vertical-Padding: 12px;

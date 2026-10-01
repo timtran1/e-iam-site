@@ -1,4 +1,4 @@
-import {useTranslation} from 'react-i18next';
+import {Trans, useTranslation} from 'react-i18next';
 import clsx from 'clsx';
 import {VIEW_MODE} from './constants.js';
 import SearchResultsInput from './SearchResultsInput.jsx';
@@ -14,6 +14,7 @@ import Spinner from '../../../../common/ui/Spinner.jsx';
  * @param {number} props.resultsCount - Number of search results
  * @param {React.ReactNode} props.children - Results content to render
  * @param {string} props.searchTerm - Current search term for empty state
+ * @param {string} props.replacementTerm - Term U5CMS has searched for instead, when the search term has no hits
  * @param {string} props.viewMode
  * @param props.setViewMode
  */
@@ -22,6 +23,7 @@ const SearchResultsLayout = ({
   resultsCount,
   children,
   searchTerm = '',
+  replacementTerm = '',
   viewMode,
   setViewMode,
   showViewToggle = false,
@@ -41,7 +43,27 @@ const SearchResultsLayout = ({
       <div className="search-result__input-container">
         <div className="search-result__input-content">
           <div className="search-result__input-label">{t('search')}</div>
-          <SearchResultsInput className="search-result__input-control" />
+          <div className="search-result__input-group">
+            <SearchResultsInput
+              className="search-result__input-control"
+              // The textfield keeps the term of the user, not the replacement
+              userSearchTerm={replacementTerm ? searchTerm : ''}
+            />
+
+            {/* Hint, only shown if there were no hits for the search term */}
+            {!!replacementTerm && (
+              <div className="search-result__input-hint">
+                <p>{t('noResultsFor', {searchTerm})}</p>
+                <p>
+                  <Trans
+                    i18nKey="showingResultsFor"
+                    values={{replacementTerm}}
+                    components={{strong: <strong />}}
+                  />
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

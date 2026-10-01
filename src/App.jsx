@@ -21,7 +21,7 @@ const App = () => {
   // Shrink the whole app on Windows
   const {os} = useOSDetect();
   console.log('[App] OS:', os);
-  console.log('[App] Version: 1.0.7');
+  console.log('[App] Version: 1.1.0');
 
   return (
     <AppProvider>

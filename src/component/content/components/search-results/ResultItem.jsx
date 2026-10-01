@@ -7,9 +7,10 @@ import {VIEW_MODE} from './constants.js';
  * @type {React.NamedExoticComponent<{
  *     readonly searchResult: SearchResult
  *     readonly viewMode: string
+ *     readonly crossSite?: boolean - Smaller design for results of other sites
  * }>}
  */
-const ResultItem = React.memo(({searchResult, viewMode}) => {
+const ResultItem = React.memo(({searchResult, viewMode, crossSite = false}) => {
   /**
    * Build the full href URL with current search params
    * @type {string}
@@ -55,8 +56,13 @@ const ResultItem = React.memo(({searchResult, viewMode}) => {
         .split(' ')
         .slice(0, 20)
         .join(' ') || '';
-    return `${heading}. ${description}`;
-  }, [searchResult.heading?.innerHTML, searchResult.description?.innerHTML]);
+    const badge = searchResult.badge ? ` (${searchResult.badge})` : '';
+    return `${heading}${badge}. ${description}`;
+  }, [
+    searchResult.heading?.innerHTML,
+    searchResult.description?.innerHTML,
+    searchResult.badge,
+  ]);
 
   return (
     <>
@@ -66,7 +72,8 @@ const ResultItem = React.memo(({searchResult, viewMode}) => {
           'search-result__view-item block !no-underline hover:no-underline cursor-pointer group focus:outline-none visited:!text-inherit focus:ring-2 focus:ring-primary-main',
           viewMode === VIEW_MODE.Grid &&
             'focus:ring-offset-2 rounded p-6 shadow search-result__view-item--grid',
-          viewMode === VIEW_MODE.List && 'search-result__view-item--list'
+          viewMode === VIEW_MODE.List && 'search-result__view-item--list',
+          crossSite && 'search-result__view-item--cross-site'
         )}
         aria-label={ariaLabel}
       >
@@ -91,6 +98,24 @@ const ResultItem = React.memo(({searchResult, viewMode}) => {
             }}
           ></p>
         </div>
+
+        {!!searchResult.badge && (
+          <div aria-hidden="true" className="search-result__badge">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M9.77027 4.0835V4.10059L5.639 9.78662H5.6155V20.667H19.1345V4.0835H9.77027ZM9.77027 5.37598V9.78662H6.56543L9.77027 5.37598ZM18.3845 19.917H6.36548V10.5366H10.5203V4.8335H18.3845V19.917Z"
+                fill="currentColor"
+              />
+            </svg>
+            <span>{searchResult.badge}</span>
+          </div>
+        )}
 
         {viewMode === VIEW_MODE.Grid && (
           <div className="flex justify-end mt-4">

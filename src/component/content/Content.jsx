@@ -15,6 +15,7 @@ import {
 } from '../../common/helper/element-parsing.js';
 import useHashScroll from '../../common/hook/useHashScroll.js';
 import useSearchResult from './hooks/useSearchResult.js';
+import useCrossSiteResults from './hooks/useCrossSiteResults.js';
 import SearchResults from './components/search-results/index.jsx';
 import {ELEMENT_ID} from '../../common/constant/element-id.js';
 import clsx from 'clsx';
@@ -66,9 +67,16 @@ const Content = () => {
   }, [articleWidth, articleHeight, setContentMeta]);
 
   // Search contents
-  const {isSearchResultPage, searchResults} = useSearchResult(
-    isDevMode ? MockingSearchResultsContent : content
-  );
+  const {
+    isSearchResultPage,
+    searchResults,
+    searchTerm,
+    replacementTerm,
+    crossSiteSources,
+  } = useSearchResult(isDevMode ? MockingSearchResultsContent : content);
+
+  // Search results of other sites
+  const crossSiteResults = useCrossSiteResults(crossSiteSources);
 
   // Init hash scroll — gated on contentReady so the retry loop starts once
   // the legacy #content markup has actually been captured, rather than
@@ -222,7 +230,13 @@ const Content = () => {
             )}
           >
             {isSearchResultPage ? (
-              <SearchResults className="w-full" searchResults={searchResults} />
+              <SearchResults
+                className="w-full"
+                searchResults={searchResults}
+                searchTerm={searchTerm}
+                replacementTerm={replacementTerm}
+                crossSiteResults={crossSiteResults}
+              />
             ) : (
               <div
                 ref={contentRef}

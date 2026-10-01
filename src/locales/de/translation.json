@@ -5,6 +5,8 @@
   "showMore": "Mehr anzeigen",
   "suche": "Suche",
   "searchResults": "Suchergebnisse",
+  "noResultsFor": "Keine Ergebnisse für «{{searchTerm}}».",
+  "showingResultsFor": "Stattdessen werden Ergebnisse für «<strong>{{replacementTerm}}</strong>» angezeigt.",
   "noMatchesFor": "Keine Treffer für «{{searchTerm}}»",
   "searchTips": "Suchtipps",
   "checkSpelling": "Überprüfen Sie die Rechtschreibung Ihres Suchbegriffs",
