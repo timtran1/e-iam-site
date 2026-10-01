@@ -435,7 +435,7 @@ export const MockingSearchResultsContent = `<main class="grow mx-auto max-w-[740
         <input type="submit" class="btnSubmit" alt="search" value="search">
         <span id="keeper" style="display:none"></span>
         <script type="text/javascript">
-            document.fsearch2.q.value=unescape('search').replace(/&quot;/g,'"');
+            document.fsearch2.q.value=unescape('serach').replace(/&quot;/g,'"');
             setTimeout("if(document.fsearch2.q.value.replace(/\\s/g,'')==''){document.getElementById('keeper').innerHTML=unescape('search');document.fsearch2.q.value=document.getElementById('keeper').innerHTML};document.fsearch2.q.select()",555);
         </script>
     </form>
@@ -450,11 +450,13 @@ export const MockingSearchResultsContent = `<main class="grow mx-auto max-w-[740
             }
         }
     </script>
-    <p><strong>2</strong> hits containing all of the term <strong id="terms">search</strong></p>
+    No hits with your search. Suggestion:<br><p><strong>3</strong> hits containing all of the term <strong id="terms">search</strong></p>
     <h5><a style="text-decoration:underline" onclick="if(document.getElementById('search_Input'))this.href+=('&amp;q='+escape(document.getElementById('search_Input').value.replace(/ /g,',').replace(/\\+/g,',')))" href="?c=zumbeispielformate&amp;l=en">writeyourtitlehere Lorem ipsum dolor sit amet, consetetur .  . . .</a></h5>
     <p>…positions and eye movement. Eye trackers are used in re<span class="hitshilite">search</span> on the visual system, in psychology, in cognitive ling…which the eye position is extracted. Other methods use <span class="hitshilite">search</span> coils or are based on the electrooculogram. download L…</p>
     <h5><a style="text-decoration:underline" onclick="if(document.getElementById('search_Input'))this.href+=('&amp;q='+escape(document.getElementById('search_Input').value.replace(/ /g,',').replace(/\\+/g,',')))" href="?c=formatexamples&amp;l=en">writeyourtitlehere Lorem ipsum dolor sit amet, consetetur .  . . .</a></h5>
     <p>…positions and eye movement. Eye trackers are used in re<span class="hitshilite">search</span> on the visual system, in psychology, in cognitive ling…which the eye position is extracted. Other methods use <span class="hitshilite">search</span> coils or are based on the electrooculogram. download L…</p>
+    <h5><a style="text-decoration:underline" href="f.php?f=r/p035/p035_de.docx?t=1727785064"><span style="font-size:60%">cug docx</span> P035 form</a></h5>
+    <p>… Download P035 Word form for the re<span class="hitshilite">search</span> on the visual system …</p>
     <p></p>
     <script type="text/javascript">
         function replace(string,text,by) {
@@ -484,7 +486,12 @@ export const MockingSearchResultsContent = `<main class="grow mx-auto max-w-[740
         });
     </script>
     <script src="sq.js"></script>
-    <div id="teledocs"></div>
+    <div id="teledocs">
+        <div style="margin-top:77px;font-size:80%"><h1>Suggestions from docs.eiam.admin.ch:</h1>
+        <h5 style="font-size:120%"><a style="text-decoration:underline" onclick="if(document.getElementById('search_Input'))this.href+=('&amp;z='+escape(document.getElementById('search_Input').value.replace(/ /g,',').replace(/\\+/g,',')))" href="https://docs.eiam.admin.ch/?q=search&amp;c=intdelegusermgnt&amp;l=en">Delegated management</a></h5><p>… users can <span class="hitshilite">search</span> for identities in their unit and assign roles to them without a reporting procedure …</p>
+        <h5 style="font-size:120%"><a style="text-decoration:underline" href="https://docs.eiam.admin.ch/?q=search&amp;f.php?f=r/p035/p035_de.doc?t=1654939936"><span style="font-size:60%">cug doc</span> P035 form</a></h5><p>* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *…</p>
+        </div>
+    </div>
     <iframe style="display:none" src="u5sys.content.php?c=teledocs&amp;x=_search&amp;l=en&amp;q=search&amp;q2=search"></iframe>
     <div id="telehelp"></div>
     <iframe style="display:none" src="u5sys.content.php?c=telehelp&amp;x=_search&amp;l=en&amp;q=search&amp;q2=search"></iframe>
@@ -494,6 +501,10 @@ export const MockingSearchResultsContent = `<main class="grow mx-auto max-w-[740
     <iframe style="display:none" src="u5sys.content.php?c=teleworkagov&amp;x=_search&amp;l=en&amp;q=search&amp;q2=search"></iframe>
 </main>
 `;
+
+// Mocking current page code (the 'c' query param of u5CMS), used when the URL has no 'c'
+// '_search' shows the search results page, null shows mockContent
+export const MockingCurrentPage = '_search';
 
 export const MockingExternalLinks = [
   {
