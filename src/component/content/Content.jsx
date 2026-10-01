@@ -186,7 +186,8 @@ const Content = () => {
             : 'body-content__container--standard',
 
           // Based on design, remove right padding for right sidebar with lg breakpoint
-          !isSearchResultPage && showRightSidebarPages && 'lg:!pr-0'
+          // At 3xl+, restore right padding to match the left for visual symmetry
+          !isSearchResultPage && showRightSidebarPages && 'lg:!pr-0 3xl:!pr-[var(--Basic-Body-Horizontal-padding,80px)]'
         )}
       >
         {/*Element included LeftSidebar and MainContent*/}
