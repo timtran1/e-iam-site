@@ -1,5 +1,6 @@
 'use strict';
-// Tests for src/lowstage-guard.js and how the build places it in the bundle.
+// Tests for the lowstage guard as it ships: the minified copy of
+// src/lowstage-guard.js at the start of the built bundle, plus the bundle itself.
 // Based on lowstage.test.cjs of 2026-10-16. Run `npm run build`, then `npm test`.
 // BUNDLE=<path> tests another build (e.g. the uploaded design2026_de.js).
 const fs = require('node:fs');
@@ -7,16 +8,17 @@ const path = require('node:path');
 const vm = require('node:vm');
 const assert = require('node:assert/strict');
 const root = path.join(__dirname, '..');
-const prefix = fs.readFileSync(path.join(root, 'src/lowstage-guard.js'), 'utf8');
 const bundlePath = process.env.BUNDLE || path.join(root, 'dist/app-universal.iife.js');
-let bundleCode;
-function bundle() {
-  if (bundleCode === undefined) {
-    if (!fs.existsSync(bundlePath)) throw Error(bundlePath + ' not found, run npm run build first');
-    bundleCode = fs.readFileSync(bundlePath, 'utf8');
-  }
-  return bundleCode;
+if (!fs.existsSync(bundlePath)) {
+  console.error(bundlePath + ' not found, run npm run build first');
+  process.exit(1);
 }
+const bundleCode = fs.readFileSync(bundlePath, 'utf8');
+function bundle() { return bundleCode; }
+// vite-config/vite.universal.js writes: <minified guard>\n<skip wrapper>{\n<rest>\n}\n
+const wrapper = '\nif (!window.__design2026LowstageRedirect) {\n';
+const wrapperAt = bundleCode.indexOf(wrapper);
+const prefix = wrapperAt > 0 ? bundleCode.slice(0, wrapperAt + 1) : '';
 const tests = [];
 function test(name, fn) { tests.push([name, fn]); }
 function run(href, options = {}) {
@@ -49,8 +51,12 @@ function run(href, options = {}) {
 
 // The built bundle.
 test('Built bundle parses', () => { new vm.Script(bundle()); });
-test('Built bundle starts with the unchanged guard', () => {
-  assert.ok(bundle().startsWith(prefix));
+test('Built bundle starts with the minified guard, then the skip wrapper', () => {
+  assert.ok(wrapperAt > 0, 'skip wrapper not found');
+  assert.ok(bundle().trimEnd().endsWith('}'));
+  assert.match(prefix, /__design2026LowstageGuardRan/);
+  assert.doesNotMatch(prefix, /\/\*|\n\s+\S/, 'guard is not minified');
+  new vm.Script(prefix);
 });
 test('Built bundle on a stage redirects and runs nothing else', () => {
   const r = run('https://docs-r.eiam.admin.ch/index.php?c=test&l=de', { code: bundle() });

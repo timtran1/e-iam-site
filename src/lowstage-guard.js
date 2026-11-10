@@ -6,11 +6,12 @@
  * jsmobilespecific resource used (that one only loads with x=usetheotherlayout
  * now). Navigation aid only: this is not authentication or access control.
  *
- * Based on lowstage-guard.js of 2026-10-16. vite-config/vite.universal.js puts
- * this file verbatim at the start of the bundle and skips the rest of the
- * bundle when window.__design2026LowstageRedirect is set, so keep it plain
- * ES5, ASCII only and free of double braces (u5admin template parser).
- * Tests: tests/lowstage.test.cjs (npm test, after npm run build).
+ * Based on lowstage-guard.js of 2026-10-16. vite-config/vite.universal.js
+ * minifies this file on its own, puts it at the start of the bundle and skips
+ * the rest of the bundle when window.__design2026LowstageRedirect is set. It
+ * is not transpiled, so keep it plain ES5.
+ * Tests: tests/lowstage.test.cjs (npm test, after npm run build) run against
+ * the minified copy in the bundle.
  */
 (function () {
   'use strict';

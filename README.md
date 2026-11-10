@@ -71,8 +71,8 @@ The universal build mode creates a standalone JavaScript bundle that can be embe
 ### Lowstage guard
 Non-production stages (`docs-r.eiam.admin.ch`, `docs-a.eiam.admin.ch`, ...) show a warning and redirect to production unless the URL has `lowstage=on`, which sets a 30-day cookie for that host. It used to live in u5cms `jsmobilespecific`, which only loads with `x=usetheotherlayout` now.
 
-- Code: `src/lowstage-guard.js`. The build puts it verbatim at the very start of the bundle and skips the rest of the bundle while it redirects (`vite-config/vite.universal.js`).
-- Tests: `npm run build && npm test` (also runs in CI). To test the uploaded file: `curl -o /tmp/design2026_de.js https://www.eiam.admin.ch/r/design2026/design2026_de.js && BUNDLE=/tmp/design2026_de.js npm test`.
+- Code: `src/lowstage-guard.js`. The build minifies it on its own, puts it at the very start of the bundle and skips the rest of the bundle while it redirects (`vite-config/vite.universal.js`).
+- Tests: `npm run build && npm test` (also runs in CI). They run against the minified guard taken from the built bundle, i.e. what actually ships. To test the uploaded file: `curl -o /tmp/design2026_de.js https://www.eiam.admin.ch/r/design2026/design2026_de.js && BUNDLE=/tmp/design2026_de.js npm test`.
 
 ## Deployment
 

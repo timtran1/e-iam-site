@@ -63,16 +63,19 @@ export const minifyJsPlugin = {
 
 /**
  * Lowstage guard plugin for universal build. Runs after CSS inlining and
- * minification: puts src/lowstage-guard.js verbatim at the very start of the
- * bundle and runs the rest only if the guard did not start a redirect, so a
- * non-production stage is never restyled before it is left.
+ * minification: puts src/lowstage-guard.js, minified on its own, at the very
+ * start of the bundle (before the CSS injection) and runs the rest only if the
+ * guard did not start a redirect, so a non-production stage is never restyled
+ * before it is left.
  */
 const LOWSTAGE_GUARD_PATH = path.resolve(__dirname, '../src/lowstage-guard.js');
 
 export const lowstageGuardPlugin = {
   name: 'lowstage-guard',
-  generateBundle(options, bundle) {
-    const guard = fs.readFileSync(LOWSTAGE_GUARD_PATH, 'utf8');
+  async generateBundle(options, bundle) {
+    const guard =
+      (await minifyJsContent(fs.readFileSync(LOWSTAGE_GUARD_PATH, 'utf8'))) +
+      '\n';
     const jsAssets = Object.keys(bundle).filter(
       (key) => key.includes('app-universal') && key.endsWith('.js')
     );
