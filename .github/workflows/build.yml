@@ -49,3 +49,4 @@ jobs:
             package-lock.json
             index.html
             app.js
+            tests/**

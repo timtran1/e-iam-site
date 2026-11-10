@@ -2,15 +2,17 @@
 // Tests for the lowstage guard as it ships: the minified copy of
 // src/lowstage-guard.js at the start of the built bundle, plus the bundle itself.
 // Based on lowstage.test.cjs of 2026-10-16. Run `npm run build`, then `npm test`.
-// BUNDLE=<path> tests another build (e.g. the uploaded design2026_de.js).
+// Standalone, Node built-ins only: check the uploaded file with
+//   node lowstage.test.cjs design2026_de.js
+// (download it from https://www.eiam.admin.ch/r/design2026/design2026_de.js).
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const assert = require('node:assert/strict');
 const root = path.join(__dirname, '..');
-const bundlePath = process.env.BUNDLE || path.join(root, 'dist/app-universal.iife.js');
+const bundlePath = process.argv[2] || process.env.BUNDLE || path.join(root, 'dist/app-universal.iife.js');
 if (!fs.existsSync(bundlePath)) {
-  console.error(bundlePath + ' not found, run npm run build first');
+  console.error(bundlePath + ' not found' + (process.argv[2] || process.env.BUNDLE ? '' : ', run npm run build first'));
   process.exit(1);
 }
 const bundleCode = fs.readFileSync(bundlePath, 'utf8');
