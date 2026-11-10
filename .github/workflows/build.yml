@@ -27,6 +27,9 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Test lowstage guard in the bundle
+        run: npm test
+
       - name: Stage built bundle at root
         run: mv dist/app-universal.iife.js app.js
 

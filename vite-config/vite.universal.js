@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'path';
 import {fileURLToPath} from 'node:url';
 import {minifyJsContent} from './minify-js.js';
@@ -61,6 +62,32 @@ export const minifyJsPlugin = {
 };
 
 /**
+ * Lowstage guard plugin for universal build. Runs after CSS inlining and
+ * minification: puts src/lowstage-guard.js verbatim at the very start of the
+ * bundle and runs the rest only if the guard did not start a redirect, so a
+ * non-production stage is never restyled before it is left.
+ */
+const LOWSTAGE_GUARD_PATH = path.resolve(__dirname, '../src/lowstage-guard.js');
+
+export const lowstageGuardPlugin = {
+  name: 'lowstage-guard',
+  generateBundle(options, bundle) {
+    const guard = fs.readFileSync(LOWSTAGE_GUARD_PATH, 'utf8');
+    const jsAssets = Object.keys(bundle).filter(
+      (key) => key.includes('app-universal') && key.endsWith('.js')
+    );
+
+    for (const jsAsset of jsAssets) {
+      bundle[jsAsset].code =
+        guard +
+        'if (!window.__design2026LowstageRedirect) {\n' +
+        bundle[jsAsset].code +
+        '\n}\n';
+    }
+  },
+};
+
+/**
  * Universal build configuration
  */
 export const universalConfig = {
@@ -91,7 +118,7 @@ export const universalConfig = {
           return 'assets/[name].[hash][extname]';
         },
       },
-      plugins: [inlineCssPlugin, minifyJsPlugin],
+      plugins: [inlineCssPlugin, minifyJsPlugin, lowstageGuardPlugin],
     },
     // Additional optimization options
     target: 'es2015', // Target modern browsers for better optimization
